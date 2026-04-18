@@ -1,0 +1,1729 @@
+% !TeX root = BookN.tex
+
+\title{Direct Cutting-out Method in Problems of Mathematical Theory of Thin Inclusions and Fracture Mechanics}
+\titlerunning{Direct Cutting-out Method for Thin Inclusions and Cracks}
+
+\author{Kyryl Vasil'ev and Heorhiy Sulym}
+
+\institute{
+	Kyryl Vasil'ev \at
+	Pidstryhach Institute for Applied Problems of Mechanics and Mathematics, NAS of Ukraine \\
+	\email{kirill.all@gmail.com}
+	\and
+	Heorhiy Sulym \at
+	Pidstryhach Institute for Applied Problems of Mechanics and Mathematics, NAS of Ukraine \\
+	\email{gtsulym@gmail.com}
+}
+
+\maketitle
+
+\graphicspath{{39_Vasilev/}}
+
+\abstract{
+	The cutting-out method for solving antiplane problems in the mathematical
+	theory of thin inclusions and fracture mechanics is presented for finite
+	and semi-infinite homogeneous and bimaterial isotropic and anisotropic
+	bodies containing internal thin deformable strip-like inhomogeneities,
+	including cracks. The method reduces the original problem of elastic
+	equilibrium of a finite body with thin inhomogeneities under external
+	force or dislocation loading to a simpler problem formulated for a
+	homogeneous or piecewise-homogeneous infinite space with an increased
+	number of thin defects. Some of these defects are introduced to model
+	the boundaries of the studied body and the corresponding boundary
+	conditions.
+	\newline
+	This reduction transforms the original problem into the analysis of the
+	interaction of a finite system of thin internal and interface inclusions
+	in an infinite homogeneous or bimaterial isotropic or anisotropic medium.
+	Systems of singular integral equations describing the longitudinal shear
+	problem in an anisotropic bimaterial with thin anisotropic inhomogeneities
+	are derived and solved using the collocation method.
+	\newline
+	Examples illustrating the application of the cutting-out method to the
+	analysis of the stress--strain state of isotropic and anisotropic media
+	with cracks are presented. Convergence of the method is demonstrated for
+	problems of longitudinal shear in a half-space, a layer, a wedge, and a
+	square bar containing a crack.
+}
+
+
+\section{Introduction}
+
+The rapid development of modern industry, technology, and manufacturing, together with increasing environmental requirements for efficient production of structural components, necessitates more accurate modeling of physical objects and the processes occurring within them. Consequently, there is a growing demand for new efficient, fast, and accurate analytical and numerical methods for studying the stress--strain state of bodies and structural elements. Such methods must account for a wider range of properties of both traditional and advanced materials, including technologically embedded structural inhomogeneities, natural and manufacturing defects, as well as possible anisotropy of the material.
+
+These issues are particularly important for materials with a designed microstructure, such as composites, smart materials, metamaterials, thin-layer coatings, and biological tissues. Among the most common microstructural inhomogeneities are thin defects, including cracks and elastic or perfectly rigid inclusions. The geometric parameters and elastic properties of such inhomogeneities are often known when they are intentionally introduced as structural elements, sensors, actuators, reinforcing components, or crack fillers used in repair technologies.
+
+Thin inhomogeneities act as strong stress concentrators; therefore, fracture or plastic deformation typically initiates in their vicinity, most often near their tips. According to the classical theory of thin defects, internal cracks and thin inclusions produce a square-root singularity in the stress field at their tips. The coefficients associated with this singularity are the stress intensity factors (SIFs) for cracks and the generalized stress intensity factors (GSIFs) for thin elastic or rigid inclusions. These parameters play a key role in fracture criteria for bodies containing cracks and inclusions~\cite{Vasilev6}.
+
+Among the problems of fracture mechanics involving thin structural inhomogeneities, the most extensively studied are those formulated within the plane theory of elasticity. Problems of longitudinal shear (antiplane deformation) are somewhat simpler mathematically but remain comparatively less investigated. Nevertheless, they possess independent mechanical significance and have numerous direct analogies with geometrically related problems such as torsion, electrical conductivity, and heat conduction. Moreover, many analytical methods developed for longitudinal shear problems can be extended to the corresponding plane and even three-dimensional problems.
+
+A variety of analytical, analytical--numerical, and purely numerical approaches have been developed to analyze the elastic equilibrium of bodies, particularly those containing thin strip-like inhomogeneities. Among them are methods based on integral transforms~\cite{Vasilev1,Vasilev4,Vasilev5,Vasilev7,Vasilev12,Vasilev14,Vasilev22,Vasilev23}, techniques of complex variable theory~\cite{Vasilev2,Vasilev8,Vasilev13,Vasilev20}, as well as direct numerical methods such as boundary element and finite element approaches~\cite{Vasilev3,Vasilev15,Vasilev18,Vasilev24}. Comprehensive reviews of studies devoted to the stress state of bodies with thin inclusions and defects can be found in~\cite{Vasilev9,Vasilev10}.
+
+Analytical and analytical--numerical methods are most effective when applied to infinite domains. However, their application becomes significantly more complicated in piecewise-homogeneous media, layered systems, wedges, or bodies of canonical geometrical shapes. In such cases, the use of integral transform methods often proves to be particularly efficient. Nevertheless, when dealing with finite bodies of complex geometry or with thin inhomogeneities having curved profiles, the applicability of these methods becomes limited or even impossible.
+
+In such situations, direct numerical approaches, primarily the boundary element method and the finite element method, are commonly employed. However, despite their universality, these methods may require substantial computational resources and often do not provide explicit analytical expressions for the parameters characterizing the stress field near thin defects.
+
+Therefore, the development of efficient analytical and analytical--numerical approaches capable of describing the behavior of bodies containing thin inclusions and cracks remains an important problem of applied mechanics. One such approach is the direct cutting-out method, which allows thin inhomogeneities to be modeled by introducing appropriate discontinuities of the displacement field along the inclusion line. This method provides an effective framework for the analysis of antiplane deformation problems in anisotropic bodies containing thin inclusions and cracks.
+
+The present work is devoted to the development and application of the direct cutting-out method for studying antiplane deformation of anisotropic bodies with thin inclusions and cracks.
+
+\section{The Cutting-Out Method}
+
+The conceptual foundations of the cutting-out method can be traced to the work~\cite{Vasilev19}. In that study, singular integral equations (SIEs) were constructed for a plane elasticity problem involving a system of cracks in a half-plane. To this end, a known equation for a system of $N$ finite-length cracks in an infinite plane was considered. In this formulation, the length of one of the cracks was allowed to tend to infinity, while appropriate self-equilibrated boundary conditions were imposed on its faces. In effect, the infinite plane was ``cut'' into two half-planes by an infinitely long crack.
+
+In what follows, this approach will be referred to as the \emph{indirect cutting-out method}. In this method, the length of the inhomogeneity (crack) with prescribed loading is formally taken to infinity in the original integral equations. As a result, a system of singular integral equations (SSIEs) is obtained for a more complicated bounded domain, but with kernels that are considerably more complex and require additional effort in both analytical treatment and numerical implementation.
+
+The \emph{direct cutting-out method} as a distinct approach for studying elasticity problems of finite bodies with thin inhomogeneities was proposed in~\cite{Vasilev16,Vasilev27,Vasilev28}. The idea is to model a finite or semi-infinite body with inclusions subjected to prescribed loads and boundary conditions by replacing it with a body of simpler geometric form (for example, a homogeneous or piecewise-homogeneous space) containing additional thin-walled inhomogeneities. These additional inhomogeneities, such as cracks or perfectly rigid inclusions of sufficiently large but finite length, effectively form the boundaries of the body being studied.
+
+Boundary conditions of the first kind can be imposed by applying appropriate loads to the faces of the additional cracks, whereas boundary conditions of the second kind can be modeled by prescribing displacements along the faces of additional perfectly rigid inclusions. Consequently, a boundary-value problem for a finite body with inclusions is transformed into a problem for a geometrically simpler body containing a slightly larger number of thin inhomogeneities. Although this approach increases the number of singular integral equations, it significantly simplifies and unifies their derivation and solution.
+
+An implicit example of such an approach can be found in~\cite{Vasilev21}, where a square hole in an infinite body was modeled by means of two broken cracks.
+
+For convenience, the direct cutting-out method may be divided into two variants:
+
+\begin{enumerate}
+	\item \emph{Incomplete direct cutting-out method} --- the thin inhomogeneities that form the boundary of the body are located very close to one another but remain separated.
+	
+	\item \emph{Complete direct cutting-out method} --- the thin inhomogeneities that form the boundary of the body meet at their tips and form a closed contour (line or surface).
+\end{enumerate}
+
+This approach is inherently approximate. In the incomplete variant, the boundary formed by thin inhomogeneities is not perfectly continuous. In the complete variant, the possible singular behavior at the contact points of the inhomogeneities forming the boundary is not reproduced with the exact asymptotic order. Nevertheless, when the objective is to analyze the stress state at some distance from the boundary---in particular near an internal inhomogeneity under investigation---the method provides sufficiently accurate results.
+
+Problems involving thin inclusions and cracks are effectively solved using the \emph{method of jump functions}~\cite{Vasilev25}. This method consists of two principal steps:
+
+\begin{enumerate}
+	\item solution of the so-called \emph{external problem} of thin inhomogeneities using the principle of conjugation of continua of different dimensions;
+	
+	\item construction of mathematical models of thin inclusions together with the conditions describing their interaction with the surrounding matrix, forming the \emph{internal problem} of thin inhomogeneities.
+\end{enumerate}
+
+In the first step, according to the principle of conjugation of continua of different dimensions, the thin inhomogeneities themselves are removed from consideration. Their influence on the body is replaced by unknown jump functions of certain physical or mechanical fields across the median surfaces (lines) of the removed inclusions. Such fields may include the traction vector, derivatives of displacement components, temperature, heat flux, magnetic induction, and others.
+
+The stress--strain state of the body under a given external loading is thus expressed in terms of these unknown jump functions. Limiting values of the physical and mechanical fields are then determined on the faces of each inhomogeneity. Importantly, these fields depend only on the external loading, the jump functions, and the geometric and physical parameters of the body, as well as the geometry of the median lines of the inclusions. They do not depend on the material properties of the inclusions themselves.
+
+In the second step of the jump-function method, each thin inclusion is considered as an independent object possessing its own physical and mechanical properties. Taking into account the small thickness of the inclusions and adopting appropriate approximations, relations are derived between the physical and mechanical fields on the upper and lower faces of each inclusion. These relations constitute the mathematical models of thin inclusions.
+
+Taking into account the ideal or non-ideal contact between the inclusions and the matrix, as well as the reduction of the actual contact region to the median line of the inclusion, interaction conditions between the inclusions and the surrounding body are formulated.
+
+Substitution of the boundary values obtained in the first step into the interaction conditions yields, in most cases, a system of singular integral equations for the unknown jump functions. The resulting system is solved together with additional conditions, such as equilibrium conditions for the inclusions and compatibility conditions ensuring uniqueness of the displacement field when encircling each inhomogeneity.
+
+Once the jump functions are determined, the complete fields of stresses, displacements, temperature, and other quantities in the body containing thin inhomogeneities can be obtained.
+
+To implement the direct cutting-out method using the jump-function technique, we construct the solution for the stress--strain state of a system of thin inhomogeneities in an anisotropic space (Fig.~\ref{VasilevFig1a}) or in a piecewise-homogeneous space (Fig.~\ref{VasilevFig1b}) under longitudinal shear~\cite{Vasilev23,Vasilev27,Vasilev28}.
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{VasilevFig1a.png}
+		\caption{System of thin inhomogeneities in an anisotropic space under longitudinal shear.}
+		\label{VasilevFig1a}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{VasilevFig1b.png}
+		\caption{System of thin inhomogeneities in a piecewise-homogeneous space under longitudinal shear.}
+		\label{VasilevFig1b}
+	\end{subfigure}
+	\caption{Geometrical schemes used in the implementation of the direct cutting-out method.}
+	\label{VasilevFig1}
+\end{figure}
+
+\section{External Problem for an Infinite Anisotropic Space with Thin Strip-Like Inclusions Under Longitudinal Shear}
+
+Consider the longitudinal shear of an anisotropic space with elastic constants $a_{nm}$ $(n,m=4,5)$ containing $N$ separated arbitrarily oriented thin strip-like inhomogeneities $L_j$ with median lines $L'_j$ $(j=1,\ldots,N)$. Under longitudinal shear, the stress--strain state is uniform in planes perpendicular to the shear direction. Therefore, it is sufficient to study the stress field in a representative plane $S$ with a given coordinate system $xOy$. The $Oz$ axis is directed along the shear direction (Fig.~\ref{VasilevFig1}).
+
+At infinity, the plane may be subjected to the stresses
+\[
+\left.\sigma_{yz}\right|_{y=\pm\infty}=\tau_1,
+\qquad
+\left.\sigma_{xz}\right|_{x=\pm\infty}=\tau_2.
+\]
+Concentrated forces of intensity $Q_j$ and dislocations with Burgers vector magnitude $b_j$ $(j=1,\ldots,N_Q)$ may act at points
+\[
+z_{0,j}^{*}=x_{0,j}^{*}+iy_{0,j}^{*}
+\]
+of the plane. The coordinates of the centers
+\[
+z_{0,j}=x_{0,j}+iy_{0,j},
+\]
+the rotation angles $\varphi_j$ relative to the $x$-axis, and the lengths $2a^j$ $(j=1,\ldots,N)$ of the thin inhomogeneities are assumed to be given. Local coordinate systems $s^jO^jn^j$ are attached to their centers. Other parameters of the inclusion system, such as the thicknesses $2h^j$ and the elastic constants $a_{nm}^{j,\mathrm{in}}$ $(j=1,\ldots,N;\; n,m=4,5)$, will be used when solving the internal problem.
+
+Let us apply the principle of conjugation of continua of different dimensions. The thin inhomogeneities are excluded from the domain, and their influence on the surrounding plane is modeled by unknown jump functions of stresses $f_5^j$ and displacement derivatives $f_6^j$ on the median line
+\[
+L'_j\equiv[-a^j,a^j]
+\qquad
+(n^j=0,\; -a^j\le s^j\le a^j)
+\]
+of each inhomogeneity in its local coordinate system $s^jO^jn^j$:
+\[
+\sigma_{nz}^{j-}-\sigma_{nz}^{j+}=f_5^j(s^j),
+\quad
+\frac{\partial}{\partial s}\bigl(w^{j-}-w^{j+}\bigr)=f_6^j(s^j),
+\quad
+s^j\in L'_j
+\quad (j=1,\ldots,N).
+\]
+Moreover, $f_r^j=0$ $(r=5,6)$ for $s^j\notin L'_j$. The superscripts $(+)$ and $(-)$ denote the upper and lower faces of the inhomogeneity, respectively.
+
+Since the problem is formulated within the framework of linear elasticity, the stress--strain state of the plane with inclusions under a given external load can be written as
+\begin{equation}
+	\sigma_{yz}+i\sigma_{xz}
+	=
+	\bigl(\sigma_{yz}^{0}+i\sigma_{xz}^{0}\bigr)
+	+
+	\bigl(\widehat{\sigma}_{yz}^{0}(z)+i\widehat{\sigma}_{xz}^{0}(z)\bigr),
+	\qquad
+	w=w^{0}+\widehat{w}^{0}.
+	\label{VasilevEq1}
+\end{equation}
+Here $w(x,y)$ is the only nonzero component of the displacement vector, directed along the $Oz$ axis, while $\sigma_{yz}$ and $\sigma_{xz}$ are the corresponding shear stress components.
+
+The \emph{homogeneous} solution $\sigma_{yz}^{0}$, $\sigma_{xz}^{0}$, $w^{0}$ in \eqref{VasilevEq1} describes the stress--strain state of the plane under the given external load in the absence of inhomogeneities. Its construction for concentrated forces and dislocations is given in~\cite{Vasilev23,Vasilev25,Vasilev26}. For the case of a uniform load applied at infinity, the homogeneous solution takes the form
+\begin{equation}
+	\sigma_{yz}^{0}+i\sigma_{xz}^{0}=\tau_1+i\tau_2.
+	\label{VasilevEq2}
+\end{equation}
+The homogeneous displacement field $w^{0}$ is determined from the generalized Hooke law~\cite{Vasilev25,Vasilev26}:
+\begin{equation}
+	\frac{\partial w^{0}}{\partial x}=a_{45}\sigma_{yz}^{0}+a_{55}\sigma_{xz}^{0},
+	\qquad
+	\frac{\partial w^{0}}{\partial y}=a_{44}\sigma_{yz}^{0}+a_{45}\sigma_{xz}^{0}.
+	\label{VasilevEq3}
+\end{equation}
+
+The \emph{basic perturbed} solution $\widehat{\sigma}_{yz}^{0}$, $\widehat{\sigma}_{xz}^{0}$, $\widehat{w}^{0}$ accounts for the additional influence of thin inclusions on the infinite plane. Using Fourier integral transforms, a perturbed solution in terms of the unknown jump functions was constructed in~\cite{Vasilev23} for a single inclusion. Alternatively, it can be obtained by direct integration of known fundamental solutions along the median line of the inhomogeneity. For a thin inhomogeneity $L_j$ with median line $L'_j$ in its local coordinate system $s^jO^jn^j$, the solution can be written in the form~\cite{Vasilev27,Vasilev29}
+\begin{equation}
+	\begin{aligned}
+		&\sigma_{nz}^{j,\mathrm{in}}+i\sigma_{sz}^{j,\mathrm{in}}
+		=
+		\frac{1}{4}\bigl(g_p^j t_5(z^j)-g_m^j t_5(\bar z^j)\bigr)
+		+
+		\frac{i}{4a_{55}^j\alpha^j}\bigl(g_p^j t_6(z^j)+g_m^j t_6(\bar z^j)\bigr),\\
+		&t_r(z^j)
+		=
+		\frac{1}{\pi}\int_{L'_j}\frac{f_r^j(t)\,dt}{t-z^j}
+		\qquad (r=5,6),\\
+		&g_p^j=\beta^j+i(1+\alpha^j),
+		\qquad
+		g_m^j=\beta^j+i(1-\alpha^j),\\
+		&\alpha^j
+		=
+		\frac{\sqrt{a_{44}^j a_{55}^j-(a_{45}^j)^2}}{a_{55}^j},
+		\qquad
+		\beta^j=\frac{a_{45}^j}{a_{55}^j},
+		\qquad
+		z^j=s^j+(\beta^j+i\alpha^j)n^j.
+	\end{aligned}
+	\label{VasilevEq4}
+\end{equation}
+Here and below, the overline denotes complex conjugation.
+
+The elastic constants $a_{nm}^j$ in the coordinate system $s^jO^jn^j$ are determined by the formulas~\cite{Vasilev11,Vasilev26}
+\begin{equation}
+	\begin{aligned}
+		a_{44}^j &= a_{44}\cos^2\varphi_j-2a_{45}\sin\varphi_j\cos\varphi_j+a_{55}\sin^2\varphi_j,\\
+		a_{45}^j &= (a_{44}-a_{55})\sin\varphi_j\cos\varphi_j+a_{45}\bigl(\cos^2\varphi_j-\sin^2\varphi_j\bigr),\\
+		a_{55}^j &= a_{44}\sin^2\varphi_j+2a_{45}\sin\varphi_j\cos\varphi_j+a_{55}\cos^2\varphi_j.
+	\end{aligned}
+	\label{VasilevEq5}
+\end{equation}
+
+Using the principle of superposition, expression \eqref{VasilevEq4}, and the transformation formulas for the stress tensor under a change of coordinates, the basic perturbed solution for the stresses in the coordinate system $xOy$ for $N$ thin strip-like inhomogeneities is written as
+\begin{equation}
+	\widehat{\sigma}_{yz}^{0}+i\widehat{\sigma}_{xz}^{0}
+	=
+	\sum_{j=1}^{N}
+	\bigl(\sigma_{nz}^{j,\mathrm{in}}+i\sigma_{sz}^{j,\mathrm{in}}\bigr)e^{-i\varphi_j},
+	\qquad
+	s^j+in^j=(x+iy-z_{0,j})e^{-i\varphi_j}.
+	\label{VasilevEq6}
+\end{equation}
+The basic perturbed solution for the displacement field $\widehat{w}^{0}$ is obtained, by linearity, from the generalized Hooke law analogously to \eqref{VasilevEq3}. Thus, relation \eqref{VasilevEq1}, together with \eqref{VasilevEq2} and \eqref{VasilevEq6}, gives the stress--strain state of an anisotropic plane (space) with inclusions in terms of the unknown jump functions.
+
+Note that the formulas obtained for the external problems for homogeneous and piecewise-homogeneous spaces remain valid also in the case of curvilinear median lines $L'_j$~\cite{Vasilev25}.
+
+Let us now pass to the coordinate system of the $\ell$-th inhomogeneity:
+\[
+\sigma_{nz}^{\ell}+i\sigma_{sz}^{\ell}
+=
+(\sigma_{yz}+i\sigma_{xz})e^{i\varphi_\ell},
+\qquad
+x+iy=(s^\ell+in^\ell)e^{i\varphi_\ell}+z_{0,\ell},
+\]
+and determine the limiting values of the stresses $\sigma_{nz}^{\ell\pm}$ and the displacement derivatives $\partial w^{\ell\pm}/\partial s^\ell$ on its median line $L'_\ell$ using the Sokhotski--Plemelj formulas~\cite{Vasilev17,Vasilev25}:
+\begin{equation}
+	\begin{aligned}
+		\sigma_{nz}^{\ell\pm}
+		&=
+		\mp\frac{1}{2}f_5^\ell(s^\ell)
+		-\frac{1}{2\pi\alpha^\ell a_{55}^\ell}\int_{L'_\ell}\frac{f_6^\ell(t)}{t-s^\ell}\,dt
+		+\sigma_{nz}^{\ell,\ell},\\
+		\frac{\partial w^{\ell\pm}}{\partial s^\ell}
+		&=
+		\mp\frac{1}{2}f_6^\ell(s^\ell)
+		+\frac{a_{55}^\ell\alpha^\ell}{2\pi}\int_{L'_\ell}\frac{f_5^\ell(t)}{t-s^\ell}\,dt
+		+a_{45}^\ell\sigma_{nz}^{\ell,\ell}
+		+a_{55}^\ell\sigma_{sz}^{\ell,\ell}.
+	\end{aligned}
+	\label{VasilevEq7}
+\end{equation}
+Here
+\[
+\sigma_{nz}^{\ell,\ell}+i\sigma_{sz}^{\ell,\ell}
+=
+\sigma_{nz}^{\ell,\hom}+i\sigma_{sz}^{\ell,\hom}
++
+\sum_{\substack{j=1\\ j\ne \ell}}^{N}
+\bigl(\widehat{\sigma}_{nz}^{j,\mathrm{in}}+i\widehat{\sigma}_{sz}^{j,\mathrm{in}}\bigr)
+e^{i(\varphi_\ell-\varphi_j)},
+\]
+\[
+s^j+in^j
+=
+\bigl(s^\ell e^{i\varphi_\ell}+z_{0,\ell}-z_{0,j}\bigr)e^{-i\varphi_j},
+\qquad
+\sigma_{nz}^{\ell,\hom}+i\sigma_{sz}^{\ell,\hom}
+=
+\bigl(\sigma_{yz}^{0}+i\sigma_{xz}^{0}\bigr)e^{i\varphi_\ell}.
+\]
+The upper sign corresponds to the upper face of the inhomogeneity, and the lower sign to the lower face. The quantities $\sigma_{nz}^{\ell,\hom}$ and $\sigma_{sz}^{\ell,\hom}$ are the homogeneous stresses expressed in the coordinate system of the $\ell$-th inclusion.
+
+\section{Homogeneous Solution Due to Concentrated Factors in an Anisotropic Plane}
+
+For certain classes of problems, the jump functions may be known or prescribed.
+If the jump functions are represented using the Dirac delta function in the form
+\begin{equation}
+	f_5^{j}=-Q_j\,\delta(t),
+	\qquad
+	f_6^{j}=-b_j\,\delta(t),
+	\qquad
+	j=1,\ldots,N,
+	\label{VasilevEq8}
+\end{equation}
+where $Q_j,b_j\in\mathbb{R}$, then substitution of \eqref{VasilevEq8} into \eqref{VasilevEq6} and integration using the properties of the delta function yields expressions for the stress--strain state of an anisotropic plane containing a system of concentrated forces of magnitude $Q_j$ and screw dislocations with Burgers vector component $b_j$ acting at points $z_{0,j}$ $(j=1,\ldots,N)$.
+
+Let us introduce the notation $z_{0,j}=z_{0,j}^{*}$ and set $N=N_Q$. The homogeneous solution corresponding to the action of the concentrated factors together with a uniform external load can then be written as
+\begin{equation}
+	\begin{aligned}
+		\sigma_{yz}^{0}+i\sigma_{xz}^{0}
+		&=
+		\tau_1+i\tau_2
+		+
+		\sum_{j=1}^{N_Q}
+		\Bigg[
+		\frac{Q_j}{4}
+		\left(
+		\frac{g_p}{z^{*,j}}
+		-
+		\frac{g_m}{\bar{z}^{*,j}}
+		\right)
+		+
+		\frac{i\,b_j}{4a_{55}\alpha}
+		\left(
+		\frac{g_p}{z^{*,j}}
+		+
+		\frac{g_m}{\bar{z}^{*,j}}
+		\right)
+		\Bigg],
+		\\[2pt]
+		g_p &= \beta+i(1+\alpha),
+		\qquad
+		g_m = \beta+i(1-\alpha),
+		\\
+		\alpha &=
+		\frac{\sqrt{a_{44}a_{55}-(a_{45})^{2}}}{a_{55}},
+		\qquad
+		\beta=
+		\frac{a_{45}}{a_{55}} .
+	\end{aligned}
+	\label{VasilevEq9}
+\end{equation}
+%
+Here the complex coordinate is defined as
+\begin{equation*}
+	z^{*,j}
+	=
+	x-x_{0,j}^{*}
+	+
+	(\beta+i\alpha)\,(y-y_{0,j}^{*}),
+	\qquad
+	i^{2}=-1 .
+\end{equation*}
+
+\section{External Problem for a Piecewise-Homogeneous Anisotropic Space with Thin Internal Inhomogeneities}
+
+Let the representative plane with coordinate system $xOy$ consist of two perfectly bonded half-planes $S_k$ ($k=1,2$) with elastic constants $a_{nm}^{k}$ $(n,m=4,5)$ (Fig.~\ref{VasilevFig1b}). Ideal mechanical contact conditions are satisfied at the rectilinear interface $y=0$ between the half-planes.
+
+The loading at infinity is applied in the form of stresses
+\[
+\begin{array}{ll}
+\left.\sigma_{yz}^{1}\right|_{y=+\infty}=\tau_1,
+\qquad &
+\left.\sigma_{xz}^{1}\right|_{y>0,\,x=\pm\infty}=\tau_2^{1},
+\\[6pt]
+\left.\sigma_{yz}^{2}\right|_{y=-\infty}=\tau_1,
+\qquad &
+\left.\sigma_{xz}^{2}\right|_{y<0,\,x=\pm\infty}=\tau_2^{2},
+\end{array}
+\]
+where the indices $1$ and $2$ correspond to the upper and lower half-planes, respectively.
+
+In addition, concentrated factors may act in the medium: concentrated forces of intensity $Q_{j,k}$ and dislocations with Burgers vector magnitude $b_{j,k}$ $(j=1,\ldots,N_k;\; k=1,2)$ located at points
+\[
+z_{0,j,k}^{*}=x_{0,j,k}^{*}+iy_{0,j,k}^{*}.
+\]
+
+Systems of $N_k$ arbitrarily oriented elastic strip-like inclusions $L_{j,k}$ with median lines $L'_{j,k}$ $(j=1,\ldots,N_k;\; k=1,2)$ are located in the upper ($k=1$) and lower ($k=2$) half-planes $S_k$ (Fig.~\ref{VasilevFig1}). Local coordinate systems $s^{j,k}O^{j,k}n^{j,k}$ are attached to the centers of the inhomogeneities. As in the case of the infinite plane, the coordinates of the centers
+\[
+z_{0,j,k}=x_{0,j,k}+iy_{0,j,k},
+\]
+the rotation angles $\varphi_{j,k}$, and the lengths $2a_{j,k}$ $(j=1,\ldots,N_k;\; k=1,2)$ of the thin inclusions are assumed to be known.
+
+The stress--strain states of the upper ($k=1$) and lower ($k=2$) half-planes are represented as a superposition of solutions~\cite{Vasilev23,Vasilev25,Vasilev27}:
+\begin{equation}
+	\begin{aligned}
+\sigma_{yz}^{k}+i\sigma_{xz}^{k}
+&=
+\sigma_{yz}^{0,k}+i\sigma_{xz}^{0,k}
++
+\Big(
+\widehat{\sigma}_{yz}^{0,k}(z)+i\widehat{\sigma}_{xz}^{0,k}(z)
+\Big)
++
+\Big(
+\widehat{\sigma}_{yz}^{1,k}(z)+i\widehat{\sigma}_{xz}^{1,k}(z)
+\Big),
+\\
+	w^{k}
+	&=
+	w^{0,k}
+	+
+	\widehat{w}^{0,k}
+	+
+	\widehat{w}^{1,k}
+	\qquad
+	(k=1,2).
+\end{aligned}
+\label{VasilevEq10}
+\end{equation}
+%
+Here $w^{k}$ is the only nonzero component of the displacement vector directed along the $Oz$ axis in the $k$-th half-plane, while $\sigma_{yz}^{k}$ and $\sigma_{xz}^{k}$ are the corresponding shear stress components.
+
+The \emph{homogeneous} solution $\sigma_{yz}^{0,k}$, $\sigma_{xz}^{0,k}$, $w^{0,k}$ describes the stress--strain state of the $k$-th half-plane of the piecewise-homogeneous medium without accounting for internal inhomogeneities, while the external load is prescribed.
+
+Under the action of a uniform load applied at infinity, the homogeneous solution has the form
+\begin{equation}
+	\sigma_{yz}^{0,k}(z)+i\sigma_{xz}^{0,k}(z)
+	=
+	\tau_1+i\tau_2^{k}
+	\quad
+	(k=1,2).
+	\label{VasilevEq11}
+\end{equation}
+
+In contrast to the case of a homogeneous plane, the condition of ideal mechanical contact between the half-planes must additionally be satisfied at the interface at infinity:
+\begin{align}
+	\notag
+	\left.\sigma_{yz}^{0,1}\right|_{y=0,\,x\to\pm\infty}
+	&=
+	\left.\sigma_{yz}^{0,2}\right|_{y=0,\,x\to\pm\infty},
+	\\[4pt]
+	\left.
+	\frac{\partial w^{0,1}}{\partial x}
+	\right|_{y=0,\,x\to\pm\infty}
+	&=
+	\left.
+	\frac{\partial w^{0,2}}{\partial x}
+	\right|_{y=0,\,x\to\pm\infty}.
+	\label{VasilevEq12}
+\end{align}
+
+Applying the generalized Hooke law yields the relation between the elastic constants of the materials and the stresses prescribed at infinity:
+\begin{equation*}
+	a_{45}^{1}\tau_1+a_{55}^{1}\tau_2^{1}
+	=
+	a_{45}^{2}\tau_1+a_{55}^{2}\tau_2^{2}.
+\end{equation*}
+
+The homogeneous displacement fields $w^{0,k}$ are obtained from the generalized Hooke law as
+\[
+\frac{\partial w^{0,k}}{\partial x}
+=
+a_{45}^{k}\sigma_{yz}^{0,k}
++
+a_{55}^{k}\sigma_{xz}^{0,k},
+\qquad
+\frac{\partial w^{0,k}}{\partial y}
+=
+a_{44}^{k}\sigma_{yz}^{0,k}
++
+a_{45}^{k}\sigma_{xz}^{0,k}
+\quad
+(k=1,2).
+\]
+
+The inclusion of concentrated forces and dislocations in the homogeneous solution follows the same procedure as in the case of an anisotropic infinite plane.
+
+The solution \emph{perturbed by the inclusions} in \eqref{VasilevEq10}, indicated by a hat, is represented as the sum of two parts.
+
+The first part is the \emph{basic perturbed} solution
+$\widehat{\sigma}_{yz}^{0,k}$,
+$\widehat{\sigma}_{xz}^{0,k}$,
+$\widehat{w}^{0,k}$,
+which is generated by the system of $N_k$ inclusions $L_{j,k}$ $(j=1,\ldots,N_k)$ in an infinite plane possessing the physical and mechanical properties of the corresponding half-plane $S_k$.
+
+The second part is the \emph{corrective perturbed} solution
+$\widehat{\sigma}_{yz}^{1,k}$,
+$\widehat{\sigma}_{xz}^{1,k}$,
+$\widehat{w}^{1,k}$,
+which accounts for the presence of the interface between the half-planes and the interaction of inclusions located in different half-planes.
+
+The \emph{basic perturbed} solution for the half-plane $S_k$ $(k=1,2)$ can be written analogously to \eqref{VasilevEq6} in the form
+\begin{equation}
+	\begin{aligned}
+\widehat{\sigma}_{yz}^{0,k}
++i\widehat{\sigma}_{xz}^{0,k}
+&=
+\sum_{j=1}^{N_k}
+\left(
+\widehat{\sigma}_{nz}^{j,k,\mathrm{in}}
++i\widehat{\sigma}_{sz}^{j,k,\mathrm{in}}
+\right)
+e^{-i\varphi_{j,k}},
+\\
+\frac{\partial \widehat{w}^{0,k}}{\partial x}
+&=
+a_{45}^{k}\widehat{\sigma}_{yz}^{0,k}
++
+a_{55}^{k}\widehat{\sigma}_{xz}^{0,k},
+\\
+	s^{j,k}+in^{j,k}
+	&=
+	(x+iy-z_{0,j,k})\,e^{-i\varphi_{j,k}},
+\end{aligned}
+	\label{VasilevEq13}
+	\end{equation}
+%
+provided that in expressions \eqref{VasilevEq6}, \eqref{VasilevEq4}, and \eqref{VasilevEq5} the single index $j$ is replaced by the pair of indices $(j,k)$:
+\begin{align*}
+	j &\to (j,k), &
+	f_r^{j} &\to f_r^{j,k}, &
+	z^{j} &\to z^{j,k}, &
+	a_{nm}^{j} &\to a_{nm}^{j,k}, &
+	a_{nm} &\to a_{nm}^{k}, \\
+	g_p^{j} &\to g_p^{j,k}, &
+	g_m^{j} &\to g_m^{j,k}, &
+	\alpha^{j} &\to \alpha^{j,k}, &
+	\beta^{j} &\to \beta^{j,k}, \\
+	s^{j} &\to s^{j,k}, &
+	n^{j} &\to n^{j,k}, &
+	\widehat{\sigma}_{yz}^{0} &\to \widehat{\sigma}_{yz}^{0,k}, &
+	\widehat{\sigma}_{xz}^{0} &\to \widehat{\sigma}_{xz}^{0,k}, \\
+	\widehat{w}^{0} &\to \widehat{w}^{0,k}, &
+	\sigma_{nz}^{j,\mathrm{in}} &\to \sigma_{nz}^{j,k,\mathrm{in}}, &
+	\sigma_{sz}^{j,\mathrm{in}} &\to \sigma_{sz}^{j,k,\mathrm{in}}, \\
+	\varphi_{j} &\to \varphi_{j,k}, &
+	z_{0,j} &\to z_{0,j,k}, &
+	L'_j &\to L'_{j,k}.
+\end{align*}
+
+The \emph{corrective perturbed} solution
+$\widehat{\sigma}_{yz}^{1,k}$,
+$\widehat{\sigma}_{xz}^{1,k}$,
+$\widehat{w}^{1,k}$
+is unknown. Using the generalized Hooke law, the equilibrium equations, the introduction of the stress function, and the application of the Fourier integral transform, it can be written in the form~\cite{Vasilev23,Vasilev27}
+\begin{equation}
+	\begin{aligned}
+		\widehat{\sigma}_{xz}^{1,k}(x,y)
+		&=
+		\frac{1}{2\pi}
+		\int_{-\infty}^{\infty}
+		\Big[
+		A_{1}^{k}(\xi)\lambda_{1}^{k}e^{\lambda_{1}^{k}y}
+		+
+		A_{2}^{k}(\xi)\lambda_{2}^{k}e^{\lambda_{2}^{k}y}
+		\Big]
+		e^{-i\xi x}\,d\xi, \\
+		\widehat{\sigma}_{yz}^{1,k}(x,y)
+		&=
+		\frac{i}{2\pi}
+		\int_{-\infty}^{\infty}
+		\Big[
+		A_{1}^{k}(\xi)e^{\lambda_{1}^{k}y}
+		+
+		A_{2}^{k}(\xi)e^{\lambda_{2}^{k}y}
+		\Big]
+		\xi e^{-i\xi x}\,d\xi, \\
+		\frac{\partial \widehat{w}^{1,k}}{\partial x}
+		&=
+		a_{45}^{k}\widehat{\sigma}_{yz}^{1,k}
+		+
+		a_{55}^{k}\widehat{\sigma}_{xz}^{1,k},
+	\end{aligned}
+	\label{VasilevEq14}
+\end{equation}
+%
+where
+\begin{align*}
+\lambda_{\ell}^{k}
+&=
+(-1)^{\ell+1}\alpha^{k}|\xi|-i\beta^{k}\xi
+\quad
+(\ell=1,2),
+\\
+	\alpha^{k}
+	&=
+	\frac{\sqrt{a_{44}^{k}a_{55}^{k}-(a_{45}^{k})^{2}}}{a_{55}^{k}},
+	\qquad
+	\beta^{k}
+	=
+	\frac{a_{45}^{k}}{a_{55}^{k}}
+	\quad
+	(k=1,2).
+\end{align*}
+
+The unknown functions $A_{\ell}^{k}(\xi)$ $(\ell,k=1,2)$ are determined from the boundary conditions and the conditions of ideal mechanical contact at the interface.
+
+At infinity, the boundary conditions in accordance with \eqref{VasilevEq11} and \eqref{VasilevEq12} are automatically satisfied by the homogeneous solution
+$\sigma_{yz}^{0,k}(z)$, $\sigma_{xz}^{0,k}(z)$.
+Therefore, the perturbed fields
+\[
+\widehat{\sigma}_{yz}^{0,k}+\widehat{\sigma}_{yz}^{1,k},
+\qquad
+\widehat{\sigma}_{xz}^{0,k}+\widehat{\sigma}_{xz}^{1,k},
+\qquad
+\widehat{w}^{0,k}+\widehat{w}^{1,k}
+\]
+must satisfy the zero boundary conditions
+\[
+\left.
+\big(\widehat{\sigma}_{yz}^{0,1}+\widehat{\sigma}_{yz}^{1,1}\big)
+\right|_{y\to +\infty}=0,
+\qquad
+\left.
+\big(\widehat{\sigma}_{yz}^{0,2}+\widehat{\sigma}_{yz}^{1,2}\big)
+\right|_{y\to -\infty}=0.
+\]
+
+From these relations it follows that
+\begin{equation}
+	A_{1}^{1}(\xi)=0,
+	\qquad
+	A_{2}^{2}(\xi)=0.
+	\label{VasilevEq15}
+\end{equation}
+
+Consider the conditions of ideal mechanical contact between the upper and lower half-planes. Since the homogeneous solution automatically satisfies these conditions at the material interface \(y=0\), it follows from \eqref{VasilevEq10} and \eqref{VasilevEq12} that
+
+\begin{equation}
+\begin{aligned}
+	\left.
+	\bigl(
+	\widehat{\sigma}_{yz}^{0,1}
+	+
+	\widehat{\sigma}_{yz}^{1,1}
+	\bigr)
+	\right|_{y=0}
+	&=
+	\left.
+	\bigl(
+	\widehat{\sigma}_{yz}^{0,2}
+	+
+	\widehat{\sigma}_{yz}^{1,2}
+	\bigr)
+	\right|_{y=0},
+	\\[2pt]
+	\left.
+	\left(
+	\frac{\partial \widehat{w}^{0,1}}{\partial x}
+	+
+	\frac{\partial \widehat{w}^{1,1}}{\partial x}
+	\right)
+	\right|_{y=0}
+	&=
+	\left.
+	\left(
+	\frac{\partial \widehat{w}^{0,2}}{\partial x}
+	+
+	\frac{\partial \widehat{w}^{1,2}}{\partial x}
+	\right)
+	\right|_{y=0}.
+	\end{aligned}
+	\label{VasilevEq16}
+\end{equation}
+
+Let us apply the direct Fourier transform with respect to \(x\) to \eqref{VasilevEq16}, taking into account \eqref{VasilevEq13}--\eqref{VasilevEq15}:
+\[
+f^{F}(\xi)=\int_{-\infty}^{\infty} f(x)e^{i\xi x}\,dx,
+\qquad
+f(x)=\frac{1}{2\pi}\int_{-\infty}^{\infty} f^{F}(\xi)e^{-i\xi x}\,d\xi.
+\]
+Here the superscript \(F\) denotes the Fourier image of the function \(f\).
+
+In this way, the integrals with respect to \(\xi\) and \(x\) appearing in
+\[
+\widehat{\sigma}_{yz}^{1,k},
+\qquad
+\widehat{\sigma}_{xz}^{1,k},
+\qquad
+\frac{\partial \widehat{w}^{1,k}}{\partial x}
+\]
+are eliminated from \eqref{VasilevEq16}. The quantity
+\[
+\widehat{\sigma}_{yz}^{0,k}+i\widehat{\sigma}_{xz}^{0,k}
+\]
+reduces to a function of the form
+\[
+f(x)=\frac{r+iq}{c+bx+id},
+\qquad
+c,b,d,r,q\in\mathbb{R}.
+\]
+
+Using the expansions from~\cite[\S\,13.5]{Vasilev25}, the Fourier images of the real and imaginary parts of \(f(x)\) can be written as~\cite{Vasilev27}
+\[
+\bigl(\Re f(x)\bigr)^{F}
+=
+\frac{\pi}{b}
+\bigl(
+ir\,\sign(\xi)+q\,\sign(bd)
+\bigr)
+\exp\!\left(
+-\left|\frac{\xi d}{b}\right|
+-i\frac{\xi c}{b}
+\right),
+\]
+\[
+\bigl(\Im f(x)\bigr)^{F}
+=
+\frac{\pi}{b}
+\bigl(
+iq\,\sign(\xi)-r\,\sign(bd)
+\bigr)
+\exp\!\left(
+-\left|\frac{\xi d}{b}\right|
+-i\frac{\xi c}{b}
+\right).
+\]
+
+Thus, \eqref{VasilevEq16} is reduced to a second-order system of linear algebraic equations, from which the unknown functions \(A_\ell^k\), \(\ell,k=1,2\), can be determined.
+
+The obtained values of $A_{\ell}^{k}$ $(\ell,k=1,2)$ are substituted into \eqref{VasilevEq14}. After integration, with the infinite integration interval split into two semi-infinite parts, and subsequent simplification, we arrive at the following expressions for the corrective perturbed stresses:
+\begin{multline}
+	\widehat{\sigma}_{yz}^{1,k}+i\widehat{\sigma}_{xz}^{1,k}
+	=
+	\sum_{j=1}^{N_k}\int_{L'_{j,k}}\Bigg\{
+	\frac{
+		\bigl[\beta^{k}+i(1-\alpha^{k})\bigr]
+		\bigl(a_{55}^{j,k}\alpha^{j,k}f_{5}^{j,k}(t)+if_{6}^{j,k}(t)\bigr)
+		G_{1}^{j,k}
+	}{
+		4\pi\bigl(a_{55}^{1}\alpha^{1}+a_{55}^{2}\alpha^{2}\bigr)a_{55}^{j,k}\alpha^{j,k}H_{1}^{j,k}(t)
+	}
+	\\
+	+\frac{
+		-\bigl[\beta^{k}+i(1+\alpha^{k})\bigr]
+		\bigl(a_{55}^{j,k}\alpha^{j,k}f_{5}^{j,k}(t)-if_{6}^{j,k}(t)\bigr)
+		\overline{G_{1}^{j,k}}
+	}{
+		4\pi\bigl(a_{55}^{1}\alpha^{1}+a_{55}^{2}\alpha^{2}\bigr)a_{55}^{j,k}\alpha^{j,k}\overline{H_{1}^{j,k}(t)}
+	}\Bigg\}dt
+	\\
+	+\sum_{j=1}^{N_{3-k}}\int_{L'_{j,3-k}}\Bigg\{
+	\frac{
+		\bigl[\beta^{k}+i(1-\alpha^{k})\bigr]
+		\bigl(a_{55}^{j,3-k}\alpha^{j,3-k}f_{5}^{j,3-k}(t)-if_{6}^{j,3-k}(t)\bigr)
+		G_{2}^{j,k}
+	}{
+		4\pi\bigl(a_{55}^{1}\alpha^{1}+a_{55}^{2}\alpha^{2}\bigr)a_{55}^{j,3-k}\alpha^{j,3-k}H_{2}^{j,k}(t)
+	}
+	\\
+	+\frac{
+		-\bigl[\beta^{k}+i(1+\alpha^{k})\bigr]
+		\bigl(a_{55}^{j,3-k}\alpha^{j,3-k}f_{5}^{j,3-k}(t)+if_{6}^{j,3-k}(t)\bigr)
+		\overline{G_{2}^{j,k}}
+	}{
+		4\pi\bigl(a_{55}^{1}\alpha^{1}+a_{55}^{2}\alpha^{2}\bigr)a_{55}^{j,3-k}\alpha^{j,3-k}\overline{H_{2}^{j,k}(t)}
+	}\Bigg\}dt
+	\quad (k=1,2).
+	\label{VasilevEq17}
+\end{multline}
+%
+Here
+\begin{align*}
+	G_{1}^{j,k}
+	&=
+	a_{45}^{k}C_{2}^{j,k}
+	+
+	a_{55}^{k}C_{1}^{j,k}
+	+
+	i\bigl(-a_{55}^{k}\alpha^{j,k}+C_{2}^{j,k}a_{55}^{3-k}\alpha^{3-k}\bigr),
+	\\[4pt]
+	G_{2}^{j,k}
+	&=
+	a_{45}^{3-k}C_{2}^{j,3-k}
+	+
+	a_{55}^{3-k}C_{1}^{j,3-k}
+	+
+	i\bigl(a_{55}^{3-k}\alpha^{j,3-k}+C_{2}^{j,3-k}a_{55}^{3-k}\alpha^{3-k}\bigr),
+	\\[4pt]
+	C_{1}^{j,k}
+	&=
+	\left(-1+\frac{a_{44}^{j,k}}{a_{55}^{j,k}}\right)
+	\sin\varphi_{j,k}\cos\varphi_{j,k}
+	-
+	\beta^{j,k}\cos 2\varphi_{j,k},
+	\\[4pt]
+	C_{2}^{j,k}
+	&=
+	\left(-1+\frac{a_{44}^{j,k}}{a_{55}^{j,k}}\right)
+	\sin^{2}\varphi_{j,k}
+	-
+	\beta^{j,k}\sin 2\varphi_{j,k}
+	+
+	1,
+	\\[4pt]
+	H_{1}^{j,k}(t)
+	&=
+	yB^{j,k}\alpha^{k}
+	+
+	T_{1}^{j,k}
+	+
+	i\bigl(y\beta^{k}B^{j,k}+T_{2}^{j,k}+xB^{j,k}\bigr),
+	\\[4pt]
+	H_{2}^{j,k}(t)
+	&=
+	yB^{j,3-k}\alpha^{k}
+	-
+	T_{1}^{j,3-k}
+	+
+	i\bigl(y\beta^{k}B^{j,3-k}+T_{2}^{j,3-k}+xB^{j,3-k}\bigr),
+	\\[4pt]
+	B^{j,k}
+	&=
+	\bigl(\beta^{j,k}\sin\varphi_{j,k}-\cos\varphi_{j,k}\bigr)^{2}
+	+
+	(\alpha^{j,k})^{2}\sin^{2}\varphi_{j,k},
+	\\[4pt]
+	T_{1}^{j,k}
+	&=
+	\alpha^{j,k}\bigl(t\sin\varphi_{j,k}+y_{0,j,k}\bigr),
+	\\[4pt]
+	T_{2}^{j,k}
+	&=
+	\begin{multlined}[t]
+	\bigl(-\cos\varphi_{j,k}+\beta^{j,k}\sin\varphi_{j,k}\bigr)
+	\Bigl[
+	t
+	+
+	\bigl(\cos\varphi_{j,k}-\beta^{j,k}\sin\varphi_{j,k}\bigr)x_{0,j,k}
+	\\
+	+
+	\bigl(\sin\varphi_{j,k}+\beta^{j,k}\cos\varphi_{j,k}\bigr)y_{0,j,k}
+	\Bigr]
+	\\
+	-
+	(\alpha^{j,k})^{2}
+	\bigl(x_{0,j,k}\sin\varphi_{j,k}-y_{0,j,k}\cos\varphi_{j,k}\bigr)
+	\sin\varphi_{j,k}.
+	\end{multlined}
+\end{align*}
+
+The corresponding expressions for the corrective perturbed displacements are obtained from the generalized Hooke law.
+
+Thus, formulas \eqref{VasilevEq10} together with \eqref{VasilevEq11}, \eqref{VasilevEq13}, \eqref{VasilevEq14}, and \eqref{VasilevEq17} describe the stress--strain state of an anisotropic piecewise-homogeneous plane with a system of internal thin inhomogeneities in terms of the jump functions.
+
+Let us now pass in \eqref{VasilevEq10} to the local coordinate system associated with the median line $L'_{\ell,k}$ of an inhomogeneity. Taking into account \eqref{VasilevEq11}, \eqref{VasilevEq13}, and \eqref{VasilevEq17}, we determine the limiting values $\sigma_{nz}{}^{\ell,k\pm}$ of the stresses and the derivatives of the displacements $\partial w^{\ell,k\pm}/\partial s^{\ell,k}$ on its faces by means of the Sokhotski--Plemelj formulas, similarly to the case of an infinite anisotropic plane:
+\begin{equation}
+	\begin{aligned}
+		\sigma_{nz}^{\ell,k\pm}
+		&=
+		\mp\frac{1}{2}f_{5}^{\ell,k}(s^{\ell,k})
+		-\frac{1}{2\pi\alpha^{\ell,k}a_{55}^{\ell,k}}
+		\int_{L'_{\ell,k}}\frac{f_{6}^{\ell,k}(t)}{t-s^{\ell,k}}\,dt
+		+\sigma_{nz}^{\ell,k,\ell},
+		\\
+		\frac{\partial w^{\ell,k\pm}}{\partial s^{\ell,k}}
+		&=
+		\mp\frac{1}{2}f_{6}^{\ell,k}(s^{\ell,k})
+		+\frac{a_{55}^{\ell,k}\alpha^{\ell,k}}{2\pi}
+		\int_{L'_{\ell,k}}\frac{f_{5}^{\ell,k}(t)}{t-s^{\ell,k}}\,dt
+		+a_{45}^{\ell,k}\sigma_{nz}^{\ell,k,\ell}
+		+a_{55}^{\ell,k}\sigma_{sz}^{\ell,k,\ell}.
+	\end{aligned}
+	\label{VasilevEq18}
+\end{equation}
+%
+Here
+\[
+\begin{array}{c}
+\begin{aligned}
+	\sigma_{nz}^{\ell,k,\ell}+i\sigma_{sz}^{\ell,k,\ell}
+	&=
+	\begin{multlined}[t]
+	\sigma_{nz}^{\ell,k,\hom}+i\sigma_{sz}^{\ell,k,\hom}
+	\\[-1.5em]
+	+\sum_{\substack{j=1, j\ne \ell}}^{N_k}
+	\bigl(
+	\widehat{\sigma}_{nz}^{j,k,\mathrm{in}}
+	+i\widehat{\sigma}_{sz}^{j,k,\mathrm{in}}
+	\bigr)
+	e^{\,i(\varphi_{\ell,k}-\varphi_{j,k})}
+	\\
+	+
+	\bigl(
+	\widehat{\sigma}_{yz}^{1,k}
+	+i\widehat{\sigma}_{xz}^{1,k}
+	\bigr)e^{\,i\varphi_{\ell,k}},
+	\end{multlined}
+	\\
+	\sigma_{nz}^{\ell,k,\hom}+i\sigma_{sz}^{\ell,k,\hom}
+	&=
+	\bigl(
+	\sigma_{yz}^{0,k}+i\sigma_{xz}^{0,k}
+	\bigr)e^{\,i\varphi_{\ell,k}},
+\end{aligned}
+	\\[3.8em]
+	s^{j,k}+in^{j,k}
+	=
+	\bigl(
+	s^{\ell,k}e^{\,i\varphi_{\ell,k}}
+	+z_{0,\ell,k}-z_{0,j,k}
+	\bigr)e^{-i\varphi_{j,k}},
+	\quad
+	x+iy
+	=
+	s^{\ell,k}e^{\,i\varphi_{\ell,k}}+z_{0,\ell,k}.
+\end{array}
+\]
+
+The same approach can be used to study the external problem for a system of thin inhomogeneities in the presence of thin interfacial inclusions~\cite{Vasilev28}.
+
+\section{Internal Problem. Construction of the Interaction Conditions Between the Body and a Thin Anisotropic Elastic Inclusion}\label{VasilevSec6}
+
+In general, the interaction conditions between the body and a thin inclusion $L_{\ell}$ may be prescribed.
+For example, for a crack symmetrically loaded by stresses $\tau^{\mathrm{cr}}$, the stress conditions on its edges can be written as
+\[
+\sigma_{nz}^{\ell,\mathrm{in}\pm}=\tau^{\mathrm{cr}}.
+\]
+For a perfectly rigid inclusion embedded in a body under zero tension, the boundary conditions on the edges can be specified as zero derivatives of the displacements,
+\[
+\frac{\partial w^{\ell,\mathrm{in}\pm}}{\partial s^{\ell}}=0.
+\]
+Here the subscript “in” denotes quantities related to the thin inhomogeneity.
+
+Let us consider the more general case of an elastic inclusion $L_{\ell}$.
+The properties of the inclusion—its thickness $2h^{\ell}$, length $2a^{\ell}$, and elastic constants $a_{nm}^{\ell,\mathrm{in}}$—are assumed to be known.
+The mechanical contact between the inclusion and the surrounding matrix is assumed to be non-ideal.
+Additional stresses $\tau^{\ell,\mathrm{in}\pm}$ and displacement jumps $g^{\ell,\mathrm{in}\pm}$ are prescribed on the upper and lower edges of the inhomogeneity.
+Therefore, the contact conditions can be written as
+\begin{equation}
+	\label{VasilevEq19}
+	\sigma_{nz}^{\ell,\mathrm{in}\pm}
+	=
+	\sigma_{nz}^{\ell\pm}
+	+
+	\tau^{\ell,\mathrm{in}\pm},
+	\qquad
+	w^{\ell,\mathrm{in}\pm}
+	=
+	w^{\ell\pm}
+	+
+	g^{\ell,\mathrm{in}\pm}.
+\end{equation}
+
+The average values of the stresses and the displacement derivatives along the median line of the inclusion are defined as
+\begin{equation}
+	\label{VasilevEq20}
+	\begin{aligned}
+	\sigma_{nz}^{\ell,\mathrm{in,mid}}
+	&=
+	\frac{1}{2}
+	\left(
+	\sigma_{nz}^{\ell,\mathrm{in}+}
+	+
+	\sigma_{nz}^{\ell,\mathrm{in}-}
+	\right),
+	\\
+	\frac{\partial w^{\ell,\mathrm{in,mid}}}{\partial s^{\ell}}
+	&=
+	\frac{1}{2}
+	\left(
+	\frac{\partial w^{\ell,\mathrm{in}+}}{\partial s^{\ell}}
+	+
+	\frac{\partial w^{\ell,\mathrm{in}-}}{\partial s^{\ell}}
+	\right).
+	\end{aligned}
+\end{equation}
+
+The relations of the generalized Hooke law for the inclusion can be written in the form
+\begin{equation}
+		\label{VasilevEq21}
+	\begin{aligned}
+\sigma_{nz}^{\ell,\mathrm{in,mid}}
+&=
+\frac{a_{45}^{\ell,\mathrm{in}}}{a_{44}^{\ell,\mathrm{in}}}
+\frac{\partial w^{\ell,\mathrm{in,mid}}}{\partial n^{\ell}}
+-
+\frac{a_{45}^{\ell,\mathrm{in}}}{a_{44}^{\ell,\mathrm{in}}}
+\sigma_{sz}^{\ell,\mathrm{in,mid}},
+\\
+\frac{\partial w^{\ell,\mathrm{in,mid}}}{\partial s^{\ell}}
+&=
+\frac{a_{45}^{\ell,\mathrm{in}}}{a_{44}^{\ell,\mathrm{in}}}
+\frac{\partial w^{\ell,\mathrm{in,mid}}}{\partial n^{\ell}}
++
+\frac{|r^{\ell,\mathrm{in}}|^{2}}{a_{44}^{\ell,\mathrm{in}}}
+\sigma_{sz}^{\ell,\mathrm{in,mid}},
+\end{aligned}
+\end{equation}
+%
+where
+\begin{equation*}
+	|r^{\ell,\mathrm{in}}|
+	=
+	\sqrt{
+		a_{44}^{\ell,\mathrm{in}}a_{55}^{\ell,\mathrm{in}}
+		-
+		\left(a_{45}^{\ell,\mathrm{in}}\right)^2
+	}.
+\end{equation*}
+
+From the equilibrium condition for an element $[-a^{\ell},\,s^{\ell}]$ of a thin inclusion,
+\[
+2h^{\ell}
+\bigl(
+\sigma_{sz}^{\ell,\mathrm{in,mid}}(s^{\ell})
+-
+\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})
+\bigr)
++
+\int_{-a^{\ell}}^{s^{\ell}}
+\bigl(
+\sigma_{nz}^{\ell,\mathrm{in}+}
+-
+\sigma_{nz}^{\ell,\mathrm{in}-}
+\bigr)\,dt
+=0,
+\]
+we determine the average shear stresses
+$\sigma_{sz}^{\ell,\mathrm{in,mid}}$
+for $s^{\ell}\in[-a^{\ell},a^{\ell}]$, $n^{\ell}=0$:
+\begin{multline}
+	\label{VasilevEq22}
+	\sigma_{sz}^{\ell,\mathrm{in,mid}}(s^{\ell},0)
+	=
+	\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell},0)
+	\\
+	+
+	\frac{1}{2h^{\ell}}
+	\int_{-a^{\ell}}^{s^{\ell}}
+	\bigl(
+	\sigma_{nz}^{\ell,\mathrm{in}+}(t,0)
+	-
+	\sigma_{nz}^{\ell,\mathrm{in}-}(t,0)
+	\bigr)\,dt .
+\end{multline}
+
+The average values of the displacement derivatives
+$\partial w^{\ell,\mathrm{in,mid}}/\partial n^{\ell}$
+are written as follows~\cite{Vasilev25,Vasilev29}:
+\begin{equation}
+	\label{VasilevEq23}
+	\frac{\partial w^{\ell,\mathrm{in,mid}}}{\partial n^{\ell}}
+	=
+	\frac{1}{2h^{\ell}}
+	\left(
+	\int_{-a^{\ell}}^{s^{\ell}}
+	\left(
+	\frac{\partial w^{\ell,\mathrm{in}+}}{\partial t}
+	-
+	\frac{\partial w^{\ell,\mathrm{in}-}}{\partial t}
+	\right)\!dt
+	+
+	w^{\ell,*}(-a^{\ell})
+	\right),
+\end{equation}
+where
+\[
+w^{\ell,*}(-a^{\ell})
+=
+w^{\ell,\mathrm{in}+}(-a^{\ell})
+-
+w^{\ell,\mathrm{in}-}(-a^{\ell}).
+\]
+
+Substituting \eqref{VasilevEq21} into \eqref{VasilevEq20} and taking into account
+\eqref{VasilevEq22}, \eqref{VasilevEq23}, and \eqref{VasilevEq19},
+we obtain the following interaction conditions:
+\begin{align}
+	\notag
+	\begin{multlined}[b]
+	\sigma_{nz}^{\ell+}
+	+
+	\sigma_{nz}^{\ell-}
+	+
+	\tau^{\ell,\mathrm{in}+}
+	+
+	\tau^{\ell,\mathrm{in}-}
+	\\
+	+
+	\frac{1}{h^{\ell}a_{44}^{\ell,\mathrm{in}}}
+	\int_{-a^{\ell}}^{s^{\ell}}
+	a_{45}^{\ell,\mathrm{in}}
+	\bigl(
+	\sigma_{nz}^{\ell-}
+	-
+	\sigma_{nz}^{\ell+}
+	+
+	\tau^{\ell,\mathrm{in}-}
+	-
+	\tau^{\ell,\mathrm{in}+}
+	\bigr)dt
+	\\
+	+
+	\frac{1}{h^{\ell}a_{44}^{\ell,\mathrm{in}}}
+	\int_{-a^{\ell}}^{s^{\ell}}
+	\left(
+	\frac{\partial w^{\ell-}}{\partial t}
+	-
+	\frac{\partial w^{\ell+}}{\partial t}
+	+
+	\frac{\partial}{\partial t}
+	\bigl(
+	g^{\ell,\mathrm{in}-}
+	-
+	g^{\ell,\mathrm{in}+}
+	\bigr)
+	\right)dt
+	\end{multlined}
+	\\
+	=
+	-2\frac{a_{45}^{\ell,\mathrm{in}}}{a_{44}^{\ell,\mathrm{in}}}
+	\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})
+	+
+	\frac{w^{\ell,*}}{h^{\ell}a_{44}^{\ell,\mathrm{in}}},
+	\label{VasilevEq24}
+\\
+\notag
+\begin{multlined}[b]
+	\frac{\partial w^{\ell+}}{\partial s^{\ell}}
+	+
+	\frac{\partial w^{\ell-}}{\partial s^{\ell}}
+	+
+	\frac{\partial}{\partial s^{\ell}}
+	\bigl(
+	g^{\ell,\mathrm{in}+}
+	+
+	g^{\ell,\mathrm{in}-}
+	\bigr)
+	\\
+	-
+	\frac{1}{h^{\ell}a_{44}^{\ell,\mathrm{in}}}
+	\int_{-a^{\ell}}^{s^{\ell}}
+	|r^{\ell,\mathrm{in}}|^{2}
+	\bigl(
+	\sigma_{nz}^{\ell-}
+	-
+	\sigma_{nz}^{\ell+}
+	+
+	\tau^{\ell,\mathrm{in}-}
+	-
+	\tau^{\ell,\mathrm{in}+}
+	\bigr)dt
+	\\
+	+
+	\frac{1}{h^{\ell}a_{44}^{\ell,\mathrm{in}}}
+	\int_{-a^{\ell}}^{s^{\ell}}
+	a_{45}^{\ell,\mathrm{in}}
+	\left(
+	\frac{\partial w^{\ell-}}{\partial t}
+	-
+	\frac{\partial w^{\ell+}}{\partial t}
+	+
+	\frac{\partial}{\partial t}
+	\bigl(
+	g^{\ell,\mathrm{in}-}
+	-
+	g^{\ell,\mathrm{in}+}
+	\bigr)
+	\right)dt
+	\end{multlined}
+	\\
+	=
+	2\frac{|r^{\ell,\mathrm{in}}|^{2}}{a_{44}^{\ell,\mathrm{in}}}
+	\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})
+	+
+	\frac{a_{45}^{\ell,\mathrm{in}}}{a_{44}^{\ell,\mathrm{in}}}
+	\frac{w^{\ell,*}}{h^{\ell}}
+	\label{VasilevEq25}
+\end{align}
+%
+($\ell=1,\ldots,N$).
+
+The constants $\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})$ and
+$w^{\ell,*}(-a^{\ell})$ correspond to the stresses at the tip of the inclusion
+and to the magnitude of the displacement of the upper edge of the inclusion tip
+relative to the lower one. These quantities will be specified \emph{a priori}
+in a manner similar to~\cite{Vasilev25,Vasilev29}:
+\begin{equation}
+	\label{VasilevEq26}
+	\begin{aligned}
+\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})
+&\approx
+\sigma_{sz}^{\ell,\mathrm{hom}}(-a^{\ell},0)
+\frac{a_{44}^{\ell}}{\max(a_{44}^{\ell},a_{44}^{\ell,\mathrm{in}})} .
+\\
+		w^{\ell,*}(-a^{\ell})
+		&\approx
+		\begin{multlined}[t]
+		2h^{\ell}
+		\Bigg(
+		a_{44}^{\ell}
+		\left[
+		\sigma_{nz}^{\ell,\mathrm{hom}}(-a^{\ell},0)
+		+\frac{1}{2}
+		\left(
+		\tau^{\ell,\mathrm{in}+}
+		+
+		\tau^{\ell,\mathrm{in}-}
+		\right)
+		\right]
+		\\
+		+
+		a_{45}^{\ell}
+		\sigma_{sz}^{\ell,\mathrm{in,mid}}(-a^{\ell})
+		\Bigg)
+		\frac{\min(a_{44}^{\ell},a_{44}^{\ell,\mathrm{in}})}{a_{44}^{\ell}}
+		\\
+		+
+		g^{\ell,\mathrm{in}+}
+		-
+		g^{\ell,\mathrm{in}-}.
+		\end{multlined}
+	\end{aligned}
+\end{equation}
+%
+Here $\sigma_{nz}^{\ell,\mathrm{hom}}$ denotes the homogeneous solution produced
+by the external loading. The above approach for prescribing the constants
+\eqref{VasilevEq26} provides sufficiently accurate results for three limiting
+cases of the elastic properties of a thin inclusion: a crack, a perfectly rigid
+inclusion, and an inclusion composed of the same material as the matrix.
+
+To unify the construction of the system of singular integral equations (SSIE),
+loaded cracks corresponding to boundary conditions of the \emph{first kind}
+are modeled by loaded very compliant isotropic elastic inclusions. Perfectly
+rigid inclusions corresponding to boundary conditions of the \emph{second
+	kind} are modeled by very stiff isotropic elastic inclusions embedded in the
+body under the prescribed loading.
+
+\section{Construction of the System of Singular Integral Equations for the Incomplete Direct Cutting-Out Method}\label{VasilevSec7}
+
+In the incomplete direct cutting-out method, thin inhomogeneities are separated from each other.
+The boundary values of the stresses and the displacement derivatives on the edges of each inclusion,
+obtained either for a homogeneous plane \eqref{VasilevEq7} or for a piecewise-homogeneous plane
+\eqref{VasilevEq18}, are substituted into the interaction conditions
+\eqref{VasilevEq24} and \eqref{VasilevEq25} for each inclusion.
+As a result, a system of singular integral equations (SSIE) with respect to the unknown jump functions is obtained.
+
+Additional conditions expressing the equilibrium of each inclusion and the uniqueness of the displacement field when going around the inclusions make it possible to determine the unknown jump functions.
+For a homogeneous anisotropic plane, these conditions can be written in the form
+
+\begin{equation*}
+	\label{VasilevEq27}
+	\begin{aligned}
+	\int_{L'_j}
+	\left[
+	f_5^{\,j}(t)
+	+
+	\bigl(
+	\tau^{j,\mathrm{in}-}
+	-
+	\tau^{j,\mathrm{in}+}
+	\bigr)
+	\right] dt
+	&=0,
+	\\
+	\int_{L'_j}
+	\left[
+	f_6^{\,j}(t)
+	+
+	\frac{\partial}{\partial t}
+	\bigl(
+	g^{j,\mathrm{in}-}
+	-
+	g^{j,\mathrm{in}+}
+	\bigr)
+	\right] dt
+	&=0
+	\quad
+	(j=1,\ldots,N).
+	\end{aligned}
+\end{equation*}
+%
+For the case of a piecewise-homogeneous space, the single index $j$ in these relations must be replaced by the pair of indices $(j,k)$.
+
+According to \eqref{VasilevEq1} or \eqref{VasilevEq10}, the stress--strain state of the body with thin inhomogeneities can then be determined.
+The stress--strain state inside the inclusions is evaluated using the mathematical models of inclusions described in Section~\ref{VasilevSec6}.
+
+\section{Construction of the SSIE for the Complete Direct Cutting-Out Method}
+
+In the complete direct cutting-out method, it is assumed that thin
+inhomogeneities are in contact at adjacent vertices and form a closed
+surface (line)~\cite{Vasilev16}.
+
+Let us consider the longitudinal shear of a finite body containing
+$(N-N_{Q*})$ thin inclusions. The closed boundary of the body is
+represented by a plane with $N_{Q*}$ strip-like inhomogeneities
+(lines $L'_j$) that are in contact at adjacent vertices
+$z_{0,j}^{Q}$ $(j=1,\ldots,N_{Q*})$.
+
+Since large stress gradients arise at the contact points of the
+inhomogeneities, it becomes difficult to obtain convergent and
+reliable solutions of the SSIE constructed by the approach described
+in Section~\ref{VasilevSec7}.
+
+It is known that under longitudinal shear, thin inhomogeneities can be
+modeled by distributions of concentrated forces and dislocations of
+unknown density. Therefore, to reduce the influence of the interaction
+between adjacent vertices of the inhomogeneities forming the boundary
+on the stress state of the plane, we impose additional $4N_{Q*}$
+conditions requiring the jump functions to vanish at the
+$N_{Q*}$ contact points $z_{0,j}^{Q}$ of the inhomogeneities
+(two conditions at each vertex of the boundary inclusions):
+\begin{equation}
+	\label{VasilevEq28}
+	\begin{array}{rclrcl}
+		f_{5}^{j}(z_{0,j}^{Q}) &=&0,
+		\qquad &
+		f_{6}^{j}(z_{0,j}^{Q}) &=&0,
+		\\[4pt]
+		f_{5}^{j}(z_{0,j+1}^{Q}) &=&0,
+		\qquad &
+		f_{6}^{j}(z_{0,j+1}^{Q}) &=&0,
+		\\[4pt]
+		f_{5}^{N_{Q*}}(z_{0,N_{Q*}}^{Q}) &=&0,
+		\qquad &
+		f_{6}^{N_{Q*}}(z_{0,N_{Q*}}^{Q}) &=&0,
+		\\[4pt]
+		f_{5}^{N_{Q*}}(z_{0,1}^{Q}) &=&0,
+		\qquad &
+		f_{6}^{N_{Q*}}(z_{0,1}^{Q}) &=&0
+	\end{array}
+\end{equation}
+($j=1,\ldots,N_{Q*}-1$).
+
+To compensate for the constraints introduced by
+\eqref{VasilevEq28}, we additionally introduce unknown concentrated
+forces $Q_j$ and dislocations $b_j$ $(j=1,\ldots,N_{Q*})$ at the
+$N_{Q*}$ contact points of the inhomogeneities.
+
+To obtain the SSIE with respect to the unknown jump functions, the
+limiting values of the stresses and displacement derivatives
+\eqref{VasilevEq7} are substituted into the interaction conditions
+\eqref{VasilevEq24} and \eqref{VasilevEq25} for each inhomogeneity.
+Note that in the homogeneous solution \eqref{VasilevEq9}, it is also
+necessary to include the additional $2N_{Q*}$ concentrated forces and
+dislocations of unknown magnitude.
+
+As a result, we obtain a system of singular integral equations with
+respect to the $2N$ unknown jump functions and the $2N_{Q*}$ unknown
+concentrated forces and dislocations.
+
+The additional $4N_{Q*}$ conditions \eqref{VasilevEq28}, together with
+the $2(N-N_{Q*})$ conditions of equilibrium and uniqueness of
+displacements when bypassing the internal inclusions,
+\begin{equation*}
+	\begin{aligned}
+	\int_{L'_j}
+	\left[
+	f_{5}^{j}(t)
+	+
+	\bigl(
+	\tau^{j,\mathrm{in}-}
+	-
+	\tau^{j,\mathrm{in}+}
+	\bigr)
+	\right] dt
+	&=0,
+	\\
+	\int_{L'_j}
+	\left[
+	f_{6}^{j}(t)
+	+
+	\frac{\partial}{\partial t}
+	\bigl(
+	g^{j,\mathrm{in}-}
+	-
+	g^{j,\mathrm{in}+}
+	\bigr)
+	\right] dt
+	&=0
+	\quad
+	(j=N_{Q*}+1,\ldots,N)
+	\end{aligned}
+\end{equation*}
+allow us to determine all unknown quantities and thus solve the
+resulting SSIE.
+
+\section{Method for Solving the SSIE}
+
+Without loss of generality, we consider the case of an infinite representative plane.
+The jump functions corresponding to the inclusion $L_j$ are represented
+as finite series with square-root singularities at the inclusion tips:
+\begin{equation}
+	\label{VasilevEq30}
+	f_r^{\,j}(t)
+	\approx
+	\sum_{m=0}^{M_j}
+	\frac{A_m^{rj}\,T_m\!\left(t/a^{j}\right)}
+	{\sqrt{1-\left(t/a^{j}\right)^2}},
+	\qquad
+	r=5,6,
+	\quad
+	j=1,\ldots,N.
+\end{equation}
+%
+Here $A_m^{rj}$ are unknown coefficients, $T_m$ are the Chebyshev
+polynomials of the first kind, and $M_j$ is the prescribed number of
+terms in the series expansion of the jump functions.
+
+After substituting \eqref{VasilevEq30} into the SSIE, the resulting
+equations are satisfied at a finite set of collocation points
+$s_k\in(-a^{j},a^{j})$, $k=1,\ldots,M_j$.
+As the collocation points we use the zeros of the Chebyshev polynomial,
+\[
+s_k
+=
+a^{j}\cos\!\left(\frac{\pi k}{M_j+1}\right),
+\qquad
+k=1,\ldots,M_j .
+\]
+
+Using the formulas~\cite{Vasilev25}
+\begin{align*}
+\frac{1}{\pi}&
+\int_{-a^{j}}^{a^{j}}
+\frac{a^{j}T_m(t/a^{j})}
+{\sqrt{(a^{j})^{2}-t^{2}}\,(t-s_k)}\,dt
+=
+U_{m-1}(s_k/a^{j}),
+\\
+&\int_{-a^{j}}^{s_k}
+\frac{T_m(t/a^{j})}
+{\sqrt{(a^{j})^{2}-t^{2}}}\,dt
+=
+\begin{cases}
+	\pi-\arccos(s_k/a^{j}),
+	& m=0,
+	\\[4pt]
+	-\dfrac{\sin\!\bigl(m\arccos(s_k/a^{j})\bigr)}{m},
+	& m\neq 0,
+\end{cases}
+\\
+T_m(s_k)&=\cos\!\bigl(m\arccos s_k\bigr),
+\qquad
+U_m(s_k)
+=
+\frac{
+	\sin\!\bigl((m+1)\arccos s_k\bigr)
+}{
+	\sin(\arccos s_k)
+},
+\end{align*}
+%
+the SSIE is reduced to a system of linear algebraic equations.
+
+For the incomplete direct cutting-out method,
+the resulting system has order
+\[
+2\sum_{j=1}^{N}(M_j+1)
+\]
+with respect to the coefficients $A_m^{rj}$.
+
+For the complete direct cutting-out method,
+the system has order
+\[
+2\sum_{j=1}^{N}(M_j+1)+2N_{Q*},
+\]
+with respect to the coefficients $A_m^{rj}$ and the unknown
+concentrated forces $Q_j$ and dislocations $b_j$.
+
+The resulting system of algebraic equations is solved using the
+Gauss elimination method.
+After determining the coefficients $A_m^{rj}$, the jump functions are
+reconstructed from \eqref{VasilevEq30}, which makes it possible to
+determine the stress–strain state of the body.
+
+\section{Numerical Results}
+
+An effective parameter for assessing the degree of stress concentration
+in the vicinity of a thin homogeneous inclusion, and one of the most
+commonly used fracture criteria, is the generalized stress intensity
+factor (GSIF)~\cite{Vasilev25}. For a homogeneous plane, the GSIFs
+at the vertices $A$ and $B$ of inclusion $L_j$ are calculated as
+\begin{equation}
+	\label{VasilevEq29}
+K_{3,2}^{j,A,B}
+-
+iK_{3,1}^{j,A,B}
+=
+\mp
+\left(
+p_{5}^{j\pm}
++
+\frac{i}{a_{55}\alpha}p_{6}^{j\pm}
+\right)
+\sqrt{\frac{\pi}{2}},
+\end{equation}
+%
+where
+\begin{equation*}
+	p_r^{j\pm}
+	=
+	\lim_{t\to \pm a_j}
+	\sqrt{|a_j\mp t|}
+	\,f_r^{\,j}(t)
+	\quad
+	(r=5,6),
+	\qquad
+	\alpha
+	=
+	\frac{\sqrt{a_{44}a_{55}-(a_{45})^2}}{a_{55}}.
+\end{equation*}
+%
+The upper signs correspond to vertex $B$, while the lower signs correspond
+to vertex $A$.
+For a piecewise-homogeneous plane, the corresponding formulas are obtained
+by replacing the elastic constants of the plane in
+\eqref{VasilevEq29} with the elastic constants of the materials
+in the corresponding half-planes.
+
+For very compliant inclusions, the GSIF $K_{3,1}$ coincides with the
+classical mode-III stress intensity factor $K_3$ for cracks.
+
+\medskip
+\noindent\textbf{Example 1.}
+The incomplete direct cutting-out method is applied to problems of
+longitudinal shear in the following domains: a half-plane, a layer of
+thickness $2d$, and a wedge with opening angle $2\varphi=\pi/3$.
+Each domain contains a crack $L_1$ loaded by stresses
+\[
+\tau^{1,\mathrm{in}-}=\tau^{1,\mathrm{in}+}=\tau^{\mathrm{cr}}.
+\]
+
+The boundaries of the bodies are traction-free.
+Both isotropic and anisotropic materials are considered, with elastic
+constants
+
+\[
+a_{44}/a_{55}=1,\; a_{45}=0
+\]
+%
+for the isotropic case and
+
+\[
+a_{44}/a_{55}=2/3,\; a_{45}/a_{55}=1/3
+\]
+%
+for the anisotropic case.
+
+The crack is located at a distance $d=a_1$ from the boundary
+(Fig.~\ref{VasilevFig2}).
+
+\begin{figure}[t]
+	\centering
+	
+	\begin{subfigure}{0.30\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{VasilevFig2a}
+		\caption{Half-plane containing a crack.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{VasilevFig2b}
+		\caption{Layer of thickness $2d$ containing a crack.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.32\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{VasilevFig2c}
+		\caption{Wedge with opening angle $2\varphi=\pi/3$ containing a crack.}
+	\end{subfigure}
+	
+	\caption{Geometries considered in Example~1.}
+	\label{VasilevFig2}
+	
+\end{figure}
+
+In the infinite plane, thin inhomogeneities are placed appropriately.
+Cracks and boundary conditions of the first kind are modeled using very
+compliant isotropic inclusions $L_j$ with elastic constants
+\[
+a_{44}^{j,\mathrm{in}}=a_{55}^{j,\mathrm{in}}=10^{6}a_{55},
+\qquad
+a_{45}^{j,\mathrm{in}}=0,
+\]
+relative thickness $h_j=0.01a_1$, and the number of terms in the jump
+function expansions $M_j=80$.
+
+Table~\ref{VasilevTab1} presents the values of the normalized generalized
+stress intensity factor
+\[
+K_3
+=
+\frac{K_{3,1}^{1,A}}
+{\tau^{\mathrm{cr}}\sqrt{\pi a_1}}
+\]
+as functions of the relative half-lengths
+\[
+a=\frac{a_2}{a_1}=\frac{a_3}{a_1}
+\]
+of the inhomogeneities $L_2$ and $L_3$, whose median lines model
+traction-free boundaries of the bodies.
+
+The relative distance from the adjacent vertices of $L_2$ and $L_3$
+to the virtual vertex $O$ of the wedge is
+\[
+\varepsilon=\frac{\varepsilon_2}{a_1}
+=
+\frac{\varepsilon_3}{a_1}
+=0.001 .
+\]
+The influence of the parameter $\varepsilon$ on the convergence of the
+method was analyzed in~\cite{Vasilev29}.
+
+\begin{table}[!h]
+	\centering
+	\caption{Normalized generalized stress intensity factor $K_3$ for
+		different geometries and material properties.}
+	\label{VasilevTab1}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+		\toprule
+		$a$ & 0.5 & 1 & 2 & 4 & 8 & 16 \\
+		\midrule
+		Isotropic half-plane   & 1.0126 & 1.0440 & 1.0829 & 1.0906 & 1.0912 & 1.0912 \\
+		Anisotropic half-plane & 1.0292 & 1.0867 & 1.1336 & 1.1395 & 1.1398 & 1.1398 \\
+		Isotropic layer        & 1.0251 & 1.0847 & 1.1446 & 1.1493 & 1.1493 & 1.1493 \\
+		Anisotropic layer      & 0.1133 & 0.4446 & 1.0711 & 1.2251 & 1.2281 & 1.2287 \\
+		Isotropic wedge        & 1.0055 & 1.1042 & 1.2148 & 1.2215 & 1.2216 & 1.2216 \\
+		Anisotropic wedge      & 1.0119 & 1.1475 & 1.3015 & 1.3101 & 1.3101 & 1.3101 \\
+		\bottomrule
+	\end{tabular*}
+\end{table}
+
+We observe that as the relative length $a$ increases, the GSIF $K_{3}$
+approaches limiting values (highlighted in bold), which can be
+considered approximate values of the stress intensity factor.
+An error of less than $0.1\%$ is already achieved for $a=16$.
+The application of the incomplete direct cutting-out method,
+taking into account anisotropy, piecewise-homogeneous materials,
+and the presence of both internal and interface inhomogeneities,
+is analyzed in~\cite{Vasilev27,Vasilev28,Vasilev29}.
+
+
+\textbf{Example 2.}
+We apply the \emph{complete} direct cutting-out method to the problem
+of longitudinal shear of an isotropic square bar of half-length
+$b=2a_5$ containing a crack $L_5$ loaded by stresses
+\[
+\tau^{5,\mathrm{in}-}=\tau^{5,\mathrm{in}+}=\tau^{\mathrm{cr}} .
+\]
+The edges of the bar are traction-free (Fig.~\ref{VasilevFig3}).
+The crack is located parallel to the boundary at a distance $d$
+from the center of the square.
+
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{VasilevFig3}
+	\caption{
+		Modeling of a crack located near the boundary of a finite body using
+		the complete direct cutting-out method.
+		(a) Physical problem: a crack $L_5$ subjected to stresses
+		$\tau^{\mathrm{cr}}$ located at a distance $d$ from the boundary.
+		(b) Equivalent model in an infinite plane with strip-like
+		inhomogeneities $L'_1$, $L'_2$, $L'_3$, $L'_4$ representing the
+		traction-free boundary of the finite domain.
+	}
+	\label{VasilevFig3}
+\end{figure}
+
+The parameters of the inhomogeneities with median lines $L'_j$
+$(j=1,2,3,4)$, which model the boundaries of the body,
+are the same as in the previous example.
+
+Table~\ref{VasilevTab2} presents the values of the normalized GSIF
+\[
+K_3=\frac{K_{3,1}^{5,A,B}}{\tau^{\mathrm{cr}}\sqrt{\pi a_5}}
+\]
+as a function of the relative crack position $d/a_5$ obtained using
+the complete direct cutting-out method (CDCM) and the boundary
+element method (BEM) from~\cite{Vasilev16}.
+
+\begin{table}[!h]
+	\centering
+	\caption{Normalized generalized stress intensity factor $K_3$
+		for different crack positions in a square bar.}
+	\label{VasilevTab2}
+	
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccccccccc}
+		\toprule
+		$d/a_5$ & 0 & 0.1 & 0.2 & 0.5 & 0.8 & 1 & 1.3 & 1.5 & 1.9 \\
+		\midrule
+		CDCM & 1.130 & 1.130 & 1.131 & 1.134 & 1.142 & 1.153 & 1.195 & 1.262 & 2.067 \\
+		BEM  & 1.130 & 1.130 & 1.131 & 1.134 & 1.142 & 1.153 & 1.195 & 1.261 & 2.052 \\
+		\bottomrule
+	\end{tabular*}
+	
+\end{table}
+
+The results obtained by the two methods differ by no more than
+$0.1\%$ for practically all considered values of $d/a_5$.
+For very small distances between the crack and the edge of the square
+($d=1.9a_5$), this difference does not exceed $1\%$.
+As the crack approaches the free boundary of the body, a monotonic
+increase in the values of the GSIFs is observed.
+The application of the complete direct cutting-out method, taking into
+account the influence of concentrated forces and dislocations in an
+isotropic square bar, is analyzed in~\cite{Vasilev16}.
+
+\section{Conclusions}
+
+
+Within the framework of the theory of thin inclusions, the cutting-out
+method is presented as an effective and relatively simple approach for
+solving boundary value problems of the linear theory of elasticity for
+finite and semi-infinite homogeneous and piecewise-homogeneous isotropic
+and anisotropic bodies containing thin strip-like inhomogeneities.
+
+The method is based on reducing the original problem for a finite body to
+an equivalent problem formulated for an infinite homogeneous or
+piecewise-homogeneous medium with a system of internal and interface
+inhomogeneities. Boundary conditions are modeled using limiting cases of
+elastic inclusions: perfectly rigid and perfectly compliant inclusions.
+Rigid inclusions represent surface fragments with prescribed
+displacements, whereas compliant inclusions represent surfaces with
+prescribed forces.
+
+To implement the cutting-out method, systems of singular integral
+equations for the longitudinal shear problem in anisotropic bimaterials
+with thin anisotropic inhomogeneities are derived using the Fourier
+integral transform and the jump-function method. The resulting systems
+are solved numerically using the collocation method.
+
+Examples of the application of the method are demonstrated for problems
+of longitudinal shear of an isotropic and anisotropic half-plane, a
+layer, a wedge, and an isotropic square bar containing a loaded crack.
+The calculated values of the generalized stress intensity factors are in
+good agreement with results obtained by other numerical approaches, with
+an error of about $0.1\%$ and not exceeding $1\%$.
+
+The proposed approach can be readily extended to other classes of
+elasticity problems, including plane and antiplane problems for finite
+bodies, as well as problems involving bodies with holes or massive
+inclusions under arbitrary boundary conditions specified on their
+contours.
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter39} 

@@ -1,0 +1,2707 @@
+% !TeX root = BookN.tex
+
+\title{Analysis of the Effectiveness of a Unified Approach to Fracture Mechanics Problems of Bodies with Loading Applied Along Crack Faces}
+
+\titlerunning{Unified Approach to Fracture Mechanics with Crack-Face Loading}
+
+\author{
+	Viacheslav Bogdanov,
+	Aleksander Guz, and
+	Volodymyr Nazarenko
+}
+
+\institute{
+	Viacheslav Bogdanov \at 
+	\AffIMech
+	\email{bogdanov@nas.gov.ua}
+	\and
+	Aleksander Guz \at 
+	\AffIMech
+	\email{inst\_mech@inmech.kyiv.ua}
+	\and
+	Volodymyr Nazarenko \at 
+	\AffIMech
+	\email{nazvm1@gmail.com}
+}
+
+\maketitle
+
+
+\graphicspath{{04_BogdanovGuz/}}
+
+\abstract{
+The application of a unified approach based on the relations of the
+three-dimensional linearized mechanics of deformable solids is analyzed
+for two non-classical problems of fracture mechanics: (i) the fracture
+of bodies taking into account the action of initial (residual) stresses
+along cracks and (ii) the fracture of bodies under compression along
+cracks caused by a local loss of stability of the equilibrium state of
+the material in the vicinity of the cracks.
+\newline
+The unified approach is based on the fact that the values of initial
+(residual) compressive stresses can be determined from the solution of
+boundary-value problems of fracture mechanics for pre-stressed bodies
+as the stresses at which the stress intensity factors undergo
+resonance-like changes. The values of initial (residual) stresses
+obtained in this way correspond to the theoretical compressive strength
+limits of bodies containing cracks with similar geometric
+configurations subjected to forces acting along the crack planes.
+\newline
+The effectiveness of this unified approach and the expediency of its
+application to problems with different crack placement geometries in
+homogeneous isotropic and transversely isotropic materials are
+demonstrated by considering several plane and spatial problems for
+cracks interacting with each other and with body boundaries. 
+\newline
+The order of the stress singularity at the crack tip in the considered
+problems of brittle fracture mechanics with initial (residual) stresses
+is also investigated, and it is shown that this order coincides with
+that obtained within the framework of classical linear fracture
+mechanics.
+}
+
+\section{Introduction}
+
+Accounting for the influence of load components acting along crack faces on the strength and service life of structures, machine components, and structural elements constitutes an important scientific and technical problem. During the production of structural materials (metals, alloys, polymers, composites), their treatment (mechanical, thermal, electrodynamical, etc.), manufacturing processes (including welding and soldering), and subsequent operation, initial (residual, technological) stresses, deformations, and defects such as cracks or delaminations often arise \cite{BogdanovGuz17,BogdanovGuz18,BogdanovGuz22,BogdanovGuz48,BogdanovGuz49,BogdanovGuz50,BogdanovGuz52,BogdanovGuz57,BogdanovGuz61}. 
+
+For materials with heat-insulating, anticorrosion, or wear-resistant coatings, as well as for laminated and fiber-reinforced composites, it is typical that initial (residual) stresses act along interfaces containing cracks or delaminations \cite{BogdanovGuz20,BogdanovGuz56,BogdanovGuz57}. Moreover, in the mechanics of composite and coated materials, geomechanics, and structural mechanics, near-surface separation or internal delamination frequently occurs in bodies compressed along cracks or interfacial defects. In such cases, fracture is initiated by local loss of material stability in the vicinity of the defect \cite{BogdanovGuz13,BogdanovGuz28,BogdanovGuz41,BogdanovGuz45,BogdanovGuz55,BogdanovGuz65}.
+
+These phenomena cannot be adequately described within the framework of classical fracture mechanics \cite{BogdanovGuz2,BogdanovGuz16,BogdanovGuz21}. In particular, solutions of the linear theory of elasticity show that loading components acting along crack faces do not enter the expressions for stress intensity factors, the $J$-integral, crack opening displacement, or related fracture parameters. Consequently, such loading components are not reflected in classical fracture criteria (Griffith--Irwin, Cherepanov--Rice, critical crack opening displacement, and their generalizations).
+
+For isotropic and orthotropic bodies subjected to compression strictly along crack surfaces (for orthotropic materials, cracks are assumed to lie in planes parallel to one of the material symmetry planes), a homogeneous stress--strain state is obtained. This leads to the absence of stress and displacement singularities near crack tips and, therefore, to zero values of stress intensity factors, the $J$-integral, and crack opening displacement. Nevertheless, experimental studies confirm the significant influence of such loading components on fracture behavior \cite{BogdanovGuz1,BogdanovGuz12,BogdanovGuz42,BogdanovGuz47}.
+
+Theoretical approaches to these non-classical fracture problems (terminology introduced in \cite{BogdanovGuz27,BogdanovGuz29}) have been analyzed in detail in \cite{BogdanovGuz9,BogdanovGuz30}. Approximate methods based on applied theories of thin-walled systems were considered in \cite{BogdanovGuz13,BogdanovGuz14,BogdanovGuz41,BogdanovGuz45}. 
+
+Within the framework of rigorous linearized mechanics of deformable bodies \cite{BogdanovGuz5,BogdanovGuz28}, an approach for investigating fracture problems of bodies with initial stresses acting along cracks was proposed in \cite{BogdanovGuz25,BogdanovGuz27}, where corresponding energy and power fracture criteria were formulated. Using this approach, several classes of plane and spatial problems for isotropic and anisotropic bodies with different crack geometries were studied \cite{BogdanovGuz6,BogdanovGuz7,BogdanovGuz8,BogdanovGuz9,BogdanovGuz11,BogdanovGuz27}, revealing new mechanical effects associated with residual stresses.
+
+For bodies compressed along cracks, an approach based on the three-dimensional linearized theory of stability of deformable bodies \cite{BogdanovGuz28} was developed in \cite{BogdanovGuz26,BogdanovGuz65,BogdanovGuz66}. Results for plane and spatial problems involving isolated and interacting cracks are presented in \cite{BogdanovGuz10,BogdanovGuz19,BogdanovGuz31,BogdanovGuz32,BogdanovGuz33,BogdanovGuz35,BogdanovGuz36,BogdanovGuz37,BogdanovGuz38,BogdanovGuz39,BogdanovGuz46,BogdanovGuz63,BogdanovGuz64}.
+
+To unify the treatment of fracture in pre-stressed bodies and fracture under compression along cracks, an integrated approach within the framework of linearized mechanics of deformable bodies was proposed in \cite{BogdanovGuz34}. This approach allows determination of critical load parameters leading to local loss of stability near cracks without separate eigenvalue analyses within the three-dimensional stability theory. The critical parameters are obtained by solving boundary-value problems of fracture mechanics for materials with initial stresses. As the loading parameter varies continuously, certain critical values of initial compressive stresses lead to resonance-like amplification of stresses and displacements near crack tips.
+
+In the present work, the effectiveness of this unified approach is analyzed using representative plane and spatial problems with various crack geometries, including interacting cracks and interaction with boundary surfaces. Based on these examples, conclusions are drawn regarding the applicability and further development of the proposed methodology.
+
+\section{Mathematical Formulation}
+\label{BogdanovGuzSec2}
+
+As noted in the Introduction, one of the effective approaches to fracture problems in pre-stressed bodies—when initial (residual) stresses act along the cracks contained in the body—is based on the linearized mechanics of deformable bodies. 
+
+In this section, the fundamental linearized relations are briefly summarized, and the general boundary-value formulations are outlined. The concept of the unified approach to fracture problems in bodies with initial (residual) stresses, as well as to bodies compressed along cracks, is then presented.
+
+\subsection{Basic Linearized Relations}
+
+Consider an isotropic or orthotropic body (including, as a particular case, a transversely isotropic body) subjected to initial (residual) tensile or compressive stresses. Let $S_{ij}^{0}$ denote the components of the symmetric Lagrangian stress tensor $\tilde{\mathbf{S}}^{0}$. 
+
+For orthotropic materials, it is assumed that the principal material directions coincide with the coordinate axes. The initial stresses are assumed to act strictly along cracks located in parallel planes, while the crack surfaces themselves are traction-free.
+
+The presence of initial stresses produces a homogeneous initial stress--strain state. The corresponding components of the initial displacement vector $\mathbf{u}^{0}$ are given by
+\begin{equation}
+	\label{BogdanovGuzEq1}
+	u_i^{0} = \lambda_i^{-1}(\lambda_i - 1) y_i, 
+	\qquad \lambda_i = \text{const}, 
+	\qquad i = 1,2,3,
+\end{equation}
+where $\lambda_i$ are the stretch ratios (elongation or contraction) along the coordinate axes induced by the initial stresses $S_{ij}^{0}$. 
+
+In \eqref{BogdanovGuzEq1} and throughout the paper, the superscript “$0$” indicates quantities referring to the initial stress--strain state.
+
+The analysis is carried out in Lagrangian coordinates of the initial state, denoted by $y_i$, which are related to the Cartesian coordinates of the natural (undeformed) configuration $x_i$ by
+\[
+y_i = \lambda_i x_i, \qquad i = 1,2,3.
+\]
+
+In addition to the initial (residual) stresses, additional (operational) loads and prescribed displacements may act on crack faces and on the external boundary of the body. These loads are associated with the components of the (generally asymmetric) Piola--Kirchhoff stress tensor $\tilde{\mathbf{Q}}'$ \cite{BogdanovGuz24} and with the displacement vector $\mathbf{u}$.
+
+It is assumed that the disturbances of the stress--strain state caused by operational loads are small compared with those induced by the initial stresses. Under this assumption, the relations of linearized mechanics of deformable bodies may be applied to fracture problems of materials subjected to forces acting along crack faces \cite{BogdanovGuz5,BogdanovGuz28}.
+
+The linearized relations between the components of the Piola--Kirchhoff stress tensor and those of the symmetric Lagrangian stress tensor are given by \cite{BogdanovGuz28}
+\[
+Q'_{ij}
+=
+\frac{\lambda_i \lambda_j}{\lambda_1 \lambda_2 \lambda_3} S_{ij}
++
+\frac{\lambda_i}{\lambda_1 \lambda_2 \lambda_3}
+S^{0}_{in}
+\frac{\partial u_j}{\partial y_n}.
+\]
+
+For compressible materials, the linearized equilibrium equations in terms of displacements take the form \cite{BogdanovGuz28}
+\begin{equation}
+	\label{BogdanovGuzEq2}
+	\omega'_{ij\alpha\beta}
+	\frac{\partial^2 u_\alpha}{\partial y_i \partial y_\beta}
+	= 0,
+\end{equation}
+where $u_\alpha$ are the incremental displacements caused by operational loads superimposed on the initial stress state.
+
+For incompressible materials, the linearized equilibrium equations have a similar structure but additionally involve a scalar parameter associated with the hydrostatic pressure \cite{BogdanovGuz28}.
+
+The linearized constitutive relations for compressible materials take the form \cite{BogdanovGuz28}
+\begin{equation}
+	\label{BogdanovGuzEq3}
+	Q'_{ij}
+	=
+	\omega'_{ij\alpha\beta}
+	\frac{\partial u_\alpha}{\partial y_\beta}.
+\end{equation}
+
+The components of the fourth-rank elasticity tensor $\boldsymbol{\omega}'$, which appear in \eqref{BogdanovGuzEq2} and \eqref{BogdanovGuzEq3}, are given by
+\begin{multline}
+	\label{BogdanovGuzEq4}
+		\omega'_{ij\alpha\beta}
+		=
+		\frac{\lambda_i \lambda_j \lambda_\alpha \lambda_\beta}
+		{\lambda_1 \lambda_2 \lambda_3}
+		\left[
+		\delta_{ij}\delta_{\alpha\beta} A_{i\beta}
+		+
+		(1-\delta_{ij})
+		\left(
+		\delta_{i\alpha}\delta_{j\beta}
+		+
+		\delta_{i\beta}\delta_{j\alpha}
+		\right)
+		G_{ij}
+		\right]  \\
+		+
+		\frac{\lambda_i \lambda_\beta}
+		{\lambda_1 \lambda_2 \lambda_3}
+		\delta_{i\beta}\delta_{j\alpha}
+		S^{0}_{\beta\beta},
+\end{multline}
+where $\delta_{ij}$ is the Kronecker delta, $A_{i\beta}$ are elastic constants, $G_{ij}$ are shear moduli, $S^{0}_{\beta\beta}$ are components of the initial stress tensor, and $\lambda_m$ are the stretch ratios along the coordinate axes $O y_m$ induced by the initial stresses.
+
+Boundary conditions in stresses on a part of the body surface $S_1$ (including crack faces) are given by
+\begin{equation}
+	\label{BogdanovGuzEq5}
+	N_i^{0} Q'_{ij} = P'_j,
+\end{equation}
+where $N_i^{0}$ are the components of the unit normal vector to the body surface in the initial configuration, and $P'_j$ are the prescribed surface tractions.
+
+Boundary conditions in displacements on the complementary part of the surface $S_2$ are of the form
+\begin{equation}
+	\label{BogdanovGuzEq6}
+	u_j = f'_j,
+\end{equation}
+where $f'_j$ are the prescribed displacement components.
+
+Thus, the general formulation of static linearized fracture problems for materials subjected to forces acting along crack faces—by which we mean both fracture of pre-stressed bodies containing cracks and compression of bodies by forces directed strictly along cracks—includes, for compressible materials:
+(i) the equilibrium equations in displacements \eqref{BogdanovGuzEq2},  
+(ii) the constitutive relations \eqref{BogdanovGuzEq3}, together with the definition of the elasticity tensor \eqref{BogdanovGuzEq4}, and  
+(iii) the boundary conditions in stresses \eqref{BogdanovGuzEq5} and displacements \eqref{BogdanovGuzEq6}.
+
+For incompressible materials, the general structure of the linearized formulation remains similar, with the additional involvement of the hydrostatic pressure parameter \cite{BogdanovGuz27,BogdanovGuz31,BogdanovGuz32}.
+
+\subsection{Representations of the General Solutions}
+
+Representations of the general solutions to the linearized equilibrium equations \eqref{BogdanovGuzEq2} in terms of harmonic potentials are presented in \cite{BogdanovGuz28,BogdanovGuz31,BogdanovGuz32}.
+
+As an illustrative example, consider the case of plane strain in the $y_1 O y_2$ plane. The cracks are assumed to lie in parallel planes $y_2=\text{const}$. For an orthotropic material, the axis of material symmetry is taken to coincide with the $O y_2$ axis. The displacement components satisfy
+\[
+u_1 = u_1(y_1,y_2), 
+\qquad
+u_2 = u_2(y_1,y_2), 
+\qquad
+u_3 = 0,
+\]
+and the following conditions hold:
+\begin{equation}
+	\label{BogdanovGuzEq7}
+	S_{ii}^{0}=\text{const}, 
+	\quad
+	S_{22}^{0}=0,
+	\quad
+	S_{11}^{0}\neq 0,
+	\quad
+	S_{33}^{0}\neq 0,
+	\quad
+	Q'_{13}=Q'_{23}=Q'_{31}=Q'_{32}=0.
+\end{equation}
+
+In this case, the displacements $u_i$ and stresses $Q'_{ij}$ can be expressed in terms of harmonic potential functions. The specific form of these representations depends on the multiplicity of the roots of the corresponding characteristic equation \cite{BogdanovGuz28,BogdanovGuz31}.
+
+For the case of equal roots ($n_1^* = n_2^*$), the displacement and stress components are
+\begin{align}
+u_1
+&=
+-\frac{\partial \varphi}{\partial y_1}
+-
+z_1 \frac{\partial F}{\partial y_1},
+\notag \\
+u_2
+&=
+(n_1^*)^{-1/2}
+\left[
+(m_1^*+1-m_2^*)F
+-
+m_1^*\Phi
+-
+m_1^* z_1 \frac{\partial F}{\partial z_1}
+\right],
+\notag \\
+	Q'_{21}
+	&=
+	C_{44}^*(n_1^*)^{-1/2}
+	\frac{\partial}{\partial y_1}
+	\left[
+	(d_1^*-d_2^*)F
+	-
+	d_1^*\Phi
+	-
+	d_1^* z_1 \frac{\partial F}{\partial z_1}
+	\right],
+\label{BogdanovGuzEq8} \\
+Q'_{22}
+&=
+C_{44}^*
+\left[
+(d_1^*l_1^*-d_2^*l_2^*)\frac{\partial F}{\partial z_1}
+-
+d_1^*l_1^* \frac{\partial \Phi}{\partial z_1}
+-
+d_1^*l_1^* z_1 \frac{\partial^2 F}{\partial z_1^2}
+\right].
+\notag
+\end{align}
+
+The harmonic potentials are defined as
+\[
+\varphi = -(\varphi_1 + \varphi_2),
+\qquad
+F = -\frac{\partial \varphi_2}{\partial z_1},
+\qquad
+\Phi = \frac{\partial \varphi}{\partial z_1}.
+\]
+
+The following notation is introduced:
+\begin{align}
+z_1 &= (n_1^*)^{-1/2} y_2,
+\qquad
+C_{44}^* = \omega'_{1212},
+\notag \\
+	m_1^* &=
+	\frac{\omega'_{1111} n_1^* - \omega'_{2112}}
+	{\omega'_{1122} + \omega'_{1212}}, \qquad
+	m_2^* =
+	\frac{\omega'_{1122} + \omega'_{1212} - 2\omega'_{2112}}
+	{\omega'_{1122} + \omega'_{1212}}, 
+	\notag \\
+	d_1^* &=
+	\frac{\omega'_{2112}}{\omega'_{1212}} + m_1^*, \qquad
+	d_2^* =
+	2\frac{\omega'_{2112}}{\omega'_{1212}}
+	+
+	m_2^*
+	-
+	1, 
+	\label{BogdanovGuzEq9} \\
+	l_1^* &=
+	\frac{\omega'_{2222} m_1^* - \omega'_{2211} n_1^*}
+	{\omega'_{1212} d_1^* n_1^*}, \qquad
+	l_2^* =
+	\frac{\omega'_{2222}(m_1^*+m_2^*-1) - \omega'_{2211} n_1^*}
+	{\omega'_{1212} d_2^* n_1^*}.
+	\notag
+\end{align}
+
+The roots of the characteristic equation are determined from
+\begin{equation}
+	\label{BogdanovGuzEq10}
+	n_{1,2}^*
+	=
+	a'
+	\pm
+	\sqrt{
+		a'^2
+		-
+		\frac{\omega'_{2222}\omega'_{2112}}
+		{\omega'_{1111}\omega'_{1221}}
+	},
+\end{equation}
+where the parameter $a'$ is defined by
+\[
+2\omega'_{1111}\omega'_{1221} a'
+=
+\omega'_{1111}\omega'_{2222}
++
+\omega'_{2112}\omega'_{1221}
+-
+\left(\omega'_{1122}+\omega'_{1212}\right)^2.
+\]
+
+For non-equal roots ($n_1^* \neq n_2^*$), the displacement and stress fields are represented in terms of harmonic potentials
+$\varphi_1(y_1,z_1)$ and $\varphi_2(y_1,z_2)$ as follows:
+\begin{equation}
+	\label{BogdanovGuzEq11}
+	\begin{array}{rcl}
+		u_1
+		&=&
+		\dfrac{\partial}{\partial y_1}
+		\left(\varphi_1+\varphi_2\right), \\[8pt]
+		
+		u_2
+		&=&
+		m_1^*(n_1^*)^{-1/2}
+		\dfrac{\partial \varphi_1}{\partial z_1}
+		+
+		m_2^*(n_2^*)^{-1/2}
+		\dfrac{\partial \varphi_2}{\partial z_2}, \\[10pt]
+		
+		Q'_{21}
+		&=&
+		C_{44}^*
+		\dfrac{\partial}{\partial y_1}
+		\left[
+		d_1^*(n_1^*)^{-1/2}
+		\dfrac{\partial \varphi_1}{\partial z_1}
+		+
+		d_2^*(n_2^*)^{-1/2}
+		\dfrac{\partial \varphi_2}{\partial z_2}
+		\right], \\[10pt]
+		
+		Q'_{22}
+		&=&
+		C_{44}^*
+		\left(
+		d_1^* l_1^*
+		\dfrac{\partial^2 \varphi_1}{\partial z_1^2}
+		+
+		d_2^* l_2^*
+		\dfrac{\partial^2 \varphi_2}{\partial z_2^2}
+		\right).
+	\end{array}
+\end{equation}
+%
+where
+\begin{equation}
+	\label{BogdanovGuzEq12}
+	\begin{array}{c}
+		z_j
+		=
+		(n_j^*)^{-1/2} y_2, \qquad
+		C_{44}^*
+		=
+		\omega'_{1212}, \qquad
+		m_j^*
+		=
+		\dfrac{\omega'_{1111} n_j^* - \omega'_{2112}}
+		{\omega'_{1122} + \omega'_{1212}}, 
+		\\
+		d_j^*
+		=
+		\dfrac{\omega'_{2112}}{\omega'_{1212}}
+		+
+		m_j^*, \qquad		
+		l_j^*
+		=
+		\dfrac{\omega'_{2222} m_j^* - \omega'_{2211} n_j^*}
+		{\omega'_{1212} d_j^* n_j^*}
+		\qquad (j=1,2).
+	\end{array}
+\end{equation}
+
+Similarly, for spatial problems, when cracks are located in parallel planes $y_3=\mathrm{const}$, the axis of material symmetry of the orthotropic body coincides with the $O y_3$ axis, and the conditions
+\begin{equation}
+	\label{BogdanovGuzEq13}
+	\lambda_1=\lambda_2\neq\lambda_3,
+	\quad
+	S_{ii}^0=\mathrm{const},
+	\quad
+	S_{33}^0=0,
+	\quad
+	S_{11}^0=S_{22}^0\neq 0
+	\quad (i=1,2,3)
+\end{equation}
+are satisfied. 
+
+In this case, the general solutions of the linearized equilibrium equations can be represented, separately for equal and unequal roots of the characteristic equation, by means of three harmonic potential functions (see, for example, \cite{BogdanovGuz28,BogdanovGuz32}). 
+
+For unequal roots ($n_1\neq n_2$), the displacement and stress components admit the representations
+\begin{equation}
+	\label{BogdanovGuzEq14}
+	\begin{array}{rcl}
+		u_r
+		&=&
+		\dfrac{\partial (\varphi_1+\varphi_2)}{\partial r}
+		-
+		\dfrac{1}{r}
+		\dfrac{\partial \varphi_3}{\partial \theta},
+		\\[6pt]
+		
+		u_\theta
+		&=&
+		\dfrac{1}{r}
+		\dfrac{\partial (\varphi_1+\varphi_2)}{\partial \theta}
+		+
+		\dfrac{\partial \varphi_3}{\partial r},
+		\\[6pt]
+		
+		u_3
+		&=&
+		m_1 n_1^{-1/2}
+		\dfrac{\partial \varphi_1}{\partial z_1}
+		+
+		m_2 n_2^{-1/2}
+		\dfrac{\partial \varphi_2}{\partial z_2},
+		\\[8pt]
+		
+		Q'_{3r}
+		&=&
+		C_{44}
+		\Bigg(
+		d_1 n_1^{-1/2}
+		\dfrac{\partial^2 \varphi_1}{\partial r \partial z_1}
+		+
+		d_2 n_2^{-1/2}
+		\dfrac{\partial^2 \varphi_2}{\partial r \partial z_2}
+		-
+		n_3^{-1/2}
+		\dfrac{1}{r}
+		\dfrac{\partial^2 \varphi_3}{\partial \theta \partial z_3}
+		\Bigg),
+		\\[6pt]
+		
+		Q'_{3\theta}
+		&=&
+		C_{44}
+		\Bigg(
+		d_1 n_1^{-1/2}
+		\dfrac{1}{r}
+		\dfrac{\partial^2 \varphi_1}{\partial \theta \partial z_1}
+		+
+		d_2 n_2^{-1/2}
+		\dfrac{1}{r}
+		\dfrac{\partial^2 \varphi_2}{\partial \theta \partial z_2}
+		+
+		n_3^{-1/2}
+		\dfrac{\partial^2 \varphi_3}{\partial r \partial z_3}
+		\Bigg),
+		\\[6pt]
+		
+		Q'_{33}
+		&=&
+		C_{44}
+		\left(
+		d_1 l_1
+		\dfrac{\partial^2 \varphi_1}{\partial z_1^2}
+		+
+		d_2 l_2
+		\dfrac{\partial^2 \varphi_2}{\partial z_2^2}
+		\right).
+	\end{array}
+\end{equation}
+The parameters for a compressible body are defined as
+\begin{equation}
+	\label{BogdanovGuzEq15}
+	\begin{array}{l}
+		z_i = n_i^{-1/2} y_3, \quad
+		C_{44} = \omega'_{1313}, \\[4pt]	
+		m_j =
+		\dfrac{\omega'_{1111} n_j - \omega'_{3113}}
+		{\omega'_{1133} + \omega'_{1313}}, \quad
+		d_j = 1 + m_j, \quad		
+		l_j =
+		\dfrac{\omega'_{3333} m_j - \omega'_{1133} n_j}
+		{\omega'_{1313} d_j n_j}, 
+		\\[6pt]
+		n_{1,2} =
+		c' \pm
+		\sqrt{
+			c'^2 -
+			\dfrac{\omega'_{3333}\omega'_{3113}}
+			{\omega'_{1111}\omega'_{1331}}
+		}, \qquad
+		n_3 =
+		\dfrac{\omega'_{3113}}{\omega'_{1221}}, \\[4pt]
+		
+		2\omega'_{1111}\omega'_{1331}c'
+		=
+		\omega'_{1111}\omega'_{3333}
+		+
+		\omega'_{1331}\omega'_{3113}
+		-
+		(\omega'_{1133}+\omega'_{1313})^2,
+	\end{array}
+\end{equation}
+where $ i=1,2,3$ and $j=1,2$. 
+
+\subsection{Concept of the Unified Approach to Investigating the Problems}
+
+Using the representations of stresses and displacements in terms of harmonic potentials introduced above, the general formulation of linearized fracture problems for materials subjected to forces acting along crack faces—given by \eqref{BogdanovGuzEq2}, \eqref{BogdanovGuzEq3}, \eqref{BogdanovGuzEq5}, and \eqref{BogdanovGuzEq6}—can be reformulated in terms of potential functions. 
+
+For the plane and spatial problems considered in this work, the harmonic potentials are expressed via integral transforms (Fourier transforms in the plane case and Hankel transforms in the spatial case). This reduces the original boundary-value problems first to dual (paired) differential equations and subsequently to Fredholm integral equations of the second kind, which are solved numerically.
+
+It is important to emphasize that the linearized equilibrium equations \eqref{BogdanovGuzEq2} and the linearized constitutive relations \eqref{BogdanovGuzEq3} are identical for both classes of problems: (i) fracture of pre-stressed bodies with cracks under the action of initial stresses acting along crack faces, and (ii) compression of bodies by forces directed strictly along cracks. Moreover, within the adopted computational schemes, the configurations of the bodies and the crack geometries are also the same. Thus, the two classes of problems share a common mathematical framework based on linearized mechanics of deformable bodies.
+
+The essential difference between them lies in the boundary conditions imposed on crack faces. In fracture problems for pre-stressed bodies, the boundary conditions \eqref{BogdanovGuzEq5} on crack faces are non-homogeneous, that is, $P'_j \neq 0$. In contrast, in problems of compression along cracks, the boundary conditions on crack faces are homogeneous ($P'_j = 0$). Consequently, the former leads to non-homogeneous boundary-value problems, whereas the latter reduces to homogeneous eigenvalue problems.
+
+The physical interpretation of this distinction is as follows. Consider a pre-stressed body containing a crack. When compressive initial stresses acting along the crack approach values corresponding to local loss of stability of a body with identical configuration and crack geometry under compression, a state of neutral equilibrium arises in the vicinity of the crack tips. In such a situation, even a small additional perturbation of external loading may trigger fracture characterized by local instability near the crack.
+
+Indeed, for plane and spatial problems involving an unbounded pre-stressed body with an isolated internal crack, it has been shown (see, for example, \cite{BogdanovGuz27}) that as the initial stresses approach values corresponding to surface instability of a half-plane (in plane problems) or half-space (in spatial problems), resonance-like phenomena occur near crack tips. Specifically, certain stress and displacement components obtained from the linearized relations grow without bound, while the corresponding critical fracture stresses tend to zero.
+
+These mathematical and physical considerations motivated the unified approach proposed in \cite{BogdanovGuz34}. It was hypothesized that for more complex crack geometries (including crack arrays), similar resonance-like effects would also occur. Accordingly, instead of separately analyzing non-homogeneous boundary-value problems and eigenvalue stability problems, both classes of problems can be investigated within a single unified framework based on linearized mechanics of deformable bodies.
+
+Within this unified approach, critical load parameters for compression of bodies along cracks (or crack arrays) are determined without explicitly solving separate eigenvalue problems within the three-dimensional linearized stability theory \cite{BogdanovGuz28}. Instead, they are obtained from the solution of the corresponding boundary-value fracture problem for a pre-stressed body. As the initial compressive stress parameters vary continuously, certain critical values are identified at which resonance-like amplification of stress intensity factors—and, correspondingly, stress and displacement amplitudes near crack tips—occurs. These critical stress values coincide with the eigenvalues of the corresponding compression-along-cracks problem.
+
+An important advantage of the unified approach is its generality. It allows investigation, in a single formulation, of compressible and incompressible isotropic or orthotropic (including transversely isotropic) elastic bodies with arbitrary elastic potentials. The approach is applicable both within the theory of finite (large) initial strains and within various formulations of small initial strain theory. The specific material model is introduced only at the final stage of the analysis, during the numerical solution of the resulting integral equations.
+
+Finally, it is worth noting that analogous ideas appear in other areas of mechanics, particularly in the theory of forced vibrations of linear systems. When the frequency of an external excitation approaches a natural frequency of the system, resonance-like amplification of stresses and displacements occurs \cite{BogdanovGuz59}. Experimental methods for determining natural frequencies—widely used in engineering practice and seismology—are based precisely on this phenomenon.
+
+\section{Problem Statement}
+\label{BogdanovGuzSec3}
+
+We consider several representative plane and spatial problems for bodies with initial (residual) stresses containing interacting cracks. 
+
+When employing the unified approach described above to study fracture of pre-stressed bodies with cracks and failure of bodies compressed along cracks, it is important to account for the correspondence between stability modes and fracture modes. Specifically, homogeneous stability problems (with zero boundary conditions on crack faces) associated with the symmetric mode of stability loss correspond to linearized boundary-value problems for opening-mode (Mode~I) cracks in pre-stressed bodies. In contrast, homogeneous problems associated with antisymmetric (bending) stability loss correspond to boundary-value problems for transverse shear cracks (in spatial problems, radial shear cracks).
+
+In \cite{BogdanovGuz31,BogdanovGuz32}, it was shown that for unbounded bodies containing two parallel cracks or a periodic array of parallel cracks, loss of stability in the antisymmetric (bending) mode occurs at lower critical compressive loads than in the symmetric mode. However, for a semi-infinite body containing a near-surface crack parallel to the free boundary, the critical compressive loads corresponding to symmetric and antisymmetric stability modes coincide.
+
+Accordingly, in what follows we focus on:
+(i) a plane problem for a semi-infinite body containing a near-surface Mode~I crack;
+(ii) spatial axisymmetric problems for circular mixed-mode cracks;
+(iii) unbounded bodies with two parallel coaxial circular sliding-mode (Mode~II) cracks; and
+(iv) unbounded bodies containing a periodic array of coaxial circular Mode~II cracks.
+
+These geometrical configurations enable evaluation of the influence of initial (residual) stresses, crack interaction effects, and interaction with boundary surfaces on stress intensity factors and on critical compressive parameters that lead to local loss of material stability near crack tips.
+
+\subsection{Plane Problem on a Near-Surface Mode I Crack in a Semi-Infinite Pre-Stressed Body}
+
+We consider a homogeneous semi-infinite isotropic body occupying the domain 
+$y_{2} \ge -h$. A plane crack of length $2a$ is located along the line 
+$y_{2} = 0$, infinite in the $Oy_{3}$ direction and occupying the interval 
+$-a \le y_{1} \le a$.
+
+Plane strain conditions are assumed. Accordingly, relations 
+\eqref{BogdanovGuzEq7} hold for the displacement vector $\mathbf{u}$ 
+and for the components of the Lagrange stress tensor $\tilde{\mathbf S}^{0}$ 
+and the Piola--Kirchhoff stress tensor $\tilde{\mathbf Q}'$.
+
+In addition to the initial stresses, uniformly distributed normal loads 
+of intensity $\sigma(y_{1})$, directed perpendicularly to the crack line, 
+act on the crack faces, while the external boundary of the body is free 
+of tractions. Thus, the boundary conditions corresponding to the general 
+relations \eqref{BogdanovGuzEq5} and \eqref{BogdanovGuzEq6} take the form
+
+\begin{align}
+	\notag
+	Q'_{22} &= -\sigma(y_{1}), 
+	\qquad 
+	Q'_{21} = 0
+	\qquad (|y_{1}| \le a,\; y_{2} = \pm 0), 
+	\\ \label{BogdanovGuzEq16}
+	Q'_{22} &= 0, 
+	\qquad 
+	Q'_{21} = 0
+	\qquad (-\infty < y_{1} < \infty,\; y_{2} = -h).
+\end{align}
+%
+The symbols “$\pm$” denote the upper and lower crack faces.
+
+It should be noted that this problem has been thoroughly investigated in \cite{BogdanovGuz10}; therefore, only the main stages of its analysis are presented below.
+
+The half-plane $y_{2} \ge -h$ occupied by the body is conditionally divided into two domains: domain~1 (the half-plane $y_{2} \ge 0$) and domain~2 (the strip $-h \le y_{2} \le 0$). In this formulation, the crack faces belong to different domains. 
+
+On the interface between the domains outside the crack $(|y_{1}|>a,\; y_{2}=0)$, the conditions of displacement and stress continuity must be satisfied:
+\begin{align}
+	\notag
+	u_{1}^{(1)} &= u_{1}^{(2)}, 
+	\qquad 
+	u_{2}^{(1)} = u_{2}^{(2)}
+	\qquad (|y_{1}| > a,\; y_{2} = 0),\\
+	\label{BogdanovGuzEq17}
+	Q_{22}^{\prime (1)} &= Q_{22}^{\prime (2)}, 
+	\qquad 
+	Q_{21}^{\prime (1)} = Q_{21}^{\prime (2)}
+	\qquad (|y_{1}| > a,\; y_{2} = 0).
+\end{align}
+
+In \eqref{BogdanovGuzEq17} and in subsequent expressions, the superscript in parentheses indicates that the quantity belongs to domain~1 or domain~2. Taking into account the first line of the boundary conditions \eqref{BogdanovGuzEq16}, it follows that the stress-continuity conditions (the second line of \eqref{BogdanovGuzEq17}) hold along the entire line $y_{2}=0$:
+\begin{equation}
+	\label{BogdanovGuzEq18}
+	\begin{aligned}
+		Q_{22}^{\prime (1)} &= Q_{22}^{\prime (2)},\\
+		Q_{21}^{\prime (1)} &= Q_{21}^{\prime (2)}
+		\qquad (-\infty < y_{1} < \infty,\; y_{2}=0).
+	\end{aligned}
+\end{equation}
+
+The mathematical formulation of the analyzed linearized boundary-value problem includes the linearized equilibrium equations \eqref{BogdanovGuzEq2}, the constitutive relations \eqref{BogdanovGuzEq3}, the boundary conditions \eqref{BogdanovGuzEq16} (taking into account the division into domains), and the continuity conditions for displacements (the first line of \eqref{BogdanovGuzEq17}) and stresses \eqref{BogdanovGuzEq18}. 
+
+Using the representations of stresses and displacements in terms of harmonic potentials \eqref{BogdanovGuzEq9} and \eqref{BogdanovGuzEq11}, these conditions take the following form (for the case of non-equal roots $n_{1}^{*} \neq n_{2}^{*}$):
+
+\begin{align}
+	\nonumber
+	C_{44}^{*}\!\left(
+	d_{1}^{*} l_{1}^{*} \frac{\partial^{2}\varphi_{1}^{(2)}}{\partial z_{1}^{2}}
+	+
+	d_{2}^{*} l_{2}^{*} \frac{\partial^{2}\varphi_{2}^{(2)}}{\partial z_{2}^{2}}
+	\right)
+	= -\sigma(y_{1}),&\\
+	\nonumber
+	C_{44}^{*}\frac{\partial}{\partial y_{1}}
+	\left[
+	d_{1}^{*}(n_{1}^{*})^{-1/2}\frac{\partial \varphi_{1}^{(2)}}{\partial z_{1}}
+	+
+	d_{2}^{*}(n_{2}^{*})^{-1/2}\frac{\partial \varphi_{2}^{(2)}}{\partial z_{2}}
+	\right]
+	&=0\\
+	\nonumber
+	\qquad (|y_{1}|\le a,\; z_{j}=0)&,\\
+	\nonumber
+	C_{44}^{*}\!\left(
+	d_{1}^{*} l_{1}^{*} \frac{\partial^{2}\varphi_{1}^{(2)}}{\partial z_{1}^{2}}
+	+
+	d_{2}^{*} l_{2}^{*} \frac{\partial^{2}\varphi_{2}^{(2)}}{\partial z_{2}^{2}}
+	\right)
+	&=0,\\
+	\label{BogdanovGuzEq19}
+	C_{44}^{*}\frac{\partial}{\partial y_{1}}
+	\left[
+	d_{1}^{*}(n_{1}^{*})^{-1/2}\frac{\partial \varphi_{1}^{(2)}}{\partial z_{1}}
+	+
+	d_{2}^{*}(n_{2}^{*})^{-1/2}\frac{\partial \varphi_{2}^{(2)}}{\partial z_{2}}
+	\right]
+	&=0\\
+	\nonumber
+	\qquad (-\infty<y_{1}<\infty,\; z_{j}=-h_{j}),&\\
+	\nonumber
+	\frac{\partial}{\partial y_{1}}
+	\left[
+	(\varphi_{1}^{(1)}-\varphi_{1}^{(2)})
+	+
+	(\varphi_{2}^{(1)}-\varphi_{2}^{(2)})
+	\right]
+	&=0,\\
+	\nonumber
+	m_{1}^{*}(n_{1}^{*})^{-1/2}
+	\frac{\partial(\varphi_{1}^{(1)}-\varphi_{1}^{(2)})}{\partial z_{1}}
+	+
+	m_{2}^{*}(n_{2}^{*})^{-1/2}
+	\frac{\partial(\varphi_{2}^{(1)}-\varphi_{2}^{(2)})}{\partial z_{2}}
+	&=0\\
+	\nonumber
+	\qquad (|y_{1}|>a,\; z_{j}=0),&\\
+	\nonumber
+	C_{44}^{*}\!\left[
+	d_{1}^{*}l_{1}^{*}
+	\frac{\partial^{2}(\varphi_{1}^{(1)}-\varphi_{1}^{(2)})}{\partial z_{1}^{2}}
+	+
+	d_{2}^{*}l_{2}^{*}
+	\frac{\partial^{2}(\varphi_{2}^{(1)}-\varphi_{2}^{(2)})}{\partial z_{2}^{2}}
+	\right]
+	&=0,\\
+	\nonumber
+	C_{44}^{*}\frac{\partial}{\partial y_{1}}
+	\left[
+	d_{1}^{*}(n_{1}^{*})^{-1/2}
+	\frac{\partial(\varphi_{1}^{(1)}-\varphi_{1}^{(2)})}{\partial z_{1}}
+	+
+	d_{2}^{*}(n_{2}^{*})^{-1/2}
+	\frac{\partial(\varphi_{2}^{(1)}-\varphi_{2}^{(2)})}{\partial z_{2}}
+	\right]
+	&=0\\
+	\nonumber
+	\qquad (-\infty<y_{1}<\infty,\; z_{j}=0).&
+\end{align}
+%
+Here
+\[
+z_{j}=(n_{j}^{*})^{-1/2}y_{2}, 
+\qquad 
+h_{j}=(n_{j}^{*})^{-1/2}h
+\qquad (j=1,2).
+\]
+
+In addition, the attenuation conditions for the components of the displacement vector and the stress tensor must be satisfied as the distance from the crack increases:
+\begin{equation}
+	\label{BogdanovGuzEq20}
+	u_j \to 0, \qquad Q'_{ij} \to 0
+	\quad (y_{1} \to +\infty,\; y_{2} \to +\infty).
+\end{equation}
+
+\subsection{Spatial Problem on a Near-Surface Mixed-Mode Crack in a Semi-Infinite Pre-Stressed Body}
+
+In the case of three-dimensional problems, it is assumed that under the action of initial stresses $S_{ij}^{0}$ in a body with cracks a homogeneous initial state is realized, characterized by relations \eqref{BogdanovGuzEq1} and \eqref{BogdanovGuzEq13} for the components of the displacement vector and the stress tensor. 
+
+Since circular (penny-shaped) cracks are considered, the spatial problem is formulated in circular cylindrical coordinates $(r,\theta,y_{3})$, obtained from Cartesian coordinates $(y_{1},y_{2},y_{3})$.
+
+An elastic body occupying a half-space contains in the plane $y_{3}=0$ a penny-shaped crack of radius $r=a$ whose center lies on the $Oy_{3}$ axis. The external boundary of the half-space is traction-free, while tensile, shear, and torsional loads of intensities $\sigma(r)$, $\tau_r(r)$, and $\tau_{\theta}(r)$, respectively, act on the crack faces. The boundary conditions of the axisymmetric problem take the form
+\begin{align}
+	\nonumber
+	Q'_{33} &= -\sigma(r), \quad 
+	Q'_{3r} = -\tau_r(r), \quad 
+	Q'_{3\theta} = -\tau_{\theta}(r)
+	\quad (0 \le r \le a,\; y_{3} = \pm 0),\\
+	\label{BogdanovGuzEq21}
+	Q'_{33} &= 0, \quad 
+	Q'_{3r} = 0, \quad 
+	Q'_{3\theta} = 0
+	\quad (0 \le r < \infty,\; y_{3} = -h).
+\end{align}
+
+The attenuation conditions for the displacement vector and stress tensor components as the distance from the crack increases are
+\begin{equation}
+	\label{BogdanovGuzEq22}
+	u_j \to 0, \qquad Q'_{ij} \to 0
+	\quad (r \to +\infty,\; y_{3} \to +\infty).
+\end{equation}
+
+Considering the half-space $y_{3} \ge -h$ occupied by the body as the union of two domains, namely domain 1, which is the half-space $y_{3} \ge 0$, and domain 2 (the layer $-h \le y_{3} \le 0$), and taking into account the conditions of continuity of displacements and stresses at the interface of the domains outside the crack, we arrive at the following boundary conditions of the problem:
+\begin{align}
+	\nonumber
+	Q'^{(2)}_{33} &= -\sigma(r), &
+	Q'^{(2)}_{3r} &= -\tau_r(r), &
+	Q'^{(2)}_{3\theta} &= -\tau_{\theta}(r)
+	& (0 \le r \le a,\; y_{3}=0),
+	\\
+	\nonumber
+	Q'^{(2)}_{33} &= 0, &
+	Q'^{(2)}_{3r} &= 0, &
+	Q'^{(2)}_{3\theta} &= 0
+	& (0 \le r < \infty,\; y_{3}=-h),
+	\\
+	\nonumber
+	u^{(1)}_{3} &= u^{(2)}_{3}, &
+	u^{(1)}_{r} &= u^{(2)}_{r}, &
+	u^{(1)}_{\theta} &= u^{(2)}_{\theta}
+	& (a \le r < \infty,\; y_{3}=0),
+	\\
+	\label{BogdanovGuzEq23}
+	Q'^{(1)}_{33} &= Q'^{(2)}_{33}, &
+	Q'^{(1)}_{3r} &= Q'^{(2)}_{3r}, &
+	Q'^{(1)}_{3\theta} &= Q'^{(2)}_{3\theta}
+	& (0 \le r < \infty,\; y_{3}=0).
+\end{align}
+
+Using the representations of displacements and stresses in spatial linearized problems via harmonic potential functions \eqref{BogdanovGuzEq14}, problem \eqref{BogdanovGuzEq23} can, similarly to the case of the plane problem (see expression~\eqref{BogdanovGuzEq19}), be reformulated in terms of harmonic potentials.
+
+\subsection{Spatial Problem on Two Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+\noindent 
+
+\noindent An infinite elastic body with initial stresses $S_{11}^{0}=S_{22}^{0}$ contains two circular cracks of the same radius $r=a$ located in parallel planes $y_{3}=0$ and $y_{3}=-2h$ with centers on the axis $Oy_{3}$. Tangential radial stresses $\tau_r(r)$ are applied to the crack faces antisymmetrically with respect to their location. 
+
+Taking into account the symmetry of the geometric and loading schemes with respect to the plane $y_{3}=-h$, we conditionally divide the half-space $y_{3}\ge -h$ into two domains: the half-space $y_{3}\ge 0$ (domain 1) and the layer $-h\le y_{3}\le 0$ (domain 2). The boundary conditions of the problem then take the form
+\begin{align}
+	\nonumber
+	Q'^{(2)}_{33} &= 0, \qquad
+	Q'^{(2)}_{3r} = -\tau_r(r)
+	& (0 \le r \le a,\; y_{3}=0),
+	\\
+	\nonumber
+	u^{(2)}_{r} &= 0, \qquad
+	Q'^{(2)}_{33} = 0
+	& (0 \le r < \infty,\; y_{3}=-h),
+	\\
+	\nonumber
+	u^{(1)}_{3} &= u^{(2)}_{3}, \qquad
+	u^{(1)}_{r} = u^{(2)}_{r}
+	& (a \le r < \infty,\; y_{3}=0),
+	\\ 	\label{BogdanovGuzEq24}
+	r
+	Q'^{(1)}_{33} &= Q'^{(2)}_{33}, \qquad
+	Q'^{(1)}_{3r} = Q'^{(2)}_{3r}
+	& (0 \le r < \infty,\; y_{3}=0).
+\end{align}
+
+Using the representations of displacements and stresses in spatial linearized problems via harmonic potential functions \eqref{BogdanovGuzEq14}, the formulation of problem \eqref{BogdanovGuzEq24} can be reformulated in terms of harmonic potentials.
+
+\subsection{Spatial Problem on a Periodic Array of Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+\noindent 
+
+\noindent We consider an infinite pre-stressed body containing an infinite number of coaxial circular cracks of the same radius $r=a$, located in parallel planes $y_{3}=\mathrm{const}$:
+\[
+\{\, r\le a,\; 0\le \theta <2\pi,\; y_{3}=2nh;\; n=0,\pm1,\pm2,\ldots \,\}.
+\]
+The crack faces are subjected to tangential radial loads of intensity $\tau_r(r)$ that are antisymmetric with respect to the planes of their location. 
+
+Taking into account that the geometric and loading schemes of the problem are antisymmetric with respect to the plane $y_{3}=0$, and considering the periodicity of the components of the stress tensor and displacement vector (with period $2h$) along the variable $y_{3}$, the problem can be reduced to the mathematically equivalent problem for a layer $\mu_j=\lambda h_j$ with the following conditions on its boundaries:
+\begin{align}
+	\nonumber
+	Q'_{3r} &= -\tau_r(r)
+	& (0\le r\le a,\; y_{3}=0),
+	\\
+	\nonumber
+	u_r &= 0, \qquad
+	Q'_{33} = 0
+	& (0\le r<\infty,\; y_{3}=h),
+	\\
+	\nonumber
+	u_r &= 0
+	& (a\le r<\infty,\; y_{3}=0),
+	\\
+		\label{BogdanovGuzEq25}
+	Q'_{33} &= 0
+	& (0\le r<\infty,\; y_{3}=0).
+\end{align}
+
+Using the representations of displacements and stresses in spatial linearized problems via harmonic potential functions \eqref{BogdanovGuzEq14}, the formulation of problem \eqref{BogdanovGuzEq25} can be reformulated in terms of harmonic potentials.
+
+\section{Resolving Fredholm Integral Equations}
+
+The next stage in solving the boundary-value problems formulated in the previous subsection consists in representing the harmonic potential functions describing displacements and stresses as integral transforms: Fourier transforms in the case of plane problems and Hankel transforms in the case of spatial problems. 
+
+Below we consider in more detail the case of \textit{non-equal roots} of the characteristic equation (analytical expressions for the case of equal roots are obtained in a similar way).
+
+In each of the domains 1 and 2, the potential functions $\varphi_{1}(y_{1},z_{1})$ and $\varphi_{2}(y_{1},z_{2})$, which appear in the boundary conditions \eqref{BogdanovGuzEq19} of the formulation of the plane linearized problem for a semi-infinite body with a near-surface crack, are represented as Fourier integral transforms~\cite{BogdanovGuz58}
+\begin{equation}
+	\label{BogdanovGuzEq26}
+	\begin{array}{rcl}
+		\varphi_{1}^{(1)}(y_{1},z_{1})&=&\displaystyle
+		\int_{0}^{\infty}
+		A(\lambda)\,
+		e^{-\lambda z_{1}}
+		\cos(\lambda y_{1})
+		\frac{d\lambda}{\lambda},
+		\\
+			\varphi_{1}^{(2)}(y_{1},z_{1})
+		&=&
+		\begin{multlined}[t]			
+			\displaystyle
+			\int_{0}^{\infty}
+			\Bigl[ C_{1}(\lambda)\cosh\!\bigl(\lambda(z_{1}+h_{1})\bigr) \\
+			\\[-3em] 
+			+ C_{2}(\lambda)\sinh\!\bigl(\lambda(z_{1}+h_{1})\bigr)
+			\Bigr]
+			\cos(\lambda y_{1})
+			\frac{d\lambda}{\lambda\sinh(\lambda h_{1})},
+		\end{multlined}
+		\\
+		\varphi_{2}^{(2)}(y_{1},z_{2})
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			\int_{0}^{\infty}
+			\Bigl[
+			 D_{1}(\lambda)\cosh\!\bigl(\lambda(z_{2}+h_{2})\bigr) \\
+			\\[-3em] 
+			 + D_{2}(\lambda)\sinh\!\bigl(\lambda(z_{2}+h_{2})\bigr)
+			\Bigr]
+			\cos(\lambda y_{1})
+			\frac{d\lambda}{\lambda\sinh(\lambda h_{2})}.
+		\end{multlined}
+	\end{array}
+\end{equation}
+%
+Here $A(\lambda)$, $B(\lambda)$, $C_{j}(\lambda)$, and $D_{j}(\lambda)$ ($j=1,2$) are unknown functions of a single variable that are determined in the course of solving the problem. 
+
+It should be noted that representation \eqref{BogdanovGuzEq26} corresponds to the evenness of the displacement component $u_{2}$ with respect to $y_{1}$ and the oddness of the displacement component $u_{1}$ in this variable. Therefore, it is sufficient to consider only the domain $y_{1}\ge 0$. In addition, representation \eqref{BogdanovGuzEq26} ensures the fulfillment of the attenuation conditions~\eqref{BogdanovGuzEq20}.
+
+Potential functions $\varphi_{1}(r,z_{1})$, $\varphi_{2}(r,z_{2})$, and $\varphi_{3}(r,z_{3})$, which appear in representations \eqref{BogdanovGuzEq14} and, correspondingly, in the mathematical formulations of spatial axisymmetric linearized problems obtained from \eqref{BogdanovGuzEq23} and \eqref{BogdanovGuzEq24} when representations \eqref{BogdanovGuzEq14} are used, are given in each of the domains 1 and 2 as Hankel integral transforms~\cite{BogdanovGuz62}:
+\begin{equation}
+	\label{BogdanovGuzEq27}
+	\begin{array}{rcl}
+		\varphi_{1}^{(1)}(r,z_{1})&=&\displaystyle
+		\int_{0}^{\infty}
+		A(\lambda)\,
+		e^{-\lambda z_{1}}
+		J_{0}(\lambda r)
+		\frac{d\lambda}{\lambda},
+		\\
+		\varphi_{2}^{(1)}(r,z_{2})&=&\displaystyle
+		\int_{0}^{\infty}
+		B(\lambda)\,
+		e^{-\lambda z_{2}}
+		J_{0}(\lambda r)
+		\frac{d\lambda}{\lambda},
+		\\
+		\varphi_{3}^{(1)}(r,z_{3})&=&\displaystyle
+		\int_{0}^{\infty}
+		C(\lambda)\,
+		e^{-\lambda z_{3}}
+		J_{0}(\lambda r)
+		\frac{d\lambda}{\lambda},
+		\\
+		\varphi_{1}^{(2)}(r,z_{1})
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			\int_{0}^{\infty}
+			\Bigl[
+			A_{1}(\lambda)\cosh\!\bigl(\lambda(z_{1}+h_{1})\bigr) \\
+			\\[-3em]
+			+ A_{2}(\lambda)\sinh\!\bigl(\lambda(z_{1}+h_{1})\bigr)
+			\Bigr]
+			J_{0}(\lambda r)
+			\frac{d\lambda}{\lambda\sinh(\lambda h_{1})},
+		\end{multlined}
+		\\
+		\varphi_{2}^{(2)}(r,z_{2})
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			\int_{0}^{\infty}
+			\Bigl[
+			B_{1}(\lambda)\cosh\!\bigl(\lambda(z_{2}+h_{2})\bigr) \\
+			\\[-3em]
+			+ B_{2}(\lambda)\sinh\!\bigl(\lambda(z_{2}+h_{2})\bigr)
+			\Bigr]
+			J_{0}(\lambda r)
+			\frac{d\lambda}{\lambda\sinh(\lambda h_{2})},
+		\end{multlined}
+		\\
+		\varphi_{3}^{(2)}(r,z_{3})
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			\int_{0}^{\infty}
+			\Bigl[
+			C_{1}(\lambda)\cosh\!\bigl(\lambda(z_{3}+h_{3})\bigr) \\
+			\\[-3em]
+			+ C_{2}(\lambda)\sinh\!\bigl(\lambda(z_{3}+h_{3})\bigr)
+			\Bigr]
+			J_{0}(\lambda r)
+			\frac{d\lambda}{\lambda\sinh(\lambda h_{3})}.
+		\end{multlined}
+	\end{array}
+\end{equation}
+%
+Here $h_{i}=(n_{i})^{-1/2}h$ ($i=1,2,3$) and $A(\lambda)$, $B(\lambda)$, $C(\lambda)$, $A_{j}(\lambda)$, $B_{j}(\lambda)$, $C_{j}(\lambda)$ ($j=1,2$) are unknown functions of a single variable that are to be determined in the course of solving the problem. It should be noted that representing the harmonic potential functions in the form \eqref{BogdanovGuzEq27} ensures the fulfillment of the attenuation conditions \eqref{BogdanovGuzEq22}. 
+
+When considering the problem of a pre-stressed unbounded body containing an infinite number of coaxial circular cracks of the same radius, the division into two domains is not performed, and the displacement and stress components are expressed through two potential functions $\varphi_{1}(r,z_{1})$ and $\varphi_{2}(r,z_{2})$. In this case, these functions are represented by the fourth and fifth expressions in \eqref{BogdanovGuzEq27} (without the superscripts in parentheses).
+
+Using the Fourier transforms \eqref{BogdanovGuzEq26} and the Hankel transforms \eqref{BogdanovGuzEq27}, the boundary-value problems formulated in Section~\ref{BogdanovGuzSec3} are reduced first to dual (paired) integral equations and then to Fredholm resolving integral equations of the second kind. The procedure for solving them will be demonstrated using the example of a plane problem (solutions for spatial axisymmetric problems are obtained in a similar way).
+
+
+\subsection{Plane Problem on a Near-Surface Mode I Crack in a Semi-Infinite Pre-Stressed Body}
+
+The conditions in \eqref{BogdanovGuzEq19}, which are specified over the entire plane $y_{2}=\mathrm{const}$, make it possible to reduce the number of unknown functions involved in the Fourier integral transforms \eqref{BogdanovGuzEq26} by the number of conditions specified. Indeed, from the third, fourth, seventh, and eighth lines in \eqref{BogdanovGuzEq19} we obtain
+\begin{equation}
+	\label{BogdanovGuzEq28}
+	\begin{array}{rcl}
+		A(\lambda)
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			\frac{1}{k^{*}}
+			\Bigl\{
+			\left[
+			k_{1}^{*}\bigl(\coth\mu_{1}-\gamma\coth\mu_{2}\bigr)
+			+\bigl(k_{2}^{*}-k_{1}^{*}\gamma\bigr)
+			\right]C_{1}(\lambda)
+			\\[-1em]
+			+
+			\left[
+			k_{2}^{*}\bigl(\coth\mu_{1}-\gamma\coth\mu_{2}\bigr)
+			+\bigl(k_{1}^{*}-k_{2}^{*}\gamma\bigr)
+			\right]C_{2}(\lambda)
+			\Bigr\},
+		\end{multlined}
+		\\[3em]
+		B(\lambda)
+		&=&
+		\begin{multlined}[t]
+			\displaystyle
+			-\frac{d_{1}^{*}l_{1}^{*}}{d_{2}^{*}l_{2}^{*}}
+			\frac{1}{k^{*}}
+			\Bigl\{
+			\left[
+			k_{2}^{*}\bigl(\coth\mu_{1}-\gamma\coth\mu_{2}\bigr)
+			+\bigl(k_{2}^{*}-k_{1}^{*}\gamma\bigr)
+			\right]C_{1}(\lambda)
+			\\[-1.2em]
+			+
+			\frac{k_{2}^{*}}{k_{1}^{*}}
+			\left[
+			k_{1}^{*}\bigl(\coth\mu_{1}-\gamma\coth\mu_{2}\bigr)
+			+\bigl(k_{1}^{*}-k_{2}^{*}\gamma\bigr)
+			\right]C_{2}(\lambda)
+			\Bigr\},
+		\end{multlined}
+		\\
+		D_{1}(\lambda)
+		&=&
+		-\dfrac{d_{1}^{*}l_{1}^{*}}{d_{2}^{*}l_{2}^{*}}\,
+		\gamma\,C_{1}(\lambda),
+		\\[8pt]
+		D_{2}(\lambda)
+		&=&
+		-\dfrac{d_{1}^{*}l_{1}^{*}}{d_{2}^{*}l_{2}^{*}}\,
+		\frac{k_{2}^{*}}{k_{1}^{*}}\,
+		\gamma\,C_{2}(\lambda).
+	\end{array}
+\end{equation}
+%
+Here
+\begin{equation}
+	\label{BogdanovGuzEq29}
+	\begin{array}{l}
+		\mu_{j}=\lambda h_{j} \quad (j=1,2); \qquad
+		\gamma=\dfrac{\sinh\mu_{2}}{\sinh\mu_{1}}; 
+		\\[8pt]
+		k_{1}^{*}=l_{1}^{*}(n_{2}^{*})^{-1/2}, \quad
+		k_{2}^{*}=l_{2}^{*}(n_{1}^{*})^{-1/2}, \quad
+		k^{*}=k_{1}^{*}-k_{2}^{*}.
+	\end{array}
+\end{equation}
+
+The remaining conditions in \eqref{BogdanovGuzEq19} lead to the following system of dual integral equations for the unknown functions $C_{1}(\lambda)$ and $C_{2}(\lambda)$:
+\begin{equation}
+	\label{BogdanovGuzEq30}
+	\begin{array}{rcl}
+			\begin{multlined}[b]
+				\displaystyle
+				\int_{0}^{\infty}
+				\Bigl[
+				(\coth\mu_{1}-\gamma\coth\mu_{2})C_{1}(\lambda)
+				\\[-1em]
+				-
+				\left(1-\frac{k_{2}^{*}}{k_{1}^{*}}\gamma\right)C_{2}(\lambda)
+				\Bigr]
+				\lambda\cos(\lambda y_{1})\,d\lambda
+				\end{multlined}
+				&=&-\dfrac{\sigma(y_{1})}{C_{44}^{*}d_{1}^{*}l_{1}^{*}},
+				\quad y_{1}\le a,
+		\\[1em]
+			\begin{multlined}[b]
+				\displaystyle
+				\int_{0}^{\infty}
+				\Bigl[
+				\left(1-\frac{k_{1}^{*}}{k_{2}^{*}}\gamma\right)C_{1}(\lambda)
+				\\[-1em]
+				+
+				(\coth\mu_{1}-\gamma\coth\mu_{2})C_{2}(\lambda)
+				\Bigr]
+				\lambda\sin(\lambda y_{1})\,d\lambda
+			\end{multlined}
+				&=&0,
+				\quad y_{1}\le a,
+		\\[1em]
+		\displaystyle
+		\int_{0}^{\infty} X_{1}\cos(\lambda y_{1})\,d\lambda
+		&=&0,
+		\quad y_{1}>a,
+		\\
+		\displaystyle
+		\int_{0}^{\infty} X_{2}\sin(\lambda y_{1})\,d\lambda
+		&=&0,
+		\quad y_{1}>a.
+	\end{array}
+\end{equation}
+%
+Here
+\[
+\begin{array}{rcl}
+	X_{1}
+	&=&
+	\begin{multlined}[t]
+		\displaystyle
+		\frac{k_{1}^{*}}{k^{*}}
+		\Bigl[
+		(\coth\mu_{1}-\gamma\coth\mu_{2})
+		+(1-\gamma)
+		\Bigr]C_{1}(\lambda)
+		\\[-1em]
+		+
+		\frac{1}{k^{*}}
+		\Bigl[
+		(k_{1}^{*}\coth\mu_{1}-k_{2}^{*}\gamma\coth\mu_{2})
+		+
+		(k_{1}^{*}-k_{2}^{*}\gamma)
+		\Bigr]C_{2}(\lambda),
+	\end{multlined}
+	\\[3.5em]
+	X_{2}
+	&=&
+	\begin{multlined}[t]
+		\displaystyle
+		\frac{1}{k^{*}}
+		\Bigl[
+		(k_{2}^{*}\coth\mu_{1}-k_{1}^{*}\gamma\coth\mu_{2})
+		+
+		(k_{2}^{*}-k_{1}^{*}\gamma)
+		\Bigr]C_{1}(\lambda)
+		\\[-1em]
+		+
+		\frac{k_{2}^{*}}{k^{*}}
+		\Bigl[
+		(\coth\mu_{1}-\gamma\coth\mu_{2})
+		+(1-\gamma)
+		\Bigr]C_{2}(\lambda).
+	\end{multlined}
+\end{array}
+\]
+
+Dual integral equations \eqref{BogdanovGuzEq30} are solved by the substitution method \cite{BogdanovGuz62}. 
+We represent the expressions $X_{1}$ and $X_{2}$ as integral expansions via Bessel functions \cite{BogdanovGuz4}
+
+\begin{align}
+	\nonumber
+	X_{1} &= \int_{0}^{a} \varphi(t)\,J_{0}(\lambda t)\,dt,
+	\\
+	\label{BogdanovGuzEq31}
+	X_{2} &= -\lambda^{-1}\int_{0}^{a} \tilde{\psi}(t)
+	\left[J_{0}(\lambda a)-J_{0}(\lambda t)\right]dt,
+	\\
+	\nonumber
+	\tilde{\psi}(t) &\equiv \frac{d\psi(t)}{dt}.
+\end{align}
+%
+where $\varphi(t)$ and $\psi(t)$ are unknown functions that are continuous, together with their first derivatives, on the interval $[0,a]$.
+
+Substituting expressions \eqref{BogdanovGuzEq31} into the third and fourth equations of \eqref{BogdanovGuzEq30}, and taking into account the Weber--Schafheitlin discontinuous integrals \cite{BogdanovGuz54},
+\[
+\int_{0}^{\infty}
+\cos(\lambda x)\,
+J_{0}(\lambda t)\,d\lambda
+=
+\begin{cases}
+	0, & 0\le t<x,\\[6pt]
+	\dfrac{1}{\sqrt{t^{2}-x^{2}}}, & 0\le x<t,
+\end{cases}
+\]
+\[
+\int_{0}^{\infty}
+\sin(\lambda x)\,
+J_{1}(\lambda t)\,d\lambda
+=
+\begin{cases}
+	0, & 0\le t<x,\\[6pt]
+	\dfrac{x}{t\sqrt{t^{2}-x^{2}}}, & 0\le x<t,
+\end{cases}
+\]
+it can be shown that these equations are satisfied automatically.
+
+The first and second equations in \eqref{BogdanovGuzEq30}, after some rather cumbersome transformations similar to those carried out in the case of the axisymmetric problem on a pre-stressed body with a near-surface opening-mode crack (see, for example, \cite{BogdanovGuz32}), and taking into account the following formula \cite{BogdanovGuz23}
+\[
+\int_{0}^{\infty}
+e^{-p\lambda}
+J_{0}(\lambda x)
+J_{0}(\lambda t)\,d\lambda
+=
+\frac{1}{\pi\sqrt{xt}}\,
+Q_{-1/2}
+\!\left(
+\frac{p^{2}+x^{2}+t^{2}}{2xt}
+\right),
+\]
+%
+(where $Q_{-1/2}$ is the Legendre function of the second kind), together with formulas of operational calculus, lead to the resolving system of Fredholm nonhomogeneous integral equations of the second kind
+\begin{equation}
+	\label{BogdanovGuzEq32}
+	\begin{array}{rcl}
+	\begin{multlined}[b]
+	f(\xi)
+	+
+	\frac{1}{\pi}\int_{0}^{1} K_{11}(\xi,\eta)f(\eta)\,d\eta
+	\\[-1em]
+	+
+	\frac{1}{\pi}\int_{0}^{1} K_{12}(\xi,\eta)g(\eta)\,d\eta
+	\end{multlined}
+	&=&
+	\dfrac{4k_{1}^{*}}{\pi k^{*}}
+	\,\xi
+	\displaystyle\int_{0}^{\pi/2}
+	\Sigma(\xi\sin\theta)\,d\theta,
+	\\[1em]
+	\begin{multlined}[b]
+	g(\xi)
+	+
+	\dfrac{1}{\pi}\int_{0}^{1} K_{21}(\xi,\eta)f(\eta)\,d\eta
+	\\[-1em]
+	+
+	\frac{1}{\pi}\int_{0}^{1} K_{22}(\xi,\eta)g(\eta)\,d\eta
+	\end{multlined}
+	&=&
+	0,
+	\qquad
+	0\le \xi \le 1,
+	\end{array}
+\end{equation}
+where
+\[
+\Sigma(\xi)
+=
+-\frac{\sigma(a\xi)}{C_{44}^{*} d_{1}^{*} l_{1}^{*}} 
+\]
+and the following dimensionless variables and functions are used:
+\begin{equation}
+	\label{BogdanovGuzEq33}
+	\xi \equiv a^{-1}x,
+	\quad
+	\eta \equiv a^{-1}t,
+	\quad
+	f(\xi)\equiv a^{-1}\varphi(a\xi)=a^{-1}\varphi(x),
+	\quad
+	g(\xi)\equiv \tilde{\psi}(a\xi)=\tilde{\psi}(x).
+\end{equation}
+
+It should be noted that, if in \eqref{BogdanovGuzEq32} one assumes $\Sigma(\xi)=0$, we obtain a system of Fredholm homogeneous integral equations of the second kind, which serves as the resolving system for the plane problem of compressing a half-plane with a near-surface crack by forces directed along the crack. This system differs somewhat from the resolving system of integral equations obtained in \cite{BogdanovGuz31} due to the different procedures used to solve the paired integral equations.
+
+The kernels in the Fredholm integral equations \eqref{BogdanovGuzEq32} have the forms
+\begin{equation}
+	\label{BogdanovGuzEq34}
+	\begin{array}{rcl}
+		
+		K_{11}(\xi,\eta)
+		&=&
+		\begin{multlined}[t]
+		\frac{1}{k^{*}\sqrt{\xi}\,\eta^{3/2}}
+		\Bigl[
+		k_{1}^{*}(k_{1}^{*}+k_{2}^{*})\beta_{1}S(z_{11})
+		+
+		k_{2}^{*}(k_{1}^{*}+k_{2}^{*})\beta_{2}S(z_{12})
+		\\[-1em]
+		-2k_{1}^{*}k_{2}^{*}(\beta_{1}+\beta_{2})S(z_{1})
+		\Bigr],
+		\end{multlined}
+		\\[3.5em]
+		K_{12}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			\dfrac{k_{1}^{*}(k_{1}^{*}+k_{2}^{*})}{k^{*2}}\sqrt{\xi}
+			\Bigl\{
+			\eta^{-1/2}
+			&\bigl[
+			Q_{-1/2}(z_{11})+Q_{-1/2}(z_{12})-2Q_{-1/2}(z_{1})
+			\bigr]
+			\\
+			-\,
+			&\bigl[
+			Q_{-1/2}(z_{21})+Q_{-1/2}(z_{22})-2Q_{-1/2}(z_{2})
+			\bigr]
+			\Bigr\},
+		\end{aligned}
+		\\[3em]
+		K_{21}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			\dfrac{k_{2}^{*}(k_{1}^{*}+k_{2}^{*})}
+			{2k^{*2}\sqrt{\xi}\,\eta^{3/2}}
+			\Biggl\{
+			&\left[
+			1-\frac{2(2\beta_{1})^{2}z_{11}}
+			{\xi\eta(z_{11}^{2}-1)}
+			\right]S(z_{11})
+			-
+			\frac{(2\beta_{1})^{2}}
+			{2\xi\eta(z_{11}^{2}-1)}
+			Q_{-1/2}(z_{11})
+			\\
+			+
+			&\left[
+			1-\frac{2(2\beta_{2})^{2}z_{12}}
+			{\xi\eta(z_{12}^{2}-1)}
+			\right]S(z_{12})
+			-
+			\frac{(2\beta_{2})^{2}}
+			{2\xi\eta(z_{12}^{2}-1)}
+			Q_{-1/2}(z_{12})
+			\\
+			-
+			2&\left[
+			1-\frac{2(\beta_{1}+\beta_{2})^{2}z_{1}}
+			{\xi\eta(z_{1}^{2}-1)}
+			\right]S(z_{1})
+			+
+			\frac{(\beta_{1}+\beta_{2})^{2}}
+			{\xi\eta(z_{1}^{2}-1)}
+			Q_{-1/2}(z_{1})
+			\Biggr\},
+		\end{aligned}
+		\\
+		K_{22}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			\dfrac{1}{k^{*2}\sqrt{\xi}}
+			\Bigl\{
+			&k_{2}^{*}(k_{1}^{*}+k_{2}^{*})\beta_{1}
+			\bigl[\eta^{-3/2}S(z_{11})-S(z_{21})\bigr]
+			\\
+			+\,
+			&k_{1}^{*}(k_{1}^{*}+k_{2}^{*})\beta_{2}
+			\bigl[\eta^{-3/2}S(z_{12})-S(z_{22})\bigr]
+			\\
+			-\,
+			&k_{1}^{*}k_{2}^{*}(\beta_{1}+\beta_{2})
+			\bigl[\eta^{-3/2}S(z_{1})-S(z_{2})\bigr]
+			\Bigr\}.
+		\end{aligned}
+	\end{array}
+\end{equation}
+%
+where the following notations are introduced:
+\begin{equation}
+	\label{BogdanovGuzEq35}
+	\begin{array}{rcl}
+		\beta &=& ha^{-1}, 
+		\qquad 
+		\beta_{j}=(n_{j}^{*})^{-1/2}\beta,
+		\\[4pt]
+		
+		z_{1j} &=& \dfrac{4\beta_{j}^{2}+\xi^{2}+\eta^{2}}{2\xi\eta},
+		\qquad
+		z_{2j}=\dfrac{4\beta_{j}^{2}+\xi^{2}+1}{2\xi},
+		\qquad j=1,2,
+		\\[6pt]
+		
+		z_{1} &=& \dfrac{(\beta_{1}+\beta_{2})^{2}+\xi^{2}+\eta^{2}}{2\xi\eta},
+		\qquad
+		z_{2}=\dfrac{(\beta_{1}+\beta_{2})^{2}+\xi^{2}+1}{2\xi},
+		\\[8pt]
+		
+		S(z) &=& \dfrac{Q_{1/2}(z)-zQ_{-1/2}(z)}{z^{2}-1}.
+	\end{array}
+\end{equation}
+
+\subsection{Spatial Problem on a Near-Surface Mixed-Mode Crack in a	Semi-Infinite Pre-Stressed Body}
+
+First, we consider the case when normal and radial shear stresses act on the crack faces, i.e., when in conditions \eqref{BogdanovGuzEq21}, \eqref{BogdanovGuzEq23} we have
+$\sigma(r)\neq0$, $\tau_r(r)\neq0$, and $\tau_\theta(r)=0$ and, by virtue of the axisymmetric nature of the problem, $u_\theta=Q'_{3\theta}=0$.
+
+By substituting the representations of displacements and stresses via harmonic potential functions \eqref{BogdanovGuzEq14} into expression \eqref{BogdanovGuzEq23}, and taking into account Hankel integral transforms of these functions in the form \eqref{BogdanovGuzEq27}, we obtain a system of dual integral equations and then the following system of Fredholm resolving integral equations of the second kind (the solution procedure is described in more detail in \cite{BogdanovGuz32}):
+
+\begin{equation}
+	\label{BogdanovGuzEq36}
+	\begin{array}{rcl}
+		
+		\begin{multlined}[b]
+			f(\xi)
+			+
+			\frac{4k_{1}}{\pi k}
+			\int_{0}^{1} f(\eta)K_{11}(\xi,\eta)\,d\eta
+			\\[-1em]
+			-
+			\frac{4k_{1}}{\pi k}
+			\int_{0}^{1} g(\eta)K_{12}(\xi,\eta)\,d\eta
+		\end{multlined}
+		&=&
+		-\dfrac{4k_{1}}{\pi k}
+		\displaystyle\int_{0}^{\pi/2}
+		\Sigma(\xi\sin\theta)\,d\theta ,
+		\\[1em]
+		\begin{multlined}[b]
+			g(\xi)
+			+
+			\frac{4k_{2}}{\pi k}
+			\int_{0}^{1} f(\eta)K_{21}(\xi,\eta)\,d\eta
+			\\[-1em]
+			-
+			\frac{4k_{2}}{\pi k}
+			\int_{0}^{1} g(\eta)K_{22}(\xi,\eta)\,d\eta
+		\end{multlined}
+		&=&
+		\dfrac{4k_{2}}{\pi k}\,
+		\xi
+		\displaystyle\int_{0}^{\pi/2}
+		T'(\xi\sin\theta)\,d\theta .	
+	\end{array}
+\end{equation}
+
+Here
+\[
+\Sigma(\xi)\equiv
+\frac{\xi\,\sigma(a\xi)}{C_{44}d_{1}l_{1}},
+\qquad
+T(\xi)\equiv
+\frac{\sqrt{n_{1}}\,\xi\,\tau(a\xi)}{C_{44}d_{1}},
+\qquad
+T'(\xi)=\frac{dT(\xi)}{d\xi}.
+\]
+
+The kernels of the integral equations \eqref{BogdanovGuzEq36} are
+
+\begin{equation}
+	\label{BogdanovGuzEq37}
+	\begin{array}{rcl}
+		K_{11}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+		\dfrac{k_{2}}{k}
+		\bigg[
+		2I_{1}(\beta_{1}+\beta_{2},\eta)
+		&-
+		\frac{k_{1}+k_{2}}{2k_{2}}\,I_{1}(2\beta_{1},\eta)
+		\\
+		&-
+		\frac{k_{1}+k_{2}}{2k_{1}}\,I_{1}(2\beta_{2},\eta)
+		\bigg],
+		\end{aligned}
+		\\
+		K_{12}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			\frac{k_{1}+k_{2}}{k}
+			\Bigl\{
+			&
+			\eta^{-1}I_{0}(\beta_{1}+\beta_{2},\eta)
+			-
+			I_{0}(\beta_{1}+\beta_{2},1)
+			\\
+			&
+			-\frac12\left[
+			\eta^{-1}I_{0}(2\beta_{1},\eta)
+			-
+			I_{0}(2\beta_{1},1)
+			\right]
+			\\
+			&
+			-\frac12\left[
+			\eta^{-1}I_{0}(2\beta_{2},\eta)
+			-
+			I_{0}(2\beta_{2},1)
+			\right]
+			\Bigr\},
+		\end{aligned}
+		\\[3em]
+		
+		K_{21}(\xi,\eta)
+		&=&
+		-\dfrac{k_{1}+k_{2}}{k}\,
+		\xi
+		\left[
+		I_{2}(\beta_{1}+\beta_{2},\eta)
+		-
+		\frac12 I_{2}(2\beta_{1},\eta)
+		-
+		\frac12 I_{2}(2\beta_{2},\eta)
+		\right],
+		\\[10pt]
+		
+		K_{22}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			-\frac{k_{1}}{k}\,
+			\xi
+			\Bigl\{
+			&
+			2\left[
+			\eta^{-1}I_{1}(\beta_{1}+\beta_{2},\eta)
+			-
+			I_{1}(\beta_{1}+\beta_{2},1)
+			\right]
+			\\
+			&
+			-\frac{k_{1}+k_{2}}{2k_{1}}
+			\left[
+			\eta^{-1}I_{1}(2\beta_{1},\eta)
+			-
+			I_{1}(2\beta_{1},1)
+			\right]
+			\\
+			&
+			-\frac{k_{1}+k_{2}}{2k_{2}}
+			\left[
+			\eta^{-1}I_{1}(2\beta_{2},\eta)
+			-
+			I_{1}(2\beta_{2},1)
+			\right]
+			\Bigr\},
+		\end{aligned}
+	\end{array}
+\end{equation}
+%
+where		
+
+\begin{equation}\label{BogdanovGuzEq38}
+	\begin{aligned}
+		&\beta_j = \beta n_j^{-1/2}, \quad j=1,2; 
+		\\
+		&k_1 = l_1 n_2^{-1/2}, \quad
+		k_2 = l_2 n_1^{-1/2}, \quad
+		k = k_1 - k_2; 
+		\\
+		&I_{0}(\tilde{\beta},\eta)
+		= \frac{1}{4}\ln
+		\frac{\tilde{\beta}^{2}+(\xi+\eta)^{2}}
+		{\tilde{\beta}^{2}+(\xi-\eta)^{2}}
+		= \frac{1}{4}\ln\frac{\zeta+1}{\zeta-1}, 
+		\\
+		&I_{1}(\tilde{\beta},\eta)
+		= \frac{\tilde{\beta}}{2\xi\eta(\zeta^{2}-1)}, 
+		\\
+		&I_{2}(\tilde{\beta},\eta)=
+		 I_{1}(\tilde{\beta},\eta)
+		\left[4\zeta I_{1}(\tilde{\beta},\eta)-\frac{1}{\tilde{\beta}}\right],\quad
+		\zeta = \frac{\tilde{\beta}^{2}+\xi^{2}+\eta^{2}}{2\xi\eta}.
+	\end{aligned}
+\end{equation}
+
+Further, we consider the case when only torsional forces act on the crack faces (antisymmetrically with respect to the crack plane), i.e., when
+\[
+\sigma(r)=\tau_r(r)=0, \qquad \tau_\theta(r)\ne 0
+\]
+in conditions \eqref{BogdanovGuzEq21}, \eqref{BogdanovGuzEq23}. In this situation, only the displacement component $u_\theta$ and the stress component $Q'_{3\theta}$ are nonzero.
+
+Substituting the representations of displacements and stresses via harmonic potential functions \eqref{BogdanovGuzEq14} into expression \eqref{BogdanovGuzEq23}, and taking into account the Hankel integral transforms of these functions in the form \eqref{BogdanovGuzEq27}, we obtain the following Fredholm resolving integral equation of the second kind (a more detailed derivation is given in~\cite{BogdanovGuz32}):
+
+\begin{equation}\label{BogdanovGuzEq39}
+	\begin{array}{r}
+		f(\xi)-\dfrac{1}{\pi}\int_{0}^{1} f(\eta)\,K(\xi,\eta)\,d\eta
+		=\dfrac{4}{\pi}\,\xi \displaystyle\int_{0}^{\pi/2} q'(\xi\sin\theta)\,d\theta,
+		\\
+		q(\xi)\equiv \dfrac{\xi\,\tau_\theta(a\xi)}{C_{44}\,n_3^{-1/2}} .
+	\end{array}
+\end{equation}
+%
+with the kernel
+
+\begin{equation}\label{BogdanovGuzEq40}
+	K(\xi,\eta)=2\xi\left[\eta^{-1}I_1(2\beta_3,\eta)-I_1(2\beta_3,1)\right].
+\end{equation}
+
+
+\subsection{Spatial Problem on Two Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+For this problem, the following system of Fredholm resolving integral equations of the second kind is obtained~\cite{BogdanovGuz32}:
+\begin{equation}\label{BogdanovGuzEq41}
+	\begin{array}{rcl}
+		\begin{multlined}[b]
+			f(\xi)-\dfrac{2}{\pi k}\displaystyle\int_{0}^{1}f(\eta)K_{11}(\xi,\eta)\,d\eta
+			\\[-1em]
+				-\dfrac{2}{\pi k}\displaystyle\int_{0}^{1}g(\eta)K_{12}(\xi,\eta)\,d\eta
+		\end{multlined}
+		&=&0, 
+		\\[1em]
+		\begin{multlined}[b]
+			g(\xi)+\dfrac{2}{\pi k}\displaystyle\int_{0}^{1}f(\eta)K_{21}(\xi,\eta)\,d\eta
+			\\[-1em]
+			+\dfrac{2}{\pi k}\displaystyle\int_{0}^{1}g(\eta)K_{22}(\xi,\eta)\,d\eta
+		\end{multlined}
+		&=&-\dfrac{4}{\pi}\xi\displaystyle\int_{0}^{\pi/2}T'(\xi\sin\theta)\,d\theta .
+	\end{array}
+\end{equation}
+%
+where
+\[
+T(\xi)\equiv
+-\frac{\xi\,\tau_r(a\xi)}{C_{44}\,n_2^{-1/2}d_2}.
+\]
+
+The kernels of system~\eqref{BogdanovGuzEq41} have the forms
+\begin{equation}\label{BogdanovGuzEq42}
+	\begin{array}{rcl}
+		K_{11}(\xi,\eta)&=&-k_1 I_1(2\beta_1,\eta)+k_2 I_1(2\beta_2,\eta), 
+		\\[4pt]
+		K_{21}(\xi,\eta)&=&k_2\xi
+		\big[I_2(2\beta_1,\eta)-I_2(2\beta_2,\eta)\big], 
+		\\[4pt]
+		K_{12}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			-k_1\!\big\{
+			&\big[I_0(2\beta_1,1)-I_0(2\beta_2,1)\big]
+			\\
+			-\eta^{-1}&\big[I_0(2\beta_1,\eta)-I_0(2\beta_2,\eta)\big]
+			\big\}, 
+		\end{aligned}
+		\\[2em]
+		K_{22}(\xi,\eta)
+		&=&
+		\begin{aligned}[t]
+			\xi\!\big\{
+			&\big[k_2 I_1(2\beta_1,1)-k_1 I_1(2\beta_2,1)\big]
+			\\
+			-\eta^{-1}&\big[k_2 I_1(2\beta_1,\eta)-k_1 I_1(2\beta_2,\eta)\big]
+			\big\}
+		\end{aligned}
+	\end{array}
+\end{equation}
+%
+where $I_0$, $I_1$, and $I_2$ are defined by~\eqref{BogdanovGuzEq38}.
+
+\subsection{Spatial Problem on the Periodic Array of Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+For this problem such a system of Fredholm resolving integral equations of the second kind was obtained~\cite{BogdanovGuz32}:
+
+\begin{equation}\label{BogdanovGuzEq43}
+	\begin{aligned}
+	f(\xi)-\frac{1}{\pi}\int_{0}^{1}f(\eta)K(\xi,\eta)\,d\eta
+	=\frac{2}{\pi}\xi\int_{0}^{\pi/2}T'(\xi\sin\theta)\,d\theta,
+	\\
+	T(\xi)\equiv
+	\frac{k_{2}\xi\,\tau_r(a\xi)}{kC_{44}n_1^{-1/2}d_{1}} .
+	\end{aligned}
+\end{equation}
+
+The kernel in \eqref{BogdanovGuzEq43} is of the form
+
+\begin{equation}\label{BogdanovGuzEq44}
+	K(\xi,\eta)
+	=\xi\eta^{-1}\big[R_{1}(\xi-\eta)-R_{1}(\xi+\eta)\big]
+	-\xi\big[R_{1}(\xi-1)-R_{1}(\xi+1)\big],
+\end{equation}
+%
+where
+\[
+R_{1}(z)\equiv
+k^{-1}\left[
+\frac{k_{1}}{\beta_{2}}\operatorname{Re}\psi\!\left(1+\frac{iz}{2\beta_{2}}\right)
+-\frac{k_{2}}{\beta_{1}}\operatorname{Re}\psi\!\left(1+\frac{iz}{2\beta_{1}}\right)
+\right].
+\]
+
+Thus, boundary value problems formulated by expressions
+\eqref{BogdanovGuzEq19}, \eqref{BogdanovGuzEq23}--\eqref{BogdanovGuzEq25}
+have been reduced (for the case of unequal roots of the characteristic equation)
+to Fredholm nonhomogeneous integral equations of the second kind
+\eqref{BogdanovGuzEq32}, \eqref{BogdanovGuzEq36},
+\eqref{BogdanovGuzEq39}, \eqref{BogdanovGuzEq41},
+and \eqref{BogdanovGuzEq43}, which will be studied numerically.
+In the case of equal roots of the characteristic equation,
+the corresponding Fredholm integral equations are obtained similarly.
+
+\section{Stress Intensity Factors}
+
+We analyze the asymptotic distribution of stresses in the vicinity of the crack tips and determine the stress intensity factors. Similarly to the classical fracture mechanics formulation without initial stresses~\cite{BogdanovGuz16,BogdanovGuz21}, these factors represent the coefficients of the singular terms in the stress fields as the crack tips are approached from the side of the continuous body. 
+
+As in the previous section, the results are presented only for the case of non-equal roots of the characteristic equation. For the case of equal roots, analogous results are obtained.
+
+\subsection{Plane Problem on a Near-Surface Mode I Crack in a Semi-Infinite Pre-Stressed Body}
+
+From the representations of the stress tensor components via harmonic potential functions in the forms~\eqref{BogdanovGuzEq11}, taking into account relations~\eqref{BogdanovGuzEq26}, \eqref{BogdanovGuzEq28}, and \eqref{BogdanovGuzEq30}, the following expressions are obtained for the stress tensor components $Q'_{22}$ and $Q'_{21}$ in the domain $\lvert y_{1}\rvert>a$, $y_{2}=0$ (i.e., along the line of crack location outside the crack, in domain 2):
+\begin{equation}\label{BogdanovGuzEq45}
+	\begin{array}{rcl}
+		Q'^{(2)}_{22}(y_{1},0)
+		&=&
+		\begin{multlined}[t]
+			C_{44}^{*}d_{1}^{*}l_{1}^{*}
+			\bigg\{
+			\frac{k^{*}}{2k_{1}^{*}}
+			\int_{0}^{\infty}X_{1}\lambda\cos(\lambda y_{1})\,d\lambda
+			\\[-1em]
+			+
+			\int_{0}^{\infty}\big[M(\lambda)X_{1}+F(\lambda)X_{2}\big]
+			\lambda\cos(\lambda y_{1})\,d\lambda
+			\bigg\},
+		\end{multlined}
+		\\[1em]	
+		Q'^{(2)}_{21}(y_{1},0)
+		&=&
+		\begin{multlined}[t]
+			-\,C_{44}^{*}d_{1}^{*}(n_{1}^{*})^{-1/2}
+			\bigg\{
+			\frac{k^{*}}{2k_{2}^{*}}
+			\int_{0}^{\infty}X_{2}\lambda\sin(\lambda y_{1})\,d\lambda
+			\\[-1em]
+			+
+			\int_{0}^{\infty}\big[F(\lambda)X_{1}+L(\lambda)X_{2}\big]
+			\lambda\sin(\lambda y_{1})\,d\lambda
+			\bigg\}.
+		\end{multlined}
+	\end{array}
+\end{equation}
+%
+Here $k_{1}^{*}$, $k_{2}^{*}$, and $k^{*}$ are defined by~\eqref{BogdanovGuzEq30}, while $X_{1}$ and $X_{2}$ are determined from~\eqref{BogdanovGuzEq30}. The following auxiliary functions are introduced:
+\begin{align*}
+M(\lambda)
+&=
+2\frac{k_{2}^{*}}{k^{*}}e^{-\mu_{1}-\mu_{2}}
+-\frac{k_{1}^{*}+k_{2}^{*}}{2k^{*}}
+\left(
+e^{-2\mu_{1}}
++\frac{k_{2}^{*}}{k_{1}^{*}}e^{-2\mu_{2}}
+\right),
+\\ 
+L(\lambda)
+&=
+2\frac{k_{1}^{*}}{k^{*}}e^{-\mu_{1}-\mu_{2}}
+-\frac{k_{1}^{*}+k_{2}^{*}}{2k^{*}}
+\left(
+e^{-2\mu_{1}}
++\frac{k_{1}^{*}}{k_{2}^{*}}e^{-2\mu_{2}}
+\right),
+\\
+F(\lambda)
+&=
+\frac{k_{1}^{*}+k_{2}^{*}}{2k^{*}}
+\left(e^{-\mu_{1}}-e^{-\mu_{2}}\right)^{2}.
+\end{align*}
+
+It follows from the analysis of expressions \eqref{BogdanovGuzEq45} that, as
+$y_{1}\to a$, only the first integrals inside the braces in the expressions for
+$Q_{22}^{\prime(2)}(y_{1},0)$ and $Q_{21}^{\prime(2)}(y_{1},0)$ contain
+singular terms. Indeed, the second integrals do not possess such singularities,
+as follows from the corresponding formulas for integrals involving Bessel
+functions~\cite{BogdanovGuz54}.
+
+Consider the first integral in the expression for
+$Q_{22}^{\prime(2)}(y_{1},0)$. Taking into account
+\eqref{BogdanovGuzEq31} and using the Weber--Schafheitlin discontinuous
+integral~\cite{BogdanovGuz54}
+\[
+\int_{0}^{\infty}\cos(\lambda y_{1})J_{1}(\lambda t)\,d\lambda
+=
+\begin{cases}
+	t^{-1}, & 0\le y_{1}<t,
+	\\[6pt]
+	-\dfrac{t}{\sqrt{y_{1}^{2}-t^{2}}\,
+		\bigl(y_{1}+\sqrt{y_{1}^{2}-t^{2}}\bigr)},
+	& 0<t<y_{1},
+\end{cases}
+\]
+it can be shown~\cite{BogdanovGuz10} that
+\begin{multline}
+	\label{BogdanovGuzEq46}
+	\int_{0}^{\infty}X_{1}\lambda\cos(\lambda y_{1})\,d\lambda
+	\\
+	=
+	-\frac{a\,\varphi(a)}
+	{\sqrt{y_{1}^{2}-a^{2}}\,
+		\bigl(y_{1}+\sqrt{y_{1}^{2}-a^{2}}\bigr)}
+	-
+	\int_{0}^{a}
+	\frac{\varphi(t)-t^{-1}\varphi'(t)}
+	{\sqrt{y_{1}^{2}-t^{2}}\,
+		\bigl(y_{1}+\sqrt{y_{1}^{2}-t^{2}}\bigr)}\,dt .
+\end{multline}
+%
+The second term in \eqref{BogdanovGuzEq46} does not contain singularities as
+$y_{1}\to a$~\cite{BogdanovGuz53}.
+
+Substituting \eqref{BogdanovGuzEq46} into the first expression in
+\eqref{BogdanovGuzEq45}, we obtain
+\begin{equation}
+	\label{BogdanovGuzEq47}
+	Q_{22}^{\prime(2)}(y_{1},0)
+	=
+	-\,C_{44}^{*} d_{1}^{*} l_{1}^{*}
+	\frac{k^{*}}{2k_{1}^{*}}
+	\frac{a\,\varphi(a)}
+	{\sqrt{(y_{1}-a)(y_{1}+a)}
+		\left(y_{1}+\sqrt{y_{1}^{2}-a^{2}}\right)}
+	+O(1),
+\end{equation}
+where the symbol $O(1)$ denotes regular terms, i.e., terms that remain finite
+as $y_{1}\to a$.
+
+Carrying out analogous calculations for
+$Q_{21}^{\prime(2)}(y_{1},0)$, we obtain
+\begin{equation}
+	\label{BogdanovGuzEq48}
+	Q_{21}^{\prime(2)}(y_{1},0)
+	=
+	C_{44}^{*} d_{1}^{*}
+	\frac{k^{*}}{2\sqrt{n_{1}^{*}}\,k_{2}^{*}}
+	\frac{\psi(a)}
+	{\sqrt{(y_{1}-a)(y_{1}+a)}}
+	+O(1).
+\end{equation}
+
+It follows from expressions \eqref{BogdanovGuzEq47} and \eqref{BogdanovGuzEq48}
+that the order of singularity in the stress distribution near the tip of the
+near-surface crack in the pre-stressed half-plane is equal to $-\frac12$, i.e., it
+coincides with the order of singularity in the stress distribution near the
+crack tip in a body without initial stresses~\cite{BogdanovGuz16}.
+
+Relations \eqref{BogdanovGuzEq26} and \eqref{BogdanovGuzEq27} can therefore be written in the form
+\begin{equation}
+	\label{BogdanovGuzEq49}
+	\begin{array}{rcl}
+		Q_{22}^{\prime(2)}(y_{1},0)
+		&=&
+		\dfrac{K_{I}}{\sqrt{2\pi (y_{1}-a)}}+O(1),
+		\\[6pt]
+		Q_{21}^{\prime(2)}(y_{1},0)
+		&=&
+		\dfrac{K_{II}}{\sqrt{2\pi (y_{1}-a)}}+O(1),
+	\end{array}
+\end{equation}
+where $K_{I}$ and $K_{II}$ are the stress intensity factors (SIFs) at the crack
+tip, determined from the following expressions:
+\begin{equation}
+	\label{BogdanovGuzEq50}
+	\begin{aligned}		
+		K_{I}
+		&\equiv
+		\displaystyle
+		\lim_{y_{1}\to +a}
+		\sqrt{2\pi (y_{1}-a)}\,Q_{22}^{\prime(2)}
+		\\
+		&
+		\displaystyle
+		=
+		-\,C_{44}^{*} d_{1}^{*} l_{1}^{*}
+		\dfrac{k^{*}}{2k_{1}^{*}}
+		\sqrt{\dfrac{\pi}{a}}\,
+		\varphi(a),
+		\\
+		K_{II}
+		&\equiv
+			\displaystyle
+			\lim_{y_{1}\to +a}
+			\sqrt{2\pi (y_{1}-a)}\,Q_{21}^{\prime(2)}
+			\\
+			&
+			=
+			C_{44}^{*} d_{1}^{*}
+			\dfrac{k^{*}}{2\sqrt{n_{1}^{*}}\,k_{2}^{*}}
+			\sqrt{\dfrac{\pi}{a}}\,
+			\psi(a)
+			\\
+			&
+			=
+			\displaystyle
+			C_{44}^{*} d_{1}^{*}
+			\dfrac{k^{*}}{2\sqrt{n_{1}^{*}}\,k_{2}^{*}}
+			\sqrt{\dfrac{\pi}{a}}
+			\int_{0}^{a}\tilde{\psi}(t)\,dt .
+	\end{aligned}
+\end{equation}
+%
+Here and below, the notation $y_{1}\to +a$ (or $r\to +a$) denotes approaching
+the crack tip from the side of the continuous body.
+
+Changing in \eqref{BogdanovGuzEq50} to dimensionless variables and functions,
+with account taken of \eqref{BogdanovGuzEq34}, we obtain the following
+expressions for the stress intensity factors:
+\begin{equation}
+	\label{BogdanovGuzEq51}
+	\begin{array}{rcl}
+		K_{I}
+		&=&
+		-\,C_{44}^{*} d_{1}^{*} l_{1}^{*}
+		\dfrac{k^{*}}{2k_{1}^{*}}
+		\sqrt{\pi a}\,
+		f(1),
+		\\[8pt]
+		K_{II}
+		&=&
+		C_{44}^{*} d_{1}^{*}
+		\dfrac{k^{*}}{2\sqrt{n_{1}^{*}}\,k_{2}^{*}}
+		\sqrt{\pi a}
+		\displaystyle\int_{0}^{1} g(\eta)\,d\eta ,
+	\end{array}
+\end{equation}
+where the functions $f(\eta)$ and $g(\eta)$ are determined from the system of
+Fredholm integral equations~\eqref{BogdanovGuzEq32}.
+
+An analysis of expressions \eqref{BogdanovGuzEq50} and
+\eqref{BogdanovGuzEq51} for the stress intensity factors shows that the
+interaction between the near-surface crack and the free boundary of the
+half-plane leads to qualitative changes in the asymptotic stress distribution
+near the crack tips. In particular, both SIFs $K_{I}$ and $K_{II}$ become
+nonzero even when the crack faces are subjected only to normal loading.
+This differs from the case of an isolated mode~I crack in an infinite plane
+(with or without initial stresses~\cite{BogdanovGuz27,BogdanovGuz16}),
+for which $K_{I}\neq 0$ while $K_{II}=0$.
+
+Furthermore, expressions \eqref{BogdanovGuzEq50} and
+\eqref{BogdanovGuzEq51} demonstrate that, for the problem under
+consideration, both SIFs depend on the initial stresses. Indeed, the
+parameters $n_{1}^{*}$, $n_{2}^{*}$, $C_{44}^{*}$, $d_{1}^{*}$, $l_{1}^{*}$,
+$k_{1}^{*}$, $k_{2}^{*}$, and $k^{*}$ depend on the parameter $\lambda_{1}$,
+which is induced by the presence of initial stresses.
+
+\subsection{Spatial Problem on a Near-Surface Mixed-Mode Crack in a Semi-Infinite Pre-Stressed Body}
+
+For the case when normal stresses $\sigma(r)$ and radial shear stresses
+$\tau_r(r)$ act on the faces of a penny-shaped crack located parallel to the
+surface of a pre-stressed semi-infinite body, the following asymptotic
+expressions are obtained for the stress tensor components
+$Q'_{33}$, $Q'_{3r}$, and $Q'_{3\theta}$ in the domain $r>a$, $y_{3}=0$
+(i.e., in the plane of the crack outside it, in domain 2) as
+$r\to a$~\cite{BogdanovGuz32}:
+\begin{equation}
+	\label{BogdanovGuzEq52}
+	\begin{aligned}
+		Q_{33}^{\prime(2)}(r,0)
+		&=
+			\frac{C_{44} d_{1} l_{1} k}{2k_{1}}
+			\frac{a}{\sqrt{(r-a)(r+a)}}\,f(1)
+			+O(1)
+			\\
+			&=
+			\frac{K_{I}}{\sqrt{2\pi (r-a)}}+O(1),
+		\\
+		Q_{3r}^{\prime(2)}(r,0)
+		&=
+		\frac{C_{44} d_{1} k}{2\sqrt{n_{1}}\,k_{2}}
+			\frac{a^{2}}{r\sqrt{(r-a)(r+a)}}
+			\int_{0}^{1} g(\eta)\,d\eta
+			+O(1)
+			\\
+			&=
+			\frac{K_{II}}{\sqrt{2\pi (r-a)}}+O(1),
+		\\
+		Q_{3\theta}^{\prime(2)}(r,0)
+		&=
+		0 .		
+	\end{aligned}
+\end{equation}
+
+It follows from \eqref{BogdanovGuzEq52} that the order of singularity in the
+stress distribution near the edge of a near-surface penny-shaped crack in the
+pre-stressed half-space is equal to $-1/2$. Thus, it coincides with the order
+of singularity in the stress distribution near the edge of a penny-shaped
+crack parallel to the free surface of a semi-infinite body without initial
+stresses~\cite{BogdanovGuz43}.
+
+The stress intensity factors are determined from the relations
+\begin{equation}
+	\label{BogdanovGuzEq53}
+	\begin{aligned}
+		K_{I}
+		&\equiv
+		\lim_{r\to +a}
+			\sqrt{2\pi(r-a)}\,Q_{33}^{\prime(2)}
+			\\
+			& =
+			-\frac{C_{44} d_{1} l_{1} k}{2k_{1}}
+			\sqrt{\pi a}\,f(1),
+		\\
+		K_{II}
+		&\equiv
+			\lim_{r\to +a}
+			\sqrt{2\pi(r-a)}\,Q_{3r}^{\prime(2)}
+			\\[-0.5em]
+			& =
+			\frac{C_{44} d_{1} k}{2\sqrt{n_{1}}\,k_{2}}
+			\sqrt{\pi a}
+			\int_{0}^{1} g(\xi)\,d\xi ,
+		\\
+		K_{III}
+		&\equiv
+		\lim_{r\to +a}
+			\sqrt{2\pi(r-a)}\,Q_{3\theta}^{\prime(2)}
+			\\
+			&=0.
+	\end{aligned}
+\end{equation}
+
+Here the functions $f(\eta)$ and $g(\eta)$ are determined from the system of
+Fredholm integral equations~\eqref{BogdanovGuzEq36}.
+
+When a near-surface penny-shaped crack is subjected to torsional loading
+$\tau_{\theta}(r)$, the following SIFs are obtained~\cite{BogdanovGuz32}:
+\begin{equation}
+	\label{BogdanovGuzEq54}
+	\begin{aligned}
+		K_{I}&=0,
+		\\[4pt]
+		K_{II}&=0,
+		\\
+		K_{III}
+		&=
+		\displaystyle
+		\frac{C_{44}}{2\sqrt{n_{3}}}
+		\sqrt{\pi a}
+		\int_{0}^{1} f(\eta)\,d\eta .
+	\end{aligned}
+\end{equation}
+%
+Here the function $f(\eta)$ is determined from the Fredholm integral
+equation~\eqref{BogdanovGuzEq39}.
+
+It follows from expressions \eqref{BogdanovGuzEq53} and
+\eqref{BogdanovGuzEq54} that the SIFs, similarly to the
+plane problem, depend on the initial stresses in the body.
+
+
+\subsection{Spatial Problem on Two Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+In this case, as $r\to a$, the following asymptotic expressions are obtained
+for the components of the stress tensor
+$Q'_{33}$, $Q'_{3r}$, and $Q'_{3\theta}$ near the crack faces in the planes of
+their location~\cite{BogdanovGuz32}:
+\begin{equation}
+	\label{BogdanovGuzEq55}
+	\begin{aligned}
+		Q_{33}^{\prime(2)}(r,0)
+		&=
+			-\frac{1}{2}C_{44} d_{2} l_{2}
+			\frac{a}{\sqrt{(r-a)(r+a)}}\,f(1)
+			+O(1)
+			\\
+			&=
+			\frac{K_{I}}{\sqrt{2\pi (r-a)}}+O(1),
+		\\
+		Q_{3r}^{\prime(2)}(r,0)
+		&=
+			\frac{1}{2}C_{44}\frac{d_{2}}{\sqrt{n_{2}}}
+			\frac{a^{2}}{r\sqrt{(r-a)(r+a)}}
+			\int_{0}^{1} g(\eta)\,d\eta
+			+O(1)
+			\\
+			&=
+			\frac{K_{II}}{\sqrt{2\pi (r-a)}}+O(1),
+			\\
+		Q_{3\theta}^{\prime(2)}(r,0)
+		&=
+		0.
+	\end{aligned}
+\end{equation}
+
+As follows from \eqref{BogdanovGuzEq55}, the order of singularity in the
+stress distribution near the edges of penny-shaped cracks in a pre-stressed
+infinite body is equal to $-\frac12$. The stress intensity factors in this case
+are determined from the relations
+\begin{equation}
+	\label{BogdanovGuzEq56}
+	\begin{aligned}
+		K_{I}
+		&\equiv
+			\lim_{r\to +a}\sqrt{2\pi(r-a)}\,Q_{33}^{\prime(2)}
+			\\
+			&=
+			-\frac{1}{2}C_{44} d_{2} l_{2}
+			\sqrt{\pi a}\,f(1),
+		\\
+		K_{II}
+		&\equiv
+		\lim_{r\to +a}\sqrt{2\pi(r-a)}\,Q_{3r}^{\prime(2)}
+			\\
+			&=
+			\frac{1}{2}\frac{C_{44} d_{2}}{\sqrt{n_{2}}}
+			\sqrt{\pi a}
+			\int_{0}^{1} g(\xi)\,d\xi ,
+		\\
+		K_{III}
+		&\equiv
+		\lim_{r\to +a}\sqrt{2\pi(r-a)}\,Q_{3\theta}^{\prime(2)}
+		\\
+		&=0 .
+	\end{aligned}
+\end{equation}
+%
+Here the functions $f(\eta)$ and $g(\eta)$ are determined from the system of
+Fredholm integral equations~\eqref{BogdanovGuzEq41}.
+
+An analysis of expressions \eqref{BogdanovGuzEq56} for the stress intensity
+factors shows that the mutual interaction of two parallel coaxial cracks in a
+body with initial stresses leads to qualitative changes in the asymptotic
+stress distribution near the crack edges. In particular, both SIFs $K_{I}$ and
+$K_{II}$ become nonzero when the crack faces are subjected only to radial
+shear loading. This differs from the case of an isolated mode~II crack in an
+unbounded body (both with initial stresses~\cite{BogdanovGuz27} and without
+them~\cite{BogdanovGuz16}), for which $K_{I}=0$ and $K_{II}\ne 0$.
+
+Furthermore, expressions \eqref{BogdanovGuzEq56} show that, for the problem
+under consideration, both stress intensity factors depend on the initial
+stresses in the body.
+
+\subsection{Spatial Problem on a Periodic Array of Parallel Coaxial Mode II Cracks in an Infinite Pre-Stressed Body}
+
+For this problem, an analysis of the asymptotic stress distribution near the
+crack edges as $r\to a$ yields the following expressions for the components of
+the stress tensor $Q'_{33}$, $Q'_{3r}$, and $Q'_{3\theta}$ in the planes of the
+crack locations~\cite{BogdanovGuz32}:
+\begin{equation}
+	\label{BogdanovGuzEq57}
+	\begin{aligned}		
+		Q_{33}'(r,0) &= 0,
+		\\
+		Q_{3r}'(r,0)
+		&=
+		C_{44}\frac{d_{1}k}{\sqrt{n_{1}}\,k_{2}}
+			\frac{a^{2}}{r\sqrt{(r-a)(r+a)}}
+			\int_{0}^{1} g(\eta)\,d\eta
+			+O(1)
+			\\
+			&=
+			\frac{K_{II}}{\sqrt{2\pi(r-a)}}+O(1),
+		\\
+		Q_{3\theta}'(r,0) &= 0 .
+	\end{aligned}
+\end{equation}
+
+It follows from \eqref{BogdanovGuzEq57} that the order of singularity in the
+distribution of the stress component $Q'_{3r}$ near the edges of penny-shaped
+cracks in a pre-stressed unbounded body is equal to $-\tfrac12$. The stress
+intensity factors in this case are determined from the relations
+\begin{equation}
+	\label{BogdanovGuzEq58}
+	\begin{aligned}
+		K_{I} &= 0,
+		\\		
+		K_{II}
+		&\equiv
+			 \lim_{r\to +a}\sqrt{2\pi(r-a)}\,Q'_{3r}
+			\\
+			&=
+			\frac{C_{44} d_{1} k}{\sqrt{n_{2}}\,k_{2}}
+			\sqrt{\pi a}
+			\int_{0}^{1} f(\xi)\,d\xi ,
+		\\
+		K_{III} &= 0 .		
+	\end{aligned}
+\end{equation}
+%
+Here the function $f(\eta)$ is determined from the Fredholm integral
+equation~\eqref{BogdanovGuzEq43}. The SIF $K_{II}$
+depends on the initial stresses in the body.
+
+\section{Numerical Results}
+
+Fredholm resolving integral equations of the second kind for different crack
+geometries and loading schemes,
+\eqref{BogdanovGuzEq32}, \eqref{BogdanovGuzEq36},
+\eqref{BogdanovGuzEq39}, \eqref{BogdanovGuzEq41},
+\eqref{BogdanovGuzEq43}, as well as the corresponding expressions for the
+stress intensity factors (SIFs)
+\eqref{BogdanovGuzEq51}, \eqref{BogdanovGuzEq53},
+\eqref{BogdanovGuzEq54}, \eqref{BogdanovGuzEq56},
+have been obtained in a unified form for both compressible and
+incompressible elastic bodies in the case when the roots of the
+characteristic equation \eqref{BogdanovGuzEq10} (for the plane problem)
+and \eqref{BogdanovGuzEq15} (for the spatial problem) are non-equal.
+
+Analogous expressions, also in a unified form for different elastic-body
+models, can be derived for the case of equal roots of the characteristic
+equation.
+
+The specification of the material model is required only at the stage of
+numerical solution of the Fredholm integral equations and computation of
+the SIFs, by assigning specific values to the parameters
+$n_{i}^{*}$, $C_{44}^{*}$, $d_{j}^{*}$, $l_{j}^{*}$, $k_{j}^{*}$, $k^{*}$
+(for the plane problem) and
+$n_{1}$, $n_{2}$, $C_{44}$, $d_{j}$, $l_{j}$, $k_{j}$, $k$
+(for the spatial problems), where $j=1,2$.
+The values of these parameters for various materials are given,
+for example, in~\cite{BogdanovGuz10,BogdanovGuz31,BogdanovGuz32}.
+
+Below we present numerical results for several compressible and incompressible
+nonlinearly elastic (hyperelastic) materials described by different elastic
+potentials~\cite{BogdanovGuz51}. The results are obtained for both cases of
+equal and non-equal roots of the characteristic equation~\cite{BogdanovGuz28}.
+In addition, results are presented for laminated composite materials with
+isotropic layers and for fibrous composites reinforced with short fibers in
+the plane of anisotropy, which within the framework of the continuum composite
+model are treated as transversely isotropic bodies~\cite{BogdanovGuz15}.
+
+\medskip
+
+Consider first the results for the \textit{plane problem on a pre-stressed
+	half-plane with a near-surface mode I crack}. The calculations are performed
+for isotropic nonlinearly elastic materials described by the Treloar and
+Bartenev--Khazanovich elastic potentials, when a uniform normal tensile load
+\begin{equation}
+	\label{BogdanovGuzEq59}
+	\sigma(y_{1})=\sigma=\text{const}
+\end{equation}
+acts on the crack faces.
+
+\medskip
+
+\emph{Material with the Treloar potential}~\cite{BogdanovGuz60}
+(incompressible neo-Hookean body, the case of non-equal roots).
+Figures~\ref{BogdanovGuzFig1} and~\ref{BogdanovGuzFig2} illustrate, for different values of the normalized distance
+between the crack and the free boundary of the body
+$\beta=h/a$, the dependence of the normalized SIFs $K_{I}/K_{I}^{\infty}$ and $K_{II}/K_{I}^{\infty}$ on the parameter of
+initial stresses $\lambda_{1}$. Here $K_{I}^{\infty}$ denotes the SIF for a
+mode~I crack in an unbounded plane, which does not depend on the initial
+stress parameter $\lambda_{1}$ and is given by
+$K_{I}^{\infty}=\sqrt{\pi a}\,\sigma$~\cite{BogdanovGuz16,BogdanovGuz27}.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.64\textwidth]{BogdanovGuzFig1}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{I}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Treloar potential.}
+	\label{BogdanovGuzFig1}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.64\textwidth]{BogdanovGuzFig2}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{I}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Treloar potential.}
+	\label{BogdanovGuzFig2}
+\end{figure}
+
+The values of the parameter $\lambda_{1}$ in the interval
+$0<\lambda_{1}<1$ correspond to compressive initial stresses,
+$\lambda_{1}>1$ corresponds to tensile initial stresses,
+and $\lambda_{1}=1$ corresponds to the absence of initial stresses.
+It follows from these figures that both SIFs $K_{I}$ and $K_{II}$ depend
+significantly on the initial stresses, with the influence of compressive
+initial stresses being more pronounced than that of tensile stresses.
+In addition, the normalized distance $\beta$ between the crack and the
+boundary has a substantial effect on the SIF values.
+
+
+The curves shown in Figs.~\ref{BogdanovGuzFig1} and~\ref{BogdanovGuzFig2} exhibit vertical asymptotes in the
+region of compressive initial stresses. This indicates that when the
+compressive stress $S_{11}^{0}$ (and, correspondingly, the parameter
+$\lambda_{1}<1$) reaches certain critical values, which depend on the
+distance parameter $\beta$, an abrupt (resonance-like) increase in the
+stress intensity factors occurs.
+
+
+
+Table~\ref{BogdanovGuzTab1}
+ presents, for several values of the normalized distance
+$\beta=h/a$ between the crack and the body boundary, the numerical
+values of the parameter $\lambda_{1}$ at which this resonance-like
+phenomenon occurs, together with the corresponding SIF values.
+
+It should be noted that these values of $\lambda_{1}$ coincide with the
+critical values of the contraction coefficient along the coordinate
+axis $Oy_{1}$ under the action of the compressive force $S_{11}^{0}$
+obtained in~\cite{BogdanovGuz31} for the plane problem of compression of
+a half-plane containing a near-surface crack. These critical values
+correspond to the loss of stability of the equilibrium state of the
+material in a local region near the crack (taking into account the
+transformation to the undeformed coordinates $x_{i}$ used in the
+calculations in~\cite{BogdanovGuz31}).
+
+For large values of $\beta$, the corresponding value of $\lambda_{1}$
+approaches the critical value $\lambda_{1}^{*}=0.544$, obtained for the
+plane problem of compression of an infinite plane made of a material
+with the Treloar potential containing an isolated crack~\cite{BogdanovGuz31}.
+This value also coincides with the critical value of the parameter
+$\lambda_{1}$ corresponding to the onset of surface instability of a
+half-space under plane-strain conditions~\cite{BogdanovGuz27}.
+
+\begin{table}[!h]
+	\centering
+	\caption{Values of the normalized stress intensity factors
+		$K_{I}/K_{I}^{\infty}$ and $K_{II}/K_{I}^{\infty}$ and the corresponding
+		values of the initial stress parameter $\lambda_{1}$ for a material with
+		the Treloar potential.}
+	\label{BogdanovGuzTab1}
+	
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cccccccc}
+		\toprule
+		$\beta$ & 0.1 & 0.25 & 0.5 & 1.0 & 2.0 & 10.0 & $10^{3}$ \\
+		\midrule
+		$\lambda_{1}$ & 0.9958 & 0.9689 & 0.9120 & 0.8242 & 0.7307 & 0.5945 & 0.5442 \\
+		$K_{I}/K_{I}^{\infty}$ & 52207.9 & 25575.6 & 1551540.0 & 39871.6 & 12345.2 & 3454.5 & 11071.7 \\
+		$K_{II}/K_{I}^{\infty}$ & 48213.4 & 27861.2 & 1494780.0 & 33792.7 & 8573.7 & 987.7 & 42.8 \\
+		\bottomrule
+	\end{tabular*}
+	
+\end{table}
+The results presented above confirm the effectiveness of the unified
+approach described in Section~\ref{BogdanovGuzSec2} of this chapter for investigating
+non-classical failure mechanisms in plane fracture mechanics problems
+under the action of forces directed along cracks. Within this approach,
+critical (limit) compressive forces can be determined directly from the
+numerical solution of the linearized boundary-value problem for a
+pre-stressed semi-bounded body containing a near-surface crack.
+These critical values correspond to the initial compressive stresses
+whose approach leads to an abrupt resonance-like increase in the stress
+intensity factor ratios.
+
+\medskip
+
+\emph{Material with Bartenev--Khazanovich potential}~\cite{BogdanovGuz3}
+(incompressible body, the case of \textit{equal roots}).
+
+Figure~\ref{BogdanovGuzFig3} illustrates, for this potential, the
+dependence of the normalized stress intensity factor
+$K_{I}/K_{I}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+for different values of the geometric parameter
+$\beta = h/a$. As can be seen from the figure, the character of these
+dependences is similar to that obtained above for materials described
+by the Treloar potential.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{BogdanovGuzFig3}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{I}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig3}
+\end{figure}
+
+
+The curves shown in Fig.~\ref{BogdanovGuzFig3} exhibit vertical
+asymptotes in the region of compressive initial stresses. This
+indicates that when the compressive stresses (and, correspondingly,
+the parameter $\lambda_{1}$) reach certain critical values, a
+resonance-like increase of the stress intensity factor occurs. The
+resonance character of this growth is also reflected in the numerical
+values presented in Table~\ref{BogdanovGuzTab2}.
+
+\begin{table}[!h]
+	\centering
+	\caption{Values of the normalized stress intensity factors
+		$K_{I}/K_{I}^{\infty}$ and $K_{II}/K_{I}^{\infty}$ corresponding to
+		the values of the initial stress parameter $\lambda_{1}$ and the
+		critical values of the relative contraction $\varepsilon_{1}$ for a
+		material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzTab2}
+	
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ccccccccc}
+		\toprule
+		$\beta$ & 0.1 & 0.25 & 0.5 & 0.75 & 1.0 & 2.0 & 10.0 & $10^{3}$ \\
+		\midrule
+		$\lambda_{1}$ & 0.9958 & 0.9689 & 0.9124 & 0.8644 & 0.8265 & 0.7371 & 0.6166 & 0.5776 \\
+		$\varepsilon_{1}$ & 0.0042 & 0.0311 & 0.0876 & 0.1356 & 0.1735 & 0.2693 & 0.3834 & 0.4224 \\
+		$K_{I}/K_{I}^{\infty}$ & 62023.0 & 176557.0 & 158461.0 & 109089.0 & 78712.8 & 127403.0 & 447175.0 & 28887.8 \\
+		$K_{II}/K_{I}^{\infty}$ & 57277.6 & 192364.0 & 152676.0 & 97888.3 & 66584.7 & 86793.6 & 110024.0 & 86.5 \\
+		\bottomrule
+	\end{tabular*}
+	
+\end{table}
+
+The results obtained, similarly to those for the material with the
+Treloar potential, make it possible to determine the critical values
+of the contraction parameter $\lambda_{1}$ corresponding to the loss
+of stability of a portion of the material in the vicinity of the
+near-surface crack under compression along the crack.
+
+Figure~\ref{BogdanovGuzFig4} presents the dependence of the critical
+relative contraction
+$\varepsilon_{1}=1-\lambda_{1}$ on the dimensionless distance between
+the crack and the body boundary $\beta = h/a$ for the material with
+the Bartenev--Khazanovich potential. As follows from this figure, the
+interaction between the crack and the free surface has a significant
+influence on the critical values of $\varepsilon_{1}$: smaller
+distances between the crack and the body boundary correspond to lower
+critical compression parameters.
+
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{BogdanovGuzFig4}
+	\caption{Dependence of the critical relative contraction
+		$\varepsilon_{1}=1-\lambda_{1}$ on the geometric parameter
+		$\beta$ for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig4}
+\end{figure}
+
+At the same time, as the distance between the crack and the body
+boundary increases, their mutual influence decreases noticeably, and
+the corresponding values of $\varepsilon_{1}$ approach the limiting
+value
+$\varepsilon_{1}^{*}=1-\lambda_{1}^{*}=0.423$,
+which was obtained for the compression of an unbounded body containing
+an isolated crack~\cite{BogdanovGuz31}. This value also coincides with the
+critical parameter corresponding to surface instability of a half-space
+made of this material under plane strain conditions~\cite{BogdanovGuz27}.
+
+\medskip
+
+Some examples of numerical calculations for \emph{spatial axisymmetric problems} are presented below. Consider a semi-infinite
+pre-stressed body with a near-surface penny-shaped crack whose faces
+are subjected to a uniform shear load
+\begin{equation}
+	\label{BogdanovGuzEq60}
+	\tau(r)=\tau=\mathrm{const}.
+\end{equation}
+
+Figures~\ref{BogdanovGuzFig5} and \ref{BogdanovGuzFig6} show, for a
+material described by the \textit{Bartenev--Khazanovich potential},
+the dependences of the normalized stress intensity factors
+$K_{II}/K_{II}^{\infty}$ and $K_{I}/K_{II}^{\infty}$, respectively,
+on the initial stress parameter $\lambda_{1}$ for different values
+of the dimensionless distance between the crack and the body boundary
+$\beta = h/a$. Here $K_{II}^{\infty}$ denotes the stress intensity factor for a mode~II crack in an infinite body, which does not depend on the initial stresses
+and is determined by the expression
+\[
+K_{II}^{\infty}=\frac{\tau}{2}\sqrt{\pi a}
+\]
+\cite{BogdanovGuz16,BogdanovGuz27}.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig5}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig5}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig6}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig6}
+\end{figure}
+
+As follows from the figures, both stress intensity factors $K_{II}$
+and $K_{I}$ are non-zero and depend noticeably on the initial stresses.
+
+The curves shown in Figs.~\ref{BogdanovGuzFig5} and~\ref{BogdanovGuzFig6} exhibit vertical asymptotes, which indicate a resonance-like effect arising when the initial compressive stresses (and, correspondingly, the parameter $\lambda_{1}<1$) approach the critical values associated with a local loss of material stability (in the form that is antisymmetric with respect to the crack plane). In accordance with the unified approach described in Section~\ref{BogdanovGuzSec2}, this feature makes it possible to determine the critical compression parameters for the axisymmetric problem of a semi-bounded body containing a near-surface crack. For the Bartenev--Khazanovich material, Table~\ref{BogdanovGuzTab3} compares the relative critical contraction $\varepsilon_{1}^{(1)}$ obtained by this unified approach with $\varepsilon_{1}^{(2)}$ computed within the three-dimensional linearized stability theory~\cite{BogdanovGuz32}. The two sets of values are in excellent agreement.
+
+\begin{table}[t]
+	\centering
+	\caption{Critical values of the relative contraction
+		$\varepsilon_{1}^{(i)} = 1-\lambda_{1}^{(i)}$
+		for the Bartenev--Khazanovich potential (near-surface penny-shaped crack).}
+	\label{BogdanovGuzTab3}
+	
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ccccccc}
+		\toprule
+		$\beta$ & 0.125 & 0.25 & 0.5 & 1.0 & 2.0 & 10.0 \\
+		\midrule
+		$\varepsilon_{1}^{(1)}$
+		& 0.01044 & 0.03271 & 0.08077 & 0.15003 & 0.21807 & 0.29463 \\
+		
+		$\varepsilon_{1}^{(2)}$
+		& 0.01043 & 0.03273 & 0.08076 & 0.15004 & 0.21806 & 0.29469 \\
+		\bottomrule
+	\end{tabular*}
+	
+\end{table}
+
+\medskip
+
+\emph{Material with a harmonic-type potential}~\cite{BogdanovGuz40}
+(compressible body, the case of \textit{equal roots}). For certain
+values of the geometric parameter $\beta = h/a$ and Poisson’s ratio
+$\nu = 0.3$, Figs.~\ref{BogdanovGuzFig7} and
+\ref{BogdanovGuzFig8} show the dependences of the normalized stress
+intensity factors $K_{II}/K_{II}^{\infty}$ and
+$K_{I}/K_{II}^{\infty}$, respectively, on the initial stress parameter
+$\lambda_{1}$.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{BogdanovGuzFig7}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with a harmonic-type potential.}
+	\label{BogdanovGuzFig7}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{BogdanovGuzFig8}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with a harmonic-type potential.}
+	\label{BogdanovGuzFig8}
+\end{figure}
+
+As can be seen from the figures, the curves also exhibit vertical
+asymptotes corresponding to the critical values of the contraction
+parameter that arise under compression of the body along a
+near-surface penny-shaped crack.
+
+\medskip
+
+\emph{A fibrous composite stochastically reinforced in the planes
+	$y_{3}=\mathrm{const}$.} Within the framework of the continual
+approach, such a composite material in macroscopic volumes is modeled
+as an elastic transversely isotropic medium with the plane of isotropy
+$y_{3}=\mathrm{const}$~\cite{BogdanovGuz44}, which corresponds to the case of
+\textit{non-equal roots}. The parameters of this composite required
+for the numerical solution of the Fredholm integral equations of the
+second kind~\eqref{BogdanovGuzEq36} and for the calculation of the stress
+intensity factors by formulas~\eqref{BogdanovGuzEq53} are given
+in~\cite{BogdanovGuz32}.
+
+The results are presented in
+Figs.~\ref{BogdanovGuzFig9} and~\ref{BogdanovGuzFig10} for a
+carbon/plastic composite reinforced with carbon fibers
+(the fiber volume fraction $c_{1}=0.7$).
+Similarly to the nonlinear elastic materials considered above, for
+this composite the normalized stress intensity factors
+$K_{II}/K_{II}^{\infty}$ and $K_{I}/K_{II}^{\infty}$ increase
+unboundedly as the initial stress parameter $\lambda_{1}$ approaches
+the values corresponding to the local loss of half-space stability
+under compression along the near-surface crack.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig9}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a fibrous composite with stochastic reinforcement.}
+	\label{BogdanovGuzFig9}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig10}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a fibrous composite with stochastic reinforcement.}
+	\label{BogdanovGuzFig10}
+\end{figure}
+
+\medskip
+Consider a half-space with a near-surface penny-shaped crack whose faces
+are subjected to uniform tangential torsion loads of intensity
+\begin{equation}
+	\label{BogdanovGuzEq61}
+\tau_{\theta}(r)=\tau=\mathrm{const}.
+\end{equation}
+
+Figures~\ref{BogdanovGuzFig11} and~\ref{BogdanovGuzFig12} show, for the material
+with the \emph{Bartenev--Khazanovich potential}, the dependences of the ratio
+$K_{III}/K_{III}^{\infty}$ (where $K_{III}^{\infty}=\frac{\tau}{2}\sqrt{\pi a}$
+is the stress intensity factor for an isolated mode~III crack in an infinite
+body~\cite{BogdanovGuz16,BogdanovGuz27}) on the initial stress parameter
+$\lambda_{1}$ and on the normalized distance from the crack to the free surface,
+$\beta=h/a$, respectively. As can be seen in Fig.~\ref{BogdanovGuzFig11}, the
+initial stresses significantly affect the value of $K_{III}$. However, unlike
+the mode~I and mode~II cases, no resonance-like effects are observed for the
+mode~III crack. This indicates the absence of a local loss-of-stability mode of
+the half-space under compression that would correspond to a crack subjected to
+torsional loading.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig11}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{III}/K_{III}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig11}
+\end{figure}
+
+\begin{figure}[t]
+    \sidecaption[t]
+	\includegraphics[width=0.4\textwidth]{BogdanovGuzFig12}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{III}/K_{III}^{\infty}$ on the geometric parameter $\beta=h/a$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig12}
+\end{figure}
+
+\medskip
+
+Now we consider an infinite pre-stressed body containing two parallel
+coaxial penny-shaped cracks whose faces are subjected to loads of the
+form~\eqref{BogdanovGuzEq60}.
+
+For a \textit{material with the Bartenev--Khazanovich potential},
+Figs.~\ref{BogdanovGuzFig13} and~\ref{BogdanovGuzFig14} show the
+dependences of the normalized stress intensity factors
+$K_{II}/K_{II}^{\infty}$ and $K_{I}/K_{II}^{\infty}$, respectively,
+on the initial stress parameter $\lambda_{1}$ for different values of
+the dimensionless half-distance between the cracks
+$\beta = h/a$.
+
+The figures demonstrate the significant influence of the initial
+stresses on the values of both stress intensity factors $K_{II}$ and
+$K_{I}$. In the region of compressive initial stresses the curves have
+vertical asymptotes corresponding to a resonance-like effect. This
+effect arises when the compressive stresses approach the values at
+which a local loss of material stability occurs in the vicinity of
+cracks compressed along their planes.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig13}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig13}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig14}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{I}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a material with the Bartenev--Khazanovich potential.}
+	\label{BogdanovGuzFig14}
+\end{figure}
+
+For this material, Table~\ref{BogdanovGuzTab4} gives the values of the
+relative critical contraction parameter
+$\varepsilon_{1}=1-\lambda_{1}$ that lead to the local loss of material
+stability under compression along two parallel coaxial penny-shaped
+cracks. One can see that at small distances between the cracks their
+mutual influence results in a significant reduction of the critical
+compression parameters. At the same time, as the distance between the
+cracks increases, the values of the relative critical contraction
+parameter tend to
+$\varepsilon_{1}^{*}=0.307$, which for the Bartenev--Khazanovich
+potential corresponds to the critical contraction parameter for the
+spatial problem of a single isolated crack in an infinite body
+\cite{BogdanovGuz32}.
+
+\begin{table}[!h]
+	\centering
+	\caption{Critical values of the relative contraction
+		$\varepsilon_{1}=1-\lambda_{1}$ for the Bartenev--Khazanovich potential
+		(two parallel coaxial penny-shaped cracks).}
+	\label{BogdanovGuzTab4}
+	
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ccccccccc}
+		\toprule
+		$\beta$ & 0.0625 & 0.125 & 0.25 & 0.5 & 1.0 & 2.0 & 5.0 & 10.0 \\
+		\midrule
+		$\varepsilon_{1}$ & 0.008 & 0.035 & 0.089 & 0.168 & 0.242 & 0.288 & 0.305 & 0.306 \\
+		\bottomrule
+	\end{tabular*}
+	
+\end{table}
+
+Consider an unbounded pre-stressed body containing a periodic array of
+parallel coaxial penny-shaped cracks whose faces are subjected to loads
+of the form~\eqref{BogdanovGuzEq61}.
+
+The dependence of the normalized stress intensity factor
+$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+for a \textit{laminated two-component composite material with isotropic
+	layers} (the case of \textit{non-equal roots}) is illustrated in
+Fig.~\ref{BogdanovGuzFig15}. Here it is assumed that the ratio of the
+elastic moduli of the layers is
+$E^{(1)}/E^{(2)}=3$, the Poisson ratios
+of the layer materials are
+$\nu^{(1)}=\nu^{(2)}=0.3$, and the volume
+fraction of the material of the first layer is $c_{1}=0.3$. It can be
+seen that the stress intensity factor $K_{II}$ significantly depends on
+the initial stresses. In the region of compressive initial stresses
+($\lambda_{1}<1$), the curves have vertical asymptotes corresponding to
+a resonance-like effect. This makes it possible to determine the
+critical compression parameters at which the local loss of material
+stability occurs under compression along a periodic array of cracks.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig15}
+	\caption{Dependence of the normalized stress intensity factor
+		$K_{II}/K_{II}^{\infty}$ on the initial stress parameter $\lambda_{1}$
+		for a laminated composite material with isotropic layers.}
+	\label{BogdanovGuzFig15}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovGuzFig16}
+	\caption{Dependence of the critical dimensionless compressive stress
+		$\bar{\sigma}=S_{11}^{0}/E$ on the ratio of the elastic moduli of the
+		layers $E^{(1)}/E^{(2)}$ for a laminated
+		composite material.}
+	\label{BogdanovGuzFig16}
+\end{figure}
+
+Figure~\ref{BogdanovGuzFig16} demonstrates the dependence of the
+critical dimensionless compressive stresses
+$\bar{\sigma}=S_{11}^{0}/E$ (the stresses normalized by the reduced
+elastic modulus of the composite material) on the ratio of the elastic
+moduli of the layers
+$E^{(1)}/E^{(2)}$ for this composite.
+The solid line corresponds to the problem of a periodic array of
+parallel cracks. For comparison, the same figure also shows the
+dependences of $\bar{\sigma}$ on
+$E^{(1)}/E^{(2)}$ for two parallel cracks
+(dashed line) and for a near-surface crack (dash–dot line).
+
+\section{Conclusions}
+
+The results obtained in this chapter demonstrate the high effectiveness
+of the unified approach proposed by the authors for investigating the
+fracture of bodies with initial stresses acting along the planes where
+cracks are located, as well as the fracture of bodies containing cracks
+when they are compressed along the crack planes.
+
+Numerical calculations carried out for the plane problem on pre-stressed
+highly elastic materials containing a near-surface mode~I crack, as well
+as for spatial problems on highly elastic materials and composites with
+near-surface mode~I and mode~II cracks, two parallel coaxial mode~II
+cracks, and periodic arrays of parallel coaxial mode~II cracks show that
+the stress intensity factors change in a resonance-like manner when the
+initial compressive loads reach certain critical values.
+
+This resonance-like effect makes it possible to determine the critical
+compression parameters in fracture mechanics problems for bodies with
+near-surface or parallel cracks compressed along their planes directly
+from the solution of the corresponding non-homogeneous fracture
+mechanics problems for pre-stressed bodies. In particular, according to
+the unified approach described in Section~\ref{BogdanovGuzSec2}, these critical values
+correspond to the compressive stresses $S_{11}^{0}$ (or the contraction
+ratio $\lambda_{1}$) at which fracture initiates as a result of a local
+loss of equilibrium of the material in the vicinity of the cracks.
+
+At the same time, the numerical results obtained for the problem on the
+stress--strain state of a body with a near-surface mode~III crack show
+that in this case the resonance-like phenomenon is not observed. This
+indicates that in compression problems for bodies containing cracks
+there is no form of local loss of material stability that would
+correspond to torsional loading.
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter04}

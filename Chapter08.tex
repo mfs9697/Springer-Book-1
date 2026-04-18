@@ -1,0 +1,497 @@
+\title{Fracture Mechanics Problems within Strain Gradient Elasticity and Mixed Finite Element Implementation}
+\titlerunning{Fracture Mechanics Problems within Strain Gradient Elasticity}
+
+\author{Oleksandr Chirkov,	Lidiia Nazarenko, and Holm Altenbach}
+
+\institute{%
+	Oleksandr Chirkov
+	\at 
+	\AffPisarenko
+	\\
+	\email{chirkale82@gmail.com}
+	\and
+	Lidiia Nazarenko
+	\at 
+	\AffOVGU
+	\\
+	\email{lidiia.nazarenko@ovgu.de}
+	\and
+	Holm Altenbach
+	\at 
+	\AffOVGU
+	\\
+	\email{holm.altenbach@ovgu.de}
+}
+
+\maketitle
+
+\abstract{An alternative approach is proposed and applied to solve boundary crack problems within the strain gradient elasticity theory. A mixed variation formulation of the finite element method (FEM) based on the concept of the Galerkin method is used. To construct the finite-dimensional subspaces, separate approximations of displacements, strains, stresses, and their gradients are implemented by choosing the different sets of piecewise polynomial basis functions interrelated by the stability condition of the mixed FEM approximation. This significantly simplifies the pre-requirement for approximating functions to belong to class C${}^{1}$ and even allows one to use the simplest triangular finite elements with a linear approximation of displacements under uniform or near-uniform triangulation conditions. The conditions of existence, uniqueness, and continuous dependence of the solution on the problem's initial data are formulated for equations of mixed FEM. These are solved by a modified iteration procedure, where the global stiffness matrix for classical elasticity problems is treated as a preconditioning matrix with fictitious elastic moduli. The results of solving the two-dimensional model problem of the stretching of a plate with a central Mode I crack under a plane deformed state are presented. The crack opening displacements for various values of the length scale parameter are presented. An increase in this parameter increases the stiffness of the crack, which leads to a decrease in the crack opening displacements and a smooth closure of its faces at the crack tip. The specific feature of the solution obtained with the strain gradient effect account was a decline in the values of local parameters related to the fracture energy compared to the classical theory of elasticity. Using the gradient theory of elasticity equations, the material microstructure scale effect on the brittle fracture resistance of the WWER-1000 reactor vessel steel was assessed. The microstructure scale effect for a subsurface crack is more significant than for a surface one. Therefore, the strengthening effects from the strain gradient lead to a less conservative assessment of the resistance to brittle fracture. This allows an additional safety margin for the reactor vessel.}
+
+\section{Introduction}
+
+Gradient elasticity theories, a natural generalization of classical elasticity, allow accounting for the microstructure of actual materials. In particular, it is important in problems where classical elasticity has limitations. These limitations arise when we encounter size-dependent phenomena (e.g., homogenization problems, accounting for surface or interface energies) or discontinuity in the boundary conditions (edges, corners, or concentrated forces). In such cases, it is necessary to consider the material's microstructure to capture the size effect or avoid singularity in the solution. One such generalized continuum theory that has received considerable attention in recent years is the so-called strain gradient elasticity introduced by \cite{Chirkov1, Chirkov2, Chirkov3}.
+
+The key point of practical applications of any gradient theory is the specification of nonclassical elastic parameters. It is evident that even using the symmetry properties associated with the reversibility of the deformations and the conjugation of tangential stresses, the theory requires such a huge number of experiments for determining the nonclassical moduli that it will be practically inapplicable. Therefore, the crucial moment of research within any gradient theory shifts to searching for specific models that would minimize the number of nonclassical moduli while preserving the possibility of explaining the most significant size effects, removing the singularities and boundary discontinuities. By introducing certain assumptions for higher-order constitutive relations, one can reduce the number of material constants of the gradient theories to obtain models with one \cite{Chirkov4, Chirkov5, Chirkov6, Chirkov7, Chirkov8, Chirkov9, Chirkov10, Chirkov11}, two \cite{Chirkov3, Chirkov6, Chirkov12}, or three additional scale parameters \cite{Chirkov6, Chirkov12}, so that the identification procedure is simplified.
+
+Most results have dealt with the simplified strain gradient model \cite{Chirkov4, Chirkov13}. In this model, a sixth-rank tensor ${{\mathbb C}}_6$ is taken in the form ${{{\mathbb C}}_6=l}^2{{\mathbb C}}_4\otimes {\mathbf I}$, where ${{\mathbb C}}_4$ is the classical stiffness tensor, ${\mathbf I}$ is the unit second-rank tensor, and the characteristic length $l$ is the only nonclassical parameter describing scale effects. Additionally, the model has been extensively used in the last two decades to solve various boundary value problems (see, e.g., \cite{Chirkov14, Chirkov15, Chirkov16, Chirkov17, Chirkov18, Chirkov19, Chirkov20, Chirkov21, Chirkov22, Chirkov23, Chirkov24, Chirkov25}), and it will be employed in this article to solve the boundary problem of the strain gradient elasticity theory.
+
+Various authors have adopted this model and its variational counterpart for studying dislocation, disclination, and crack problems \cite{Chirkov5, Chirkov6, Chirkov24, Chirkov26, Chirkov27, Chirkov28, Chirkov29, Chirkov30, Chirkov31, Chirkov32}. Within the context of Toupin-Mindlin strain gradient elasticity, analytical studies for plane-strain crack problems were carried out by \cite{Chirkov14, Chirkov33}. Numerical studies employing finite and boundary elements (see, e.g., \cite{Chirkov21, Chirkov28, Chirkov31, Chirkov34, Chirkov35, Chirkov36, Chirkov37} have been developed to address problems within the Toupin-Mindlin theory.
+
+This paper applies an alternative approach to solving crack problems within the gradient elasticity theory \cite{Chirkov38, Chirkov39, Chirkov40, Chirkov41, Chirkov42, Chirkov43}. A mixed variation formulation of the finite element method (FEM) based on the concept of the Galerkin method is used. To construct finite-dimensional subspaces, separate approximations of displacements, strains, stresses, and their gradients are implemented by choosing the different sets of piecewise polynomial basis functions, interrelated by the stability condition of the mixed FEM approximation. This significantly simplifies the pre-requirement for approximating functions to belong to class C${}^{1}$ and allows one to use the simplest triangular finite elements with a linear approximation of displacements under uniform or near-uniform triangulation conditions. Global unknowns in a discrete problem are nodal displacements, while the strains and stresses in nodes are treated as local unknowns. The conditions of existence, uniqueness, and continuous dependence of the solution on the problem's initial data are formulated for discrete equations of mixed FEM. These are solved by a modified iteration procedure, where the global stiffness matrix for classical elasticity problems is treated as a preconditioning matrix with fictitious elastic moduli. This avoids the need to form a global stiffness matrix for the problem of strain gradient elasticity since it is enough to calculate only the residual vector in the current approximation. 
+
+The results of solving the two-dimensional model problem of the plate stretching with a central Mode I crack under a plane deformed state are presented. The calculations were performed using a triangular cross-type mesh with a dense mesh at the crack tip for different mesh spacings and the linear scale parameters of the microstructure. The crack opening displacements for various values of the length scale parameter are presented. An increase in this parameter increases the stiffness of the crack, which leads to a decrease in the crack opening displacements and a smooth closure of its faces at the crack tip. 
+
+The concept of energy balance is adopted to calculate the energy release rate with a virtual increase in crack length. The increment of the potential energy of an elastic body is determined by accounting for the strain and stress gradient contribution. Based on the energy balance criterion, local fracture parameters, such as the release rate of elastic energy at the crack tip and the stress intensity factor (SIF). The specific feature of solutions, which includes the strain gradient contribution, is the decrease in the values of the calculated parameters associated with the fracture energy compared to the classical elasticity theory. 
+
+The effect of the material microstructure scale on the brittle fracture resistance of WWER-1000 reactor vessel steel is assessed. The results of determining the temperature dependence of the stress intensity factor (SIF) at the tip of postulated cracks under the reactor core's emergency cooling condition are presented. The calculations were performed based in an axisymmetric formulation using two types of postulated annular cracks located in the cylindrical part of the reactor vessel at the level of weld No. 4. The SIF values were calculated using the formula used in linear fracture mechanics and methodological documents to assess the strength of reactor pressure vessels using the elastic energy release rate at the crack tip. The temperature dependences of the stress intensity coefficient for the surface and sub-surface cracks at different scale parameter values associated with the material microstructure's linear size are plotted. The feature of the results obtained, which consider the influence of microstructure according to the equations of the gradient theory of elasticity, is a decrease in the calculated SIF values compared to solutions based on the classical theory of elasticity, which is the basis of linear fracture mechanics. For a subsurface crack, the microstructure scale effect is more significant than that of a surface one. Therefore, the strengthening effects from the strain gradient lead to a less conservative assessment of the resistance to brittle fracture. This allows us to justify an additional safety margin for the reactor vessel.
+
+\section{A Brief Outline of Strain Gradient Elasticity Theory}
+
+\subsection{Toupin-Mindlin Strain Gradient Elasticity}
+
+Within the first strain gradient theory, the strain and strain gradient energy is defined as follows:
+\begin{equation} \label{Chirkov_Eq_1_} 
+	w\left({\ {\mathbf E}}_2,{{\mathbb E}}_3\ \right)=\frac{1}{2}{\ {\mathbf E}}_2:\ {{\mathbb C}}_4:{\ {\mathbf E}}_2+{\ {\mathbf E}}_2: {{\mathbb C}}_5\;\vdots\; {{\mathbb E}}_3+\frac{1}{2}{{\mathbb E}}_3\;\vdots\; {{\mathbb C}}_6\;\vdots\; {{\mathbb E}}_3,   
+\end{equation} 
+where ${{\mathbb C}}_4,\ {{\mathbb C}}_5,\ {{\mathbb C}}_6$ are stifnesses, while${\ {\mathbf E}}_2\ $and ${{\mathbb E}}_3$ are the strains and the second gradient of displacement vector ${\mathbf u}{\mathbf (}{\mathbf x}{\mathbf )}$:
+\begin{equation} \label{Chirkov_Eq_2_} 
+	{{\mathbf E}}_2={\rm sym(}{\mathbf u}\otimes \nabla {\rm )},\quad        {{\mathbb E}}_3={\mathbf u}\otimes \nabla \otimes \nabla .    
+\end{equation} 
+
+The following notations are utilized hereinafter: scalars, vectors, second- and higher-rank tensors are denoted by italic letters (such as ${\mathbf e}$ or ${\mathbf E}$), bold minuscules (such as ${\mathbf e}$), bold majuscules (such as ${\mathbf E}$), and bold blackboard majuscules (such as ${\mathbb E}$), respectively.
+
+The indices indicate the tensor rank of ${{\mathbf E}}_2,\ {{\mathbb E}}_3,\ {{\mathbb C}}_4,\ {{\mathbb C}}_5,\ {{\mathbb C}}_6$. These tensors possess the following symmetries:
+\begin{equation} \label{Chirkov_Eq_3_} 
+	\begin{array}{l}
+		E_{ij}=E_{ji};\quad  
+		E_{ijk}=E_{ikj};\quad
+		C_{ijkl}=C_{klij}=C_{jikl}=C_{ijlk};
+		\\
+		C_{ijklm}=C_{jiklm}=C_{ijkml};\quad  C_{ijklmn}=C_{lmnijk}=C_{ikjlmn}=C_{ijklnm};       
+	\end{array}
+\end{equation} 
+``$\nabla $'' is the three-dimensional nabla operator
+\begin{equation} \label{Chirkov_Eq_4_} 
+	\nabla \equiv \frac{\partial }{\partial x_{{\mathbf i}}}{{\mathbf e}}_i\quad (j=1,2,3) 
+\end{equation} 
+with the orthonormal base vectors ${{\mathbf e}}_1,{{\mathbf e}}_2, {{\mathbf e}}_3$. Here, a summation over repeated indices is implied. ``$\otimes $'' denotes the dyadic product, and the displacement gradient is defined as
+\begin{equation} \label{Chirkov_Eq_5_} 
+	{\mathbf u}\otimes \nabla \equiv \frac{\partial u_i}{\partial x_j}{{\mathbf e}}_i\otimes {{\mathbf e}}_j=u_{i,j}{{\mathbf e}}_i\otimes {{\mathbf e}}_j. 
+\end{equation} 
+
+The dots denote scalar contractions, where the double and triple scalar contractions are defined concerning orthonormal base vectors ${{\mathbf e}}_i$ as follows:
+\begin{equation} \label{Chirkov_Eq_6_} 
+	{{\mathbf e}}_i\otimes {{\mathbf e}}_j:{{\mathbf e}}_k\otimes {{\mathbf e}}_l=\delta_{ik}\delta_{jl};\quad  {{\mathbf e}}_i\otimes {{\mathbf e}}_j\otimes {{\mathbf e}}_m\;\vdots\; {{\mathbf e}}_k\otimes {{\mathbf e}}_l\otimes {{\mathbf e}}_n=\delta_{ik}\delta_{jl}\delta_{mn}.     
+\end{equation} 
+where $\delta_{ij}$ is the Kronecker symbol. 
+
+The stresses and the double stresses are given by
+\begin{equation} \label{Chirkov_Eq_7_} 
+	{{\mathbf T}}_2=\frac{\partial w}{\partial {{\mathbf E}}_2}={\mathbb C}_4:{{\mathbf E}}_2+{{\mathbb C}}_5\;\vdots\; {{\mathbb E}}_3;
+	\quad
+	{{\mathbb T}}_3=\frac{\partial w}{\partial {{\mathbb E}}_3}={{\mathbb C}}^{{\rm T}}_5:{{\mathbf E}}_2+{{\mathbb C}}_6\;\vdots\; {{\mathbb E}}_3. 
+\end{equation} 
+
+
+
+\subsection{Simplified Model}
+
+The stiffness tensors ${{\mathbb C}}_4$, ${{\mathbb C}}_5$, and ${{\mathbb C}}_6$ in the case of hemitropy (the absence of improper rotations preserves the existence of ${{\mathbb C}}_5$, which is the only difference from isotropic strain gradient elasticity) are characterized by eight independent parameters and have the following form (c.f. \cite{Chirkov2, Chirkov44, Chirkov45})
+\begin{equation} \label{Chirkov_Eq_8_} 
+	\begin{array}{rcl}
+		{\mathbb C}_4 &=&\left[\lambda\delta_{ij}\delta_{kl}+\mu\left(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{kj}\right)\right]{{\mathbf e}}_i\otimes {{\mathbf e}}_j\otimes {{\mathbf e}}_k\otimes {{\mathbf e}}_l;
+		\\
+		{\mathbb C}_5 &=&\left[c_1\left(\varepsilon_{imk}\delta_{jl}+\varepsilon_{ilk}\delta_{jm}+\varepsilon_{jmk}\delta_{il}+\varepsilon_{jlk}\delta_{im}\right)\right]{{\mathbf e}}_i\otimes {{\mathbf e}}_j\otimes {{\mathbf e}}_k\otimes {{\mathbf e}}_l\otimes {{\mathbf e}}_m;
+		\\
+		{\mathbb C}_6 &=&
+		\begin{multlined}[t] \big[c_2(\delta_{jk}\delta_{im}\delta_{nl}+\delta_{jk}\delta_{in}\delta_{ml}+\delta_{ij}\delta_{kl}\delta_{nl}+\delta_{jk}\delta_{im}\delta_{mn})
+			\\[-1em]
+			+c_3\left(\delta_{ij}\delta_{km}\delta_{nl}+\delta_{jm}\delta_{ki}\delta_{nl}+\delta_{ij}\delta_{kn}\delta_{ml}+\delta_{jn}\delta_{ik}\delta_{ml}\right) 
+			\\
+			+c_4(\delta_{jm}\delta_{kl}\delta_{in}+\delta_{jl}\delta_{in}\delta_{km}+\delta_{jn}\delta_{im}\delta_{kl}+\delta_{jl}\delta_{im}\delta_{nk})
+			\\
+			+c_5(\delta_{jn}\delta_{il}\delta_{km}+\delta_{jm}\delta_{kn}\delta_{il})
+			\\
+			+c_6\delta_{il}\delta_{jk}\delta_{mn}\big]{{\mathbf e}}_i\otimes {{\mathbf e}}_j\otimes {{\mathbf e}}_k\otimes {{\mathbf e}}_l\otimes {{\mathbf e}}_m\otimes {{\mathbf e}}_n,
+		\end{multlined}
+	\end{array}
+\end{equation} 
+where $\varepsilon_{imk}$ is the Levi‒Civita permutation symbol, $\lambda$ and $\mu$ are standard Lame's coefficients, and $c_1,\dots ,c_6$ are the higher order material parameters.
+
+The development of physically simplified models and reducing the number of material parameters are necessary to solve the practical problems within the strain gradient elasticity. One of the possibilities is a simplified model of \cite{Chirkov4, Chirkov13} adopted here to solve some crack problems. It is assumed that
+\begin{equation} \label{Chirkov_Eq_9_} 
+	c_1=c_2=c_3=0,\quad c_4=\frac{\lambda}{2}l^2,\quad c_5= c_6=\frac{\mu}{2}l^2,                          
+\end{equation} 
+where $l$ has the length dimension, and $\lambda$ and $\mu$ are Lamé parameters.
+
+Positive definiteness of the strain and strain gradient energy requires the following inequality constraints for material parameters: $3\lambda+2\mu>0$ and $\mu>0$  \cite{Chirkov3, Chirkov46}.                                 
+
+In this case, the strain and strain gradient energy can be written as follows \cite{Chirkov46}:
+\begin{equation} \label{Chirkov_Eq_11_} 
+	w=\frac{1}{2}{\ {\mathbf T}}_2:{\ {\mathbf E}}_2+\frac{1}{2}l^2{{\mathbf T}}_2\otimes \nabla \;\vdots\; {\ {\mathbf E}}_2\otimes \nabla,                                   
+\end{equation} 
+
+The elastic energy is symmetric concerning the strain and the stress as well as the strain gradient and the stress gradient
+\begin{equation} \label{Chirkov_Eq_12_} 
+	\frac{\partial w}{\partial {({\mathbf E}}_2\otimes \nabla {\mathbf )}}=l^2{{\mathbf T}}_2\otimes \nabla ,\quad \frac{\partial w}{\partial {({\mathbf T}}_2\otimes \nabla {\mathbf )}}=l^2{{\mathbf E}}_2\otimes \nabla . 
+\end{equation} 
+
+Then, the double stresses are
+\begin{equation} \label{Chirkov_Eq_13_} 
+	{~{\mathbb T}}_3=l^2{{\mathbf T}}_2\otimes \nabla .                                                           
+\end{equation} 
+
+The equations of equilibrium take the following form \cite{Chirkov13}:
+\begin{equation} \label{Chirkov_Eq_14_} 
+	\left(1-l^2{\nabla }^2\right)( \nabla \cdot {\mathbf T}_2)={\mathbf 0},                                                    
+\end{equation} 
+
+The boundary conditions for prescribed traction and prescribed double traction in the normal direction on the part of the boundary ${{\rm S}}$:
+\begin{equation} \label{Chirkov_Eq_15_} 
+	\begin{aligned}
+		{{\mathbf p}}_{pr}&=\left(1-l^2{\nabla }^2-l^2\nabla \cdot {\nabla }_{{\mathbf s}}\right){({\mathbf T}}_2\cdot {\mathbf n}{\mathbf )}+l^2{{\mathbf T}}_2:[({\nabla }_{{\mathbf s}}\cdot {\mathbf n}){\mathbf n}\otimes {\mathbf n}-{\mathbf n}\otimes {\nabla }_{{\mathbf s}}{\mathbf ]}; 
+		\\
+		{{\mathbf r}}_{n\ pr}&=l^2{{\mathbf T}}_2:{\mathbf n}\otimes {\mathbf n},             
+	\end{aligned}                                                                            
+\end{equation} 
+and the kinematic boundary conditions in terms of the prescribed displacement and their normal derivative on the part of the body surface ${\ {\rm S}}_u$:
+\begin{equation} \label{Chirkov_Eq_16_} 
+	{{\mathbf u}}_{pr}={\mathbf u};\quad     {\mathbf D}{{\mathbf u}}_{pr}={\mathbf Du}.                                         
+\end{equation} 
+Here ``${\nabla }^2$'' denotes Laplacian; ${\rm S}_{\tau} \cup {{\rm S}}_u={\rm S}$, and ${\mathbf Du}=\left({\mathbf u}\otimes \nabla \right)\cdot {\mathbf n}= (\partial u_i/\partial x_j)n_je_i$. 
+
+\section{Finite Element Implementation of Plane Crack Problems}
+
+The specific feature of solving the variational equations of the gradient elasticity theory consists of accounting for the first derivatives from the strain tensor components (second derivatives from displacements) \cite{Chirkov37, Chirkov47, Chirkov48, Chirkov49, Chirkov50}]. A precondition for the convergence of finite element method solutions (FEM) is the property of approximating functions to be continuously differentiable. In other words, approximating functions must belong to a class of smooth C${}^{1}$ functions \cite{Chirkov51, Chirkov52}. This leads to significant mathematical and computational difficulties since the dimension of ``local'' spaces of finite elements increases, and their structure becomes essentially complicated \cite{Chirkov52, Chirkov53}. For example, the triangular finite element introduced by Zienkiewicz for the thin plate bending problem satisfies the condition of continuity of the normal derivative on the triangle sides just if the triangle mesh is formed by a system of three equidistant parallel lines \cite{Chirkov51, Chirkov52}.
+
+To take into consideration the condition of continuity of the first derivatives from displacements, special finite elements (Argyris triangle, Bogner-Fox-Schmit rectangle, Zienkiewicz singular triangle) are used in which the nodal unknowns are the displacements, their first and even second derivatives \cite{Chirkov37, Chirkov47, Chirkov52}. Using elements of this type significantly increases the matrix bandwidth and the dimension of the global stiffness matrix, which complicates the computational process.
+
+In the present work, an alternative approach is developed, in which a mixed variation formulation of FEM concerning displacement‒strain-stress and their gradients is used to solve the boundary problem of the gradient elasticity theory. Here, the classical formulation of FEM in displacements is changed so that displacements, strains, stresses, and their gradients are the direct arguments of the finite-dimensional problem and are not determined from the solution of the problem in displacements. It significantly simplifies the selection of approximating functions since it is not necessary to use high-order finite elements having continuous first derivatives of displacements. The construction of finite-dimensional spaces is based on the separate approximations of the fields of displacements, strains, stresses, and their gradients using a different set of the piecewise polynomial basis functions, interconnected by the stability condition of the mixed approximation \cite{Chirkov39, Chirkov40, Chirkov41, Chirkov42}.
+
+The original premises for mixed FEM formulations may be different. One of them is based on the use of the variational principles of mechanics, according to which the solution of the boundary problem is reduced to finding a stationary value of some variational functional with respect to the corresponding arguments \cite{Chirkov54, Chirkov55, Chirkov56}. The second is based on the methods of the duality theory and on the dual-basic formulation of the problem under the assumption of the duality principle \cite{Chirkov51, Chirkov54, Chirkov57}. The more general approach is reached from an abstract formulation of the boundary value problem using the results of the theory developed by Brezzi [58]. Within this approach, a mixed formulation of the boundary value problem is considered, regardless of whether it is obtained from the problem of the saddle point or not.
+
+A characteristic feature of the mixed FEM formulations of the problems of gradient elasticity theory is that the displacements, strains, stresses and their gradients are determined simultaneously in the process of solving a finite-dimensional problem, in contrast to the classical FEM, in which they are calculated from the results of the solution in displacements. The mixed variation FEM formulation is based on the concept of the Galerkin method, according to which the equations of the boundary problem are multiplied by arbitrary continuous functions, which can be interpreted as variations in displacements, strains-stresses, and their gradients. Integration of the resulting relations over the region occupied by the body leads to integral identities that include partial derivatives from displacements of the first order only \cite{Chirkov38, Chirkov39, Chirkov40, Chirkov41, Chirkov42, Chirkov43}. This is a main feature of the formulated variational equations since the variational formulation in displacements using the Lagrange equations assumes a twofold differentiation of displacements, and the classical formulation contains partial derivatives from displacements up to the fourth order.
+
+Using mixed FEM significantly simplifies the selection of approximating functions while eliminating the request to employ finite elements of the C${}^{1}$ class. Thus, it is possible to use the simplest triangular finite elements with a linear approximation of displacements, provided that uniform or near-uniform triangulation is utilized. Forces, reinforcements, etc.) provides super-convergence in calculating strains and stresses in Uniform triangulation in the vicinity of the stress concentrators (crack mouth, concentrated mesh nodes \cite{Chirkov38, Chirkov39}. Global unknowns in a discrete problem are nodal displacements, while the strains and stresses at mesh nodes are considered as local unknowns due to the use of special numerical integration formulas of the interpolation type. Specifically, such a formulation of FEM, based on a separate approximation of displacements-strains-stresses and their gradients, is used in this work.
+
+In this regard, it is necessary to mention the article \cite{Chirkov28}, in which three types of equations of the strain gradient elasticity theory are examined in detail, alternative mixed variational formulations of FEM were developed on their basis, and special rectangular finite elements of the mixed type of the class $\rm C^0$ were constructed. In these elements, both displacements and their gradients are used as independent unknowns, and their relationship is provided in the ``integral sense''. A patch test in a mixed formulation is used to justify the correctness of the constructed finite elements, a necessary condition for the solvability of the discrete problem \cite{Chirkov52}. At the same time, this condition is not sufficient for stability and convergence of the mixed approximation since it is still necessary to ensure the fulfillment of the stability condition of Brezzi \cite{Chirkov58}, which is a sufficient condition for a unique solution of the saddle point problem in which the solution continuously depends on the input data. Otherwise, discretization based on mixed approximation can be unstable and cause parasitic solution fluctuations.
+
+In the present work, an alternative condition of the solvability and stability of the mixed approximation is formulated, equivalent to the Brezzi condition (inequality (38) presented below). This condition is obtained based on the concretization of the equations of the mixed method for strain gradient elasticity problems. Triangular finite elements of mixed type are constructed, providing the uniqueness of the solution and stability of the mixed approximation.
+
+A modified iteration procedure with a preconditioning matrix is implemented to solve the system of discrete equations of mixed FEM \cite{Chirkov38}. A global stiffness matrix of the classical FEM is used as a preconditioning matrix for piecewise linear approximation of displacements on triangular elements with fictitious elastic moduli. The elastic moduli in this matrix are modified to provide convergence of the iterative process. It is also possible to use the method of conjugate gradients with a preconditioning matrix, which has a higher convergence rate \cite{Chirkov59, Chirkov60}. 
+
+In the above methods, there is no need to form a global stiffness matrix of the mixed FEM to perform each iteration; it is enough to calculate only the residual vector in the current approximation. This significantly simplifies the solution of the equations of the mixed method and reduces requirements regarding computer memory.
+
+\section{Classical Variational Formulation of the Boundary Value  Problem}
+
+Let us consider a body occupying the area $\Omega \subset {{\mathbb R}}^3$ with a regular boundary \textit{S}. Displacements are defined on the part of the boundary ${{\rm S}}_u$, and surface traction $f_p$ is defined on the rest part ${\ {\rm S}}$. In addition, the body is subjected to volume forces $F_p$. It is assumed that the displacements satisfy boundary conditions on the part of the body surface, excluding its rigid motion.
+
+Let us denote $W\subset [H^2(\Omega )]^3$ the set of possible vector functions for the displacements ${\mathbf u}:\;\Omega \to {{\mathbb R}}^3$ that are integrable with the square in $\Omega $ together with all their partial derivatives up to and including the second order.
+
+Then, the boundary value problem of linear gradient elasticity is formulated as a variational Lagrange equation w.r.t. displacements ${\mathbf u},{\mathbf v}\in W$:   
+\begin{equation} \label{Chirkov_Eq_17_} 
+	\int_{\Omega }{\left({{\mathbf T}}_2\left({\mathbf u}\right):{{\mathbf E}}_2\left({\mathbf v}\right)+{{\mathbb T}}_3\left({\mathbf u}\right)\;\vdots\; {{\mathbb E}}_3\left({\mathbf v}\right)\right)}d\Omega =\int_{\Omega }{{\mathbf F}\cdot {\mathbf v}d\Omega }+\int_{{{\rm S}}_u}{{\mathbf f}\cdot {\mathbf v}d{{\rm S}}_u}. 
+\end{equation} 
+
+
+\section{An Alternative Variational Formulation of the Problem }
+
+The set of possible displacements ${\mathbf u}:\Omega \to {{\mathbb R}}^3$ will be considered as elements of the functional space $U\subset [H^1(\Omega)^3]$ consisting of vector functions that are integrable with the square in $\Omega $ along with all their first-order partial derivatives. 
+
+The range of possible values for strains ${{\mathbf E}}_2:\;\Omega \to {\rm sym}({\mathbb R}^{3\times 3})$ and stresses ${{\mathbf T}}_2:\;\Omega \to{\rm sym}({{\mathbb R}}{}^{3\times 3})$ is denoted by $X\subset [H^1(\Omega )]{}^{3\times 3}$ and defined as the set of symmetric tensor functions of the second rank, all components of which are integrable with a square in $\Omega $, along with all their first-order partial derivatives. 
+
+As a range of possible values for the strain gradient ${{\mathbb E}}_3:\;\Omega \to{{\mathbb R}}^{3\times 3\times 3}$ and the stress gradient ${{\mathbb T}}_3:\Omega\to{\mathbb R}^{3\times 3\times 3}$ we take the set $Z$, consisting of tensor functions of the third rank, all components of which are integrable with the square in $\Omega $.
+
+According to \eqref{Chirkov_Eq_2_}, \eqref{Chirkov_Eq_8_}, \eqref{Chirkov_Eq_9_}, \eqref{Chirkov_Eq_12_}, and \eqref{Chirkov_Eq_13_}, let us write down the boundary value problem of the gradient elasticity theory by a system of integral identities:
+\begin{equation} \label{Chirkov_Eq_18_} 
+	\begin{aligned}
+		\displaystyle\int_{\Omega }{{{\mathbf E}}_2:\delta {{\mathbf T}}_2d\Omega }&=\displaystyle\int_{\Omega }{{\rm sym}\left({\mathbf u}\otimes \nabla \right):\delta {{\mathbf T}}_2d\Omega };
+		\\
+		\displaystyle\int_{\Omega }{{{\mathbf T}}_2:\delta {{\mathbf E}}_2d\Omega }&=\displaystyle\int_{\Omega }{\left(\lambda{{\mathbf I}}_2{\rm tr}({{\mathbf E}}_2)+2\mu{{\mathbf E}}_2\right):\delta {{\mathbf E}}_2d\Omega ;}
+		\\
+		\displaystyle\int_{\Omega }{{{\mathbb E}}_3\;\vdots\; \delta {{\mathbb T}}_3d\Omega }&=\displaystyle\int_{\Omega }{{{\mathbf E}}_2\otimes \nabla \;\vdots\; \delta {{\mathbb T}}_3d\Omega};
+		\\
+		\displaystyle\int_{\Omega }{{{\mathbb T}}_3\;\vdots\; \delta {{\mathbb E}}_3d\Omega }&=l^2\displaystyle\int_{\Omega }{{{\mathbf T}}_2\otimes \nabla \;\vdots\; \delta {{\mathbb E}}_3d\Omega ;}
+		\\
+		\displaystyle\int_{\Omega }{\left({{\mathbf T}}_2:\delta {{\mathbf E}}_2+{{\mathbb T}}_3\;\vdots\; \delta {{\mathbb E}}_3\right)}d\Omega &=\displaystyle\int_{\Omega }{{\mathbf F}\cdot \delta {\mathbf u}d\Omega }+\int_{{{\rm S}}_u}{{\mathbf f}\cdot \delta {\mathbf u}d{{\rm S}}_u}.   
+	\end{aligned}                  
+\end{equation} 
+
+Using the variational formulation of the boundary value problem in the form of equations \eqref{Chirkov_Eq_18_} makes it possible to reduce requirements for the smoothness of approximating functions since it is enough to consider just continuous piecewise-polynomial functions to construct an approximate FEM solution of the problem, which essentially simplifies it.
+
+Let us introduce Hilbert spaces \textit{L} and \textit{H}, consisting of the sets of strains-stresses tensor functions square-integrable in $\Omega $ and their gradients, respectively. The scalar products are defined in spaces \textit{L} and \textit{H} as follows:
+\begin{equation} \label{Chirkov_Eq_19_} 
+	{\left({{\mathbf T}}_2,{\ {\mathbf E}}_2\right)}_L:=\int_{\Omega }{{{\mathbf T}}_2:{{\mathbf E}}_2d\Omega };;\ \ \ \ \ {\left({{\mathbb T}}_3,{{\mathbb E}}_3\right)}_H:=\int_{\Omega }{{{\mathbb T}}_3\;\vdots\; {{\mathbb E}}_3d\Omega }. 
+\end{equation} 
+
+Then, the boundary value problem can be formulated as follows:
+
+Find $({\mathbf u},{{\mathbf E}}_2,{{\mathbf T}}_2,{{\mathbb E}}_3,{{\mathbb T}}_3)\in U{\times }X{\times }X{\times }Z\times Z$ such that:
+
+\begin{equation}\label{Chirkov_Eq_20_} 
+	\begin{aligned}
+		{\left({{\mathbf E}}_2,\delta {{\mathbf T}}_2\right)}_L&={\left({\rm B}{\mathbf u},\delta {{\mathbf T}}_2\right)}_L;
+		\\ 
+		{\left({{\mathbf T}}_2,\delta {{\mathbf E}}_2\right)}_L&={\left({\rm D}{{\mathbf E}}_2,\delta {{\mathbf E}}_2\right)}_L; 
+		\\ 
+		{\left({{\mathbb E}}_3,\delta {{\mathbb T}}_3\right)}_H&={\left({\rm N}{{\mathbf E}}_2,\delta {{\mathbb T}}_3\right)}_H; 
+		\\ 
+		{\left({{\mathbb T}}_3,\delta {{\mathbb E}}_3\right)}_H&=l^2{\left({{\rm N}{\mathbf T}}_2,{\delta {\mathbb E}}_3\right)}_H;
+		\\ 
+		{\left({{\mathbf T}}_2,\delta {{\mathbf E}}_2\right)}_L+{\left({{\mathbb T}}_3,\delta {{\mathbb E}}_3\right)}_H&=\left\langle {\mathbf f},\delta {\mathbf u}\right\rangle , 
+	\end{aligned}
+\end{equation}
+
+\noindent where ${\rm B}$ is the linear differential operator for the determination of strains ${{\mathbf E}}_2$
+\begin{equation} \label{Chirkov_Eq_21_} 
+	{\rm B}{\mathbf u}:={\rm sym}\left({\mathbf u}\otimes \nabla \right);                                                     
+\end{equation} 
+${\rm D}$ is the linear self-adjoined positive definite operator associated with a symmetric tensor of material elastic moduli
+\begin{equation} \label{Chirkov_Eq_22_} 
+	{\rm D}{{\mathbf E}}_2:={{\mathbb C}}_4:{{\mathbf E}}_2;                                                      
+\end{equation} 
+${\rm N}$ is the linear differential operator for calculating strain and stress gradients
+
+\begin{equation} \label{Chirkov_Eq_23_} 
+	{\rm N}{{\mathbf E}}_2:={\ {\mathbf E}}_2\otimes \nabla  \quad   {\rm or} \quad   {\rm N}{{\mathbf T}}_2:={\ {\mathbf T}}_2\otimes \nabla;
+\end{equation} 
+
+\noindent $\left\langle \cdot, \cdot \right\rangle $ is the linear form identified with the work of applied loads to the body.
+
+The domain of the operator's definition ${\rm B}$ is the space $U$, whose value range is denoted by $Y$. The set $\ Y$ will be considered a closed linear subspace of the Hilbert space $L$. The domain of definition and range of the operator ${\rm D}$ is the set $X$. The domain of the operator ${\rm N}$ is the set $X$, and the domain of its values is $Z$. We assume that $X$ and $Z$ are linear subspaces of Hilbert spaces $L$ and $H$, respectively.
+
+Given that $\delta {{\mathbf E}}_2\left({\mathbf u}\right)={\rm B}\delta {\mathbf u}$, $\delta {{\mathbf T}}_2\left({\mathbf u}\right)={\rm DB}\delta {\mathbf u}$\textit{, }$\delta {{\mathbb E}}_3\left({\mathbf u}\right)={\rm NB}\delta {\mathbf u}$, and $\delta {{\mathbb T}}_3\left({\mathbf u}\right)=l^2{\rm NDB}\delta {\mathbf u}$, from \eqref{Chirkov_Eq_20_} follows a variational formulation of the boundary value problem in displacements:
+
+\begin{equation} \label{Chirkov_Eq_24_} 
+	{\left({\rm DB}{\mathbf u},{\rm B}\delta {\mathbf u}\right)}_L+l^2{\left({\rm NDB}{\mathbf u}\;,{\rm NB}\delta {\mathbf u}\right)}_H=\left\langle {\mathbf f},\delta{\mathbf u}\right\rangle ,\      \forall \ \delta {\mathbf u}\in W. 
+\end{equation} 
+
+For continuous problems of gradient elasticity theory, variational formulations in the form \eqref{Chirkov_Eq_20_} and \eqref{Chirkov_Eq_24_} are equivalent under the condition ${\mathbf u}\in W$. However, the latter is more flexible for constructing approximate solutions based on mixed FEM schemes.
+
+
+
+\section{Finite-Dimensional Problem Formulation}
+
+Let $U_h\subset U,\ X_h\subset X,\ Z_h\subset Z{\rm \ }{\rm \ }$be finite-dimensional approximating spaces, where $h$ is the defining parameter of the set of finite-dimensional spaces, which goes to zero in the limit. 
+
+Then, the finite-dimensional problem is formulated similarly to \eqref{Chirkov_Eq_20_}:
+
+Find $({{\mathbf u}}_h,{{\mathbf E}}_{2h},{{\mathbf T}}_{2h},{{\mathbb E}}_{3h},{{\mathbb T}}_{{\rm 3}h})\in U_h\times X_h\times X_h{\rm \times }Z_h\times Z_h$ sach that: 
+
+\begin{equation} \label{Chirkov_Eq_25_}  
+	\begin{aligned}
+		{\left({{\mathbf E}}_{2h},\delta {{\mathbf T}}_{2h}\right)}_L&={\left({\rm B}{{\mathbf u}}_h,\delta {{\mathbf T}}_{2h}\right)}_L; 
+		\\ 
+		{\left({{\mathbf T}}_{2h},\delta {{\mathbf E}}_{2h}\right)}_L&={\left({\rm D}{{\mathbf E}}_{2h},\delta {{\mathbf E}}_{2h}\right)}_L;
+		\\ 
+		{\left({{\mathbb E}}_{3h},\delta {{\mathbb T}}_{3h}\right)}_H&={\left({{\rm N}{\mathbf E}}_{2h},\delta {{\mathbb T}}_{3h}\right)}_H; 
+		\\ 
+		{\left({{\mathbb T}}_{3h},\delta {{\mathbb E}}_{3h}\right)}_H&=l^2{\left({{\rm N}{\mathbf T}}_{2h},\delta {{\mathbb E}}_{3h}\right)}_H; 
+		\\ 
+		{\left({{\mathbf T}}_{2h},\delta {{\mathbf E}}_{2h}\right)}_L+{\left({{\mathbb T}}_{3h},\delta {{\mathbb E}}_{3h}\right)}_H&=\left\langle {\mathbf f},{\delta {\mathbf u}}_h\right\rangle . 
+	\end{aligned}
+\end{equation}
+
+The use of the variational equations \eqref{Chirkov_Eq_25_} to construct mixed FEM schemes makes it possible to approximate the distributions of displacements, strains, stresses, and their gradients by a different set of piecewise polynomial basis functions.
+
+\section{Solvability of a Discrete Problem Solution} 
+
+
+
+To analyze the properties of \eqref{Chirkov_Eq_25_}, it is necessary to establish a correspondence between subspaces $X_h\subset X$ and $Y_h\subset Y$. Note that $Y_h$ is a value domain of operator ${\rm B}$ acting on the closed subspace of $U_h$, i.e., $Y_h={\rm B}U_h$. Therefore, $Y_h$ is an approximating subspace for space $Y$. Both $X_h$ and $Y_h$ are finite-dimensional subspaces of the Hilbert space \textit{L}, but neither is, in general, a subset of the other.
+
+Let us introduce an orthogonal projector operator ${{\rm I}}_h$, corresponding to each element from space $Y_h$ and its orthogonal projection in $X_h$. Operator ${{\rm I}}_h$ is associated with the scalar product ${\left(\cdot ,\cdot \right)}_L$ and defined according to equality
+\begin{equation} \label{Chirkov_Eq_26_} 
+	{\left({\rm B}{{\mathbf u}}_h-{{\rm I}}_h{\rm B}{{\mathbf u}}_h,\delta {{\mathbf T}}_{2h}\right)}_L=0,\ \ \forall \ \delta {{\mathbf T}}_{2h}\in X_h. 
+\end{equation} 
+
+Using the orthogonal projector ${{\rm I}}_h:\ Y_h\to X_h$ set of equations \eqref{Chirkov_Eq_25_} can be written as a variational equation in displacements:
+\begin{equation} \label{Chirkov_Eq_27_} 
+	{\left({\rm D}{{\rm I}}_h{\rm B}{{\mathbf u}}_h,{{\rm I}}_h{\rm B}\delta {{\mathbf u}}_h\right)}_L+l^2{\left({\rm ND}{{\rm I}}_h{\rm B}{{\mathbf u}}_h,{\rm N}{{\rm I}}_h{\rm B}{\delta {\mathbf u}}_h\right)}_H=\left\langle {\mathbf f},{\delta {\mathbf u}}_h\right\rangle ,\ \ \forall {\ \delta {\mathbf u}}_h\in U_h. 
+\end{equation} 
+
+\medskip
+\emph{Solvability condition}. It is assumed that there is such a positive constant $d$ independent of $h$, for which the following inequality holds:
+\begin{equation} \label{Chirkov_Eq_28_} 
+	d{\|\ {\rm B}{{\mathbf v}}_h\|}_L\le {\|\ {{\rm I}}_h{\rm B}{{\mathbf v}}_h\|}_L,\quad 0<d\le 1,\quad \forall \ {{\mathbf v}}_h\in U_h.                   
+\end{equation} 
+
+Then, the solution of equation \eqref{Chirkov_Eq_25_} exists, which is unique and resistant to small perturbations of the initial data \cite{Chirkov38, Chirkov39}. 
+
+Thus, the peculiarity of the mixed approximation is the construction of basis functions that satisfy solvability condition \eqref{Chirkov_Eq_28_}. This is the fundamental difference between the mixed and classical approximation, for which the existence, uniqueness, and stability of the approximate solution follow from the conditions for solving the continuum problem and using the inclusion assumption $U_h\subset W$.
+
+The validation and testing of the correctness and effectiveness of the mixed FEM calculations were provided in \cite{Chirkov38, Chirkov40, Chirkov41} for problems with plane cracks. The convergence analysis of the mixed FEM formulation is presented in \cite{Chirkov43}.
+
+\section{Solution Method}
+
+Application of FEM to the solution of the problems of gradient elasticity theory using mixed variation formulation leads to a system of linear algebraic equations of significantly higher order compared to the number of equations in displacements for problems of classical elasticity theory. In addition, the global matrix of the equation system for the mixed method is not positively defined and, in general, is the dense matrix. Such matrix properties practically exclude using direct methods for solving a system of algebraic equations (the Gauss method and its various modifications).
+
+Here, the system of algebraic equations of the mixed method is converted to an equivalent form for nodal displacements. To this end, interpolation quadrature formulas are used, the weighting points of which coincide with the interpolation nodes of the triangular finite element. As a result, the solution of the system of the mixed method is significantly simplified since there is no need to use computational algorithms for inverting the Gram matrix to find strains and stresses from the first and second equations of the system \eqref{Chirkov_Eq_25_}. Thus, the procedure for determining nodal strains and stresses is reduced to calculating those using recurrent formulas. In this case, the global unknowns in the discrete problem are the displacements at the mesh nodes since the node values of strains and stresses are calculated using the ``averaging'' procedure over the triangular elements adjacent to the mesh nodes and the values of strains, stresses and their derivatives at the centers of the triangles are considered as local unknowns.
+
+Using the above procedure for the strains and stresses determination in mesh nodes leads to a positive definiteness of a symmetric global stiffness matrix. The matrix is sparse, but the number of its non-zero elements is significant. In this case, the application of direct methods for solving a system of equations of the mixed FEM remains problematic from the point of view of the computational implementation. In this regard, we have to use the iterative algorithm for solving equations of the mixed FEM.
+
+To solve system \eqref{Chirkov_Eq_25_}, consider the iterative process in the form of the method of corrections. Let ${{\mathbf u}}_h^0\in U_h$ be an arbitrary initial approximation to the ${{\mathbf u}}_h$ solution. Then, the process of successive linear approximations is constructed as follows:
+\begin{equation} \label{Chirkov_Eq_29_} 
+	\begin{aligned}
+		{\left({{\mathbf E}}^k_{2h},\delta {{\mathbf T}}_{2h}\right)}_L&={\left({\rm B}{{\mathbf u}}^k_h,\delta {{\mathbf T}}_{2h}\right)}_L;
+		\\
+		{\left({{\mathbf T}}^k_{2h},\delta {{\mathbf E}}_{2h}\right)}_L&={\left({\rm D}{{\mathbf E}}^k_{2h},\delta {{\mathbf E}}_{2h}\right)}_L;
+		\\
+		{\big({{\mathbb E}}^k_{3h},\delta {{\mathbb T}}_{3h}\big)}_H&={\left({\rm N}{{\mathbf E}}^k_{2h},\delta {{\mathbb T}}_{3h}\right)}_H;
+		\\
+		{\big({{\mathbb T}}^k_{3h},\delta {{\mathbb E}}_{3h}\big)}_H&=l^2{\left({\rm N}{{\mathbf T}}^k_{2h},\delta {{\mathbb E}}_{3h}\right)}_H;
+		\\
+		{\big(\widetilde{{\rm D}}{\rm B}{\triangle {\mathbf u}}^{k+1}_h,{{\rm B}\delta {\mathbf u}}_h\big)}_L&={\left({{\mathbf T}}^k_{2h},\delta {{\mathbf E}}_{2h}\right)}_L+{\big({{\mathbb T}}^k_{3h},\delta {{\mathbb E}}_{3h}\big)}_H-\left\langle {\mathbf f},{\delta {\mathbf u}}_h\right\rangle ;
+		\\ 
+		{{\mathbf u}}^{k+1}_h&={{\mathbf u}}^k_h-\omega{\triangle {\mathbf u}}^{k+1}_h,
+	\end{aligned}
+\end{equation}  
+where ${\triangle {\mathbf u}}_h^{k+1}$ is the correction term for displacement approximation ${{\mathbf u}}_h^k$.
+
+Parameter $\omega>0$ and operator $\tilde{D}$ are introduced to control the convergence of the iteration process \eqref{Chirkov_Eq_29_}. Their choice depends on the properties of the problem, the approximating functions, the finite element length $h$, and the structural (scale) parameter $l$, i.e., on their ratio ${l}/{h}$. It is assumed that $\tilde{D}$ is a linear self-adjoined positively definite operator corresponding to the tensor of fictitious elastic moduli, which are determined by the relations:
+
+\begin{equation} \label{Chirkov_Eq_30_} 
+	\tilde{\lambda}=\gamma\lambda,\quad \tilde{\mu}=\gamma\mu;\quad \gamma=1+C{\left({l}/{h}\ \right)}^2, 
+\end{equation} 
+where $C$ is a constant independent of the parameter $h$.
+
+If condition \eqref{Chirkov_Eq_28_} is satisfied, iterative process \eqref{Chirkov_Eq_29_}, \eqref{Chirkov_Eq_30_} converges to the solution of the mixed method equations \eqref{Chirkov_Eq_25_} at a geometric progression rate at any $\omega>0$ and initial approximation of ${{\mathbf u}}_h^0\in {{\rm U}}_h$.
+
+\section{Calculating the Energy Release Rate}
+
+To calculate the rate of energy release at the crack tip $G$ under the condition of a virtual increase in the length of a mode I crack, we used the energy balance concept \cite{Chirkov61, Chirkov62}, in which the potential energy of an elastic body is determined taking into account stress and strain gradients:
+\begin{equation} \label{Chirkov_Eq_31_} 
+	\Pi =\int_{\Omega }{wd\Omega }-A, 
+\end{equation} 
+where $w$ is determined by the expression \eqref{Chirkov_Eq_11_} and $A$ is the work of external loads. 
+
+For fixed external loads, the relationship between the parameter $G$ and the increase in potential energy $\Pi $ of an elastic body with a crack under the condition of changing its length $a$ by an infinitesimal value $\Delta a$ is written as follows: 
+
+\begin{equation} \label{Chirkov_Eq_32_} 
+	G=-\frac{\triangle \Pi }{\Delta a}.
+\end{equation}
+
+Based on Clapeyron's theorem [63], we have
+
+\begin{equation} \label{Chirkov_Eq_33_} 
+	\triangle \Pi {\rm =-}\frac{{\rm 1}}{2}\ \Delta A,
+\end{equation}
+where $\Delta A$ is the external load. 
+
+To calculate the energy release rate $G$ at the crack tip in linear fracture mechanics, an invariant contour \textit{J}-integral, independent of the integration path, is also used \cite{Chirkov64, Chirkov65}. Such an alternative representation of the fracture parameter $G$ allows it to be expressed through an invariant \textit{J}-integral using the contours surrounding the crack tip. The \textit{J}-integral application in the gradient theory of elasticity was considered in used \cite{Chirkov62, Chirkov65}, where asymptotic solutions of model problems on tensile stretching of a plate with central and edge cracks were derived using a rectangular contour surrounding the crack tip with a vanishing ``height.'' However, using the \textit{J}-integral in FEM models leads to approximate invariance of its values from the integration contour due to the discontinuous approximation of the stress and strain fields and their gradients. In the problems of fracture mechanics in which the equations of the gradient theory of elasticity are used, the use of close contours surrounding the crack tip is limited due to the need for a more accurate approximation of the stress gradient ahead of the crack tip. Therefore, the calculations were performed using an alternative approach in which the parameter $G$ was calculated using formulas \eqref{Chirkov_Eq_32_} and \eqref{Chirkov_Eq_33_}, which take into account the work increment of external loads $\Delta A$ in the case of crack advancement. Since the value of $\Delta A$ is calculated through displacements, the accuracy of the approximation of the parameter $G$ is higher compared to the calculation of the \textit{J}-integral.
+
+\section{Numerical Analysis}
+
+A solution to the model problem of stretching a plate with a central crack under plane deformation conditions has been implemented based on a mixed FEM scheme.
+
+To approximate the displacement, piecewise linear functions on triangular elements were used, and for the interpolation of the strains and the stresses, a linear combination of piecewise polynomial approximations and bulb functions was employed [66]. With such a choice of approximating functions, the stability and convergence of an approximate solution to the problem are provided.
+
+To calculate the scalar product ${\left(\cdot,\cdot \right)}_L$ in \eqref{Chirkov_Eq_29_}, interpolation quadrature formulas were utilized, in which weighting points coincide with the interpolation nodes of the triangular finite element. As a result, the solution of the system of equations of the mixed method is significantly simplified since there is no need to apply computational algorithms for inverting the Gram matrix to find strains and stresses from the first and second equations of the system \eqref{Chirkov_Eq_29_}, respectively, because the matrix becomes diagonal. In addition, a constant interpolation of strains and stresses within the triangular element was used to approximate the strain and stress gradient. Then, the distributions of the derivatives of the strains and stresses are described using piecewise constant functions, and therefore, the scalar product ${\left(\cdot ,\cdot \right)}_H$ in \eqref{Chirkov_Eq_29_} is calculated accurately. Thus, the determination of the derivatives from strains and stresses is reduced to their calculation by the recurrent formulas at each iteration. According to the accepted approximation, the global unknowns in the discrete problem are the displacements in the mesh nodes since the node values of the strains and the stresses are calculated using the ``averaging'' procedure over the triangular elements adjacent to the mesh nodes. The values of strains, stresses, and their derivatives in the centers of triangles are considered as local unknowns.
+
+Young's modulus and Poisson's ratio were set at $2\cdot {10}^5\ $~MPa and $0.3$, respectively. A square plate with a side length of $W=0.2\ {\rm m}$ was used (Fig.~\ref{ChirkovFig1}).
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=.45\textwidth]{08_Chirkov/ChirkovFig1.png}
+	\caption{The tension of a square plate with a central crack.}
+	\label{ChirkovFig1}
+\end{figure}
+
+The crack length was assumed to be equal to $a=0.04\ {\rm m}$. Calculations were performed under uniaxial uniform stretching $q=100\ $MPa for the following values of the normalized linear scale parameter: $l/a=0;0.02;0.05;0.1;0.2;0.3;0.4;0.6$. The solution within the framework of the classical theory of elasticity corresponds to the condition $l/a=0$.
+
+The calculations used a triangular cross-type mesh with higher mesh density near the crack tip with maximal strain gradients. In the first stage, a mesh of quadrilaterals was constructed based on an algorithm of equal partitions on opposite sides of auxiliary quadrilateral subregions, the union of which determines the region with the crack. In the second stage, we divided triangles by quartering each quadrilateral using its diagonals into four triangles. A uniform partition containing the crack apex was applied in the local area. The mesh spacing in the local zone with uniform partitioning was reduced by successively halving its geometric dimensions. The uniform mesh spacing $h$ value in the local zone surrounding the crack tip was assumed to be equal to $h=100; 50; 25; 12.5; 6.25$ µm. A transitional mesh with a refinement towards the crack tip was used for the areas adjacent to this zone. A uniform mesh was used for the rest of the body, as shown in Fig.~\ref{ChirkovFig2a}.
+
+
+
+\begin{figure}
+	\begin{subfigure}[t]{.49\textwidth}
+		\includegraphics[width=\textwidth]{08_Chirkov/ChirkovFig2a.png}
+		\caption{Fragment of a triangular cross-type mesh near the crack tip. (Uniform mesh spacing $h=100$ µm)} \label{ChirkovFig2a}     
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{.49\textwidth}
+		\includegraphics[width=\textwidth]{08_Chirkov/ChirkovFig2b.png}
+		\caption{Normalized crack-opening displacement as a function of normalized distance from the crack tip for different normalized parameter values ${l}/{a}$.}\label{ChirkovFig2b}        
+	\end{subfigure}
+	\caption{Mesh and solutions}
+\end{figure}
+
+Figure \ref{ChirkovFig2b} shows the results for normalized crack opening displacements ${u}/{u_{cl}}$ ($u_{cl}$ is the solution within classical linear elasticity) depending on the normalized distance from the crack tip ${x}/{a}$. The dashed line corresponds to the solution within classical linear elasticity, and the solid lines correspond to the solution within gradient elasticity. The curves corresponding to the solutions within classical linear elasticity and strain gradient elasticity with the scale parameter $l/a=0.2; 0.6$ are in good agreement with the results obtained by FEM in \cite{Chirkov37} and with the boundary element method results presented in \cite{Chirkov31}. This is an additional verification of the mixed FEM calculations presented here, especially since the results of \cite{Chirkov37} were determined using the Tri18 element belonging to a class ${{\rm C}}^1$ function.
+
+Figure \ref{ChirkovFig2b} indicates that crack stiffness increases with the scale parameter, which is in agreement with other results available in the literature \cite{Chirkov14, Chirkov31, Chirkov37, Chirkov48}. As expected, the behavior of the crack profile is different for classical and strain-gradient solutions. The crack faces close more smoothly in the case of strain-gradient elasticity compared to the classical elasticity results. Cusp-like closure of the crack in strain-gradient solutions occurs because the asymptotic solution for crack-opening displacement near the crack tip ($r\to 0$, $r$ is the radial distance from the crack tip) is governed by dominant term $r^{{3}/{2}}$, which has higher order in comparison with classical elasticity ($r^{{3}/{2}})$. 
+
+For each mesh step, the parameter $G$ is based on solving two problems: the main problem corresponds to the initial crack length, and the auxiliary one corresponds to the crack length with increment $\Delta a=h$.
+
+Table \ref{ChirkovTab} shows the calculated data for determining the rate of elastic energy release $G$ at the crack tip at different values of the normalized scale parameter $l/a$ depending on the mesh spacing $h$.
+
+\begin{table}
+	\centering
+	\caption{Calculation of the parameter ${\rm G}$ (N/mm) for the problem of stretching of a square plate with a central crack at different values $l/a$ depending on the mesh spacing $h$.}
+	\begin{tabular*}{.9\textwidth}{@{\extracolsep{\fill}}llllllll} \hline 
+		$h$, µm & \multicolumn{7}{c}{${l}/{a}$} \\ \hline 
+		& 0 & 0.02 & 0.05 & 0.1 & 0.2 & 0.3 & 0.4 \\ \hline 
+		100 & 63.781 & 61.977 & 59.145 & 54.529 & 45.699 & 37.496 & 30.250 \\ \hline 
+		50 & 63.743 & 61.884 & 59.051 & 54.432 & 45.608 & 37.411 & 30.173 \\ \hline 
+		25 & 63.726 & 61.837 & 59.001 & 54.385 & 45.566 & 37.370 & 30.141 \\ \hline 
+		12.5 & 63.713 & 61.811 & 58.984 & 54.359 & 45.539 & 37.348 & 30.118 \\ \hline 
+		6.25 & 63.711 & 61.795 & 58.959 & 54.338 & 45.516 & 37.326 & 30.109 \\ \hline 
+	\end{tabular*}
+	\label{ChirkovTab}
+\end{table}
+
+A characteristic feature of the obtained solutions that consider the strain gradient's influence is a decrease in the rate of elastic energy release at the crack tip with an increase in the scale parameter $l/a$. Thus, the material's microstructure scale effect decreases the local parameters associated with the fracture energy.
+
+\section{Material Microstructure Scale Effect on Brittle Fracture Resistance of WWER-1000 Reactor Pressure Vessel}
+
+Ensuring the integrity of the reactor vessel under emergency load conditions is one of the main conditions for the safe operation of NPP power units and their service life extension. The nuclear reactor vessel is the most critical element of the reactor installation; therefore, its safe operation period determines the lifetime of the NPP power unit. In emergency conditions, the main criterion for the strength and integrity of the reactor vessel is its ability to resist brittle fracture.
+
+Under conditions of long-term operation of NPP, the justification of the strength and service life of the reactor vessel requires the inclusion of structural inhomogeneities and metal damage at the microlevel in the calculation of the stress-strain state.
+
+The authors did not seek to cover all aspects related to the calculation justification of the RPV's resistance to brittle fracture under thermal shock conditions. Below are some results related to the analysis of the influence of the large-scale effect of metal microstructure on the assessment of the WWER-1000 RPV's brittle fracture resistance.
+
+Computations of the WWER-1000 reactor vessel's stress-strain state kinetics were performed in a quasi-static formulation for a typical emergency core cooling regime. The residual stresses after surfacing and heat treatment were considered using the ``stress-free-temperature'' procedure \cite{Chirkov67}, according to which the reactor vessel's initial state at operating temperature is taken as the initial state. To take into account the residual stresses after welding operations of cylindrical shells and subsequent heat treatment, the method of additional loading was used, according to which additional axial tensile stresses of the order of 100 MPa occur in the metal of butt-welded joints. This value is related to the level of residual stresses after welding in the case of a certain combination of technological parameters. 
+
+The computational analysis was performed in an axisymmetric formulation with the inclusion of postulated cracks in the finite element model of the reactor vessel, which is in line with the recommendations of state of-the-art regulatory documents \cite{Chirkov67, Chirkov68}. The formulation of variational equations for an axisymmetric problem of gradient elasticity in mixed form is given in \cite{Chirkov42}.
+
+The computational model is assumed to be a hollow cylinder with a 7 mm thick anticorrosive cladding applied to the inner surface and an annular crack located in the middle height of the cylinder cross-section. The inner radius of the cylindrical shell, including the cladding, is 2.068 mm, and the outer radius is 2.2675 mm. Pressure is applied to the inner surface of the cylinder, and the upper end is subjected to a tensile force of 100 MPa and a compensating load that considers the internal pressure on the spherical reactor vessel cover. The lower end of the cylinder is fixed against vertical axial motion. Two types of postulated annular (ring) cracks located in the cylindrical part of the reactor vessel at the level of weld No. 4 were used to assess the resistance to brittle fracture of the reactor vessel metal. The data were obtained to determine $K_{{\rm I}}$ for a surface crack with a depth of 22 mm from the inner surface of the cladding vessel and a subsurface with a depth of 15 mm from the interface between the cladding and the vessel's base metal. The calculations were performed for the meridional section of the cylinder using a triangular grid densified near the crack tip. In the crack tip vicinity, a uniform cross-type partitioning was used. The finite element length in the crack tip vicinity was assumed to be 100 µm.
+
+The calculated values of $K_{{\rm I}}$ for a normal tear crack were determined by recalculating the values of the parameter $G$ using the formula used in linear fracture mechanics and methodological documents for assessing the strength and service life of reactor pressure vessels \cite{Chirkov67, Chirkov68}:
+\[K_{{\rm I}}=\sqrt{\ \frac{EG}{1-
+		\nu^2}},
+\] 
+where $E$ is the Young modulus and $\nu$ is Poisson's ratio.
+
+Based on the calculation data, temperature dependences were constructed $K_{{\rm I}}$ for the surface and subsurface annular crack at different scale parameter $l$ values associated with the material microstructure's linear size. In accordance with \cite{Chirkov69}, the internal length of the microstructure is consistent with the characteristic grain size and the value correlated with the distance $\sim {\left({K_{{\rm IC}}}/{\sigma_Y}\right)}^2$ used in linear fracture mechanics, where $K_{{\rm IC}}$ is the fracture toughness, and $\sigma_Y$ is the yield strength of the material. The parameter $l$ is much smaller than the macroscale. Still, the calculations were also performed for its increased values to more clearly identify the microstructure size/scale effect on the determination of the temperature dependence of $K_{{\rm I}}$ for the postulated cracks.
+
+The calculated data were obtained for the following values of the parameter$l= 0; 1; 2; 3$ mm for the surface crack and $l=0; 0.5; 1; 1.5; 2; 2.5; 3$  mm for the subsurface crack. The zero value of the parameter $l$ corresponds to a solution within the classical theory of elasticity. Temperature dependences $K_{{\rm I}}$ for the surface and subsurface cracks are shown in Figs.~\ref{ChirkovFig3} and \ref{ChirkovFig4}. 
+
+The main feature of the results obtained, which consider the influence of microstructure according to the equations of the gradient theory of elasticity, is the reduction of the calculated values of $K_{{\rm I}}$ compared to solutions based on the classical theory of elasticity, which is the basis of linear fracture mechanics. According to the calculations, the influence of the microstructure scale on the determination of $K_{{\rm I}}$ for a subsurface crack is more significant than for a surface crack. Thus, the strengthening effects arising from the strain gradient lead to a less conservative estimate of the resistance to brittle fracture, which makes it possible to justify an additional safety margin for the reactor vessel.
+
+\begin{figure}[t]
+	\sidecaption
+	\includegraphics[width=.8\textwidth]{08_Chirkov/ChirkovFig3.png}
+	\caption{Temperature dependence $K_{{\rm I}}$ for a surface crack of 22 mm for different values of the parameter $l$.}
+	\label{ChirkovFig3}
+\end{figure}
+
+\begin{figure}[t]
+	\sidecaption
+	\includegraphics[width=.8\textwidth]{08_Chirkov/ChirkovFig4.png}
+	\caption{Temperature dependence $K_{{\rm I}}$ for a 15 mm-deep subsurface crack for different values of the parameter $l$.}
+	\label{ChirkovFig4}
+\end{figure}
+
+\section{Conclusions}
+
+An alternative approach has been applied to solve the boundary value problem within the gradient elasticity theory in that a mixed variation formulation of FEM is proposed. This approach is based on the concept of the Galerkin method, and unlike the classical formulation of FEM in the form of a displacement method, displacements, strains, stresses, and their gradients are direct arguments of the variational equations of the finite-dimensional problem, and are not determined by further transformation (differentiation) of the problem solution in displacements. To construct finite-dimensional subspaces based on such a variational formulation of the problem, separate (formally independent) approximations of displacements, strains, stresses, and their gradients are used by choosing the different sets of piecewise polynomial basis functions, interconnected by the stability condition of the mixed approximation. Mixed FEM significantly simplifies the pre-requirement for approximating functions to belong to class C${}^{1}$. Thus, it is possible to use the simplest triangular finite elements with a linear approximation of displacements under the condition that uniform or near-uniform triangulation is realized. Uniform triangulation in the vicinity of the stress concentrators provides super-convergence in calculating strains and stresses in mesh nodes. Global unknowns in a discrete problem are nodal displacements, while the strains, stresses, and their gradients are considered as local unknowns.
+
+The conditions of existence, uniqueness, and continuous dependence of the solution on the initial data of the problem have been formulated for discrete equations of mixed FEM. The system of equations of mixed FEM has been solved by a modified iteration procedure with a preconditioning matrix. The global stiffness matrix for classical elasticity problems is considered as a preconditioning matrix with fictitious elastic moduli. Then, there is no need to form a global stiffness matrix for the problem of strain gradient elasticity since it is enough to calculate only the residual vector in the current approximation. This reduces the memory resource requirements of the computer.
+
+The results of solving the two-dimensional model problem of the stretching of a plate with a central Mode I crack under a plane deformed state are presented. The problem has been considered in the context of similar results available in the literature. It indicates good agreement with those obtained by FEM in \cite{Chirkov37}, by the boundary element method in \cite{Chirkov31}, and by an analytical/numerical technique based on hypersingular integral equations. This verification of mixed FEM calculations is especially important because the results of \cite{Chirkov37} were obtained using the Tri18 element belonging to a class of C${}^{1}$ functions. Good convergence has been observed by refining the mesh (finite element length) for all scale parameters, even for unrealistically high ones. Moreover, the results demonstrate specific qualitative features characterizing stain gradient solutions, increasing crack stiffness with length scale parameter and cusp-like closure effect, and agree with similar theoretical developments in the literature. Therefore, it should be noted that the mixed FEM based on the accepted approximation for displacements, strains, stresses, and their gradients on triangular elements can be successfully applied to solving two-dimensional boundary value problems within the strain gradient elasticity theory.
+
+A computational analysis of model problems of fracture mechanics was performed to study the scale effect on determining local fracture parameters. The specific feature of the solutions obtained with an account of the strain gradient's effect was a decline in the values of local parameters related to the fracture energy compared to solutions based on the classical theory of elasticity.
+
+The main feature of the results obtained, which take into account the microstructure scale effect, according to the equations of the gradient theory of elasticity, is a decline in the SIF calculated values compared to solutions based on the classical theory of elasticity, which is the basis of linear fracture mechanics. The microstructure scale effect is more significant for a subsurface crack than a surface one. Strengthening effects arising from the strain gradient lead to a less conservative estimate of the resistance to brittle fracture. This allows for justifying an additional safety margin for the reactor vessel.
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter08}
+

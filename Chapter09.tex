@@ -1,0 +1,884 @@
+% !TeX root = BookN.tex
+
+\title{Adhesion at the Interface with Periodic Array of Gaps Due to Wavy Surface Relief}
+\titlerunning{Adhesion at a Wavy Interface with Periodic Gaps}
+
+\author{Kostyantyn Chumak and Rostyslav Martynyak}
+
+\institute{
+	Kostyantyn Chumak 
+	\at \AffIMech \\
+	\email{chumakostya@gmail.com}
+	\and
+	Rostyslav Martynyak 
+	\at \AffIMech \\
+	\email{m.rostyslav@gmail.com}
+}
+
+\maketitle
+
+
+\graphicspath{{09_Chumak/}}
+
+\abstract{
+	This study examines the adhesive contact between an elastic half-space with a wavy surface and an elastic half-space with a flat surface under plane strain conditions. Interfacial adhesion is modeled using the Maugis--Dugdale theory. Two regimes are considered: full adhesion, in which adhesive forces act over the entire gap width, and partial adhesion, where they are confined to regions near the gap edges.
+	%
+	For full adhesion, a closed-form solution is obtained. In the case of partial adhesion, analytical expressions are derived for the gap height and normal contact stresses, while the widths of the gap and adhesion zones are determined numerically from transcendental equations. 
+	%
+	The combined influence of applied pressure and adhesive stress on the contact zone width, gap evolution, maximum gap height, and normal stress distribution is analyzed for both loading and unloading processes. The results reveal jump instabilities, pull-off phenomena, and adhesion hysteresis.
+}
+
+\section{Introduction}
+
+Surface micro-texturing is widely used to improve the contact performance of both moving and stationary joints by forming a controlled regular microrelief. The most common types of regular surface relief include periodically arranged (i) protrusions, (ii) depressions (grooves or dimples), and (iii) wavy profiles. Various manufacturing technologies are employed to generate such microgeometry, including laser texturing, precision diamond turning, rolling, embossing, etching, vibrorolling, abrasive jet machining, micro electrical discharge machining, and grinding \cite{Chumak15,Chumak17,Chumak36,Chumak39,Chumak40}.
+
+When bodies with regular surface relief come into contact, the interface typically consists of periodic arrays of contact zones separated by gaps. Consequently, theoretical analysis of the interaction between textured surfaces relies on the solution of periodic contact problems in solid mechanics. Reviews of periodic contact formulations under both frictionless and frictional conditions can be found in \cite{Chumak4,Chumak16,Chumak45}. The mechanical and thermal influence of gas or liquid fillers in interface gaps on the contact behavior of solids with periodically grooved or wavy surfaces under combined mechanical and thermal loading has been investigated in \cite{Chumak8,Chumak9,Chumak12,Chumak26,Chumak27,Chumak28,Chumak31}.
+
+With the continuing miniaturization of devices, interfacial adhesion becomes increasingly significant due to molecular interactions, making its inclusion in contact analysis essential \cite{Chumak12}. Adhesion often leads to contact instabilities (jump-in and jump-out phenomena) and adhesion hysteresis, which are commonly observed in micro- and nano-patterned surfaces.
+
+In the context of adhesive contact of wavy surfaces, Johnson \cite{Chumak24} first analyzed the contact between a flat surface and an elastic sinusoidal surface by representing the contact pressure as a superposition of Westergaard’s solution \cite{Chumak43} for two slightly wavy half-planes without adhesion and Koiter’s solution \cite{Chumak25} for a plane containing an infinite array of equally spaced cracks. Based on Johnson’s formulation, Zilberman and Persson \cite{Chumak47} obtained an analytical solution for contact between a rubber block with a smooth flat surface and a rigid substrate with cosine corrugation. Hui et al. \cite{Chumak20} studied adhesion between a rigid half-plane and a periodically rough surface using a cohesive-zone approach similar to the Maugis–Dugdale model \cite{Chumak33}. Jin et al. \cite{Chumak22} extended Hui’s solution to cases where the adhesive interaction zone spans an entire period.
+
+The plane strain adhesive contact problem for a wavy surface and a flat surface was also investigated by Adams \cite{Chumak1} using the Maugis–Dugdale model. Employing Dundurs’ solution \cite{Chumak13}, the problem was reduced to a singular integral equation for the interfacial normal stress, which was solved approximately using the numerical procedure developed by Erdogan and Gupta \cite{Chumak14}. Adhesion at a wavy interface between two half-planes was further analyzed using extensions of the double-Westergaard model \cite{Chumak18,Chumak23}, as well as fully numerical approaches based on surface force laws derived from the Lennard–Jones potential \cite{Chumak37,Chumak44}.
+
+Several studies \cite{Chumak19,Chumak22,Chumak29,Chumak30,Chumak42,Chumak46} have examined adhesive interaction between a rigid smooth sphere or cylinder and an elastic surface with one- or two-dimensional waviness using different adhesion models and computational approaches. Adhesive contact of viscoelastic bodies with slightly wavy surfaces was investigated by Carbone and Mangialardi \cite{Chumak6} and by Afferrante and Violano \cite{Chumak2}.
+
+In the present study, we reconsider the plane strain problem of adhesive contact between two dissimilar elastic half-spaces, one flat and the other possessing a small-amplitude wavy profile, within the framework of the Maugis–Dugdale adhesion model. The solution is constructed using the methodology previously developed by the authors for interfacial adhesion involving a single surface groove \cite{Chumak7} and a periodic array of grooves \cite{Chumak10}.
+
+\section{Problem Formulation}
+
+Consider two isotropic, linearly elastic half-spaces $S_{1}$ and $S_{2}$ made of dissimilar materials with Poisson’s ratios $\nu_{1}$, $\nu_{2}$ and shear moduli $\mu_{1}$, $\mu_{2}$ (Fig.~\ref{ChumakFig1}). The surface of half-space $S_{1}$ is perfectly flat, whereas the surface of half-space $S_{2}$ possesses a periodic wavy profile described by the function
+\begin{equation}
+	\label{ChumakEq1}
+	r(x) = r(x+d) = \frac{A}{2}\left(1 + \cos\frac{2\pi x}{d}\right),
+\end{equation}
+where $A$ is the waviness amplitude and $d$ is the wavelength.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.5\linewidth]{ChumakFig1.png}
+	\caption{Geometry of the solids prior to loading. The lower half-space has a flat surface, while the upper half-space possesses a periodic wavy profile.}
+	\label{ChumakFig1}
+\end{figure}
+
+It is assumed that the waviness amplitude is small compared with the wavelength, i.e.,
+\[
+A \ll d.
+\]
+Under this assumption, the boundary conditions may be imposed on the plane $y=0$ instead of the actual wavy surface \cite{Chumak13}.
+
+The contact problem is formulated within the framework of linear elasticity under plane strain conditions; therefore, the system reduces to the contact of two elastic half-planes (Fig.~\ref{ChumakFig2}). The solids are pressed together by a remotely applied uniform pressure $p$.
+
+The interface consists of a periodic array of gaps
+\[
+L_{1} = \bigcup_{k=-\infty}^{\infty} L_{1k}, 
+\quad 
+L_{1k} = \left(-\frac{a}{2} + kd, \frac{a}{2} + kd\right),
+\]
+and a periodic array of contact regions
+\[
+L_{2} = \bigcup_{k=-\infty}^{\infty} L_{2k}, 
+\quad 
+L_{2k} = \left[\frac{a}{2} + kd, -\frac{a}{2} + (k+1)d\right].
+\]
+
+Two limiting cases of tangential interaction are possible: frictionless contact (zero friction coefficient) and complete stick (infinite friction coefficient). As shown in \cite{Chumak38}, the difference between the corresponding normal contact parameters is small. Since inclusion of friction significantly increases the mathematical complexity of the problem while having limited influence on the normal contact response, frictionless contact is assumed.
+
+Adhesion at the interface is described by the Maugis–Dugdale model \cite{Chumak33}. A constant adhesive stress $\sigma_{0}$ acts in regions where the gap height $h(x)$ satisfies
+\[
+0 < h(x) < h_{0},
+\]
+and vanishes in the contact zones and where the gap exceeds $h_{0}$.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\centering
+	\includegraphics[width=0.4\linewidth]{ChumakFig2.png}
+	\caption{Contact of two elastic half-planes with a periodic array of interface gaps under remote pressure $p$.}
+	\label{ChumakFig2}
+\end{figure}
+
+The solution of the problem requires consideration of two regimes: partial adhesion and full adhesion.
+
+Partial adhesion occurs when the maximum gap height exceeds the adhesive interaction range $h_{0}$. In this case, adhesive stresses act only in the regions adjacent to the gap edges, while the central part of the gap remains traction-free (Fig.~\ref{ChumakFig3}). 
+
+Full adhesion takes place when the maximum gap height is less than $h_{0}$; in this regime, adhesive stresses act throughout the entire width of each gap.
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=0.3\linewidth]{ChumakFig3.png}
+	\caption{Partial adhesion regime: adhesive stresses act near the gap edges.}
+	\label{ChumakFig3}
+\end{figure}
+
+For full adhesion, the adhesive stress distribution within the gaps is
+\begin{equation}
+	\label{ChumakEq2}
+	\sigma(x) = \sigma_{0}, 
+	\qquad x \in L_{1}.
+\end{equation}
+
+For partial adhesion, the adhesive stress is given by
+\begin{equation}
+	\label{ChumakEq3}
+	\sigma(x) =
+	\begin{cases}
+		\sigma_{0}, & x \in L_{3}, \\
+		0,          & x \in L_{4},
+	\end{cases}
+\end{equation}
+where
+\begin{align}
+	\notag
+&L_{3} = \bigcup_{k=-\infty}^{\infty} L_{3k}, 
+\quad
+L_{3k} = \left(-\frac{a}{2} + kd, -\frac{A}{2} + kd\right)
+\cup
+\left(\frac{A}{2} + kd, \frac{a}{2} + kd\right),
+\\
+	\notag
+&L_{4} = \bigcup_{k=-\infty}^{\infty} L_{4k}, 
+\quad
+L_{4k} = \left[-\frac{A}{2} + kd, \frac{A}{2} + kd\right],\quad L_{1} = L_{3} \cup L_{4}.
+\end{align}
+
+The boundary conditions at the interface (on the $x$-axis) are
+
+\begin{align}
+	\label{ChumakEq4}
+	&\sigma_{yy}^{+}(x,0) = \sigma(x), 
+	\qquad
+	\sigma_{yy}^{-}(x,0) = \sigma_{yy}^{+}(x,0),
+	\qquad x \in (-\infty,\infty),
+\\
+	\label{ChumakEq5}
+	&\sigma_{xy}^{+}(x,0) = 0,
+	\qquad
+	\sigma_{xy}^{-}(x,0) = 0,
+	\qquad x \in (-\infty,\infty),
+\\
+	\label{ChumakEq6}
+	&u_{y}^{-}(x,0) = u_{y}^{+}(x,0) + r(x),
+	\qquad x \in L_{2}.
+\end{align}
+
+The boundary conditions at infinity are
+
+\begin{equation}
+	\label{ChumakEq7}
+	\lim_{y \to \pm\infty} \sigma_{yy}(x,y) = -p,
+	\qquad
+	\lim_{y \to \pm\infty} \sigma_{xy}(x,y) = 0,
+	\qquad
+	\lim_{x \to \pm\infty} \sigma_{xx}(x,y) = 0.
+\end{equation}
+%
+Here, the superscripts ``$+$'' and ``$-$'' denote the limiting values of the corresponding quantities on the $x$-axis approached from the upper and lower half-planes, respectively. The quantities $\sigma_{xy}(x,y)$ and $\sigma_{yy}(x,y)$ represent the stress components, and $u_y(x,y)$ denotes the displacement component in the $y$-direction.
+
+The input parameters of the problem are the applied pressure $p$, the adhesive stress $\sigma_{0}$, the waviness amplitude $A$ and wavelength $d$, the material constants $\nu_{1}$, $\nu_{2}$, $\mu_{1}$, $\mu_{2}$, and the equilibrium separation distance $h_{0}$. The unknown quantities are the gap profile $h(x)$, the half-width $a$ of the interface gaps, the normal contact stresses $\sigma_{yy}^{\pm}(x,0)$, and, in the case of partial adhesion, the width of the adhesion zones 
+\[
+l = \frac{1}{2}(a - c).
+\]
+
+\section{Solution to the Problem}
+
+To determine the stress–strain state at an arbitrary point of an isotropic elastic body under plane strain conditions, it is necessary to find the displacement components $u_x(x,y)$, $u_y(x,y)$ and the stress components $\sigma_{xx}(x,y)$, $\sigma_{xy}(x,y)$, $\sigma_{yy}(x,y)$.
+
+For a half-plane without body forces and subjected to uniform stresses at infinity $\sigma_{xx}^{\infty}$, $\sigma_{xy}^{\infty}$, $\sigma_{yy}^{\infty}$, the stress and displacement fields can be expressed in terms of the Kolosov–Muskhelishvili complex potential $\Phi(z)$, which is sectionally holomorphic in the domain $S = S_{1} \cup S_{2}$ with the $x$-axis serving as the line of discontinuity \cite{Chumak35}. The fundamental relations are
+
+\begin{equation}
+	\label{ChumakEq8}
+	\begin{aligned}
+		\sigma_{xx}(x,y) + \sigma_{yy}(x,y)
+		&= 4\,\mathrm{Re}\bigl[\Phi(z)\bigr]
+		+ \sigma_{xx}^{\infty} + \sigma_{yy}^{\infty}, \\
+		\sigma_{yy}(x,y) - i\sigma_{xy}(x,y)
+		&= \Phi(z) - \Phi(\bar{z})
+		+ 2iy\,\overline{\Phi'(z)}
+		+ \sigma_{yy}^{\infty} - i\sigma_{xy}^{\infty}, \\
+		2\mu \left( \partial_x u_x(x,y) + i\,\partial_x u_y(x,y) \right)
+		&= (3 - 4\nu)\Phi(z)
+		+ \Phi(\bar{z})
+		- 2iy\,\overline{\Phi'(z)} \\
+		&\qquad
+		+ (1-\nu)\sigma_{xx}^{\infty}
+		- \nu\sigma_{yy}^{\infty}
+		+ i\sigma_{xy}^{\infty}.
+	\end{aligned}
+\end{equation}
+%
+Here $z = x + iy$ is the complex variable, the overline denotes complex conjugation, $\mathrm{Re}[\cdot]$ denotes the real part, and the prime indicates differentiation with respect to $z$. The symbols $\mu$ and $\nu$ denote the shear modulus and Poisson’s ratio of the corresponding material, respectively.
+
+Using \eqref{ChumakEq8} together with the far-field conditions \eqref{ChumakEq7}, the stress and displacement fields in each half-space $S_j$ ($j=1,2$) can be written as
+
+\begin{align}
+	\label{ChumakEq9}
+	\sigma_{xx}(x,y) + \sigma_{yy}(x,y)
+	&= 4\,\mathrm{Re}\bigl[\Phi_j(z)\bigr] - p, \\[4pt]
+	%
+	\label{ChumakEq10}
+	\sigma_{yy}(x,y) - i\sigma_{xy}(x,y)
+	&= \Phi_j(z) - \Phi_j(\bar{z})
+	+ 2iy\,\overline{\Phi_j'(z)} - p, \\[4pt]
+	%
+	\label{ChumakEq11}
+	2\mu_j \left( \partial_x u_x(x,y)
+	+ i\,\partial_x u_y(x,y) \right)
+	&= (3 - 4\nu_j)\Phi_j(z)
+	+ \Phi_j(\bar{z})
+	- 2iy\,\overline{\Phi_j'(z)}
+	+ \nu_j p.
+\end{align}
+
+To determine the complex potentials $\Phi_j(z)$ satisfying the interface conditions \eqref{ChumakEq4}–\eqref{ChumakEq6}, we employ the method of intercontact gap functions \cite{Chumak32}. Introducing the jump of normal displacements across the interface,
+
+\begin{equation}
+	\label{ChumakEq12}
+	g(x) = u_y^{-}(x,0) - u_y^{+}(x,0)
+	=
+	\begin{cases}
+		r(x) - h(x), & x \in L_{1}, \\
+		r(x),        & x \in L_{2},
+	\end{cases}
+\end{equation}
+%
+the boundary condition on normal displacements becomes
+
+\begin{equation}
+	\label{ChumakEq13}
+	u_y^{-}(x,0) = u_y^{+}(x,0) + g(x),
+\end{equation}
+%
+while the stress continuity and frictionless conditions take the form
+
+\begin{equation}
+	\label{ChumakEq14}
+	\sigma_{yy}^{-}(x,0) = \sigma_{yy}^{+}(x,0),
+	\quad
+	\sigma_{xy}^{-}(x,0) = 0,
+	\quad
+	\sigma_{xy}^{+}(x,0) = 0,
+	\quad
+	x \in (-\infty,\infty).
+\end{equation}
+
+The conditions \eqref{ChumakEq15} and \eqref{ChumakEq16}, in contrast to \eqref{ChumakEq4}–\eqref{ChumakEq6}, are unmixed and incorporate all interface conditions except the first relation in \eqref{ChumakEq4}. They allow the complex potentials $\Phi_j(z)$ to be expressed in terms of the gap height function $h(x)$, while $h(x)$ itself is determined from the remaining normal stress condition \eqref{ChumakEq4}.
+
+Applying the boundary conditions \eqref{ChumakEq16} to \eqref{ChumakEq12}, we obtain three Riemann boundary value problems:
+\begin{align}
+	\label{ChumakEq15}
+	\Phi_{1}^{+}(x) + \Phi_{2}^{+}(x)
+	= \Phi_{1}^{-}(x) + \Phi_{2}^{-}(x),
+	\qquad  & x \in (-\infty,\infty).
+\\
+	\label{ChumakEq16}
+	\Phi_{1}^{+}(x) + \overline{\Phi_{1}^{+}(x)}
+	= \Phi_{1}^{-}(x) + \overline{\Phi_{1}^{-}(x)},
+	\qquad  & x \in (-\infty,\infty).
+\\
+	\label{ChumakEq17}
+	\Phi_{2}^{+}(x) + \overline{\Phi_{2}^{+}(x)}
+	= \Phi_{2}^{-}(x) + \overline{\Phi_{2}^{-}(x)},
+	\qquad  & x \in (-\infty,\infty).
+\end{align}
+
+Their solutions are given in \cite{Chumak34}:
+\begin{equation}
+	\label{ChumakEq18}
+	\Phi_{1}(z) = -\Phi_{2}(z),
+	\quad
+	\overline{\Phi_{1}(z)} = -\Phi_{1}(z),
+	\quad
+	\overline{\Phi_{2}(z)} = -\Phi_{2}(z),
+	\qquad z \in S.
+\end{equation}
+
+Differentiating condition \eqref{ChumakEq13} with respect to $x$ and substituting the result into \eqref{ChumakEq11}, we obtain the following Riemann boundary value problem:
+\begin{equation}
+	\label{ChumakEq19}
+	K \Phi_{1}^{+}(x)
+	= -K \Phi_{1}^{-}(x) + 2i g'(x),
+	\qquad x \in (-\infty,\infty).
+\end{equation}
+%
+where
+\begin{equation}
+	\label{ChumakEq20}
+	K = 2\left[
+	\frac{1-\nu_{1}}{G_{1}}
+	+
+	\frac{1-\nu_{2}}{G_{2}}
+	\right].
+\end{equation}
+
+Its solution is given in \cite{Chumak34}:
+\begin{equation}
+	\label{ChumakEq21}
+	\Psi(z)
+	=
+	\frac{1}{\pi}
+	\int_{-\infty}^{\infty}
+	\frac{g'(t)}{t - z}\, dt.
+\end{equation}
+%
+where
+\begin{equation}
+	\label{ChumakEq22}
+	\Psi(z)
+	=
+	\begin{cases}
+		- K \Phi_{1}(z), & z \in S_{1}, \\
+		\phantom{-} K \Phi_{1}(z), & z \in S_{2}.
+	\end{cases}
+\end{equation}
+
+Taking advantage of periodicity \cite{Chumak4}, \eqref{ChumakEq21} can be written as
+\begin{equation}
+	\label{ChumakEq23}
+	\Psi(z)
+	=
+	i\Bigl(
+	J(r',b,z) - J(h',a,z)
+	\Bigr),
+	\qquad z \in S,
+\end{equation}
+%
+where
+\begin{equation}
+	\label{ChumakEq24}
+	J(f,R,z)
+	\equiv
+	\frac{1}{d i}
+	\int_{-R/2}^{R/2}
+	f(t)
+	\cot\!\left[
+	\frac{\pi}{d}(t - z)
+	\right] dt
+\end{equation}
+%
+denotes the singular integral with Hilbert kernel.
+
+It follows from \eqref{ChumakEq18}, \eqref{ChumakEq22}, and \eqref{ChumakEq23} that, after straightforward manipulations,
+\begin{equation}
+	\label{ChumakEq25}
+	\Phi_{1}(z) = -\Phi_{2}(z)
+	= \frac{(-1)^{j}}{iK}
+	\left(
+	J(h',a,z) - J(r',b,z)
+	\right),
+	\qquad z \in S_{j}.
+\end{equation}
+
+Then the contact stresses and the derivatives of the displacements can be expressed in terms of $h(x)$ by substituting \eqref{ChumakEq25} into \eqref{ChumakEq9}–\eqref{ChumakEq11}, taking the limit $y \to \pm 0$, and applying the generalized Plemelj formula \cite{Chumak5}:
+
+\begin{align}
+	\label{ChumakEq26}
+	\sigma_{yy}^{\pm}(x,0)
+	&=
+	\frac{2}{iK}
+	\left(
+	J(r',b,x) - J(h',a,x)
+	\right)
+	- p,
+	\\
+	\label{ChumakEq27}
+	\sigma_{xx}^{\pm}(x,0)
+	&=
+	\sigma_{yy}^{\pm}(x,0) + p,
+	\\
+	\label{ChumakEq28}
+	\left(\partial_x u_x\right)^{-}(x,0)
+	&=
+	\frac{1 - 2\nu_{1}}{iK G_{1}}
+	\left(
+	J(r',b,x) - J(h',a,x)
+	\right)
+	+
+	\frac{\nu_{1}}{2G_{1}}\, p^{\infty},
+	\\
+	\label{ChumakEq29}
+	\left(\partial_x u_x\right)^{+}(x,0)
+	&=
+	\frac{1 - 2\nu_{2}}{iK G_{2}}
+	\left(
+	J(r',b,x) - J(h',a,x)
+	\right)
+	+
+	\frac{\nu_{2}}{2G_{2}}\, p^{\infty},
+	\\
+	\label{ChumakEq30}
+	\left(\partial_x u_y\right)^{-}(x,0)
+	&=
+	\frac{2(1 - \nu_{1})}{K G_{1}}
+	\bigl(
+	r'(x) - h'(x)
+	\bigr),
+	\\
+	\label{ChumakEq31}
+	\left(\partial_x u_y\right)^{+}(x,0)
+	&=
+	-
+	\frac{2(1 - \nu_{2})}{K G_{2}}
+	\bigl(
+	r'(x) - h'(x)
+	\bigr)
+\end{align}
+%
+for all $x \in (-\infty,\infty)$.
+
+The first condition in \eqref{ChumakEq4}, together with \eqref{ChumakEq26} and the periodicity of the contact problem, leads to the following singular integral equation (SIE) with a Hilbert kernel for the derivative of the gap height $h'(x)$:
+\begin{multline}
+	\label{ChumakEq32}
+	\frac{1}{d}
+	\int_{-a/2}^{a/2}
+	h'(t)
+	\cot\!\left(
+	\frac{\pi (t-x)}{d}
+	\right)
+	dt
+	\\
+	=
+	\frac{1}{d}
+	\int_{-b/2}^{b/2}
+	r'(t)
+	\cot\!\left(
+	\frac{\pi (t-x)}{d}
+	\right)
+	dt
+	+
+	\frac{K}{2}\bigl(p + \sigma(x)\bigr),
+	\qquad |x| < a.
+\end{multline}
+
+
+
+The function $\sigma(x)$ describes the effect of adhesion forces on the gap height and equals
+\begin{equation}
+	\label{ChumakEq33}
+	\sigma(x)=
+	\begin{cases}
+		\sigma_{0}, & \tfrac{c}{2} < |x| < \tfrac{a}{2}, \\
+		0,          & |x| \le \tfrac{c}{2},
+	\end{cases}
+\end{equation}
+for partial adhesion, and
+\begin{equation}
+	\label{ChumakEq34}
+	\sigma(x)=\sigma_{0},
+	\qquad |x| < \tfrac{a}{2},
+\end{equation}
+for full adhesion.
+
+The SIE \eqref{ChumakEq32} is supplemented with the condition
+\begin{equation}
+	\label{ChumakEq35}
+	h(-a)=h(a)=0,
+\end{equation}
+which reflects the fact that the gap height vanishes at its endpoints. In addition, the gap is required to close smoothly at $x=\pm a$, i.e.,
+\begin{equation}
+	\label{ChumakEq36}
+	h'(-a)=h'(a)=0.
+\end{equation}
+According to the behavior of a Cauchy-type integral near the endpoints of the integration interval \cite{Chumak34}, this condition ensures bounded contact stresses at $x=\pm a$.
+
+In addition, the normal stresses in the contact regions must satisfy
+\begin{equation}
+	\label{ChumakEq37}
+	\sigma_{yy}^{\pm}(x,0) \le \sigma_{0},
+	\qquad a \le |x| \le d.
+\end{equation}
+
+Substituting \eqref{ChumakEq1} into \eqref{ChumakEq32} and performing the integration, we obtain
+\begin{equation}
+	\label{ChumakEq38}
+	\frac{1}{d}
+	\int_{-a/2}^{a/2}
+	h'(t)
+	\cot\!\left(
+	\frac{\pi (t-x)}{d}
+	\right)
+	dt
+	=
+	-
+	\frac{\pi A}{d}
+	\cos\!\left(
+	\frac{2\pi x}{d}
+	\right)
+	+
+	\frac{K}{2}\bigl(p + \sigma(x)\bigr),
+	\qquad |x| < a.
+\end{equation}
+
+Using the change of variables $\xi=\tan(\pi x/d)$, $\eta=\tan(\pi t/d)$, $\alpha=\tan\!\left(\tfrac{\pi a}{2d}\right)$, and $\chi=\tan\!\left(\tfrac{\pi c}{2d}\right)$, the SIE \eqref{ChumakEq38} with a Hilbert kernel is transformed to the SIE with a Cauchy kernel:
+\begin{equation}
+	\label{ChumakEq39}
+	\frac{1}{\pi}\int_{-\alpha}^{\alpha}\frac{h'(\eta)}{\eta-\xi}\,d\eta
+	=
+	\frac{1}{\xi^{2}+1}\left(
+	A\,\frac{\xi^{2}-1}{\xi^{2}+1}
+	+
+	\frac{dK}{2\pi}\bigl(p+\sigma(\xi)\bigr)
+	\right),
+	\qquad |\xi|<\alpha .
+\end{equation}
+
+In view of condition \eqref{ChumakEq36}, we seek a bounded solution of the SIE \eqref{ChumakEq39}. It is known \cite{Chumak34} that
+\begin{equation}
+	\label{ChumakEq40}
+	h'(\xi)
+	=
+	-\frac{\sqrt{\alpha^{2}-\xi^{2}}}{\pi}
+	\int_{-\alpha}^{\alpha}
+	\frac{
+		A\,\frac{\eta^{2}-1}{\eta^{2}+1}
+		+
+		\frac{dK}{2\pi}\bigl(p+\sigma(\eta)\bigr)
+	}{
+		\sqrt{\alpha^{2}-\eta^{2}}\;(\eta^{2}+1)\,(\eta-\xi)
+	}\,d\eta,
+	\qquad |\xi|<\alpha ,
+\end{equation}
+and this solution exists only if the right-hand side of \eqref{ChumakEq39} satisfies the consistency condition \cite{Chumak34}
+\begin{equation}
+	\label{ChumakEq41}
+	\int_{-\alpha}^{\alpha}
+	\frac{
+		A\,\frac{\eta^{2}-1}{\eta^{2}+1}
+		+
+		\frac{dK}{2\pi}\bigl(p+\sigma(\eta)\bigr)
+	}{
+		\sqrt{\alpha^{2}-\eta^{2}}\;(\eta^{2}+1)
+	}\,d\eta
+	=0 .
+\end{equation}
+
+Performing the integrations, we obtain
+\begin{equation}
+	\label{ChumakEq42}
+	h'(\xi)
+	=
+	-\frac{\sqrt{\alpha^{2}-\xi^{2}}}{\sqrt{\alpha^{2}+1}}
+	\frac{\xi}{\xi^{2}+1}
+	\left[
+	\frac{2A}{\xi^{2}+1}
+	+
+	\frac{A}{\alpha^{2}+1}
+	-
+	\frac{dK}{2\pi}\bigl(p+\sigma_{0}\bigr)
+	\right]
+	+h'_{**}(\xi),
+	\qquad |\xi|\le\alpha ,
+\end{equation}
+\begin{equation}
+	\label{ChumakEq43}
+	K\bigl(p+\sigma_{0}\bigr)
+	=
+	\frac{2\pi A}{d(\alpha^{2}+1)}
+	+p_{*},
+\end{equation}
+where
+\begin{align}
+	\label{ChumakEq44}
+	h'_{**}(\xi)
+	&=
+	-\frac{dK\sigma_{0}}{\pi^{2}}
+	\frac{\varphi(\alpha,\chi)}{\sqrt{\alpha^{2}+1}}
+	\frac{\xi\sqrt{\alpha^{2}-\xi^{2}}}{\xi^{2}+1}
+	-h'_{*}(\xi),
+\\
+	\label{ChumakEq45}
+	h'_{*}(\xi)
+	&=
+	\frac{dK\sigma_{0}}{4\pi^{2}}
+	\frac{\Gamma(\alpha,\xi,\chi)-\Gamma(\alpha,\xi,-\chi)}{\xi^{2}+1},
+\\
+	\label{ChumakEq46}
+	\Gamma(\alpha,\xi,\eta)
+	&=
+	\ln\!\left(
+	\frac{
+		\alpha^{2}-\xi\eta+\sqrt{(\alpha^{2}-\xi^{2})(\alpha^{2}-\eta^{2})}
+	}{
+		\alpha^{2}-\xi\eta-\sqrt{(\alpha^{2}-\xi^{2})(\alpha^{2}-\eta^{2})}
+	}
+	\right),
+\\
+	\label{ChumakEq47}
+	p_{*}
+	&=
+	\frac{2\sigma_{0}}{\pi}\,\varphi(\alpha,\chi),
+\\
+	\label{ChumakEq48}
+	\varphi(\alpha,\chi)
+	&=
+	\arctan\!\left(
+	\frac{\chi\sqrt{\alpha^{2}+1}}{\sqrt{\alpha^{2}-\chi^{2}}}
+	\right),
+\end{align}
+for partial adhesion, and
+\begin{equation}
+	\label{ChumakEq49}
+	h'_{*}(\xi)=0,
+	\qquad
+	h'_{**}(\xi)=0,
+	\qquad
+	p_{*}=0
+\end{equation}
+for full adhesion.
+
+Substituting \eqref{ChumakEq43} into \eqref{ChumakEq42} yields
+\begin{equation}
+	\label{ChumakEq50}
+	h'(\xi)
+	=
+	-2A
+	\frac{\sqrt{\alpha^{2}-\xi^{2}}}{\sqrt{\alpha^{2}+1}}
+	\frac{\xi}{(\xi^{2}+1)^{2}}
+	-
+	h'_{*}(\xi).
+\end{equation}
+
+Integration of \eqref{ChumakEq50} from $-\alpha$ to $\xi$, taking into account condition \eqref{ChumakEq35}, gives the gap height
+\begin{multline}
+	\label{ChumakEq51}
+	h(\xi)
+	=
+	\frac{A}{\sqrt{\alpha^{2}+1}}
+	\left[
+	\frac{1}{2\sqrt{\alpha^{2}+1}}
+	\ln\!\left|
+	\frac{
+		\sqrt{\alpha^{2}+1}-\sqrt{\alpha^{2}-\xi^{2}}
+	}{
+		\sqrt{\alpha^{2}+1}+\sqrt{\alpha^{2}-\xi^{2}}
+	}
+	\right|
+	+
+	\frac{\sqrt{\alpha^{2}-\xi^{2}}}{\xi^{2}+1}
+	\right]
+	-
+	h_{*}(\xi),
+	\\ |\xi|\le\alpha,
+\end{multline}
+where
+\begin{equation}
+	\label{ChumakEq52}
+	h_{*}(\xi)
+	=
+	\frac{dK\sigma_{0}}{4\pi^{2}}
+	\int_{-\alpha}^{\xi}
+	\frac{
+		\Gamma(\alpha,\eta,\chi)
+		-
+		\Gamma(\alpha,\eta,-\chi)
+	}{
+		\eta^{2}+1
+	}
+	\,d\eta
+\end{equation}
+for partial adhesion, and
+\begin{equation}
+	\label{ChumakEq53}
+	h_{*}(\xi)=0
+\end{equation}
+for full adhesion.
+
+Equation \eqref{ChumakEq51} involves two unknowns, $\alpha$ and $\chi$, in the case of partial adhesion. To determine them, we use the transcendental equation \eqref{ChumakEq43} together with the transcendental equation obtained from the condition $h(-\chi)=h_{0}$ following from the Maugis--Dugdale adhesive model:
+\begin{equation}
+	\label{ChumakEq54}
+	\frac{A}{\sqrt{\alpha^{2}+1}}
+	\left[
+	\frac{1}{2\sqrt{\alpha^{2}+1}}
+	\ln\!\left|
+	\frac{
+		\sqrt{\alpha^{2}+1}-\sqrt{\alpha^{2}-\chi^{2}}
+	}{
+		\sqrt{\alpha^{2}+1}+\sqrt{\alpha^{2}-\chi^{2}}
+	}
+	\right|
+	+
+	\frac{\sqrt{\alpha^{2}-\chi^{2}}}{\chi^{2}+1}
+	\right]
+	-h_{*}(\chi)
+	= h_{0}.
+\end{equation}
+
+Since the applied pressure $p$ enters \eqref{ChumakEq43} linearly and the integral in \eqref{ChumakEq52} cannot be evaluated analytically, it is numerically convenient to prescribe $\alpha$, then determine $\chi$ from \eqref{ChumakEq54}, and finally compute the corresponding pressure $p$ from \eqref{ChumakEq43}.
+
+The interval $[0,\alpha]$ was divided into $10^{5}$ subintervals, and the bisection method \cite{Chumak3} was applied on each subinterval to determine $\chi$ with tolerance $10^{-12}$. The integral in \eqref{ChumakEq52} was evaluated by the midpoint Riemann sum, using a uniform partition of the interval $(-\alpha,-\chi)$ into $10^{3}$ subintervals.
+
+Once $\alpha$ and $\chi$ are known, the width $l$ of the adhesion zones can be determined as
+\begin{equation}
+	\label{ChumakEq55}
+	l=\frac{1}{2}(a-c)
+	=
+	\frac{d}{\pi}\bigl(\arctan(\alpha)-\arctan(\chi)\bigr).
+\end{equation}
+
+For full adhesion, \eqref{ChumakEq43} yields the gap width parameter
+\begin{equation}
+	\label{ChumakEq56}
+	\alpha
+	=
+	\sqrt{\frac{2\pi A}{dK\bigl(p+\sigma_{0}\bigr)}-1}.
+\end{equation}
+
+It follows from \eqref{ChumakEq43} that complete contact (i.e., the absence of interface gaps) occurs when
+\begin{equation}
+	\label{ChumakEq57}
+	p \ge \frac{2\pi A}{dK}-\sigma_{0}.
+\end{equation}
+
+Substituting \eqref{ChumakEq50} into \eqref{ChumakEq26} and performing the integration, we obtain the normal contact stresses
+\begin{multline}
+	\label{ChumakEq58}
+	\sigma_{yy}^{\pm}(\xi,0)
+	=
+	-\frac{4\pi A}{Kd\sqrt{\alpha^{2}+1}}
+	\frac{|\xi|\sqrt{\alpha^{2}-\xi^{2}}}{\xi^{2}+1}
+	\\
+	+\sigma_{0}
+	-\frac{\sigma_{0}}{\pi}
+	\left[
+	\arcsin\!\left(\frac{\chi\xi-\alpha^{2}}{\alpha(\xi-\chi)}\right)
+	+
+	\arcsin\!\left(\frac{\chi\xi+\alpha^{2}}{\alpha(\xi+\chi)}\right)
+	\right],
+\end{multline}
+for partial adhesion, and
+\begin{equation}
+	\label{ChumakEq59}
+	\sigma_{yy}^{\pm}(\xi,0)
+	=
+	-\frac{4\pi A}{Kd\sqrt{\alpha^{2}+1}}
+	\frac{|\xi|\sqrt{\alpha^{2}-\xi^{2}}}{\xi^{2}+1}
+	+\sigma_{0},
+\end{equation}
+for full adhesion.
+
+\section{Numerical Results}
+
+ Numerical results are presented in terms of the following dimensionless quantities:
+\[
+\bar{\varphi}=\frac{\varphi}{h_{0}}, \qquad
+\varphi=\{d,A,a,c,l,h,x\},
+\]
+and
+\[
+\bar{\psi}=K\psi, \qquad
+\psi=\{p,\sigma_{0},\sigma_{yy}^{+}\}.
+\]
+The dimensionless amplitude and wavelength of the waviness are chosen as
+\[
+\bar{A}=10, \qquad \bar{d}=10^{3}.
+\]
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}{0.38\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{ChumakFig4a.png}
+		\caption{$\bar{\sigma}_{0}=0.01$}
+		\label{ChumakFig4a}
+	\end{subfigure}
+	\hspace{1em}
+	\begin{subfigure}{0.38\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{ChumakFig4b.png}
+		\caption{$\bar{\sigma}_{0}=0.05$}
+		\label{ChumakFig4b}
+	\end{subfigure}
+	\caption{Semi-width $\bar{b}=0.5(\bar{d}-\bar{a})$ of the contact zone versus applied pressure $\bar{p}$. 
+		The solid curve corresponds to partial adhesion, the dashed curve to full adhesion, and the dash-dot curve to complete contact (without interface gaps).}
+	\label{ChumakFig4}
+\end{figure}
+
+Figure~\ref{ChumakFig4} shows the semi-width $\bar{b}$ of the contact zones versus the applied pressure $\bar{p}$. 
+
+For $\bar{\sigma}_{0}=0.01$ (Fig.~\ref{ChumakFig4a}), if the surfaces are brought into contact at zero load ($\bar{p}=0$), they immediately snap together due to adhesion (point A on the solid curve). As $\bar{p}$ increases, $\bar{b}$ increases until point B, where a vertical jump from partial adhesion (solid curve) to full adhesion (dashed curve) occurs. A further increase in pressure leads to closure of the interface gaps and complete contact (point D), which persists for larger $\bar{p}$ (dash-dot curve). 
+
+During unloading, the transition from full to partial adhesion occurs at a lower pressure (points E and F) than during loading. A further decrease in pressure reduces $\bar{b}$ until the surfaces separate abruptly at the tensile pull-off stress (point G).
+
+For higher adhesive stress $\bar{\sigma}_{0}=0.05$ (Fig.~\ref{ChumakFig4b}), the loading stage is characterized by an immediate jump from partial adhesion to complete contact (points B and C). The unloading path is qualitatively similar to Fig.~\ref{ChumakFig4a}, but the jump between partial and full adhesion is larger, and the pull-off stress increases.
+
+The jump instabilities observed in Fig.~\ref{ChumakFig4} lead to different loading and unloading curves, demonstrating adhesion hysteresis.
+
+It is worth noting that the present results qualitatively reproduce the contact width–pressure relation reported in \cite{Chumak1}. However, a significant difference is observed: in the present formulation, the transitions between full adhesive contact and complete contact are continuous, whereas in \cite{Chumak1} they occur via a jump.
+
+Figure~\ref{ChumakFig5} illustrates the evolution of the interface gap during loading (Fig.~\ref{ChumakFig5a}) and unloading (Fig.~\ref{ChumakFig5b}) for $\bar{\sigma}_{0}=0.05$. In Fig.~\ref{ChumakFig5a}, curve~1 corresponds to point~A in Fig.~\ref{ChumakFig4b}, where $\bar{p}=0$, $\bar{b}=140.37$, and $\bar{l}=38.12$; curve~2 corresponds to $\bar{p}=0.01$, $\bar{b}=217.33$, and $\bar{l}=39.47$; and curve~3 corresponds to point~B, where $\bar{p}=0.0223$, $\bar{b}=340.69$, and $\bar{l}=53.21$. 
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}{0.36\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{ChumakFig5a.png}
+		\caption{Loading stage.}
+		\label{ChumakFig5a}
+	\end{subfigure}
+	\hspace{1em}
+	\begin{subfigure}{0.36\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{ChumakFig5b.png}
+		\caption{Unloading stage.}
+		\label{ChumakFig5b}
+	\end{subfigure}
+	\caption{Transformation of the interface gap for $\bar{\sigma}_{0}=0.05$.
+		Solid curves correspond to partial adhesion and the dashed curve to full adhesion.}
+	\label{ChumakFig5}
+\end{figure}
+
+In Fig.~\ref{ChumakFig5b}, curve~1 corresponds to point~E in Fig.~\ref{ChumakFig4b}, where $\bar{p}=-0.00421$ and $\bar{b}=325.63$; curve~2 corresponds to point~F, where $\bar{p}=-0.00421$, $\bar{b}=94.71$, and $\bar{l}=39.24$; and curve~3 corresponds to point~G, where $\bar{p}=-0.00645$ (pull-off stress), $\bar{b}=34.26$, and $\bar{l}=45.15$.
+
+
+The dependence of the maximum gap height $\bar{h}_{\max}$ on the applied pressure $\bar{p}$ is shown in Fig.~\ref{ChumakFig6} for 
+1 — $\bar{\sigma}_{0}=0.01$, 
+2 — $\bar{\sigma}_{0}=0.05$, and 
+3 — $\bar{\sigma}_{0}=0.1$. 
+The dashed curves correspond to full adhesion, and the solid curves to partial adhesion.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.38\textwidth]{ChumakFig6.png}
+	\caption{Maximum gap height $\bar{h}_{\max}$ versus applied pressure $\bar{p}$. 
+		Solid curves correspond to partial adhesion and dashed curves to full adhesion.}
+	\label{ChumakFig6}
+\end{figure}
+
+The upper points of the solid curves and the upper point of dashed curve~3 represent the values of $\bar{h}_{\max}$ at which the surfaces separate under a tensile pull-off force. It is observed that $\bar{h}_{\max}$ at pull-off exceeds the waviness amplitude $\bar{A}$ in the case of partial adhesion, whereas it is significantly smaller than $\bar{A}$ in the case of full adhesion.
+
+The upper points of dashed curves~1 and~2 indicate the values of $\bar{h}_{\max}$ at which the transition from full to partial adhesion occurs. Pull-off takes place at larger values of $\bar{h}_{\max}$, and the jumps between partial adhesion, full adhesion, and complete contact become more pronounced as the adhesive stress increases.
+
+Figure~\ref{ChumakFig7} presents the distributions of the normal contact stress 
+$\bar{\sigma}_{yy}^{+}$ for partial and full adhesion. 
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.40\textwidth]{ChumakFig7.png}
+	\caption{Normal contact stress $\bar{\sigma}_{yy}^{+}$ for 
+		$\bar{\sigma}_{0}=0.05$ and $\bar{p}=0.01$. 
+		The solid curve corresponds to partial adhesion 
+		($\bar{a}=565.34$, $\bar{c}=486.4$, $\bar{l}=39.47$), 
+		and the dashed curve corresponds to full adhesion 
+		($\bar{a}=136.1$).}
+	\label{ChumakFig7}
+\end{figure}
+
+Within the interface gap, the stress distribution follows the 
+Maugis–Dugdale adhesive model and is governed by 
+\eqref{ChumakEq33} and \eqref{ChumakEq34}. 
+The stress $\bar{\sigma}_{yy}^{+}$ attains the value $\bar{\sigma}_{0}$ 
+at the gap edges and then decreases monotonically with increasing 
+distance from the gap, reaching its minimum at the center of the contact zone, 
+$\bar{x}=\pm \bar{d}/2$.
+
+\section{Conclusions}
+
+Adhesive contact between a wavy elastic half-space and a flat elastic half-space has been investigated under plane strain conditions. Adhesion at the interface was modeled using the Maugis–Dugdale theory. Two regimes were analyzed: partial adhesion, in which adhesive stresses act near the gap edges and vanish in the central part of the gap, and full adhesion, in which adhesive stresses act over the entire gap width.
+
+Using the methods of complex potentials and intercontact gap functions, the contact problem was reduced to a singular integral equation with a Hilbert kernel for the derivative of the gap height. An analytical solution was obtained. In the case of full adhesion, the gap width was derived explicitly. For partial adhesion, the widths of the gap and adhesion zones were determined from a system of transcendental equations, which were solved numerically using the bisection method.
+
+The combined influence of applied pressure and adhesive stress on the contact zone width, maximum gap height, gap evolution, and normal interface stress distribution was analyzed for both loading and unloading stages. Jump instabilities and adhesion hysteresis were revealed in both regimes.
+
+For smaller adhesive stress, loading and unloading are accompanied by transitions between partial and full adhesion states. For larger adhesive stress, loading leads directly from partial adhesion to complete contact. Surface separation occurs at a tensile pull-off force. Depending on the adhesion regime, pull-off may occur either from the state of partial adhesion, when the maximum gap height exceeds the initial waviness amplitude, or from the state of full adhesion, when the maximum gap height is significantly smaller than the waviness amplitude.
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter09}

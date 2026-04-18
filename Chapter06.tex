@@ -1,0 +1,1025 @@
+% !TeX root = Book.tex
+
+\title{Analytical Model of the Process Zone Near the Tip of an Interfacial Crack at the Corner Point of the Interface of Quasi-Brittle Materials}
+\titlerunning{Process Zone Model Near Interfacial Crack Corner}
+
+\author{Olga~Bogdanova, Mykhailo~Dudyk, Anatoly~Kaminsky, and Yuliia~Reshitnyk}
+
+\institute{%
+	Olga~Bogdanova
+	\at 
+	\AffIMech
+	\\
+	\email{o.bogdanova@i.ua}
+	\and
+	Mykhailo~Dudyk
+	\at 
+	\AffUman
+	\\
+	\email{dudik_m@hotmail.com}
+	\and
+	Anatoly~Kaminsky
+	\at
+	\AffIMech
+	\\
+	\email{fract@inmech.kiev.ua}
+	\and
+	Yuliia~Reshitnyk
+	\at 
+	\AffUman
+	\\
+	\email{dikhtiarenko_iu@udpu.edu.ua}
+}
+
+\maketitle
+
+\abstract{
+	A closed‐form plane–strain model is presented for the \emph{process zone} that nucleates in a quasi-brittle joining material at the tip of an interfacial crack emanating from a corner point of a broken interface.  
+	The zone is idealised as a straight displacement–discontinuity line that satisfies the Mises–Hill strength criterion, the ultimate normal and tangential strengths of the quasi-brittle medium being the material parameters.  
+	By applying Mellin’s integral transform to the mixed-boundary elasticity problem, the governing equations are reduced to a vector Wiener–Hopf functional equation for the Mellin transforms of the stresses and displacement gradients.  
+	An approximate factorisation of this equation yields an explicit transcendental system whose solution provides (i)~the zone length~\(\ell\), (ii)~the phase angle~\(\psi\) of the tractions within the zone, and (iii)~the dissipated energy~\(D\).  
+	Maximising~\(D\) delivers the inclination angle~\(\beta\) of the zone relative to the interface, while a compact expression for the energy-release rate \(G(\ell)\) enables direct use of the energy criterion \(G=G_{c}\) to predict the ultimate load.  
+	Parametric studies quantify the influence of interface kink angle, elastic contrast, and the tensile–to–shear strength ratio on \(\ell\), \(\beta\), \(\psi\), and \(G\), demonstrating that the model captures the transition from brittle to ductile failure and accurately forecasts experimentally observed crack-kinking angles.
+}
+
+
+\graphicspath{{06_Bogdanova/}}
+
+\section{Introduction}
+\label{BogdanovaSec1}
+
+Interfacial cracks initiate at the boundary between dissimilar materials and represent a common defect in composites, laminates, sandwich panels, adhesive and welded joints, and surface coatings. When such cracks propagate in piecewise homogeneous bodies with contrasting mechanical properties, they can lead to partial or catastrophic failure during service. Consequently, predicting the strength, reliability, and durability of components composed of joined dissimilar materials has long been a central concern in fracture mechanics.
+
+Early analytical studies of interfacial cracks employed the open‐crack model and were carried out by Williams, England, Erdogan, Rice, and Sih \cite{Bogdanova17,Bogdanova18,Bogdanova36,Bogdanova40}. However, these solutions exhibited nonphysical features—namely, crack‐face interpenetration and oscillatory stresses near the tip. To remedy this, the contact‐zone model was introduced \cite{Bogdanova1,Bogdanova10,Bogdanova11,Bogdanova19}, enforcing contact between the crack faces close to the tip. While this approach overcomes the oscillation issue, under certain loading scenarios (e.g., pure tension or shear near an internal tip) it predicts an unrealistically small contact region, thereby reverting effectively to the open‐crack case.
+
+An alternative strategy introduces a process zone around the crack tip to capture local stress concentration effects. Analytical process‐zone models in piecewise homogeneous bodies represent this zone by a displacement‐discontinuity segment based on the Barenblatt \cite{Bogdanova2}, Dugdale \cite{Bogdanova16}, and Leonov–Panasyuk \cite{Bogdanova33} formulations \cite{Bogdanova24,Bogdanova25,Bogdanova29}. Applying Tresca–Saint–Venant fracture criteria in these models yields the size and influence of the plastic zone on the local stress–strain field \cite{Bogdanova24,Bogdanova29} and has been used to study interfacial‐crack kinking in brittle elastic joints \cite{Bogdanova25}. A related model employing a quadratic Mises–Hill strength criterion \cite{Bogdanova26} was developed for quasi-brittle materials and validated in orthotropic media \cite{Bogdanova27}. Meanwhile, cohesive-zone models, which relate traction to separation within the process zone, have seen extensive application in interfacial fracture, both in their original form \cite{Bogdanova21,Bogdanova31,Bogdanova37,Bogdanova38} and with adaptations incorporating the Mises–Hill criterion \cite{Bogdanova7,Bogdanova28}.
+
+Most studies to date focus on planar interfaces. Yet many engineering materials—such as advanced composites, granular assemblies, and geological media—exhibit polygonal or cornered interfaces. For cracks emanating from an interface corner, process-zone models have been explored in several works \cite{Bogdanova12,Bogdanova13,Bogdanova14,Bogdanova15,Bogdanova23}. Specifically, \cite{Bogdanova15} derives an analytical solution for process-zone development in a brittle bonding material and examines its effect on crack initiation; \cite{Bogdanova12} addresses crack kinking in an elastic bimaterial; \cite{Bogdanova14} and \cite{Bogdanova13} investigate how bonding-material plasticity influences crack deviation and interfacial strength; and \cite{Bogdanova23} obtains a process-zone solution in a quasi-brittle connector under the Mises–Hill criterion.
+
+Determining process-zone parameters at interface corners is also critical for analyzing the initial fracture stage under compression parallel to the interface, where conventional stress-intensity‐factor criteria fail due to zero intensity \cite{Bogdanova3,Bogdanova4,Bogdanova5,Bogdanova6,Bogdanova20}. In particular, \cite{Bogdanova22} applies a process-zone framework to predict crack initiation under such compressive loading.
+
+This work extends and unifies prior investigations of quasi-brittle process zones at interface corners \cite{Bogdanova23} and interfacial‐crack kinking from flat interfaces into quasi-brittle materials \cite{Bogdanova15}. Our objective is to determine the geometrical and mechanical parameters of the process zone that develops in a quasi-brittle material of a bimaterial body near the tip of an interfacial crack at an interface corner.
+
+\section{Problem Statement}
+\label{BogdanovaSec2}
+
+Under plane‐strain conditions, we seek the small‐scale process‐zone parameters near an interfacial crack tip coinciding with a polygonal interface corner of kink angle~$\alpha$ between two isotropic materials with Young’s moduli $E_{1},E_{2}$ and Poisson’s ratios $\nu_{1},\nu_{2}$.
+
+Building on the experimentally validated model of \cite{Bogdanova27}, we adopt the following assumptions:
+
+\begin{enumerate}
+	\item From the crack tip—acting as a stress concentrator—in the more compliant material (material 1) a narrow process zone of length~$\ell$ ($\ell\ll L$) develops under low load levels.
+	\item Following Barenblatt \cite{Bogdanova2}, Dugdale \cite{Bogdanova16}, Leonov–Panasyuk \cite{Bogdanova33} and cohesive‐zone variants \cite{Bogdanova7,Bogdanova28}, the zone is represented by a displacement discontinuity line inclined at angle~$\beta$ to the interface. In polar coordinates $(r,\theta)$ centered at the crack tip, the normal and shear tractions on this line satisfy the Mises–Hill criterion:
+	\begin{equation}\label{BogdanovaEq1}
+		\biggl(\dfrac{\sigma_{\theta}}{\sigma_{1}}\Bigr)^{2}
+		+\biggl(\dfrac{\tau_{r\theta}}{\tau_{1}}\Bigr)^{2}=1 \,.
+	\end{equation}
+	\item At the initiation stage, $\ell\ll L$, the body may be treated as a plane with a semi‐infinite interface crack and a finite discontinuity of length~$\ell$ extending into material 1 at angle~$\beta$ (Fig.~\ref{BogdanovaFig1}). We assume a region
+	\[
+	\ell \ll r \ll L
+	\]
+	in which the process‐zone influence is negligible, allowing the use of the crack‐only solution. Prandtl’s asymptotic‐matching method \cite{Bogdanova30} then imposes the far‐field condition that, as $\ell\ll r\ll L$, the solution tends to the asymptotics of the crack‐only problem \cite{Bogdanova12,Bogdanova13}. Stress asymptotics near an open crack tip are given in Appendix~\ref{BogdanovaAppA}.
+\end{enumerate}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{BogdanovaFig1.png}
+	\caption{Geometry and notation for the interfacial crack with process zone.}
+	\label{BogdanovaFig1}
+\end{figure}
+
+With traction‐free crack faces and using criterion~\eqref{BogdanovaEq1}, the elasticity boundary‐value problem is:
+\begin{align}
+	\theta=-\alpha\cup2\pi-\alpha:\quad 
+	&\sigma_{\theta}=0,\;\tau_{r\theta}=0, 
+	\label{BogdanovaEq2}\\
+	\theta=0:\quad 
+	&\llbracket\sigma_{\theta}\rrbracket
+	=\llbracket\tau_{r\theta}\rrbracket
+	=\llbracket u_{\theta}\rrbracket
+	=\llbracket u_{r}\rrbracket=0, 
+	\notag\\
+	\theta=\beta :\quad 
+	&\llbracket\sigma_{\theta}\rrbracket
+	=\llbracket\tau_{r\theta}\rrbracket=0, 
+	\label{BogdanovaEq3}\\
+	\theta=\beta,\;r<\ell:\quad 
+	&\sigma_{\theta}=\sigma_{1}\cos\psi(r),\;
+	\tau_{r\theta}=\tau_{1}\sin\psi(r),
+	\notag \\
+	\theta=\beta,\;r>\ell:\quad 
+	&\llbracket u_{\theta}\rrbracket
+	=\llbracket u_{r}\rrbracket=0,
+	\label{BogdanovaEq4}\\
+	\theta=\beta,\;r\to\infty:\quad 
+	&\sigma_{\theta}\sim\sum_iC_iF_1(\lambda_i,\beta)\,r^{\lambda_i},\;
+	\tau_{r\theta}\sim\sum_iC_iF_2(\lambda_i,\beta)\,r^{\lambda_i}.
+	\label{BogdanovaEq5}
+\end{align}
+Here $\llbracket\cdot\rrbracket$ denotes the jump across the interface or discontinuity, $C_i$ are load‐intensity constants, $\lambda_i\;(i=1,2,3)$ with $-1<\Re\lambda_i<0$ are roots of $D_0(\lambda)=0$, and $F_1,F_2,D_0$ are defined in Appendix~\ref{BogdanovaAppA}.
+
+
+The parameter $\psi(r)$, introduced in \eqref{BogdanovaEq4} to linearize \eqref{BogdanovaEq1}, sets the local stress‐ratio,
+\[
+\frac{\tau_{r\theta}(r,\beta)}{\sigma_{\theta}(r,\beta)}
+= \frac{\tau_{1}}{\sigma_{1}}\tan\psi(r),
+\]
+and approximates the phase angle of the stresses—definitions of which vary by stress ratio or intensity factor \cite{Bogdanova35}. Since the zone is small, we neglect the $r$–dependence and take
+\[
+\psi(r)\equiv\psi=\text{const}.
+\]
+The values of $\psi$ and $\ell$ are then fixed by enforcing a finite stress field at the process‐zone tip, while the inclination angle $\beta$ is chosen to maximize energy dissipation in the zone.
+
+Near the end of the discontinuity line, standard square‐root singularities apply \cite{Bogdanova8,Bogdanova34}:
+\begin{equation}\label{BogdanovaEq6}
+	\begin{array}{ll}
+\sigma_{\theta}(r,\beta)\sim\dfrac{k_1}{\sqrt{2\pi(r-\ell)}},&\quad
+\llbracket\partial_r u_{\theta}(r,\beta)\rrbracket\sim
+-\dfrac{4(1-\nu_1^2)}{E_1}\dfrac{k_1}{\sqrt{2\pi(\ell-r)}},
+\\
+\tau_{r\theta}(r,\beta)\sim\dfrac{k_2}{\sqrt{2\pi(r-\ell)}},&\quad
+\llbracket\partial_r u_{r}(r,\beta)\rrbracket\sim
+-\dfrac{4(1-\nu_1^2)}{E_1}\dfrac{k_2}{\sqrt{2\pi(\ell-r)}},
+\end{array}
+\end{equation}
+defining the stress‐intensity factors $k_1$ and $k_2$ at the process‐zone tip.
+
+\section{Problem Solution Technique}
+\label{BogdanovaSec3}
+
+\subsection{Reduction to the Vector Wiener–Hopf Equation}
+
+In accordance with the principle of superposition, the full solution is written as the sum of two subproblems.  The first subproblem replaces the condition \eqref{BogdanovaEq4} for $r<\ell$ by
+\begin{equation}
+	\begin{aligned}
+		\theta=\beta,\;r<\ell:\quad
+		&\sigma_{\theta}
+		=\sigma_{1}\cos\psi
+		-\sum_{i}C_{i} F_{\sigma}(\beta,\lambda_{i}) r^{\lambda_{i}},\\
+		&\tau_{r\theta}
+		=\tau_{1}\sin\psi
+		-\sum_{i}C_{i} F_{\tau}(\beta,\lambda_{i}) r^{\lambda_{i}},
+	\end{aligned}
+	\label{BogdanovaEq7}
+\end{equation}
+with the requirement that stresses and displacements decay as $o(1/r)$ at infinity.  The second subproblem is the same elasticity problem without the discontinuity line, whose solution is known \cite{Bogdanova12,Bogdanova13}.  Hence it suffices to solve the first subproblem.
+
+Applying the Mellin transform
+\[
+m^*(p)=\int_{0}^{\infty}m(r)r^{p}dr
+\]
+to the equilibrium equations, compatibility, Hooke’s law, and the boundary conditions \eqref{BogdanovaEq2}–\eqref{BogdanovaEq3}, together with \eqref{BogdanovaEq4} and \eqref{BogdanovaEq7}, one obtains the Wiener–Hopf vector equation for the transforms of the tractions and displacement jumps in the strip $-\varepsilon_1<\Re p<\varepsilon_2$:
+\begin{equation}
+	\boldsymbol{\Phi}^{+}(p)+\mathbf{F}(p)
+	=-\tan(p\pi)\mathbf{G}(p)\boldsymbol{\Phi}^{-}(p),
+	\quad-\varepsilon_{1}<\Re p<\varepsilon_{2},
+	\label{BogdanovaEq8}
+\end{equation}
+where
+\[
+\begin{array}{rcl}
+	\boldsymbol{\Phi}^{+}(p)
+&=&\displaystyle\int_{1}^{\infty}
+\begin{pmatrix}
+	\sigma_{\theta}(\rho\ell,\beta)\\
+	\tau_{r\theta}(\rho\ell,\beta)
+\end{pmatrix}
+\rho^{p} d\rho,
+\\
+\boldsymbol{\Phi}^{-}(p) &=&\dfrac{E_{1}}{4\big(1-\nu_{1}^{2}\big)}
+\displaystyle\int_{0}^{1}
+\left\llbracket
+\dfrac{\partial}{\partial r}
+\begin{pmatrix}
+	u_{\theta}\\
+	u_{r}
+\end{pmatrix}
+\right\rrbracket_{\substack{\theta=\beta\\r=\rho\ell}}
+\rho^{p}d\rho,
+\end{array}
+\]
+\[
+\begin{array}{ll}
+	\mathbf{F}(p)
+=\begin{pmatrix}
+	F_{1}(p)\\
+	F_{2}(p)
+\end{pmatrix}, & \quad==
+F_{1}(p)
+=\dfrac{\sigma_{1}\cos\psi}{p+1}
+-\displaystyle\sum_{i}\frac{C_{i} F_{1}(\lambda_{i},\beta) \ell^{\lambda_{i}}}
+{p+1+\lambda_{i}},
+\\
+& \quad F_{2}(p)
+=\dfrac{\tau_{1}\sin\psi}{p+1}
+-\displaystyle\sum_{i}\frac{C_{i} F_{2}(\lambda_{i},\beta) \ell^{\lambda_{i}}}
+{p+1+\lambda_{i}},
+\end{array}
+\]
+\[
+\mathbf{G}(p)
+=\frac{\cos(p\pi)}{\sin(p\pi)D_{0}(-1-p)}
+\begin{pmatrix}
+	D_{11}(p) & 2D_{12}(p)
+	\\
+	2D_{21}(p) & -D_{22}(p)
+\end{pmatrix}.
+\]
+The function  $D_{ij}(p)$ is defined in Appendix~\ref{BogdanovaAppB}.
+
+To solve \eqref{BogdanovaEq8} via the Wiener–Hopf method \cite{Bogdanova32}, one must factorize
+\[
+\mathbf{G}(p)=\mathbf{G}^{+}(p) \mathbf{G}^{-}(p),
+\]
+where $\mathbf{G}^{+}(p)$ is analytic for $\Re p<\varepsilon_{2}$ and $\mathbf{G}^{-}(p)$ for $\Re p>-\varepsilon_{1}$.  Since $\mathbf{G}(p)$ does not admit an exact factorization, we employ the approximate method of \cite{Bogdanova26}.
+
+\subsection{Solving the Problem in the Zero Approximation}
+In the zero approximation, we drop the off‐diagonal entries of $\mathbf G(p)$, so that \eqref{BogdanovaEq8} splits into two independent scalar Wiener–Hopf equations:
+\begin{equation}\label{BogdanovaEq9}
+	\begin{array}{ll}
+		\Phi_{1}^{0+}(p)
+		+\dfrac{\sigma_{1}\cos\psi}{p+1}
+		-\displaystyle\sum_{i}\frac{C_{i}F_{1}(\lambda_{i},\beta) \ell^{\lambda_{i}}}{p+1+\lambda_{i}}
+		&=-\tan(p\pi) G_{11}(p) \Phi_{1}^{0-}(p),
+		\\
+		\Phi_{2}^{0+}(p)
+		+\dfrac{\tau_{1}\sin\psi}{p+1}
+		-\displaystyle\sum_{i}\frac{C_{i}F_{2}(\lambda_{i},\beta) \ell^{\lambda_{i}}}{p+1+\lambda_{i}}
+		&=-\tan(p\pi)G_{22}(p) \Phi_{2}^{0-}(p).
+	\end{array}
+\end{equation}
+
+The exact analytical solutions of Eqs.~\eqref{BogdanovaEq9} (see \cite{Bogdanova12, Bogdanova13}) are  
+\begin{equation}\label{BogdanovaEq10}
+	\begin{array}{ll}
+		\Phi_{1}^{0+}(p)
+		&= -\dfrac{p\,G_{11}^{+}(p)}{K^{+}(p)}
+		\biggl\{
+		\dfrac{\sigma_{1}\cos\psi}{p+1}
+		\biggl[\dfrac{K^{+}(p)}{p\,G_{11}^{+}(p)} + N_{1}(0)\biggr]
+		\\
+		&\qquad-\displaystyle\sum_{i}
+		\dfrac{C_{i}F_{1}(\lambda_{i},\beta)\,\ell^{\lambda_{i}}}{p+1+\lambda_{i}}
+		\biggl[\dfrac{K^{+}(p)}{p\,G_{11}^{+}(p)} + N_{1}(\lambda_{i})\biggr]
+		\biggr\}, \quad (\Re p<0),\\[6pt]
+		\Phi_{1}^{0-}(p)
+		&= K^{-}(p)\,G_{11}^{-}(p)
+		\biggl[
+		\dfrac{\sigma_{1}\cos\psi\,N_{1}(0)}{p+1}
+		\\
+		&\qquad-\displaystyle\sum_{i}
+		\dfrac{C_{i}F_{1}(\lambda_{i},\beta)\,\ell^{\lambda_{i}}\,N_{1}(\lambda_{i})}{p+1+\lambda_{i}}
+		\biggr]\quad (\Re p>0),\\[10pt]
+		\Phi_{2}^{0+}(p)
+		&= -\dfrac{p\,G_{22}^{+}(p)}{K^{+}(p)}
+		\biggl\{
+		\dfrac{\tau_{1}\sin\psi}{p+1}
+		\biggl[\dfrac{K^{+}(p)}{p\,G_{22}^{+}(p)} + N_{2}(0)\biggr]
+		\\
+		&\qquad-\displaystyle\sum_{i}
+		\dfrac{C_{i}F_{2}(\lambda_{i},\beta)\,\ell^{\lambda_{i}}}{p+1+\lambda_{i}}
+		\biggl[\dfrac{K^{+}(p)}{p\,G_{22}^{+}(p)} + N_{2}(\lambda_{i})\biggr]
+		\biggr\}\quad (\Re p<0),\\[6pt]
+		\Phi_{2}^{0-}(p)
+		&= K^{-}(p)\,G_{22}^{-}(p)
+		\biggl[
+		\dfrac{\tau_{1}\sin\psi\,N_{2}(0)}{p+1}
+		\\
+		&\qquad	-\displaystyle\sum_{i}
+		\dfrac{C_{i}F_{2}(\lambda_{i},\beta)\,\ell^{\lambda_{i}}\,N_{2}(\lambda_{i})}{p+1+\lambda_{i}}
+		\biggr]\quad (\Re p>0),
+	\end{array}
+\end{equation}
+where
+\[
+N_{m}(\lambda_{i})
+= \dfrac{K^{+}(-\lambda_{i}-1)}
+{(\lambda_{i}+1) G_{mm}^{+}(-\lambda_{i}-1)}
+\quad (m=1,2),
+\]
+\noindent with the following representation used  
+\begin{equation}\label{BogdanovaEq11}
+\tan(p\pi)
+= \dfrac{p}{K^{+}(p)K^{-}(p)}, 
+\quad
+K^{\pm}(p)
+= \dfrac{\Gamma(1\mp p)}{\Gamma(0.5\mp p)},
+\end{equation}
+and each scalar factor $G_{mm}(p)$ split as \cite{Bogdanova32}
+\begin{equation}\label{BogdanovaEq12}
+G_{mm}(p)
+= \frac{G_{mm}^{+}(p)}{G_{mm}^{-}(p)},
+\quad
+G_{mm}^{\pm}(p)
+= \exp\biggl[\frac{1}{2\pi i}
+\int_{-i\infty}^{i\infty} \frac{\ln G_{mm}(z)}{ z-p } dz
+\biggr],
+\end{equation}
+analytic for $\Re p<0$ ($+$) and $\Re p>0$ ($-$).  
+
+\subsection{Solving the Problem in the First Approximation}
+
+At this stage we include the off‐diagonal terms of \(\mathbf G(p)\).  Substituting the zero‐approximation \(\Phi_n^{0-}(p)\) into the right–hand side of \eqref{BogdanovaEq8} for \(m\neq n\) and using  Eqs.~\eqref{BogdanovaEq11} and \eqref{BogdanovaEq12} yields  the coupled functional equations on \(\Re p=0\)
+
+\begin{equation}\label{BogdanovaEq13}
+	\begin{array}{rcl}
+		\begin{multlined}[b]
+		\Phi_{1}^{+}(p)\dfrac{K^{+}(p)}{pG_{11}^{+}(p)}
+		+\dfrac{K^{+}(p)}{pG_{11}^{+}(p)}
+		\\[-.5em]
+		\times	\biggl[\dfrac{\sigma_{1}\cos\psi}{p+1}
+		-\displaystyle\sum_{i}\dfrac{C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}}
+		{p+1+\lambda_{i}}\biggr] +H_{12}(p)
+	   \end{multlined}
+       &=&-\dfrac{\Phi_{1}^{-}(p)}{K^{-}(p) G_{11}^{-}(p)},
+		\\
+		\begin{multlined}[b]
+			\Phi_{2}^{+}(p)\frac{K^{+}(p)}{pG_{22}^{+}(p)}
+		+\dfrac{K^{+}(p)}{pG_{22}^{+}(p)} 
+		\\[-.5em]
+		\times\biggl[\dfrac{\tau_{1}\sin\psi}{p+1}
+		-\displaystyle\sum_{i}\dfrac{C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}}}
+		{p+1+\lambda_{i}}\biggr]+H_{21}(p)
+		\end{multlined}
+	    &=&-\dfrac{\Phi_{2}^{-}(p)}{K^{-}(p)G_{22}^{-}(p)}, 
+	   \end{array}
+\end{equation}
+where
+\[
+H_{mn}(p)
+=\tan(p\pi)\dfrac{K^{+}(p) G_{mn}(p)}{pG_{mm}^{+}(p)}\Phi_{n}^{0-}(p)
+\quad (m\neq n).
+\]
+By means of Plemelj’s formula, we write
+\begin{equation*}
+	\begin{array}{l}
+	H_{mn}(p)=H_{mn}^{+}(p)-H_{mn}^{-}(p),\quad \Re p=0,
+	\\
+\dfrac{1}{2\pi i}\displaystyle\int_{-i\infty}^{i\infty}\dfrac{H_{mn}(z)}{z-p}dz
+	=\begin{cases}
+		H_{mn}^{+}(p), & \Re p<0,\\
+		H_{mn}^{-}(p), & \Re p>0.
+	\end{cases}
+	\end{array}
+\end{equation*}
+ Eliminating the poles in \(\Re p<0\), \eqref{BogdanovaEq13} can be recast as
+
+
+	\begin{multline*}
+			\dfrac{\Phi_{1}^{+}(p)K^{+}(p)}{pG_{11}^{+}(p)}
+			+\dfrac{\sigma_{1}\cos\psi}{p+1}
+			\biggl[\dfrac{K^{+}(p)}{pG_{11}^{+}(p)}+N_{1}(0)\biggr]
+			\\
+			-\sum_{i}\dfrac{C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}}
+			{p+1+\lambda_{i}}
+			\biggl[\dfrac{K^{+}(p)}{pG_{11}^{+}(p)}+N_{1}(\lambda_{i})\biggr]
+			+H_{12}^{+}(p)
+		\\
+		=-\dfrac{\Phi_{1}^{-}(p)}{K^{-}(p)G_{11}^{-}(p)}
+		+\dfrac{\sigma_{1}\cos\psi}{p+1}N_{1}(0)
+		\\
+		-\sum_{i}\dfrac{C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}}
+		{p+1+\lambda_{i}}N_{1}(\lambda_{i})
+		+H_{12}^{-}(p),
+	\end{multline*}
+	
+	\begin{multline*}
+			\dfrac{\Phi_{2}^{+}(p) K^{+}(p)}{p G_{22}^{+}(p)}
+			+\dfrac{\tau_{1}\sin\psi}{p+1}
+			\biggl[\dfrac{K^{+}(p)}{p G_{22}^{+}(p)}+N_{2}(0)\biggr]
+			\\
+			-\sum_{i}\dfrac{C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}}}
+			{p+1+\lambda_{i}}
+			\biggl[\dfrac{K^{+}(p)}{pG_{22}^{+}(p)}+N_{2}(\lambda_{i})\biggr]
+			+H_{21}^{+}(p)
+		\\
+		=	-\dfrac{\Phi_{2}^{-}(p)}{K^{-}(p) G_{22}^{-}(p)}
+		+\dfrac{\tau_{1}\sin\psi}{p+1} N_{2}(0)
+		\\
+		-\sum_{i}\dfrac{C_{i}F_{2}(\lambda_{i},\beta) \ell^{\lambda_{i}}}
+		{p+1+\lambda_{i}} N_{2}(\lambda_{i})
+		+H_{21}^{-}(p) .
+	\end{multline*}
+
+The left‐hand expressions above are analytic for \(\Re p<0\), while the right‐hand expressions are analytic for \(\Re p>0\).  By analytic continuation and examining the asymptotic behavior as \(p\to\infty\), the Abelian theorem applied to \eqref{BogdanovaEq6} yields
+\begin{equation}\label{BogdanovaEq14}
+\begin{array}{ll}
+	\Phi_{m}^{+}(p)\sim\dfrac{k_{m}}{\sqrt{-2p\ell}},&\quad \Re p<0,
+\\
+\Phi_{m}^{-}(p)\sim -\dfrac{k_{m}}{\sqrt{2p\ell}},&\quad \Re p>0
+\quad (m=1,2).
+\end{array}
+\end{equation}
+
+\noindent Noting that \(K^{+}(p)\sim\sqrt{-p}\) for \(\Re p<\tfrac12\), \(K^{-}(p)\sim\sqrt{p}\) for \(\Re p>-\tfrac12\), and \(G_{mm}^{\pm}(p)\to1\) as \(|\Re p|\to\infty\), Liouville’s theorem implies both sides of Eqs.~\eqref{BogdanovaEq13} must vanish.  Equating them to zero gives the first‐approximation solution
+
+\begin{equation}\label{BogdanovaEq15}
+	\begin{array}{ll}
+		\Phi_{m}^{+}(p)
+		=\Phi_{m}^{0+}(p)
+		-\dfrac{pG_{mm}^{+}(p)}{K^{+}(p)}H_{mn}^{+}(p), &
+		\Re p<0,
+		\\
+		\Phi_{m}^{-}(p)
+		=\Phi_{m}^{0-}(p)
+		+K^{-}(p)G_{mm}^{-}(p)H_{mn}^{-}(p), &
+		\Re p>0.
+	\end{array}
+\end{equation}
+
+
+To refine the solution \eqref{BogdanovaEq15}, one could iterate this procedure to higher orders in the off‐diagonal terms, but each step increases the complexity of the Cauchy‐type integrals dramatically.  Accordingly, we retain only the first approximation in what follows.
+
+\section{Determining the Parameters of the Process Zone}
+\label{BogdanovaSec4}
+
+Taking into account \eqref{BogdanovaEq10} from the first‐approximation solution \eqref{BogdanovaEq15}, one finds for \(p\to\infty\), \(\Re p<0\),
+\[
+\begin{array}{ll}
+	\Phi_{1}^{+}(p)\sim \dfrac{1}{\sqrt{-p}}\biggl[
+\sigma_{1}\cos\psi N_{1}(0)
+-\sum_{i}C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{1}(\lambda_{i})
+-\dfrac{\mathcal{H}_{12}}{2\pi}
+\biggr],
+\\
+\Phi_{2}^{+}(p)\sim \dfrac{1}{\sqrt{-p}}\biggl[
+\tau_{1}\sin\psi N_{2}(0)
+-\sum_{i}C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{2}(\lambda_{i})
+-\dfrac{\mathcal{H}_{21}}{2\pi}
+\biggr],
+\end{array}
+\]
+where
+\[
+\mathcal{H}_{mn}=\int_{-\infty}^{\infty}H_{mn}(i t) dt.
+\]
+Comparing with the asymptotics \eqref{BogdanovaEq14}, the stress‐intensity factors at the end of the process‐zone discontinuity are
+\begin{equation*}
+	\begin{array}{ll}
+		k_{1}
+		&=-\sqrt{2\ell}\biggl[
+		\sigma_{1}\cos\psi N_{1}(0)
+		-\displaystyle\sum_{i}C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{1}(\lambda_{i})
+		-\dfrac{\mathcal{H}_{12}}{2\pi}
+		\biggr],\\
+		k_{2}
+		&=-\sqrt{2\ell}\biggl[
+		\tau_{1}\sin\psi N_{2}(0)
+		-\displaystyle\sum_{i}C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{2}(\lambda_{i})
+		-\dfrac{\mathcal{H}_{21}}{2\pi}
+		\biggr].
+	\end{array}
+\end{equation*}
+Requiring \(k_{1}=k_{2}=0\) to avoid any singularity at the process–zone tip gives the two equations for \(\ell\) and \(\psi\):
+
+\begin{equation}\label{BogdanovaEq16}
+\begin{array}{l}
+	\begin{multlined}
+	\left(\dfrac{
+	\sum_{i}C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{1}(\lambda_{i})
+	+\tfrac{\mathcal{H}_{12}}{2\pi}
+}{
+	\sigma_{1}N_{1}(0)
+}\right)^{2}
+\\[-1em]
++
+\left(\dfrac{
+	\sum_{i}C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}}N_{2}(\lambda_{i})
+	+\tfrac{\mathcal{H}_{21}}{2\pi}
+}{
+	\tau_{1}N_{2}(0)
+}\right)^{2}
+=1,
+\end{multlined}
+\\
+\tan\psi
+	=\dfrac{\sigma_{1}N_{1}(0)}{\tau_{1}N_{2}(0)}
+	\dfrac{2\pi\sum_{i}C_{i}F_{2}(\lambda_{i},\beta)\ell^{\lambda_{i}} N_{2}(\lambda_{i})
+		+\mathcal{H}_{21}}
+	{2\pi\sum_{i}C_{i}F_{1}(\lambda_{i},\beta)\ell^{\lambda_{i}} N_{1}(\lambda_{i})
+		+\mathcal{H}_{12}}.
+\end{array}
+\end{equation}
+
+\noindent These two equations must be supplemented by an orientation criterion for the process zone.  We adopt the requirement of maximum energy dissipation: the process‐zone formation unloads the body, releasing the greatest possible elastic energy.  Thus, we define
+\[
+D(\beta)
+= \sigma_{1}\cos\psi
+\int_{0}^{\ell}  \llbracket u_{\theta}(r,\beta)\rrbracket dr
++ \tau_{1}\sin\psi
+\int_{0}^{\ell}  \llbracket u_{r}(r,\beta)\rrbracket dr,
+\]
+and, using the transform \(\Phi^{-}(p)\) from \eqref{BogdanovaEq8}, one shows
+\begin{equation}\label{BogdanovaEq17}
+	D(\beta)
+	= -\frac{4\big(1-\nu_{1}^{2}\big)}{E_{1}}\ell^{2}
+	\bigl\{
+	\sigma_{1}\cos\psi\Phi_{1}^{-}(1)
+	+\tau_{1}\sin\psi\Phi_{2}^{-}(1)
+	\bigr\}.
+\end{equation}
+
+Finally, the crack‐initiation criterion sets the energy‐release rate \(G=dD/d\ell\) equal to the critical value \(G_{c}\).  Neglecting the weak dependence of \(\Phi^{-}(1)\) on \(\ell\), we obtain
+\begin{equation}\label{BogdanovaEq18}
+	\frac{dD}{d\ell}
+	\approx -\frac{8\big(1-\nu_{1}^{2}\big)}{E_{1}}\ell
+	\bigl\{
+	\sigma_{1}\cos\psi \Phi_{1}^{-}(1)
+	+\tau_{1}\sin\psi \Phi_{2}^{-}(1)
+	\bigr\}
+	= G_{c}.
+\end{equation}
+
+\section{Numerical Analysis}
+\label{BogdanovaSec5}
+
+The process–zone model derived in this chapter
+can be used for any plane–strain loading that opens the crack faces
+and keeps the zone small relative to the characteristic length \(L\).
+The zone length \(\ell\), inclination \(\beta\),
+phase angle \(\psi\) and the energy–release rate \(G\) are obtained from
+Eqs.~\eqref{BogdanovaEq16}–\eqref{BogdanovaEq18}
+together with the first–approximation transforms
+\(\Phi_1^{-}(p)\) and \(\Phi_2^{-}(p)\) in \eqref{BogdanovaEq15}.
+Before the numerical solution we prescribe the remote loading
+through the constants \(C_i\) that appear in the crack–tip stress
+asymptotics \eqref{BogdanovaEq5} for the un–bridged interface crack.
+
+\medskip\emph{Choice of loading parameters.} The singularity exponents \(\lambda_1,\lambda_2\)
+depend on the interface kink angle \(\alpha\)
+and the modulus ratio \(E_1/E_2\) \cite{Bogdanova15}.
+They can be \emph{real} (\(-1<\lambda_1<\lambda_2<0\))
+or form a complex conjugate pair
+\(\lambda_{1,2}= \lambda_r \pm i\lambda_m\).
+The third exponent \(\lambda_3\approx 0\) is negligible in Eqs.~\eqref{BogdanovaEq16}–\eqref{BogdanovaEq18}.
+
+\begin{itemize}
+	\item
+	\emph{Real \(\lambda_{1,2}\).}\;
+	We specify the load by the dimensionless amplitude
+	\[
+	\sigma=\frac{C_1 L^{\lambda_1}}{E_1},
+	\quad
+	n_i=\frac{C_i L^{\lambda_i}}{C_1 L^{\lambda_1}}
+	\quad(i=1,2),
+	\]
+	so that \(\sigma\) measures the overall level
+	and \(n_i\) the shape of the far–field stresses.
+	
+	\item
+	\emph{Complex \(\lambda_{1,2}\).}\;
+	We set \(C_1=\overline{C}_2
+	=K/\bigl(\sqrt{2\pi} L^{-i\lambda_m}\bigr)\),
+	introducing the complex stress–intensity factor
+	\(K=K_{\mathrm I}+iK_{\mathrm{II}}\).
+	The load is then described by
+	\(\sigma=|K|L^{\lambda_r}/(\sqrt{2\pi} E_1)\)
+	and the phase \(\Psi=\arg K\),
+	which measures the mode mixture.
+	Because the body is asymmetric,
+	\(K_{\mathrm I},K_{\mathrm{II}}\) do not correspond
+	to the classical mode-I/II factors \cite{Bogdanova35}.
+\end{itemize}
+
+All examples below use \(E_1/E_2=0.25\) and \(\nu_1=\nu_2=0.3\).
+
+\medskip\emph{Influence of the kink angle \(\alpha\).} Figures \ref{BogdanovaFig2} and \ref{BogdanovaFig3} plot
+\(\ell/L\), the normalised energy–release rate
+\(G'=G/[4(1-\nu_1^{2}) L E_1]\),
+\(\beta\) and \(\psi\) versus \(\alpha\).
+Three strength ratios are compared:
+\(\sigma_1/\tau_1=1/4,\;1,\;4\)
+(with \(\sigma_1=0.1 E_1\)).
+
+\begin{figure}[t]
+	\centering
+	\subfloat[\(\ell/L\)]{%
+		\includegraphics[width=0.46\textwidth]{BogdanovaFig2a.png}%
+		\label{BogdanovaFig2a}%
+	}\hfill
+	\subfloat[\(G'\)]{%
+		\includegraphics[width=0.49\textwidth]{BogdanovaFig2b.png}%
+		\label{BogdanovaFig2b}%
+	}\\
+	\subfloat[\(\beta\)]{%
+		\includegraphics[width=0.46\textwidth]{BogdanovaFig2c.png}%
+		\label{BogdanovaFig2c}%
+	}\hfill
+	\subfloat[\(\psi\)]{%
+		\includegraphics[width=0.49\textwidth]{BogdanovaFig2d.png}%
+		\label{BogdanovaFig2d}%
+	}
+	\caption{Dependence of process‐zone parameters on interface kink angle \(\alpha\) for real \(\lambda_{1,2}\).}
+	\label{BogdanovaFig2}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\subfloat[\(\ell/L\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig3a.png}%
+		\label{BogdanovaFig3a}%
+	}\hfill
+	\subfloat[\(G'\)]{%
+		\includegraphics[width=0.47\textwidth]{BogdanovaFig3b.png}%
+		\label{BogdanovaFig3b}%
+	}\\
+	\subfloat[\(\beta\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig3c.png}%
+		\label{BogdanovaFig3c}%
+	}\hfill
+	\subfloat[\(\psi\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig3d.png}%
+		\label{BogdanovaFig3d}%
+	}
+	\caption{Dependence of process‐zone parameters on interface kink angle \(\alpha\) for complex \(\lambda_{1,2}\).}
+	\label{BogdanovaFig3}
+\end{figure}
+
+
+\begin{itemize}
+	\item
+	For \(5^\circ \le \alpha \le 70^\circ\) (real exponents,
+	Fig.~\ref{BogdanovaFig2}),
+	\(\ell\) is very large near \(\alpha\to0^\circ\),
+	so the small-scale assumption breaks down there.
+	Between \(20^\circ\) and \(70^\circ\) the zone size
+	and \(G'\) vary only weakly with \(\alpha\).
+	
+	\item
+	For \(75^\circ \le \alpha \le 245^\circ\) (complex exponents,
+	Fig.~\ref{BogdanovaFig3}),
+	a pronounced maximum of \(\ell\) and \(G'\)
+	occurs at \(\alpha\approx120^\circ\text{–}130^\circ\).
+	Angles \(\alpha=0^\circ\) (homogeneous interface)
+	and \(\alpha\approx120^\circ\text{–}130^\circ\)
+	are therefore the most favourable for crack growth.
+	
+	\item
+	The inclination \(\beta\) decreases monotonically with \(\alpha\).
+	For brittle and quasi-brittle ratios
+	(\(\sigma_1/\tau_1=1/4,1\))
+	the zone aligns with the interface
+	(\(\beta=0^\circ\)) once \(\alpha\gtrsim125^\circ\),
+	whereas a ductile ratio (\(\sigma_1/\tau_1=4\))
+	produces two symmetric plastic zones,
+	labelled curves (1) and (2) in the figures.
+	
+	\item
+	The phase \(\psi\) reflects the fracture mechanism.
+	For brittle / quasi-brittle materials \(\psi\approx0^\circ\),
+	so tensile opening dominates,
+	whereas for ductile materials \(\psi\approx\pm90^\circ\),
+	indicating shear–dominated plasticity.
+\end{itemize}
+
+\medskip\emph{Influence of the strength ratio \(\sigma_1/\tau_1\).} Figure \ref{BogdanovaFig4}
+sweeps the ``material angle''
+\(\psi_0=\arctan(\sigma_1/\tau_1)\) from \(0^\circ\) (brittle) to
+\(90^\circ\) (pure shear),
+keeping \((\sigma_1^{2}+\tau_1^{2}){}^{1/2}= 0.1E_1\).
+Real exponents are shown at \(\alpha=45^\circ\),
+complex ones at \(\alpha=90^\circ\).
+
+\begin{itemize}
+	\item
+	Extremely brittle \((\psi_0\to0^\circ)\)
+	or extremely ductile \((\psi_0\to90^\circ)\) materials
+	develop the largest zones (Fig.~\ref{BogdanovaFig4a}),
+	but the smallest energy release (Fig.~\ref{BogdanovaFig4b}).
+	
+	\item
+	Quasi-brittle materials \((\psi_0\approx45^\circ)\)
+	generate much shorter zones yet higher \(G'\),
+	making them the most critical for initiation.
+	
+	\item
+	Plastic behaviour becomes dominant for
+	\(\psi_0\gtrsim65^\circ\;\bigl(\sigma_1/\tau_1\gtrsim2.1\bigr)\)
+	at \(\alpha=45^\circ\),
+	and already at
+	\(\psi_0\gtrsim55^\circ\;\bigl(\sigma_1/\tau_1\gtrsim1.4\bigr)\)
+	for \(\alpha=90^\circ\).
+	Two symmetric plastic zones appear, having nearly equal \(G'\)
+	but opposite shear signs (Figs.~\ref{BogdanovaFig4b} and \ref{BogdanovaFig4d}).
+	
+	\item
+	For \(\psi_0\lesssim50^\circ\)
+	only a single zone forms;
+	its stresses remain tensile (\(\psi\approx0^\circ\)),
+	see Fig.~\ref{BogdanovaFig4d}.
+\end{itemize}
+
+These trends emphasise the strong coupling between interface geometry, material strength ratio and near-tip inelastic behaviour.
+
+
+
+\begin{figure}[t]
+	\centering
+	\subfloat[\(\ell/L\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig4a.png}%
+		\label{BogdanovaFig4a}%
+	}\hfill
+	\subfloat[\(G'\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig4b.png}%
+		\label{BogdanovaFig4b}%
+	}\\
+	\subfloat[\(\beta\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig4c.png}%
+		\label{BogdanovaFig4c}%
+	}\hfill
+	\subfloat[\(\psi\)]{%
+		\includegraphics[width=0.48\textwidth]{BogdanovaFig4d.png}%
+		\label{BogdanovaFig4d}%
+	}
+	\caption{Dependence of process‐zone parameters on toughness ratio \(\psi_0=\arctan(\sigma_1/\tau_1)\).}
+	\label{BogdanovaFig4}
+\end{figure}
+
+\section{Conclusions}
+
+The analytical–numerical framework developed in this work offers a practical route for evaluating the ultimate load‐bearing capacity of piecewise-homogeneous structures whose interface is fractured in a quasi-brittle constituent—typical of concrete, rock, ceramic and granular-filler composites.  
+Its application proceeds in four steps:
+
+\begin{enumerate}
+	\item \emph{Loading specification.}  
+	The external loading is encoded by the constants \(C_i\) that appear in the tip asymptotics of an \emph{open} interfacial crack.  
+	These constants act as \emph{generalised stress-intensity factors} and must first be obtained—analytically or numerically—from the corresponding elasticity boundary-value problem for the given geometry and loading.
+	
+	\item \emph{Process-zone parameters.}  
+	With \(C_i\) known, the zone length~\(\ell\), its inclination~\(\beta\) to the interface, and the phase angle~\(\psi\) of the stresses inside the zone follow from the nonlinear algebraic system~\eqref{BogdanovaEq16}–\eqref{BogdanovaEq17}.
+	
+	\item \emph{Energy-release rate.}  
+	Substituting \(\ell,\beta,\psi\) into \eqref{BogdanovaEq18} yields the energy-release rate \(G(\ell)\).  
+	Crack growth initiates when \(G = G_c\), and the corresponding \(\beta\) gives the kink direction.
+	
+	\item \emph{Failure prediction.}  
+	Incrementing the applied load until \(G(\ell)=G_c\) is first met provides the predicted ultimate load for the structure.
+\end{enumerate}
+
+The methodology has already reproduced experimentally observed kink angles for cracks departing from planar interfaces in quasi-brittle bi-materials \cite{Bogdanova26}.  
+Because only a single elasticity solution (for the open crack) plus a modest root-finding stage are required, the model is well suited for design-oriented assessment of layered composites, rock joints and cementitious systems with polygonal or broken interfaces.
+
+%\setcounter{section}{0} 
+%\renewcommand\thesection{\thechapter.\Alph{section}}
+\appendix                
+\setcounter{section}{0}
+\renewcommand\thesection{\thechapter.\Alph{section}}
+
+\makeatletter
+\renewcommand*{\theHsection}{App.\Alph{section}}
+\makeatother
+
+\section{Appendix: Asymptotic Stress Field at the Corner–point Tip of an Interfacial Crack}
+\label{BogdanovaAppA}
+%\addcontentsline{toc}{section}{Appendix \thesection: Asymptotic Stress Field at the Corner–point Tip of an Interfacial Crack}
+
+
+For the first (more compliant) material the stress field near the crack tip
+\((r\to0,\;0<\theta<\pi-\alpha)\) in the \emph{absence} of a process zone is \cite{Bogdanova12,Bogdanova13}
+\begin{equation*}
+	\sigma_{\theta}(r,\theta)=\sum_{i}C_i F_1(\lambda_i,\theta) r^{\lambda_i},
+	\quad
+	\tau_{r\theta}(r,\theta)=\sum_{i}C_i F_2(\lambda_i,\theta) r^{\lambda_i},
+\end{equation*}
+where the singular exponents \(\lambda_i\) \(( -1<\Re\lambda_i<0)\) are the
+roots of the characteristic equation
+\begin{equation*}
+	D_0(\lambda)=0.
+\end{equation*}
+
+\emph{Characteristic equation}
+
+\[
+\begin{aligned}
+	D_0(\lambda)=
+	&-\bigl(1+\kappa_1\bigr)^2 t_1
+	-4\bigl(1+\kappa_1\bigr)(e-1) t_1t_2
+	-e^{2}\bigl(1+\kappa_2\bigr)^{2} t_3      \\
+	&\quad
+	+4(e-1)^{2}t_1t_3
+	+4e\bigl(1+\kappa_2\bigr)(e-1)t_3t_4
+	+2e\bigl(1+\kappa_2\bigr)\bigl(1+\kappa_1\bigr)t_5 ,
+\end{aligned}
+\]
+with
+\[
+\begin{aligned}
+	t_1 &= (\lambda+1)^{2}\sin^{2}\alpha-\sin^{2}\bigl[(\lambda+1)\alpha\bigr],
+	&
+	t_2 &= \sin^{2}\bigl[(\lambda+1)(2\pi-\alpha)\bigr]
+\\
+		t_3 &= (\lambda+1)^{2}\sin^{2}\alpha-\sin^{2}\bigl[(\lambda+1)(2\pi-\alpha)\bigr],
+	&
+		t_4 &= \sin^{2}\bigl[(\lambda+1)\alpha\bigr],
+		\\
+	t_5 &= t_1+\sin[(\lambda+1)\alpha] 
+	\sin 2\lambda\pi 
+	\cos\bigl[(\lambda+1)(2\pi-\alpha)\bigr],
+\\
+	e  &=\dfrac{1+\nu_2}{1+\nu_1}\dfrac{E_1}{E_2},
+	\qquad
+	\kappa_{1(2)}=3-4\nu_{1(2)}.
+\end{aligned}
+\]
+
+\emph{Angular stress functions}
+
+
+\begin{align*}
+F_1(\lambda,\theta)&=\frac{X}{(1+\kappa_1) \Delta}
+\bigl\{(\lambda+2)\mathcal A h_{11}
++(1+\kappa_1)\bigl[t_1h_{12}+e(1+\kappa_2)h_{13}\bigr]\bigr\},
+\\
+F_2(\lambda,\theta)&=\frac{X}{2(1+\kappa_1)\Delta}
+\bigl\{\mathcal B h_{21}
++(1+\kappa_1)\bigl[2t_1h_{22}+e(1+\kappa_2)h_{23}\bigr]\bigr\},
+\end{align*}
+where
+\[
+\begin{aligned}
+	\mathcal A &= e(1+\kappa_1)(1+\kappa_2)
+	-e^{2}(1+\kappa_2)^{2}
+	+4(e-1)^{2}t_1
+	+4e(1+\kappa_2)(e-1)t_4,\\
+	\mathcal B &= e^{2}(1+\kappa_2)^{2}
+	-e(1+\kappa_1)(1+\kappa_2)
+	-4(e-1)^{2}t_1
+	-4e(1+\kappa_2)(e-1)t_3,\\
+	X &= \sqrt{\dfrac{e+\kappa_1}{2\pi(1+e\kappa_2)}}.
+\end{aligned}
+\]
+
+\emph{Auxiliary functions}
+ 
+\begin{equation*}
+\begin{aligned}
+	h_{11}&= -(\lambda+1)\sin\alpha\sin\theta
+	\sin \bigl[(\lambda+1)(2\pi-\alpha-\theta)\bigr] 
+	\\
+	&\quad
+	+\sin(\alpha+\theta)
+	\sin \bigl[(\lambda+1)\theta\bigr]
+	\sin \bigl[(\lambda+1)(2\pi-\alpha)\bigr],\\[4pt]
+	h_{12}&=-2(e-1)\bigl\{(\lambda+2)
+	\cos \bigl[(\lambda+1)(2\pi-\alpha+\theta)\bigr]\sin(\alpha+\theta)\\
+	&\quad
+	+\sin \bigl[(\lambda+2)(2\pi-\alpha-\theta)\bigr]\bigr\}
+	-(1+\kappa_1)\sin \bigl[(\lambda+2)(2\pi-\alpha-\theta)\bigr],\\[4pt]
+	h_{13}&= t_1\sin \bigl[(\lambda+2)(2\pi-\alpha-\theta)\bigr]\\
+	&\quad
+	-(\lambda+2)\sin \bigl[(\lambda+1)(\alpha+\theta)\bigr] 
+	\sin(\alpha+\theta) \sin 2\lambda\pi,\\[4pt]
+	h_{21}&= 2\lambda(\lambda+2)\sin\alpha\sin\theta
+	\cos \bigl[(\lambda+1)(2\pi-\alpha-\theta)\bigr]\\
+	&\quad
+	+(\lambda+2)\sin\lambda(2\pi-\alpha)
+	\sin \bigl[(\lambda+2)\theta\bigr]
+	-\lambda\sin \bigl[(\lambda+2)(2\pi-\alpha)\bigr]\sin\lambda\theta,\\[4pt]
+	h_{22}&=-2(e-1)\bigl\{
+	(\lambda+2)\sin \bigl[(\lambda+1)(2\pi-\alpha+\theta)\bigr]\sin(\alpha+\theta)\\
+	&\quad
+	+2\sin\bigl[(\lambda+2)(2\pi-\alpha)-\theta\bigr]
+	\sin \bigl[(\lambda+1)\theta\bigr]\bigr\} \\
+	&\quad-(1+\kappa_1)\cos \bigl[(\lambda+2)(2\pi-\alpha-\theta)\bigr],\\[4pt]
+	h_{23}&= \bigl[(\lambda+2)\sin \bigl[(\lambda+2)(\alpha+\theta)\bigr]
+	-\lambda\sin\lambda(\alpha+\theta)\bigr]\sin 2\lambda\pi\\
+	&\quad
+	+2t_1\cos \bigl[(\lambda+2)(2\pi-\alpha-\theta)\bigr].
+\end{aligned}
+\end{equation*}
+
+\emph{Denominator \(\Delta\)}
+\[
+\begin{aligned}
+	\Delta
+	&= 2(1+\kappa_1)t_6
+	-e(1+\kappa_2)t_7
+	+4(e-1)\bigl\{\lambda\sin \bigl[(\lambda+2)(2\pi-\alpha)\bigr] t_8
+	+\sin\lambda\alpha t_9\bigr\},\\
+	t_6 &= \lambda\sin\alpha\cos \bigl[(\lambda+1)(2\pi-\alpha)\bigr]
+	-\sin\lambda\alpha\cos 2\lambda\pi,\\
+	t_7 &= (\lambda+2)\sin\lambda(2\pi-\alpha)
+	-\lambda\sin \bigl[(\lambda+2)(2\pi-\alpha)\bigr],\\
+	t_8 &= (\lambda+2)\sin^{2}\alpha-\sin^{2}\bigl[(\lambda+1)\alpha\bigr],\\
+	t_9 &= (\lambda+2)\sin \bigl[(\lambda+1)(2\pi-\alpha)\bigr]
+	\sin \bigl[(\lambda+1)\alpha\bigr]\\
+	&\qquad
+	-\sin \bigl[(\lambda+2)(2\pi-\alpha)\bigr]
+	\sin \bigl[(\lambda+2)\alpha\bigr].
+\end{aligned}
+\]
+
+\appendix
+\section{Appendix: Definitions of Kernel Functions}
+\label{BogdanovaAppB}
+%\addcontentsline{toc}{section}{Appendix \thesection: Definitions of Kernel Functions}
+
+The matrix elements $D_{ij}(p)$ appearing in \eqref{BogdanovaEq8} are defined by
+
+\begin{subequations}
+	\begin{align}
+		D_{11}(p)
+		&=\Delta_{1} \Delta_{21} (1+\kappa_{1})
+		\bigl[e(1+\kappa_{2})-(1+\kappa_{1})\bigr]
+		-\bigl(\Delta_{21}\Delta_{3}-\Delta_{4}\Delta_{51}\bigr)\notag\\
+		&\quad\;\times
+		\bigl[e^{2}(1+\kappa_{2})^{2}
+		-4(e-1)^{2}\Delta_{1}
+		-4e(e-1)(1+\kappa_{2})\sin^{2}(p\alpha)\bigr]
+		\notag\\
+		&\quad
+		+e(1+\kappa_{2})(1+\kappa_{1})
+		\bigl(2\Delta_{4}\Delta_{61}-\Delta_{2}\Delta_{64}\bigr)
+		\notag\\
+		&\quad
+		+4(e-1)(1+\kappa_{1})\Delta_{1}
+		\bigl[\Delta_{4}\sin(2p\beta)-\Delta_{21}\sin^{2}(p\beta)\bigr],
+		\notag\\[2pt]
+		D_{22}(p)
+		&=\Delta_{1} \Delta_{22} (1+\kappa_{1})
+		\bigl[e(1+\kappa_{2})-(1+\kappa_{1})\bigr]
+		-\bigl(\Delta_{22}\Delta_{3}-\Delta_{4}\Delta_{52}\bigr)\notag\\
+		&\quad\times
+		\bigl[e^{2}(1+\kappa_{2})^{2}
+		-4(e-1)^{2}\Delta_{1}
+		-4e(e-1)(1+\kappa_{2})\sin^{2}(p\alpha)\bigr]
+		\notag\\
+		&\quad
+		+e(1+\kappa_{2})(1+\kappa_{1})
+		\bigl(2\Delta_{4}\Delta_{62}-\Delta_{22}\Delta_{64}\bigr)
+		\notag\\
+		&\quad
+		-4(e-1)(1+\kappa_{1})\Delta_{1}
+		\bigl[\Delta_{4}\sin(2p\beta)+\Delta_{22}\sin^{2}(p\beta)\bigr],
+		\notag\\[2pt]
+		D_{12}(p)
+		&=\Delta_{1} \Delta_{41} 
+		\bigl[e(1+\kappa_{2})(1+\kappa_{1})-(1+\kappa_{1})^{2}\bigr]
+		+\bigl(\Delta_{31}\Delta_{4}-\Delta_{41}\Delta_{3}\bigr)\notag\\
+		&\quad\;\times
+		\bigl[e^{2}(1+\kappa_{2})^{2}
+		-4(e-1)^{2}\Delta_{1}
+		-4e(e-1)(1+\kappa_{2})\sin^{2}(p\alpha)\bigr]
+		\notag\\
+		&\quad
+		+e(1+\kappa_{2})(1+\kappa_{1})
+		\bigl(\Delta_{4}\Delta_{63}-\Delta_{41}\Delta_{64}\bigr)
+		\notag\\
+		&\quad
+		-2(e-1)(1+\kappa_{1})\Delta_{1}
+		\bigl[\Delta_{4}\cos(2p\beta)+2\Delta_{41}\sin^{2}(p\beta)\bigr],
+		\notag\\[2pt]
+		D_{21}(p)
+		&=\Delta_{1} \Delta_{42} (1+\kappa_{1})
+		\bigl[e(1+\kappa_{2})-(1+\kappa_{1})\bigr]
+		+\bigl(\Delta_{32}\Delta_{4}-\Delta_{42}\Delta_{3}\bigr)\notag\\
+		&\quad
+		\times\bigl[e^{2}(1+\kappa_{2})^{2}
+		-4(e-1)^{2}\Delta_{1}
+		-4e(e-1)(1+\kappa_{2})\sin^{2}(p\alpha)\bigr]
+		\notag\\
+		&\quad
+		+e(1+\kappa_{2})(1+\kappa_{1})
+		\bigl(\Delta_{4}\Delta_{65}-\Delta_{42}\Delta_{64}\bigr)
+		\notag\\
+		&\quad
+		+2(e-1)(1+\kappa_{1})\Delta_{1}
+		\bigl(\Delta_{4}\cos(2p\beta)-2\Delta_{42}\sin^{2}(p\beta)\bigr).
+		\notag
+	\end{align}
+\end{subequations}
+
+
+The auxiliary functions are
+\begin{subequations}
+\begin{align*}
+	\Delta_{1}   &=p^{2}\sin^{2}\alpha-\sin^{2}(p\alpha),\\
+	\Delta_{2}   &=p\sin\alpha\sin(\alpha+2\beta)
+	-\sin(p\alpha)\sin\bigl(p(\alpha+2\beta)\bigr),\\
+	\Delta_{3}   &=p^{2}\sin^{2}\beta-\sin^{2}(p\beta),\\
+	\Delta_{31}  &=p\sin^{2}\beta-\sin^{2}(p\beta),\quad
+	\Delta_{32}  =p\sin^{2}\beta+\sin^{2}(p\beta),\\
+	\Delta_{4}   &=p^{2}\sin^{2}(\alpha+\beta)
+	-\sin^{2}\bigl(p(2\pi-\alpha-\beta)\bigr),\\
+	\Delta_{41}  &=p\sin^{2}(\alpha+\beta)
+	-\sin^{2}\bigl(p(2\pi-\alpha-\beta)\bigr),\\
+	\Delta_{42}  &=p\sin^{2}(\alpha+\beta)
+	+\sin^{2}\bigl(p(2\pi-\alpha-\beta)\bigr),\\
+	\Delta_{51}  &=p\sin(2\beta)-\sin(2p\beta),\quad
+	\Delta_{52}  =p\sin(2\beta)+\sin(2p\beta),\\
+	\Delta_{61}  &=p\sin\alpha\cos(\alpha+2\beta)
+	-\sin(p\alpha)\cos\bigl(p(\alpha+2\beta)\bigr),\\
+	\Delta_{62}  &=p\sin\alpha\cos(\alpha+2\beta)
+	+\sin(p\alpha)\cos\bigl(p(\alpha+2\beta)\bigr),\\
+	\Delta_{63}  &=p\sin\alpha\sin(\alpha+2\beta)
+	-\sin(p\alpha)\sin\bigl(p(\alpha+2\beta)\bigr),\\
+	\Delta_{64}  &=p^{2}\sin\alpha\sin(\alpha+2\beta)
+	-\sin(p\alpha)\sin\bigl(p(\alpha+2\beta)\bigr),\\
+	\Delta_{65}  &=p\sin\alpha\sin(\alpha+2\beta)
+	+\sin(p\alpha)\sin\bigl(p(\alpha+2\beta)\bigr).
+\end{align*}
+\end{subequations}
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter06}

@@ -1,0 +1,706 @@
+% !TeX root = BookN.tex
+
+\title{Analysis of Limit Equilibrium of Bending Plates and Shells with Contact Cracks According to Local and Integral Fracture Criteria}
+
+\titlerunning{Limit Equilibrium of Plates and Shells with Contact Cracks}
+
+\author{
+	Ivan Shatskyi,
+	Taras Dalyak,
+	Mykola Makoviichuk, and
+	Vasyl Perepichka
+}
+
+\institute{
+	Ivan Shatskyi
+	\at \AffPidstryhach \\
+	\email{ipshatsky@gmail.com}
+	\and
+	Taras Dalyak
+	\at \AffPidstryhach
+	\\
+	\email{tdalyak@gmail.com}
+	\and
+	Mykola Makoviichuk 
+	\at \AffPidstryhach
+	\\
+	\email{makoviy@ua.fm}
+	\and
+	Vasyl Perepichka 
+	\at \AffPidstryhach
+	\\
+	\email{v.v.perepichka@gmail.com}
+}
+
+\maketitle
+
+\graphicspath{{36_Shatskyi/}}
+
+\abstract{
+	The stress state and limit equilibrium of thin plates and shells weakened by through contact cracks are studied within a two-dimensional formulation. Crack closure caused by bending deformation is taken into account using a model in which the crack faces come into contact along a line on one of the plate surfaces. Within this framework, boundary value problems for the equations of the classical plate and shell theories are formulated with coupled boundary conditions along the crack line. 
+	\newline
+	Singular integral equations for the unknown jumps of displacement and normal rotation angle along the crack faces are derived. Based on numerical solutions of these equations, the stress state and limit equilibrium of plates and shells are investigated as functions of the mutual arrangement of closable cracks and the curvature of the shell. Using local and integral through-the-thickness energy fracture criteria of linear fracture mechanics, lower and upper estimates of the limit loads are obtained. A brief overview of the authors’ results on two-sided estimates of ultimate bending loads for cracked plates and shells is also presented.
+}
+
+\section{Introduction}
+
+Modern thin-walled structures combine low weight with high specific strength. However, like many optimized designs, they are highly sensitive to local damage, especially to crack-like defects, which are among the most dangerous. Under bending, a cracked plate or shell is subjected to tensile and compressive stresses of opposite signs on the two sides of the neutral surface. As a result, partial crack closure may occur in the compressive zone, and this effect must be taken into account when assessing the limit equilibrium of damaged structures.
+
+Within this field, particular attention has been paid to approaches based on two-dimensional plate and shell theories. The equilibrium of a plate containing a closable crack within the frameworks of the classical Kirchhoff plate theory and plane stress theory was first studied by Jones and Swedlow~\cite{Shatskyi1}. Important subsequent contributions include the analytical solutions obtained for the bending of an infinite plate with a contact crack~\cite{Shatskyi2,Shatskyi3} and the variational justification of the line-contact model~\cite{Shatskyi4}. Since then, substantial progress has been made in modeling the stress--strain state of thin-walled structures with allowance for crack closure, mainly within the framework of classical two-dimensional theories of plane stress and plate bending. In particular, the crack-face contact problem was studied using the classical Kirchhoff plate theory in~\cite{Shatskyi5,Shatskyi6,Shatskyi7,Shatskyi8,Shatskyi9,Shatskyi10}, whereas the Timoshenko--Mindlin--Reissner-type theories were employed in~\cite{Shatskyi11,Shatskyi12,Shatskyi13,Shatskyi14}. The bending of shallow Kirchhoff--Love shells with contact cracks was investigated in~\cite{Shatskyi15,Shatskyi16,Shatskyi17,Shatskyi18}, and the problem of dynamic contact of crack edges in a bent plate was formulated in~\cite{Shatskyi19}.
+
+Despite these advances, the use of such results for estimating the limiting equilibrium of cracked plates is still not fully resolved. The main difficulty is the nonuniform stress distribution along the front of a through crack in a plate under bending.
+
+In this chapter, we analyze the solution for a plate weakened by a rectilinear crack and discuss the main ways of applying linear fracture mechanics criteria to estimate the limiting load when the crack front is nonuniformly stressed. We also summarize the authors' experience in developing a two-dimensional approach for evaluating ultimate loads for several systems with contact cracks, including infinite and semi-infinite plates, a plate on an elastic foundation, and a shallow spherical shell. A comparison of local and integral fracture criteria based on asymptotic solutions of contact problems was reported in~\cite{Shatskyi20}. Here, the emphasis is placed on numerical solutions of the corresponding singular integral equations.
+
+\section{Materials and Methods}
+
+\subsection{Formulation of the Problem and Contact Model}
+
+Consider an isotropic plate occupying, in Cartesian coordinates, the domain $(x,y,z)\in\Omega\times[-h,h]$ and containing a through rectilinear crack (cut) of length $2l$ located along the contour $L$ on the $x$-axis. The projection $\Omega$ of the plate onto the plane $z=0$ may be bounded, unbounded, or semi-infinite. 
+
+It is assumed that the domain $\Omega$ with the cut $L$, as well as the applied bending load, possess a sufficiently high degree of symmetry such that the stress--strain state in the vicinity of the crack is symmetric with respect to the crack line. In particular, along the contour $L$ there are no discontinuities in tangential displacements. Within the framework of the classical two-dimensional theories of plane stress and plate bending, we analyze the elastic and limiting equilibrium of the plate while accounting for the contact interaction of the crack edges caused by bending deformation.
+
+Crack closure in the compressed region of the bending plate violates the antisymmetry of the stress and displacement fields with respect to the middle plane, and membrane stresses arise in the vicinity of the defect. According to Kirchhoff's hypothesis of a rigid normal, the contact of the cut edges is interpreted as the closure of the crack faces along a line located on the front surface of the plate. The unknown reaction acting along the contact line is transferred to the middle surface of the plate together with the corresponding compensating bending moment.
+
+Under the symmetry conditions of the stress--strain state with respect to the $x$-axis, this line-contact model leads to a boundary value problem for a pair of biharmonic equations in the plane with mutually coupled boundary contact inequalities along the cut~\cite{Shatskyi2,Shatskyi4,Shatskyi6}:
+\begin{align}
+	&\Delta\Delta \varphi = 0, 
+	\qquad 
+	\Delta\Delta w = 0,
+	\qquad 
+	(x,y)\in\Omega\setminus L ,
+	\label{ShatskyiEq1}
+\\
+	&[u_y] = h\,|[\vartheta_y]|>0, 
+	\quad 
+	M_y = h\,N_y\,\operatorname{sgn}[\vartheta_y], 
+	\quad 
+	N_y \le 0,
+	\quad 
+	x\in L,\; y=0 .
+	\label{ShatskyiEq2}
+\end{align}
+%
+Here $\varphi$ is the Airy stress function, $w$ is the deflection of the plate, and $\Delta$ denotes the two-dimensional Laplace operator. The quantities $[u_y]$ and $[\vartheta_y]$ represent the jumps in the displacement and the rotation angle of the normal across the crack faces. The quantities $N_y$ and $M_y$ denote the membrane forces and bending moments, respectively, and $L$ is the crack contour.
+
+It is further assumed that the crack faces remain in contact along the entire crack length. On the external boundary $\partial\Omega$, the boundary conditions are prescribed in terms of forces and moments or in terms of displacements and rotation angles.
+
+\subsection{Singular Integral Equation}
+
+To construct the solution, the method of singular integral equations is employed~\cite{Shatskyi21}. The membrane forces and bending moments are expressed through the derivatives of the unknown jump functions as follows:
+\begin{equation}
+	\begin{aligned}
+		N_y(x,0) &= \frac{B}{4\pi}\int_L K_{11}(\xi,x)\,[u_y]'(\xi)\,d\xi,\\
+		M_y(x,0) &= M_y^0(x,0) - \frac{Da}{4\pi}\int_L K_{33}(\xi,x)\,[\vartheta_y]'(\xi)\,d\xi .
+	\end{aligned}
+	\label{ShatskyiEq3}
+\end{equation}
+%
+Here $M_y^0(x,0)$ denotes the bending moment corresponding to the basic stress state of the uncracked plate under the prescribed loading and boundary conditions on $\partial\Omega$. The kernels of the integral operators are expressed through Green's functions of the biharmonic operator and consist of a Cauchy-type singular part together with regular terms that depend on the crack position, the geometry of the domain $\Omega$, and the type of boundary conditions imposed on its boundary.
+%
+In \eqref{ShatskyiEq3},
+\[
+B={2Eh},
+\qquad
+D=\frac{2Eh^3}{3(1-\nu^2)},\qquad a=(3+\nu)(1-\nu),
+\]
+%
+where $E$ and $\nu$ are Young's modulus and Poisson's ratio.
+
+Substituting expressions~\eqref{ShatskyiEq3} into the boundary conditions~\eqref{ShatskyiEq2} and eliminating the function $[u_y]$, we obtain the integro-differential equation for the (by assumption) sign-constant jump of the normal rotation angle:
+\begin{equation}
+	\frac{Da}{4\pi}\int_L
+	\bigl[\kappa\,K_{11}(\xi,x)+K_{33}(\xi,x)\bigr]
+	[\vartheta_y]'(\xi)\,d\xi
+	=
+	m(x),
+	\qquad x\in L,
+	\label{ShatskyiEq4}
+\end{equation}
+where
+\[
+\kappa=\frac{3(1+\nu)}{3+\nu},
+\qquad
+m(x)=M_y^0(x,0).
+\]
+
+At the crack tips the additional boundary conditions
+\begin{equation}
+	[\vartheta_y](\partial L^{\pm})=0
+	\label{ShatskyiEq5}
+\end{equation}
+must be satisfied.
+
+\section{Results and Discussion}
+
+\subsection{Stress--Strain State near the Contact Crack}
+
+Predominantly numerical solutions of the boundary value problem~\eqref{ShatskyiEq4},~\eqref{ShatskyiEq5}, obtained by the method of mechanical quadratures~\cite{Shatskyi21}, make it possible to determine the discontinuities of the kinematic field along the crack and the corresponding contact reaction between its faces. In particular, the behavior of the derivatives of the displacement and rotation jumps near the crack tips allows one to introduce the force and moment intensity factors:
+\begin{align*}
+K_N &= \mp\frac{B}{4}\lim_{x\to\partial L^{\pm}}
+\sqrt{2|x-\partial L^{\pm}|}\,[u_y]'(x),
+\\
+K_M &= \pm\frac{Da}{4}\lim_{x\to\partial L^{\pm}}
+\sqrt{2|x-\partial L^{\pm}|}\,[\vartheta_y]'(x).
+\end{align*}
+
+In a small neighborhood of the crack tip, the membrane forces and bending moments exhibit square-root singularities. In particular, along the continuation of the crack $(\vartheta=0)$ one obtains
+\[
+N_y(r,0)=\frac{K_N}{\sqrt{2\pi r}}+O(r^0),
+\qquad
+M_y(r,0)=\frac{K_M}{\sqrt{2\pi r}}+O(r^0),
+\]
+whereas on the crack faces $(\vartheta=\pm\pi)$
+\[
+\frac{B}{4}[u_y](r)=K_N\sqrt{\frac{2r}{\pi}}+O(r),
+\qquad
+\frac{Da}{4}[\vartheta_y](r)=-K_M\sqrt{\frac{2r}{\pi}}+O(r).
+\]
+
+Using these asymptotics, the stress and displacement distributions across the plate thickness can be restored. In particular,
+\begin{equation}
+	\begin{aligned}
+		\sigma_y(r,0,z) &=
+		\frac{1}{2h}
+		\left(
+		K_N + \frac{3z}{h^2}K_M
+		\right)
+		\frac{1}{\sqrt{2\pi r}}
+		+ O(r^0),
+		\\
+		\frac{B}{4}[U_y](r,z) &=
+		\left(
+		K_N + \kappa\frac{z}{h^2}K_M
+		\right)
+		\sqrt{\frac{2r}{\pi}}
+		+ O(r).
+	\end{aligned}
+	\label{ShatskyiEq6}
+\end{equation}
+
+\subsection{Criteria for Limit Equilibrium}
+
+Hypothetically, the fracture process may be represented as follows~\cite{Shatskyi22}. At a certain lower critical load, stable crack growth begins in the most highly stressed region of the crack front. As the crack propagates, its front becomes curved so that the stresses along it tend to equalize. When the load reaches a higher (destructive) level, the crack propagates through the entire thickness of the plate.
+
+Such spatial crack growth is difficult to describe within the framework of the classical Kirchhoff hypothesis of a rigid normal. Therefore, additional assumptions are required.
+
+If the nonuniform crack growth through the thickness is interpreted as a uniform advance of an equivalent fracture surface, the energy flux to the crack tip can be evaluated as
+\[
+G(z) = \lim_{\delta\to0}
+\frac{1}{\delta}
+\int_{0}^{\delta}
+\sigma_y(r,0,z)\,[U_y](\delta-r,z)\,dr .
+\]
+
+Evaluating this integral using the asymptotic relations~\eqref{ShatskyiEq6}, we obtain
+\[
+G(z)=
+\frac{\pi}{(2h)^2E}
+\left(
+K_N+\frac{3z}{h^2}K_M
+\right)
+\left(
+K_N+\kappa\frac{z}{h^2}K_M
+\right).
+\]
+
+According to the energy criterion, steady crack growth begins at the most critical points when
+\begin{equation}
+	\max_{z} G(z)
+	=
+	\frac{\pi}{(2h)^2E}
+	\left\{
+	K_N^2
+	+
+	(3+\kappa)K_N\frac{|K_M|}{h}
+	+
+	3\kappa\left(\frac{K_M}{h}\right)^2
+	\right\}
+	=
+	2\gamma_* ,
+	\label{ShatskyiEq7}
+\end{equation}
+where $\gamma_*$ denotes the specific surface energy.
+
+The formation of a through crack can also be estimated using the average value of the energy flux along the crack front:
+\begin{equation}
+	\langle G \rangle
+	\equiv
+	\frac{1}{2h}
+	\int_{-h}^{h} G(z)\,dz
+	=
+	\frac{\pi}{(2h)^2E}
+	\left\{
+	K_N^2
+	+
+	\kappa\left(\frac{K_M}{h}\right)^2
+	\right\}
+	=
+	2\gamma_* .
+	\label{ShatskyiEq8}
+\end{equation}
+
+Criterion~\eqref{ShatskyiEq8}, proposed by Wynn and Smith~\cite{Shatskyi23}, has been successfully applied to estimate the limit equilibrium of plates and shells with cracks subjected to combined tension and bending~\cite{Shatskyi24,Shatskyi25,Shatskyi26,Shatskyi27,Shatskyi28,Shatskyi29,Shatskyi30}.
+
+Let us compare the above criteria. Both expressions~\eqref{ShatskyiEq7} and~\eqref{ShatskyiEq8} coincide in the case of plane stress ($K_N\neq0$, $K_M=0$). Since the maximum value of the energy flux always exceeds its average value, the lower limit load $m_*^{\text{local}}$, determined from the local criterion~\eqref{ShatskyiEq7}, is smaller than the upper destructive load $m_*^{\text{integral}}$, obtained from the integral criterion~\eqref{ShatskyiEq8}.
+
+\subsection{Limit State Analysis}
+
+We now summarize the main results obtained by the authors for plates and shells with contact cracks and supplement them with two-sided estimates of the limit loads based on criteria~\eqref{ShatskyiEq7} and~\eqref{ShatskyiEq8}.
+
+\subsubsection{Plate with a single rectilinear crack}
+
+Consider first the case of uniform omnidirectional bending of an infinite plate containing a rectilinear crack. In relations~\eqref{ShatskyiEq3} and~\eqref{ShatskyiEq4} we then have
+\[
+\Omega=\mathbb{R}^2,
+\qquad
+L=(-l,l),
+\qquad
+m(x)=m=\mathrm{const},
+\]
+\[
+K_{11}(\xi,x)=K_{33}(\xi,x)=\frac{1}{\xi-x}.
+\]
+
+From the analytical solution of problem~\eqref{ShatskyiEq4},~\eqref{ShatskyiEq5} the force and moment intensity factors are obtained~\cite{Shatskyi2,Shatskyi3,Shatskyi6}:
+\[
+K_N=\frac{\kappa |m|\sqrt{\pi l}}{1+\kappa},
+\qquad
+K_M=\frac{m\sqrt{\pi l}}{1+\kappa}.
+\]
+
+Substituting these expressions into criteria~\eqref{ShatskyiEq7} and~\eqref{ShatskyiEq8} yields the limit loads
+\begin{equation}
+	|m_*^{\text{local}}|
+	=
+	\frac{1+\kappa}{\sqrt{2\kappa(3+\kappa)}}\,m^0,
+	\qquad
+	|m_*^{\text{integral}}|
+	=
+	\sqrt{\frac{1+\kappa}{\kappa}}\,m^0,
+	\label{ShatskyiEq9}
+\end{equation}
+where
+\[
+m^0=2h^2\sqrt{\frac{2E\gamma_*}{\pi l}}
+\]
+is a normalizing parameter.
+
+Next consider a circular plate of radius $R$ simply supported along the boundary, containing a rectilinear crack of length $2l$ along the diameter and subjected to a transverse concentrated force $P$ applied at the center. Assuming the strong inequality $l\ll R$, the support conditions affect only the loading function of the defect-free plate. In this case
+\[
+\Omega=\mathbb{R}^2,
+\qquad
+L=(-l,l),
+\qquad
+m(x)=\frac{P}{4\pi}\left((1+\nu)\ln\frac{R}{|x|}+1-\nu\right),
+\]
+\[
+K_{11}(\xi,x)=K_{33}(\xi,x)=\frac{1}{\xi-x}.
+\]
+
+Then~\cite{Shatskyi6}
+\begin{equation}
+	\begin{aligned}
+		|P_*^{\text{local}}|
+		&=
+		\frac{1+\kappa}{\sqrt{2\kappa(3+\kappa)}}
+		\,
+		\frac{4\pi m^0}{(1+\nu)\ln(2R/l)+1-\nu},
+		\\
+		|P_*^{\text{integral}}|
+		&=
+		\sqrt{\frac{1+\kappa}{\kappa}}
+		\,
+		\frac{4\pi m^0}{(1+\nu)\ln(2R/l)+1-\nu}.
+	\end{aligned}
+	\label{ShatskyiEq10}
+\end{equation}
+
+The dependencies of the limit loads~\eqref{ShatskyiEq9} and~\eqref{ShatskyiEq10}
+(for $R=5l$) on the Poisson ratio are presented in Fig.~\ref{ShatskyiFig1}.
+
+\begin{figure}[b]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig1.png}
+	\caption{Influence of the Poisson ratio on the limit loads for a plate with a rectilinear crack: (left) uniform omnidirectional bending; (right) bending caused by a concentrated force.}
+	\label{ShatskyiFig1}
+\end{figure}
+
+\subsubsection{Periodic crack systems in an infinite plate}
+
+Consider the problem of uniform bending of an infinite plate containing a periodic system of collinear contact cracks~\cite{Shatskyi21,Shatskyi31,Shatskyi32,Shatskyi33}. In relations~\eqref{ShatskyiEq3} and~\eqref{ShatskyiEq4} one has
+\[
+\Omega=\mathbb{R}^2,
+\qquad
+L=(-l,l),
+\qquad
+m(x)=m=\mathrm{const},
+\]
+\[
+K_{11}(\xi,x)=K_{33}(\xi,x)=\frac{\pi}{d}\cot\frac{\pi(\xi-x)}{d},
+\]
+where $d$ denotes the distance between the centers of neighboring cuts.
+
+For a $d$-periodic system of parallel defects in an infinite plate, the kernels of the integral representations take the form~\cite{Shatskyi32,Shatskyi34}
+\begin{align*}
+K_{11}(\xi,x)
+&=
+\frac{\pi}{2d}
+\left(
+2\coth\frac{\pi(\xi-x)}{d}
+-
+\frac{\pi(\xi-x)}{d}\operatorname{csch}^2\frac{\pi(\xi-x)}{d}
+\right),
+\\
+K_{33}(\xi,x)
+&=
+\frac{\pi}{2d}
+\left(
+(1+\kappa_0)\coth\frac{\pi(\xi-x)}{d}
+-
+\kappa_0
+\frac{\pi(\xi-x)}{d}
+\operatorname{csch}^2\frac{\pi(\xi-x)}{d}
+\right),
+\end{align*}
+\[
+\kappa_0=\frac{1-\nu}{3+\nu}.
+\]
+
+The numerical results for the limit values of the bending moment for periodic defect systems are shown in Fig.~\ref{ShatskyiFig2}. Here and in what follows, the computations were performed for $\nu=0.3$.
+
+\begin{figure}[b]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig2.png}
+	\caption{Limit loads for periodic systems of contact cracks: (left) collinear cracks; (right) parallel cracks.}
+	\label{ShatskyiFig2}
+\end{figure}
+
+Next consider an infinite plate containing a cyclic system of $N$ rectilinear radial cracks of length $l$ emanating from the origin. Owing to cyclic symmetry, the integral equations can be formulated on a single crack. In relations~\eqref{ShatskyiEq3} and~\eqref{ShatskyiEq4} the following quantities must then be specified~\cite{Shatskyi35}:
+\[
+\Omega=\mathbb{R}^2,
+\qquad
+L=(0,l).
+\]
+
+\begin{align*}
+	K_{11}(\xi,x)&=
+	\sum_{k=0}^{N-1}
+	\left\{
+	\frac{z_x}{r^2}
+	\left(
+	1+\frac{2z_y^2}{r^2}
+	\right)
+	\cos\frac{2\pi k}{N}
+	-
+	\frac{z_y}{r^2}
+	\left(
+	1-\frac{2z_y^2}{r^2}
+	\right)
+	\sin\frac{2\pi k}{N}
+	\right\},
+\\
+	K_{33}(\xi,x)&=
+	\sum_{k=0}^{N-1}
+	\left\{
+	\frac{z_x}{r^2}
+	\left(
+	1-\kappa_0\frac{2z_y^2}{r^2}
+	\right)
+	\cos\frac{2\pi k}{N}
+	+
+	\kappa_0
+	\frac{z_y}{r^2}
+	\left(
+	1-\frac{2z_y^2}{r^2}
+	\right)
+	\sin\frac{2\pi k}{N}
+	\right\},
+\end{align*}
+
+\[
+z_x=\xi\cos\frac{2\pi k}{N}-x,
+\qquad
+z_y=\xi\sin\frac{2\pi k}{N},
+\qquad
+r^2=z_x^2+z_y^2.
+\]
+
+The boundary conditions~\eqref{ShatskyiEq5} at the crack ends take the form
+\[
+\lim_{x\to0}\sqrt{x}\,[\vartheta_y]'(x)=0,
+\qquad
+[\vartheta_y](l)=0.
+\]
+
+As in the previous cases, under uniform bending $m(x)=m=\mathrm{const}$, whereas under bending caused by a transverse force
+\[
+m(x)=\frac{P}{4\pi}\left((1+\nu)\ln\frac{R}{x}+1-\nu\right).
+\]
+
+The computed limit loads for the star-shaped crack configuration are shown in Fig.~\ref{ShatskyiFig3}.
+
+\begin{figure}[!h]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig3.png}
+	\caption{Limit loads for a star-shaped crack system: (left) uniform bending; (right) bending caused by a concentrated force.}
+	\label{ShatskyiFig3}
+\end{figure}
+
+\subsubsection{Semi-infinite plate with an internal crack perpendicular to the edge}
+
+Let the midsurface of the plate occupy the half-plane $x>0$ and contain a rectilinear cut $L$ oriented perpendicular to the edge $x=0$. Denote by $d$ the distance from the plate edge to the center of the crack. The plate is subjected to a uniform bending load $m(x)=m=\mathrm{const}$. Contact problems were analyzed for two types of boundary conditions at the plate edge: a free edge and a clamped edge.
+
+For the case of a free edge, the kernels of the integral representations take the form~\cite{Shatskyi36}:
+\[
+K_{11}(\xi,x)=\frac{1}{\xi-x}+\frac{1}{\xi+x}-\frac{2\xi(\xi-x)}{(\xi+x)^3},
+\]
+\[
+K_{33}(\xi,x)=\frac{1}{\xi-x}+\frac{1}{\xi+x}-\kappa_0^{2}\frac{2\xi(\xi-x)}{(\xi+x)^3},
+\]
+\[
+\kappa_0=\frac{1-\nu}{3+\nu}.
+\]
+
+For the cantilevered (clamped-edge) plate~\cite{Shatskyi37} the kernels become
+\begin{align*}
+K_{11}(\xi,x)&=
+\frac{1}{\xi-x}
+-\frac{1+\kappa_1^{2}}{2\kappa_1}\frac{1}{\xi+x}
++\frac{1}{\kappa_1}\frac{2\xi(\xi-x)}{(\xi+x)^3},
+\\
+K_{33}(\xi,x)&=
+\frac{1}{\xi-x}
+-\frac{1+\kappa_2^{2}}{2\kappa_2}\frac{1}{\xi+x}
++\frac{1}{\kappa_2}\frac{2\xi(\xi-x)}{(\xi+x)^3},
+\end{align*}
+\[
+\kappa_1=\frac{3-\nu}{1+\nu},
+\qquad
+\kappa_2=\frac{3+\nu}{1-\nu}.
+\]
+
+The graphs in Fig.~\ref{ShatskyiFig4} illustrate the influence of the distance between the crack center and the plate edge on the magnitude of the limit load for different edge support conditions.
+
+\begin{figure}[b]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig4.png}
+	\caption{Limit loads for a crack in a semi-infinite plate: (left) free edge; (right) clamped edge.}
+	\label{ShatskyiFig4}
+\end{figure}
+
+\subsubsection{Cracked plate resting on an elastic Winkler foundation}
+
+Consider an infinite plate weakened by a rectilinear contact crack and interacting with an elastic Winkler foundation.
+
+In this case the problem formulation must be modified: instead of the biharmonic equation for the deflection in \eqref{ShatskyiEq1}, the governing equation for a plate resting on an elastic foundation is used:
+\[
+D\,\Delta\Delta w + k\,w = 0,
+\]
+where $k$ is the foundation stiffness coefficient.
+
+As before,
+\[
+\Omega=\mathbb{R}^2,
+\qquad
+L=(-l,l).
+\]
+The kernels of the integral representations are expressed through Thomson functions~\cite{Shatskyi38}:
+\begin{align*}
+	K_{11}(\zeta)&=\frac{1}{\zeta}, \\
+	K_{33}(\zeta)&=
+	\begin{multlined}[t]
+	\frac{2(1-\nu)}{(3+\nu)\zeta}
+	\left(
+	\frac{2}{\gamma|\zeta|}\operatorname{kei}'(\gamma|\zeta|)
+	-
+	\operatorname{ker}(\gamma|\zeta|)
+	\right)
+	\\
+	-
+	2\frac{1+\nu}{3+\nu}\gamma
+	\operatorname{sgn}\zeta\,\operatorname{ker}'(\gamma|\zeta|)
+	-
+	\frac{2\gamma^2}{a}
+	\int_{0}^{\zeta}\operatorname{kei}(\gamma|\zeta|)\,d\zeta ,
+	\end{multlined}
+\end{align*}
+where
+\[
+\zeta=\xi-x,
+\qquad
+\gamma=l\left(\frac{k}{D}\right)^{1/4}.
+\]
+
+In the case of loading the crack faces by a uniform bending moment $m(x)=m=\mathrm{const}$, and in the case of bending caused by a concentrated force applied at the crack center~\cite{Shatskyi38,Shatskyi39},
+\[
+m(x)=\frac{P}{2\pi}
+\left(
+\nu\,\operatorname{kei}''(\gamma|x|)
++
+\frac{\gamma}{|x|}\operatorname{kei}'(\gamma|x|)
+\right).
+\]
+
+The influence of the dimensionless foundation stiffness parameter
+\[
+\lambda=\gamma l
+\]
+on the limit equilibrium of the cracked plate is illustrated in Fig.~\ref{ShatskyiFig5}.
+
+\begin{figure}[t]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig5.png}
+	\caption{Limit loads for a cracked plate resting on an elastic Winkler foundation: (left) uniform bending; (right) bending caused by a concentrated force.}
+	\label{ShatskyiFig5}
+\end{figure}
+
+\subsubsection{Spherical shell with a meridional crack}
+
+Consider a shallow spherical shell weakened by a rectilinear contact crack located along a meridian. Instead of the plate equations~\eqref{ShatskyiEq1}, the governing system of shallow spherical shell theory is used:
+\[
+\Delta\Delta\varphi-\frac{B}{R}\Delta w=0,
+\qquad
+\Delta\Delta w+\frac{1}{DR}\Delta\varphi=0,
+\qquad
+(x,y)\in\mathbb{R}^2\setminus L .
+\]
+
+The integral representations for the membrane forces and bending moments are
+\begin{align*}
+N_y(x,0)&=
+\frac{B}{4\pi}
+\int_L
+\bigl\{
+K_{11}(\xi-x)[u_y]'(\xi)
+-
+K_{13}(\xi-x)\,c\,[\vartheta_y]'(\xi)
+\bigr\}d\xi ,
+\\
+M_y(x,0)&=
+m(x)+
+\frac{Bc}{4\pi}
+\int_L
+\bigl\{
+K_{31}(\xi-x)[u_y]'(\xi)
+-
+K_{33}(\xi-x)\,c\,[\vartheta_y]'(\xi)
+\bigr\}d\xi ,
+\end{align*}
+where
+\[
+L=(-l,l),
+\qquad
+c=\frac{h}{\sqrt{3(1-\nu^2)}} .
+\]
+
+The kernels are determined according to~\cite{Shatskyi24,Shatskyi40,Shatskyi41}:
+
+\begin{align*}
+K_{11}(\zeta)&=
+\frac{2}{\zeta}
+\left(
+\operatorname{ker}(\gamma|\zeta|)
+-
+\gamma|\zeta|\operatorname{ker}'(\gamma|\zeta|)
+-
+\frac{2}{\gamma|\zeta|}
+\operatorname{kei}'(\gamma|\zeta|)
+\right),
+\\
+K_{13}(\zeta)&=K_{31}(\zeta)
+\begin{multlined}[t]
+=
+-\frac{2}{\zeta}
+\bigg(
+(1-\nu)
+\left(
+\frac{2}{\gamma^2\zeta^2}
++
+\frac{2}{\gamma|\zeta|}
+\operatorname{ker}'(\gamma|\zeta|)
++
+\operatorname{kei}(\gamma|\zeta|)
+\right)
+\\
++
+\nu\gamma|\zeta|
+\operatorname{kei}'(\gamma|\zeta|)
+\bigg),
+\end{multlined}
+\\
+	K_{33}(\zeta)&=
+	\begin{multlined}[t]
+	\frac{2}{\zeta}
+	\bigg(
+	(1-\nu)^2
+	\left(
+	\frac{2}{\gamma|\zeta|}
+	\operatorname{kei}'(\gamma|\zeta|)
+	-
+	\operatorname{ker}(\gamma|\zeta|)
+	\right)
+	\\
+	-
+	(1-\nu^2)\gamma|\zeta|
+	\operatorname{ker}'(\gamma|\zeta|)
+	\bigg)
+	-
+	2\gamma^2
+	\int_{0}^{\zeta}
+	\operatorname{kei}(\gamma|\zeta|)\,d\zeta ,
+	\\
+	\zeta=\xi-x,
+	\qquad
+	\gamma=\frac{(3(1-\nu^2))^{1/4}}{\sqrt{Rh}} .
+	\end{multlined}
+\end{align*}
+
+Taking into account the boundary conditions~\eqref{ShatskyiEq2}, the problem of a closable crack in a spherical shell reduces to an integral equation with a kernel that depends on the sign of the bending load:
+\begin{multline*}
+	\frac{D}{4\pi}
+	\int_L
+	\bigl\{
+	3(1-\nu^2)K_{11}(\xi-x)
+	+
+	2\,\operatorname{sgn}m(x)\sqrt{3(1-\nu^2)}\,K_{13}(\xi-x)
+	\\
+	+
+	K_{33}(\xi-x)
+	\bigr\}
+	[\vartheta_y]'(\xi)\,d\xi
+	=
+	m(x),
+	\qquad
+	x\in L .
+\end{multline*}
+
+The results of numerical simulation of the uniform limit bending loads as functions of the dimensionless curvature parameter
+\[
+\lambda=\gamma l
+\]
+are presented in Fig.~\ref{ShatskyiFig6}.
+
+\begin{figure}[!h]
+	%\sidecaption[t]
+	\centering
+	\includegraphics[width=.75\textwidth]{ShatskyiFig6.png}
+	\caption{Bending of a shallow spherical shell with a meridional crack: (left) crack-edge contact on the inner surface; (right) crack-edge contact on the outer surface.}
+	\label{ShatskyiFig6}
+\end{figure}
+
+\section{Conclusions}
+
+An important consequence of the two-dimensional analysis of closable cracks in bent plates and shells is the elimination of the kinematic contradiction associated with the possible interpenetration of crack faces in the compressed region. The accuracy of the obtained stress analysis results is therefore primarily determined by the applicability limits of the classical Kirchhoff plate theory.
+
+The proposed approach based on two-sided estimates of the limiting bending loads makes it possible to describe different scenarios of crack evolution, including stable subcritical growth and catastrophic propagation.
+
+The lower estimates of the ultimate bending load obtained from the local energy criterion~\eqref{ShatskyiEq7} differ from the upper estimates derived from the integral criterion~\eqref{ShatskyiEq8} by more than a factor of two. For predicting the destructive load corresponding to unstable propagation of a through crack, the integral energy criterion~\eqref{ShatskyiEq8} is recommended. This choice allows one to account for the stress state along the entire crack front rather than only at the most highly stressed point.
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter36}

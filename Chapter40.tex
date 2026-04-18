@@ -1,0 +1,774 @@
+% !TeX root = BookN.tex
+
+\title{Contact Problems for Elastic Prestressed Annular Cylinders and Elastic Half-Spaces (Layers) with Initial Stresses}
+\titlerunning{Contact Problems for Prestressed Cylinders and Layers}
+
+\author{Natalia Yarets’ka, Stepan Babich, and Sergii Degtyar}
+
+\institute{%
+	Natalia Yarets’ka
+	\at  \AffUEU
+	\\
+	\email{nayaretska@gmail.com}
+	\and
+	Stepan Babich
+	\at \AffIMech \\
+	\email{babichsy@ukr.net}
+	\and
+	Sergii Degtyar
+	\at \AffKNEU
+		\email{svdegtyar@gmail.com}
+}
+
+\maketitle
+
+\abstract{
+	The chapter is devoted to contact problems involving two prestressed half-spaces exerting pressure on an elastic annular cylinder with initial stresses and two elastic coaxial annular cylindrical punches acting on an elastic layer with initial stresses. The study is conducted in a general framework for both compressible and incompressible materials within the context of the theory of large (finite) initial deformations and two versions of the theory of small initial deformations. 
+		The analysis considers an arbitrary structure of the elastic potential and employs the relations of the linearized theory of elasticity, disregarding frictional forces. Both problems are formulated as solutions to triple integral equations, which are subsequently reduced to a single integral equation via the substitution method. Given the axial symmetry of both problems, the kernel of the integral equation depends on the product of three Bessel functions. 
+	The solution was obtained using a formula that expresses the product of two Bessel functions as a series expansion, reducing the problem to a system of functional equations. These functional equations establish a relationship between the displacement of the punch and the unknown coefficients of the contact stress distribution. Consequently, the derived functional equations were further transformed into infinite systems of linear algebraic equations. These systems are solved using the reduction (truncation) method. 
+	Under the applied loading conditions on the annular punches, the contact stress distribution is determined in the form of a series expansion involving products of associated Legendre functions.
+}
+
+\section{Introduction}
+
+The practical significance of the problems addressed in this section stems from the pronounced influence of residual (technological) stresses on high-rise structures such as chimneys, water towers, and cooling towers—particularly when a half-space or a layer is employed as the foundation model. These effects are also crucial in the design of various mechanical components, machinery, and structural elements.
+
+To compensate for contact stresses, it is sometimes appropriate to deliberately introduce initial (residual or technological) stresses. This approach enhances the strength of structures and the materials from which they are fabricated. As demonstrated in~\cite{YaretskaRef1}, the presence of compressive or tensile initial stresses significantly alters the quantitative behavior of contact stresses and displacements.
+
+A review of the literature in contact mechanics indicates that models incorporating complex physical and mechanical properties of materials have been studied in~\cite{YaretskaRef2,YaretskaRef3,YaretskaRef4,YaretskaRef5,YaretskaRef6,YaretskaRef7,YaretskaRef8}. In the general case, accounting for initial stresses in contact interactions necessitates the use of nonlinear elasticity theory~\cite{YaretskaRef9}. However, when initial stresses reach sufficiently large magnitudes, a linearized version of this theory may be adopted~\cite{YaretskaRef1,YaretskaRef10,YaretskaRef11}.
+
+The linearized theory of elasticity for bodies with initial stresses was first proposed in~\cite{YaretskaRef12}. In monograph~\cite{YaretskaRef13}, the author employed physical reasoning that did not always strictly adhere to the principles of linearization within nonlinear elasticity theory. This contributed to the development of the theory of incremental deformations for bodies with initial stresses. Notably, an attempt to formulate a simplified version of such a theory based on physical arguments dates back to Cauchy in the 19\textsuperscript{th} century.
+
+One of the earliest solutions to the problem of a circular crack in an incompressible elastic body with initial stresses for a specific type of potential was presented in~\cite{YaretskaRef14}. Studies of contact problems for particular elastic potentials have been reported in~\cite{YaretskaRef15}. In these works, the same problem was analyzed for prestressed bodies using different types of elastic potentials. However, such an approach does not facilitate the generalization or rationalization of contact problem solutions.
+
+The authors argue that a more effective approach is to solve contact problems in a general form for compressible and incompressible bodies with an arbitrary elastic potential. Fundamental contributions employing this approach include~\cite{YaretskaRef1,YaretskaRef2,YaretskaRef3,YaretskaRef4,YaretskaRef5,YaretskaRef6,YaretskaRef10,YaretskaRef11,YaretskaRef16}.
+
+The proposed solution method is based on the theory of complex variable functions for two-dimensional problems and potential theory for three-dimensional contact problems. This methodology enables a unified formulation of the contact problem for compressible or incompressible bodies with arbitrary elastic potential structures. Numerical results for specific potentials are derived in the final stage. The fundamental assumptions of the linearized theory of elasticity and the proposed method are detailed in~\cite{YaretskaRef16}.
+
+In light of the above, this section presents research on two contact problems: (1) two prestressed half-spaces exerting pressure on an elastic annular cylinder with initial stresses; and (2) two elastic coaxial annular cylindrical punches acting on an elastic layer with initial stresses. The study is conducted within a general framework for compressible and incompressible bodies using the theory of large (finite) initial deformations and two formulations of the theory of small initial deformations. The analysis employs the linearized theory of elasticity, neglecting frictional forces.
+
+In both problems, the initial stress-strain states in the annular punches and the half-spaces (or layers) are assumed to be homogeneous and identical. In the classical case without initial stresses, similar problems have been discussed in~\cite{YaretskaRef1,YaretskaRef18,YaretskaRef19}. The specific case of contact interaction between an annular punch and a prestressed isotropic layer was studied in~\cite{YaretskaRef20}.
+
+We assume that the elastic potentials are twice continuously differentiable functions of the algebraic invariants of the Green strain tensor~\cite{YaretskaRef1}. Furthermore, the action of the punches induces only a small perturbation to the primary stress-strain state in the contacting bodies.
+
+In this study, we consider three distinct states of bodies with initial stresses: 
+\begin{enumerate}
+	\item \textit{Natural state}, in which the bodies are free of stress;
+	\item \textit{Initial state}, characterized by pre-existing stress;
+	\item \textit{Perturbed state}, where all quantities consist of the sum of the corresponding initial values and their perturbations.
+\end{enumerate}
+
+It should be noted that the perturbations are significantly smaller than the corresponding quantities in the initial state~\cite{YaretskaRef1}.
+
+We consider elastic isotropic bodies (either compressible or incompressible) with an arbitrary form of the elastic potential. In the case of orthotropic materials, we assume that the principal material directions coincide with the coordinate axes in the deformed state.
+
+Having established these assumptions, we now proceed to examine the fundamental relations governing the contact problems considered.
+
+\section{Main Relations}
+
+We present the general solutions of the linearized theory of elasticity for the static problem~\cite{YaretskaRef1,YaretskaRef10} for compressible and incompressible bodies under the assumption of axisymmetric deformation.
+
+For this study, we employ coordinates $O y_i$ corresponding to the deformed state, which are related to the Lagrangian coordinates $x_i$ (natural state) by the relation
+\[
+y_i = \lambda_i x_i \quad (i = 1, 2, 3),
+\]
+where $\lambda_i$ are the stretching coefficients characterizing the initial (residual) stress state.
+
+Based on~\cite{YaretskaRef1}, the fundamental differential equation of the linearized theory of elasticity can be written as
+\begin{equation} \label{YaretskaEq2.1}
+	U_\alpha = L'_{m\alpha},
+\end{equation}
+where $L'_{m\alpha}$ are differential operators whose forms are provided in~\cite{YaretskaRef18} (see (29.1), (29.2)). The quantities $U_\alpha$ represent the displacements along the normal and tangential directions to the cross-sectional contour in the plane $y_3 = \text{const}$.
+
+Using the operator method, the general solution for axisymmetric static problems of compressible and incompressible bodies can be expressed as~\cite{YaretskaRef1}:
+\begin{equation} \label{YaretskaEq2.2}
+	\left( \Delta_1 + \xi_2'^2 \frac{\partial^2}{\partial y_3^2} \right)
+	\left( \Delta_1 + \xi_3'^2 \frac{\partial^2}{\partial y_3^2} \right) \tilde{\chi} = 0,
+\end{equation}
+where
+\[
+\Delta_1 = \frac{\partial^2}{\partial y_1^2} + \frac{\partial^2}{\partial y_2^2},
+\]
+and $\xi_i'^2$ ($i=2,3$) are the roots of the characteristic equation associated with \eqref{YaretskaEq2.2}. The values of these roots for both compressible and incompressible bodies are provided in~\cite{YaretskaRef1}.
+
+For all standard structured potentials in both compressible and incompressible cases, the values of $\xi_i'^2$ are positive~\cite{YaretskaRef1}, although this is not proven in general. One of the key requirements ensuring the uniqueness of the solution to the linearized contact problem is the positivity of these quantities.
+
+In \cite{YaretskaRef1,YaretskaRef2,YaretskaRef3,YaretskaRef4,YaretskaRef5,YaretskaRef6,YaretskaRef10,YaretskaRef11,YaretskaRef16}, it is demonstrated that the existence of a unique solution in the linearized theory of elasticity for both compressible and incompressible bodies is guaranteed by the condition of strong ellipticity, which requires:
+\begin{equation} \label{YaretskaEq2.3}
+	\Re \xi_i'^2 > 0, \quad \Im \xi_i'^2 = 0 \quad (i = 2, 3).
+\end{equation}
+
+Taking into account the condition~\eqref{YaretskaEq2.3}, we obtain two forms of the general solution of \eqref{YaretskaEq2.2}.
+
+\paragraph{Case of equal roots:}
+\begin{equation} \label{YaretskaEq2.4}
+	\tilde{\chi} = \tilde{\chi}_1 + y_3 \tilde{\chi}_2, \quad
+	\left( \Delta_1 + \xi_2'^2 \frac{\partial^2}{\partial y_3^2} \right) \tilde{\chi}_1 = 0, \quad
+	\left( \Delta_1 + \xi_2'^2 \frac{\partial^2}{\partial y_3^2} \right) \tilde{\chi}_2 = 0.
+\end{equation}
+
+\paragraph{Case of unequal roots:}
+\begin{equation} \label{YaretskaEq2.5}
+	\tilde{\chi} = \tilde{\chi}_1 + \tilde{\chi}_2, \quad
+	\left( \Delta_1 + \xi_2'^2 \frac{\partial^2}{\partial y_3^2} \right) \tilde{\chi}_1 = 0, \quad
+	\left( \Delta_1 + \xi_3'^2 \frac{\partial^2}{\partial y_3^2} \right) \tilde{\chi}_2 = 0.
+\end{equation}
+
+In the following sections, we will apply these general solutions to the formulation of contact problems involving bodies with initial stresses.
+
+\subsection{Formulation of Solutions for the Fundamental Equations of the Linearized Theory of Elasticity for Annular Bodies}
+
+In \eqref{YaretskaEq2.4} and~\eqref{YaretskaEq2.5}, we introduce the notations:
+\begin{equation} \label{YaretskaEq2.1.1}
+	\xi_1'^2 = n_3, \quad \xi_2'^2 = n_1, \quad \xi_3'^2 = n_2.
+\end{equation}
+
+We employ a cylindrical coordinate system $(r, \theta, z_i)$, where $z_i = v_i^{-1} y_3$ and $v_i = \sqrt{n_i}$ ($i=1,2$), denoting the radial, circumferential, and axial directions, respectively. We express the general solution for a finite annular body undergoing axisymmetric deformation with respect to its geometric axis. The initial (residual) stresses are assumed to be uniformly distributed along the $r$ and $\theta$ directions, satisfying the homogeneity condition.
+
+For the cases described in \eqref{YaretskaEq2.4} and~\eqref{YaretskaEq2.5}, the harmonic functions $\tilde{\chi}_1$ and $\tilde{\chi}_2$ are expressed as:
+\begin{equation} \label{YaretskaEq2.1.2}
+	\tilde{\chi}_1 = \Phi_{11} + \Phi_{12}, \qquad \tilde{\chi}_2 = \Phi_{21} + \Phi_{22},
+\end{equation}
+where each function $\Phi_{kj}$ ($k,j=1,2$) satisfies Laplace’s equation~\cite{YaretskaRef17}:
+\begin{equation} \label{YaretskaEq2.1.3}
+	\nabla^2 \Phi_{kj} = 0, \qquad \nabla^2 = \frac{\partial^2}{\partial r^2} + \frac{1}{r} \frac{\partial}{\partial r} + v_i^2 \frac{\partial^2}{\partial y_3^2}.
+\end{equation}
+
+The particular solutions of \eqref{YaretskaEq2.1.2} are obtained by separation of variables (Fourier method) and take the form:
+\begin{equation} \label{YaretskaEq2.1.4}
+	\Phi_{lj} = R_{lj}(r) Z_{lj}(z_i), \qquad l,j = 1,2.
+\end{equation}
+
+For example, the components $\Phi_{11}$ and $\Phi_{12}$ are:
+\begin{equation} \label{YaretskaEq2.1.5}
+	\begin{array}{ll}
+		\Phi_{11} &= \left( A_k^{(1)} I_0(\gamma_k v_i r) + B_k^{(1)} K_0(\gamma_k v_i r) \right) S_1(\gamma_k v_i z_i),  \\
+	\Phi_{12} &= \left( T_k^{(1)} J_0(\alpha_k r) + T_k^{(2)} Y_0(\alpha_k r) \right) S_2(\alpha_k z_i), 
+	\end{array}
+\end{equation}
+where
+\begin{align*}
+	S_1(\gamma_k v_i z_i) &= C_k \sin(\gamma_k v_i z_i) + D_k \cos(\gamma_k v_i z_i), \\
+	S_2(\alpha_k z_i) &= E_k \sinh(\alpha_k z_i) + F_k \cosh(\alpha_k z_i).
+\end{align*}
+Here, $I_0$ and $K_0$ are the modified Bessel and Macdonald functions, respectively; $J_0$ and $Y_0$ are the Bessel and Neumann functions. The coefficients $A_k{}^{(j)}$, $B_k{}^{(j)}$, $T_k{}^{(j)}$, $C_k$, $D_k$, $E_k$, $F_k$, and the eigenvalues $\gamma_k^2$, $\alpha_k^2$ are determined by boundary conditions.
+
+To satisfy boundary conditions, an additional harmonic term is introduced:
+\begin{equation} \label{YaretskaEq2.1.6}
+	\tilde{\chi}_i = A_0 (r^2 - 2 z_i^2) + C_0 z_i (3r^2 - 2 z_i^2) \quad (i=1 \text{ or } i=1,2).
+\end{equation}
+
+Incorporating \eqref{YaretskaEq2.1.6}, the full solution for the case of equal roots ($n_1 = n_2$) becomes:
+
+\begin{align}
+	\tilde{\chi} = (1 + v_1 z_1)\big[ A_0 (r^2 - 2 z_1^2) + C_0 z_1 (3r^2 - 2 z_1^2) \big] &
+	\notag \\
+	 + \sum_{k=1}^{\infty} \Big\{ 
+	\Bigl[ \left(A_k^{(1)} + v_1 z_1 B_k^{(1)}\right) &I_0(\gamma_k v_1 r) 
+	\notag\\
+	+ \left(A_k^{(2)} + v_1 z_1 B_k^{(2)}\right) K_0(\gamma_k v_1 r) \Bigr] &S_1(\gamma_k v_1 z_1) 
+	\notag \\
+	+ \left[ T_k^{(1)} J_0(\alpha_k r) + T_k^{(2)} Y_0(\alpha_k r) \right] &S_2(\alpha_k z_1) 
+	\notag \\
+	 + v_1 z_1 \left[ W_k^{(1)} J_0(\alpha_k r) + W_k^{(2)} Y_0(\alpha_k r) \right] &S_3(\alpha_k z_1) \Big\}, \label{YaretskaEq2.1.7}
+\end{align}
+where
+\[
+S_3(\alpha_k z_1) = N_k \sinh(\alpha_k z_1) + M_k \cosh(\alpha_k z_1),
+\]
+and all constants are determined from the boundary conditions.
+
+For unequal roots ($n_1 \ne n_2$), the solution becomes:
+\begin{align}
+	\tilde{\chi} = 2 A_0 (r^2 - z_1^2 - z_2^2) + C_0 \left[ z_1 (3r^2 - 2 z_1^2) + z_2 (3r^2 - 2 z_2^2) \right]&
+	\notag\\
+	 + \sum_{k=1}^\infty \Big\{
+	\left[ A_k^{(1)} I_0(\gamma_k v_1 r) + A_k^{(2)} K_0(\gamma_k v_1 r) \right] &S_1(\gamma_k v_1 z_1) 
+	\notag\\
+	 + \left[ B_k^{(1)} I_0(\gamma_k v_2 r) + B_k^{(2)} K_0(\gamma_k v_2 r) \right] &S_1(\gamma_k v_2 z_2) 
+	 \notag\\
+	  + \left[ T_k^{(1)} J_0(\alpha_k r) + T_k^{(2)} Y_0(\alpha_k r) \right] &S_2(\alpha_k z_1) 
+	  \notag\\
+	  + \left[ W_k^{(1)} J_0(\alpha_k r) + W_k^{(2)} Y_0(\alpha_k r) \right] &S_3(\alpha_k z_2) \Big\}. \label{YaretskaEq2.1.8}
+\end{align}
+
+Thus, the general analytical solutions of the fundamental differential equation of the linearized theory of elasticity~\eqref{YaretskaEq2.4} have been formulated for compressible and incompressible annular bodies with arbitrary cross-sectional contours.
+
+\subsection{Formulation of Solutions for the Fundamental Equations of the Linearized Theory of Elasticity for an Elastic Layer}
+
+The stress-strain state in an elastic layer and its foundation with initial (residual) stresses—under the cases of equal roots $n_1 = n_2$ (see \eqref{YaretskaEq2.4}) and unequal roots $n_1 \ne n_2$ (see \eqref{YaretskaEq2.5}) of \eqref{YaretskaEq2.2}—is determined following the approach in~\cite{YaretskaRef1}, using harmonic functions represented by Hankel-type integrals.
+
+By omitting intermediate derivations from~\cite{YaretskaRef1}, the expressions for equal roots $n_1 = n_2$ are given by:
+\begin{equation}\label{YaretskaEq2.2.1}
+\begin{aligned}
+	u_3^{(2)} &= \frac{m_1}{v_i R^3} \int_0^{\infty} \eta^2 \bigg[
+	A_1 \sinh\left(\frac{\eta z_1}{R}\right)
+	 \\
+	&\qquad+ A_2 \left( s_1 \sinh\left(\frac{\eta z_1}{R} \right) + \frac{\eta z_1}{R} \cosh\left(\frac{\eta z_1}{R} \right) \right) 
+	 + B_1 \cosh\left(\frac{\eta z_1}{R} \right)
+	 \\
+	&\qquad+ B_2 \left( s_1 \cosh\left(\frac{\eta z_1}{R} \right) + \frac{\eta z_1}{R} \sinh\left(\frac{\eta z_1}{R} \right) \right)
+	\bigg] J_0(\eta \rho)  d\eta,  
+	\\
+	Q_{33}^{(2)} &= \frac{C_{44} l_1 (1 + m_1)}{R^4} \int_0^{\infty} \eta^3 \bigg[
+	A_1 \cosh\left(\frac{\eta z_1}{R} \right)
+	 \\
+	&\qquad+ A_2 \left( s \cosh\left(\frac{\eta z_1}{R} \right) + \frac{\eta z_1}{R} \sinh\left(\frac{\eta z_1}{R} \right) \right) 
+	+ B_1 \sinh\left(\frac{\eta z_1}{R} \right)
+	\\
+	&\qquad+ B_2 \left( s \sinh\left(\frac{\eta z_1}{R} \right) + \frac{\eta z_1}{R} \cosh\left(\frac{\eta z_1}{R} \right) \right)
+	\bigg] J_0(\eta \rho)  d\eta.
+\end{aligned}
+\end{equation}
+
+The coefficients in these expressions are defined as follows:
+\[
+s_0 = \frac{(1 + m_2)}{(1 + m_1)}, \quad
+s_1 = \frac{(m_1 - 1)}{m_1}, \quad
+s_2 = \frac{m_2 v_1}{m_1 v_2}, \quad
+s_3 = \frac{s_0 v_1}{v_2}, \quad
+s = \frac{s_0 l_2}{l_1},
+\]
+where $C_{44}$, $m_i$, and $l_i$ are material parameters defined in~\cite{YaretskaRef16}.
+
+For the case of unequal roots $n_1 \ne n_2$, we obtain:
+
+\begin{equation}\label{YaretskaEq2.2.2}
+\begin{aligned}
+	u_3^{(2)} &= \frac{m_1}{v_1 R^3} \int_0^{\infty} \eta^2 \bigg[
+	A_1 \sinh\left(\frac{\eta z_1}{R} \right)
+	+ s_2 A_2 \cosh\left(\frac{\eta z_2}{R} \right)
+	\\
+	&\qquad+ B_1 \cosh\left(\frac{\eta z_1}{R} \right)
+	+ s_2 B_2 \cosh\left(\frac{\eta z_2}{R} \right)
+	\bigg] J_0(\eta \rho)  d\eta,  \\
+	Q_{33}^{(2)} &= \frac{C_{44} l_1 (1 + m_1)}{R^4} \int_0^{\infty} \eta^3 \bigg[
+	A_1 \cosh\left(\frac{\eta z_1}{R} \right)
+	+ s A_2 \cosh\left(\frac{\eta z_2}{R} \right)
+	\\
+	&\qquad	+ B_1 \sinh\left(\frac{\eta z_1}{R} \right)
+	+ s B_2 \sinh\left(\frac{\eta z_2}{R} \right)
+	\bigg] J_0(\eta \rho)  d\eta. 
+\end{aligned}
+\end{equation}
+
+All unknown coefficients $A_1$, $A_2$, $B_1$, and $B_2$ in \eqref{YaretskaEq2.2.1} and \eqref{YaretskaEq2.2.2} are determined from the boundary conditions of the linearized theory of elasticity. The solution method allows expressing all of them in terms of a single coefficient, for instance, $A_2$.
+
+\subsection{Formulation of Solutions for the Fundamental Equations of the Linearized Theory of Elasticity for an Elastic Half-Space}
+
+The stress-strain state in an elastic half-space with initial (residual) stresses—for the cases of equal roots $n_1 = n_2$ (see \eqref{YaretskaEq2.4}) and unequal roots $n_1 \ne n_2$ (see \eqref{YaretskaEq2.5}) of \eqref{YaretskaEq2.2}—is determined following~\cite{YaretskaRef1}, using harmonic functions represented in terms of Hankel integrals.
+
+For equal roots $n_1 = n_2$, the solution takes the form:
+
+\begin{equation} \label{YaretskaEq2.2.3}
+\begin{aligned}
+	u_3^{(3)} &= \frac{m_1}{v_i R^3} \int_0^\infty \eta^2 \bigg\{
+	\left( A_1 + A_2 \left( s_1 + \frac{\eta z_1}{R} \right) \right) e^{\eta z_1 / R}
+	\\
+	&\qquad	 +\left( B_1 + B_2 \left( s_1 - \frac{\eta z_1}{R} \right) \right) e^{-\eta z_1 / R}
+	\bigg\} J_0(\eta \rho)  d\eta, \\
+	Q_{33}^{(3)} &= \frac{C_{44} l_1 (1 + m_1)}{R^4} \int_0^\infty \eta^3 \bigg\{
+	\left( A_1 + A_2 \left( s + \frac{\eta z_1}{R} \right) \right) e^{\eta z_1 / R} 
+	\\
+	&\qquad	+
+	\left( B_1 + B_2 \left( s - \frac{\eta z_1}{R} \right) \right) e^{-\eta z_1 / R}
+	\bigg\} J_0(\eta \rho)  d\eta. 
+\end{aligned}
+\end{equation}
+
+For unequal roots $n_1 \ne n_2$, the corresponding solution is:
+\begin{equation} \label{YaretskaEq2.2.4} 
+\begin{aligned}
+	u_3^{(3)} &= \frac{m_1}{v_1 R^3} \int_0^\infty \eta^2 \Big(
+	A_1 e^{\eta z_1 / R} + s_2 A_2 e^{\eta z_2 / R} 
+	\\
+	&\qquad	- B_1 e^{-\eta z_1 / R} - s_2 B_2 e^{-\eta z_2 / R}
+	\Big) J_0(\eta \rho)  d\eta,\\
+	Q_{33}^{(3)} &= \frac{C_{44} l_1 (1 + m_1)}{R^4} \int_0^\infty \eta^3 \Big(
+	A_1 e^{\eta z_1 / R} + s A_2 e^{\eta z_2 / R} 
+	\\
+	&\qquad	+ B_1 e^{-\eta z_1 / R} + s B_2 e^{-\eta z_2 / R}
+	\Big) J_0(\eta \rho)  d\eta. 
+\end{aligned}
+\end{equation}
+
+As in the previous section, all unknown coefficients $A_1$, $A_2$, $B_1$, and $B_2$ in \eqref{YaretskaEq2.2.3} and \eqref{YaretskaEq2.2.4} are determined from the specific boundary conditions of the linearized theory of elasticity. Using the applied solution method, these coefficients are ultimately expressed in terms of a single parameter—for example, $A_2$.
+
+\section{Pressure of Two Prestressed Half-Spaces on an Elastic Annular Cylinder with Initial Stresses}
+
+This section presents the problem statement, boundary conditions, solution method, and numerical results.
+
+\subsection{Problem Statement and Boundary Conditions}
+
+Consider a finite elastic annular cylindrical punch of height $H$, inner radius $R_1$, and outer radius $R_2$, subjected to initial stresses (see Fig.~\ref{YaretskaFig1}).
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{40_Yaretska/YaretskaFig1}
+	\caption{Two half-spaces and an elastic annular cylinder.}
+	\label{YaretskaFig1}
+\end{figure}
+
+The punch is compressed (or stretched) by two identical prestressed half-spaces under axisymmetric loading, which is reduced to a resultant force $P$. The geometric axis of the punch coincides with the $y_3$-axis of the cylindrical coordinate system $(r, \theta, y_3)$. The external loading is applied such that the points on the unloaded surfaces of both prestressed half-spaces, as well as regions far from the contact zone, are displaced by $\varepsilon$ relative to the coordinate planes $y_3 = \pm h$, where $h = 0.5\,H$.
+
+The elastic bodies are assumed to be composed of compressible or incompressible isotropic materials with arbitrary elastic potential structures. The Poisson's ratio and Young's modulus for the upper and lower half-spaces are denoted by $v^{(i)}$, $E^{(i)}$ ($i=1,2$), while those for the annular punch are $v^{(3)}$, $E^{(3)}$.
+
+The surfaces outside the contact region are assumed to be free of external forces. Displacements and stresses at the contact interface are continuous. The quantities $\lambda_i$ ($i = 1,2,3$) denote the stretching coefficients that define the displacement field in the initial state, and $S_0^{11}$, $S_0^{22}$ are the components of the symmetric initial stress tensor.
+
+The initial states of the half-spaces and the punch are assumed to be homogeneous and identical, satisfying the relation~\cite{YaretskaRef1}:
+\begin{equation} \label{YaretskaEq3.1.1}
+	y_m = x_m + U_m^0, \qquad U_m^0 = \delta_{mi} \frac{\lambda_m - 1}{\lambda_i} y_i \qquad (i,m = 1,2,3),
+\end{equation}
+where $\delta_{mi}$ is the Kronecker delta.
+
+Quantities corresponding to the upper and lower half-spaces are denoted by superscripts $(1)$ and $(2)$, respectively, while those related to the annular punch are denoted by $(3)$.
+
+In the cylindrical coordinate system $(r, \theta, z_i)$, where $z_i = y_3 / v_i$ ($i=1,2$), the boundary conditions for this problem are as follows:
+
+\begin{enumerate}
+	\item On the end surfaces of the annular punch in the contact region $z_i = \pm h / v_i$:
+	\begin{align} 
+		Q'^{(i)}_{33} = Q'^{(3)}_{33}, \quad 
+		Q'^{(i)}_{3r} = Q'^{(3)}_{3r} = 0, \quad 
+		U'^{(i)}_{3} - U'^{(3)}_{3} = \varepsilon \quad (i=1,2)
+		\notag \\
+		R_1 \le r \le R_2 \label{YaretskaEq3.1.2}
+	\end{align}
+	
+	\item On the surfaces of the half-spaces outside the contact region $z_i = \pm h / v_i$:
+	\begin{align} \label{YaretskaEq3.1.3}
+		Q'^{(i)}_{33} = Q'^{(i)}_{3r} = 0, \quad U'^{(i)}_{3} = 0 \quad (i=1,2,3),
+		\notag \\
+		r > R_2 \text{\quad or \quad} 0 < r < R_1
+	\end{align}
+	
+	\item On the lateral surfaces of the elastic punch $r = R_1$ and $r = R_2$:
+	\begin{equation} \label{YaretskaEq3.1.4}
+		Q'^{(3)}_{rr} = Q'^{(3)}_{3r} = 0, \qquad |z_i| \le h / v_i \quad (i=1,2).
+	\end{equation}
+\end{enumerate}
+
+The equilibrium condition relating the settlement $\varepsilon$ and the resultant force $P$ is:
+\begin{equation} \label{YaretskaEq3.1.5}
+	P = -2\pi \int_{R_1}^{R_2} r \big|Q^{(i)}_{33}\big| dr, \qquad \big|Q^{(3)}_{33}\big| = \big|Q^{(3)}_{3r}\big|_{z_i = \pm h / v_i} \quad (i = 1,2).
+\end{equation}
+
+Equation~\eqref{YaretskaEq3.1.5} completes the formulation of the spatial linearized contact problem for the interaction of a prestressed finite annular cylindrical punch with two elastic half-spaces under initial stress.
+
+\subsection{Method of Solution}
+
+The stress-strain state in the prestressed half-spaces within the contact region $(y_3 = \pm h;\, z_i = \pm h/v_i,\ i=1,2)$, based on \eqref{YaretskaEq2.2.3} and \eqref{YaretskaEq2.2.4}, is given by:
+
+\begin{equation}\label{YaretskaEq3.2.1}
+\begin{aligned}
+	Q'^{(i)}_{33}\left(\rho, \pm \frac{h}{v_i R} \right) &= \frac{C_{44}(1 + m_1) l_1 (s - s_3)}{R} \int_0^\infty F(\eta) J_0(\mu \rho) \, d\eta,
+	\\
+	Q'^{(i)}_{3r}\left(\rho, \pm \frac{h}{v_i R} \right) &= 0, 
+	 \\
+	U'^{(i)}_3\left(\rho, \pm \frac{h}{v_i R} \right) &= -\frac{m_1 (s_2 - s_3)}{v_1} \int_0^\infty \frac{F(\eta)}{\eta} J_0(\mu \rho) \, d\eta,  
+	\\
+	U'^{(i)}_r\left(\rho, \pm \frac{h}{v_i R} \right) &= (s_3 - 1) \int_0^\infty \frac{F(\eta)}{\eta} J_1(\mu \rho)  d\eta \qquad (i=1,2). 
+\end{aligned}
+\end{equation}
+
+The general solution for the stress-strain state in the cylindrical elastic punch with initial stresses (in the case $n_1 = n_2$) is taken in the form:
+\[
+\chi = \chi_1 + \chi_2 z_1 v_1,
+\]
+with
+\begin{align*}
+	\chi_1 &= A_0 (r^2 - 2 z_1^2) + C_0 z_1 (3r^2 - 2 z_1^2) + \left[ A_k^{(1)} I_0(\gamma_k v_1 r) + A_k^{(2)} K_0(\gamma_k v_1 r) \right]  
+	 \\
+	&\qquad \times S_1(\gamma_k v_1 z_1) + \left[ T_k^{(2)} J_0(\alpha_k r) + T_k^{(1)} Y_0(\alpha_k r) \right] S_2(\alpha_k z_1), 
+	 \\
+	\chi_2 &= A_0 (r^2 - 2 z_1^2) + C_0 z_1 (3r^2 - 2 z_1^2) + \left[ B_k^{(1)} I_0(\gamma_k v_1 r) + B_k^{(2)} K_0(\gamma_k v_1 r) \right] 
+	 \\
+	&\qquad \times S_1(\gamma_k v_1 z_1)+ \left[ T_k^{(2)} J_0(\alpha_k r) + T_k^{(1)} Y_0(\alpha_k r) \right] S_3(\alpha_k z_1), 
+\end{align*}
+where
+\[
+\begin{aligned}
+	S_1 &= C_k \sin(\gamma_k v_1 z_1) + D_k \cos(\gamma_k v_1 z_1), \\
+	S_2 &= E_k \sinh(\alpha_k z_1) + F_k \cosh(\alpha_k z_1), \\
+	S_3 &= N_k \sinh(\alpha_k z_1) + M_k \cosh(\alpha_k z_1),
+\end{aligned}
+\]
+and all coefficients are determined by boundary conditions (Eqs.~\eqref{YaretskaEq3.1.2}–\eqref{YaretskaEq3.1.5}). The constants $A_0$, $C_0$, $A_k{}^{(j)}$, $B_k{}^{(j)}$, $T_k{}^{(j)}$ and the eigenvalues $\alpha_k$, $\gamma_k$ are found from the following characteristic equations:
+\begin{align*}
+	J_1(\alpha_k R_1) Y_1(\alpha_k R_2) - J_1(\alpha_k R_2) Y_1(\alpha_k R_1) &= 0,  \\
+	I_1(\gamma_k R_2 v_1) K_1(\gamma_k R_1 v_1) - I_1(\gamma_k R_1 v_1) K_1(\gamma_k R_2 v_1) &= 0. 
+\end{align*}
+
+The radial displacement and normal stress in the punch are given by:
+\begin{equation}\label{YaretskaEq3.2.2}
+\begin{aligned}
+	U^{(3)}_r &= -2r A_0 + \sum_{k=1}^\infty \alpha_k \left( \frac{\alpha_k}{v_1} S_4(z_1 \alpha_k) + (1 + \alpha_k z_1) S_3(z_1 \alpha_k) \right)
+	\\
+	&\qquad \times \left[ Y_1(\alpha_k r) - \frac{Y_1(\alpha_k R_1)}{J_1(\alpha_k R_1)} J_1(\alpha_k r) \right] T_k^{(1)}, 
+	\\
+	Q^{(3)}_{33} &= -C_{44} \sum_{k=1}^\infty \frac{\alpha_k^2}{v_1} \bigg\{ \left[ (1 + m_1) l_1 \alpha_k S_4(z_1 \alpha_k) + (1 + m_2) l_2 v_1 S_3(z_1 \alpha_k) \right] 
+	 \\
+	&\qquad \times \left[ Y_1(\alpha_k r) - \frac{Y_1(\alpha_k R_1)}{J_1(\alpha_k R_1)} J_1(\alpha_k r) \right] T_k^{(1)} \bigg\}, 
+\end{aligned}
+\end{equation}
+with
+\[
+S_3(x) = M_k (\sinh x + \cosh x), \quad S_4(x) = E_k \cosh x + F_k \sinh x.
+\]
+
+To determine the unknown function \( F(\eta) \) in \eqref{YaretskaEq3.2.1}, we solve the following system of triple integral equations:
+\begin{align}
+	\int_0^\infty F(\eta) J_0(\eta r) d\eta &= 0, & \quad r > R_2, \notag \\
+	\int_0^\infty \frac{F(\eta)}{\eta} J_0(\eta r) \, d\eta &= g(r), & \quad R_1 < r < R_2, \label{YaretskaEq3.2.3} \\
+	\int_0^\infty F(\eta) J_0(\eta r) d\eta &= 0, & \quad 0 < r < R_1, \notag
+\end{align}
+where the function \( g(r) \) is given by:
+\begin{equation*} 
+	\begin{aligned}
+		g(r) &= \varepsilon + \frac{1}{n_1} \sum_{k=1}^\infty \Bigg\langle
+		 4 \left[ m_1 (\alpha_k^2 - h) + (1 + m_2) h \right] A_0 \\
+		&\qquad + \alpha_k \bigg\{
+		\left[ \alpha_k h m_1 - (m_1 - 1) v_1 \right]
+		\left( \cosh\left( \frac{\alpha_k h}{v_1} \right) - \sinh\left( \frac{\alpha_k h}{v_1} \right) \right) M_k 
+		 \\
+		& \qquad - \alpha_k m_1 \left( F_k \cosh\left( \frac{\alpha_k h}{v_1} \right) - E_k \sinh\left( \frac{\alpha_k h}{v_1} \right) \right)
+		\bigg\} \\
+		&  \qquad \times \left( Y_0(\alpha_k r) - \frac{Y_1(\alpha_k R_1)}{J_1(\alpha_k R_1)} J_0(\alpha_k r) \right)
+		\Bigg\rangle T_k^{(1)}.
+	\end{aligned}
+\end{equation*}
+
+Solving \eqref{YaretskaEq3.2.3} yields an explicit expression for \( F(\eta) \) in the form:
+\begin{equation*}
+	\begin{aligned}
+		\frac{F(\eta)}{\eta} &= \frac{2}{\pi} \Bigg\{
+		 \frac{1}{n_1} \sum_{k=1}^\infty \Bigg\langle
+		4 \left[ m_1 (\alpha_k^2 - h) + (1 + m_2) h \right] A_0 \, \psi_0(\eta, 0) \\
+		& \qquad+ \alpha_k \bigg\{
+		\left[ \alpha_k h m_1 - (m_1 - 1) v_1 \right]
+		\left( \cosh\left( \frac{\alpha_k h}{v_1} \right) - \sinh\left( \frac{\alpha_k h}{v_1} \right) \right) M_k  
+		\\
+		&  \qquad - \alpha_k m_1 \left( F_k \cosh\left( \frac{\alpha_k h}{v_1} \right) - E_k \sinh\left( \frac{\alpha_k h}{v_1} \right) \right)
+		\bigg\} \\
+		& \qquad \times \left( \psi_0(\eta, 0) - \frac{Y_1(\alpha_k R_1)}{J_1(\alpha_k R_1)} \psi_0(\eta, \mu_k) \right)
+		\Bigg\rangle T_k^{(1)} + \varepsilon \psi_0(\eta, 0)
+		\Bigg\},
+	\end{aligned}
+\end{equation*}
+where the auxiliary function \( \psi_n(x, y) \) is defined as:
+\begin{equation*} 
+	\psi_n(x, y) = \int_0^1 t^n \cos(xt) \cos(yt) \, dt.
+\end{equation*}
+
+
+Let us define $T_k^{(1)} = \chi_k$ ($k = 0,1,2,\ldots$). To find $\chi_k$, we solve the infinite system of linear algebraic equations:
+\begin{equation} \label{YaretskaEq3.2.4}
+	\tilde{\alpha}_k \chi_k + \sum_{n=0}^\infty \tilde{\alpha}_{kn} \chi_n = \tilde{\beta}_k,
+\end{equation}
+where the coefficients $\tilde{\alpha}_k$, $\tilde{\alpha}_{kn}$, and $\tilde{\beta}_k$ are determined from the boundary conditions (Eqs.~\eqref{YaretskaEq3.1.2}–\eqref{YaretskaEq3.1.5}).
+
+The equilibrium condition from \eqref{YaretskaEq3.1.5} provides the relation between the applied force $P$ and the lowest-order coefficient:
+\begin{equation*} 
+	P = -4\pi l_2 C_{44} \big(R_2^2 - R_1^2\big) \chi_0 (1 + m_2) \tilde{A}_0.
+\end{equation*}
+
+By solving the system~\eqref{YaretskaEq3.2.4}, we obtain the unknown coefficients $\chi_k$, which are then substituted into \eqref{YaretskaEq3.2.1} and~\eqref{YaretskaEq3.2.2} to compute the displacements and stresses in the half-spaces and the punch. The solution is thus represented as a series involving the infinite set $\{\chi_k\}$.
+
+\subsection{Numerical Results}
+
+The numerical solution of the linear algebraic system~\eqref{YaretskaEq3.2.4} was obtained using the reduction (truncation) method. Graphs were constructed (see Fig.~\ref{YaretskaFig2}) for the harmonic potential with the following parameter values:
+\[
+R_1 = 1, \quad R_2 = 2, \quad H = 10, \quad \varepsilon = 10^{-3}, \quad E^{(i)} = 5 \cdot 10^{-2}~\text{GPa} \quad (i=1,2,3),
+\]
+and various values of the axial stretch coefficient $\lambda_1$.
+
+\begin{figure}[!h]
+	\sidecaption[t]
+	\includegraphics[width=0.5\textwidth]{40_Yaretska/YaretskaFig2}
+	\caption{Normal contact stresses in the annular cylindrical punch for various values of \(\lambda_1\).}
+	\label{YaretskaFig2}
+\end{figure}
+
+The normal contact stresses in the annular cylinder are presented in Fig.~\ref{YaretskaFig2}, plotted in terms of the dimensionless radial coordinate
+\[
+\rho = \frac{r - R_1}{R_2 - R_1}, \qquad 0 \le \rho \le 1,
+\]
+where $\rho = 0$ corresponds to $r = R_1$ (the inner surface) and $\rho = 1$ corresponds to $r = R_2$ (the outer surface).
+
+From Fig.~\ref{YaretskaFig2}, it is evident that the maximum absolute values of the normal contact stresses occur closer to the inner generatrix of the annular cylinder. Furthermore, the contact stresses under tensile loading are significantly greater in magnitude than those under compressive loading.
+
+\section{Pressure of Two Elastic Coaxial Annular Cylindrical Punches on an Elastic Layer with Initial Stresses}
+
+This section presents the problem statement, boundary conditions, solution method, and numerical results for the analysis.
+
+\subsection{Problem Statement and Boundary Conditions}
+
+We consider an infinite prestressed elastic layer into which two finite, coaxial, elastic annular cylindrical punches with initial stresses are pressed (see Fig.~\ref{YaretskaFig3}). The elastic bodies are assumed to be composed of compressible or incompressible isotropic materials, each with an arbitrary elastic potential structure.
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=0.5\textwidth]{40_Yaretska/YaretskaFig3}
+	\caption{Two elastic coaxial annular cylindrical punches and elastic layer.}
+	\label{YaretskaFig3}
+\end{figure}
+
+The Poisson’s ratios and Young’s moduli for the upper and lower punches are denoted as \( v^{(i)}, E^{(i)} \) (\( i = 1,2 \)), while for the elastic layer, they are denoted as \( v, E \), respectively.
+
+The thickness of the layer after the formation of its initial stress state is given by \( h = \lambda_3 \tilde{h} \), where \( \tilde{h} \) is the natural (unstressed) thickness of the layer. The inner and outer radii of the annular punches are \( R_1{}^{(i)} \) and \( R_2{}^{(i)} \), and their heights are \( H^{(i)} \) (\( i = 1,2 \)).
+
+External axisymmetric loads are applied only to the free ends of the punches, producing fixed displacements \( \varepsilon^{(i)} \) along the \( Oy_3 \) axis, relative to the mid-plane \( y_3 = 0 \). The surfaces outside the contact region are assumed to be traction-free, and frictional effects are neglected.
+
+The analysis is conducted in coordinates of the initially deformed state \( Oy_i \) (\( i = 1,2,3 \)), related to the Lagrangian coordinates by \( y_i = \lambda_i x_i \), where \( \lambda_i \) are the initial stretch ratios. The initial states of the punches and the layer are assumed to be homogeneous and identical.
+
+The boundary conditions, expressed in the cylindrical coordinate system \( (r, \theta, z_i) \), where \( z_i = y_3 / v_i \), are formulated as follows:
+
+\begin{enumerate}
+	\item On the end surfaces of the punches (\( y_3 = (-1)^{i+1} h + (-1)^{i+1} H^{(i)} \)):
+	\begin{equation} \label{YaretskaEq4.1.1}
+		u_3^{(i)} = (-1)^i \varepsilon^{(i)}, \quad Q_{3r}^{(i)} = 0, \quad r \in \big[R_1^{(i)}, R_2^{(i)}\big].
+	\end{equation}
+	
+	\item On the lateral surfaces of the punches:
+	\begin{equation} \label{YaretskaEq4.1.2}
+		Q_{rr}^{(i)} = 0, \quad Q_{3r}^{(i)} = 0, \quad (-1)^{i+1} y_3 \in \big[0, H^{(i)}\big], \quad r = R_k^{(i)}.
+	\end{equation}
+	
+	\item On the boundary of the elastic layer in the contact region (\( y_3 = (-1)^i h \)):
+	\begin{equation} \label{YaretskaEq4.1.3}
+		U_3 = U_3^{(i)}, \quad Q_{33} = Q_{33}^{(i)}, \quad Q_{3r} = Q_{3r}^{(i)} = 0, \quad r \in \big[R_1^{(i)}, R_2^{(i)}\big].
+	\end{equation}
+	
+	\item On the boundary of the elastic layer outside the contact region:
+	\begin{equation} \label{YaretskaEq4.1.4}
+		Q_{33} = 0, \quad Q_{3r} = 0, \quad r \notin \big[R_1^{(i)}, R_2^{(i)}\big], \quad y_3 = (-1)^i h.
+	\end{equation}
+\end{enumerate}
+Here, \( i = 1,2 \) indexes the upper and lower punches, and \( k = 1,2 \) refers to the inner and outer radii of each punch.
+
+The overall equilibrium condition requires:
+\begin{equation} \label{YaretskaEq4.1.5}
+	\int_{R_1^{(1)}}^{R_2^{(1)}} r Q_{33} \big|_{y_3 = h} \, dr
+	- \int_{R_1^{(2)}}^{R_2^{(2)}} r Q_{33} \big|_{y_3 = -h} \, dr = 0.
+\end{equation}
+
+The expression for the total external force is:
+\begin{equation} \label{YaretskaEq4.1.6}
+	P = -2\pi \int_{R_1^{(1)}}^{R_2^{(1)}} r Q_{33} \big|_{y_3 = h} \, dr
+	= -2\pi \int_{R_1^{(2)}}^{R_2^{(2)}} r Q_{33} \big|_{y_3 = -h} \, dr.
+\end{equation}
+
+Conditions~\eqref{YaretskaEq4.1.1}–\eqref{YaretskaEq4.1.6} complete the formulation of the spatial linearized contact problem involving an infinite prestressed elastic layer and two finite coaxial annular cylindrical punches with initial stresses. From both physical and mathematical considerations, it is assumed that stresses and displacements in the layer decay as \( |y_3| \to \infty \) and \( r \to \infty \), while remaining finite at the contact interfaces.
+
+\subsection{Method of Solution}
+
+We use the linearized equations to determine the stress-strain state in the elastic annular punches with initial stresses. These equations provide expressions for the displacement vector components and stress tensors for compressible and incompressible materials.
+
+The general solution for the displacement potential is written as \( \chi = \chi_1 + \chi_2 \), where:
+\begin{align*}
+	\chi_1 &= A_0 (r^2 - 2z_1^2) + C_0 z_1 (3r^2 - 2z_1^2) 
+	+ \left[ A_k^{(1)} I_0(\gamma_k v_1 r) + A_k^{(2)} K_0(\gamma_k v_1 r) \right]  
+	\\
+	&\qquad \times C_k \sin(\gamma_k v_1 z_1)+ \left[ T_k^{(1)} J_0(\alpha_k r) + T_k^{(2)} Y_0(\alpha_k r) \right] \tilde{S}_2(\alpha_k z_1) M_k, \notag \\
+	\chi_2 &= A_0 (r^2 - 2z_2^2) + C_0 z_2 (3r^2 - 2z_2^2) 
+	+ \left[ B_k^{(1)} I_0(\gamma_k v_2 r) + B_k^{(2)} K_0(\gamma_k v_2 r) \right]  
+	\\
+	&\qquad \times C_k \sin(\gamma_k v_2 z_2)+ \left[ T_k^{(1)} J_0(\alpha_k r) + T_k^{(2)} Y_0(\alpha_k r) \right] \tilde{S}_3(\alpha_k z_2) M_k. 
+\end{align*}
+The auxiliary functions used are:
+\[
+\begin{aligned}
+	\tilde{S}_2(x) &= \tilde{E}_k \sinh(x) + \tilde{F}_k \cosh(x), \\
+	\tilde{S}_3(x) &= \tilde{N}_k \sinh(x) + \cosh(x), \\
+	\tilde{S}_4(x) &= \tilde{E}_k \cosh(x) + \tilde{F}_k \sinh(x),
+\end{aligned}
+\]
+and \( \alpha_k, \gamma_k \) are the eigenvalues of the boundary value problem defined by \eqref{YaretskaEq4.1.1} –\eqref{YaretskaEq4.1.6}. The constants that appear in the general solution include
+$A_0$, $C_0$, $A_k{}^{(1)}$, $A_k{}^{(2)}$,
+$B_k{}^{(1)}$, $B_k{}^{(2)}$, $T_k{}^{(1)}$, $T_k{}^{(2)}$,
+$C_k$, $\tilde{E}_k$, $\tilde{F}_k$, $\tilde{N}_k$, and $\tilde{M}_k$.
+These quantities are determined from the boundary conditions described in \eqref{YaretskaEq4.1.1}–\eqref{YaretskaEq4.1.6}, while the values $M_k = \tilde{M}_k T_k{}^{(2)}$ are computed as part of the solution procedure.
+
+
+Applying the boundary conditions, we obtain the stress component:
+\begin{align}
+	Q_{3r}^{(i)} &= C_{44} \sum_{k=1}^\infty \bigg\{ 
+	\gamma_k^3 \bigg[
+	(1 + m_1) v_1 \tilde{A}_k \sin(v_1 \gamma_k z_1) \cdot \Phi_k^{(1)}(r) \notag \\
+	&\qquad + (1 + m_2) v_2 \tilde{B}_k \sin(v_2 \gamma_k z_2) \cdot \Phi_k^{(2)}(r)
+	\bigg] \notag \\
+	&\qquad - \frac{\alpha_k^3}{R_2^{(i)}} \Psi_k(r) 
+	\left( \frac{(1 + m_1) \tilde{S}_2(\alpha_k z_1)}{n_1} 
+	+ \frac{(1 + m_2) \tilde{S}_3(\alpha_k z_2)}{n_2} \right)
+	\bigg\} M_k, \label{YaretskaEq4.2.1}
+\end{align}
+
+\begin{align*}
+	\Phi_k^{(m)}(r) =& 
+	\frac{K_1\big(v_m \gamma_k R_1^{(i)}\big)}{I_1(v_m \gamma_k R_1^{(i)})} 
+	I_1\big(v_m \gamma_k r\big) - K_1(v_m \gamma_k r)
+	\qquad (m = 1, 2), \\
+	\Psi_k(r) = &
+	Y_1\big( \alpha_k r / R_2^{(i)} \big)
+	- \frac{ Y_1\big( \alpha_k R_1^{(i)} / R_2^{(i)} \big)}
+	{J_1\big( \alpha_k R_1^{(i)} / R_2^{(i)}} 
+	J_1\big( \alpha_k r / R_2^{(i)} \big).
+\end{align*}
+where \( \tilde{A}_k = A_k^{(2)} C_k \), \( \tilde{B}_k = B_k^{(2)} C_k \), and \( J_v(x), Y_v(x) \) are Bessel and Neumann functions, respectively. The constants \( C_{44}, l_1, l_2, m_1, m_2, s_0 \) are material parameters.
+
+The stress-strain state in the prestressed layer is determined using the linearized relations:
+\begin{align}
+	U_3 &= \theta_3 \left[
+	\int_0^\infty f(\xi) \xi^{-1} J_0(\xi \rho) \, d\xi 
+	- \int_0^\infty f(\xi) \xi^{-1} F(\xi h^{(i)}) J_0(\xi \rho) \, d\xi
+	\right], \notag \\
+	Q_{33} &= \theta_1 \int_0^\infty f(\xi) J_0(\xi \rho) \, d\xi, \label{YaretskaEq4.2.2}
+\end{align}
+where
+
+\begin{equation*} \label{YaretskaEqConstants}
+	\begin{array}{c}
+		\theta_1 = A_{44} l_1 (1 + m_1) \tilde{k},\quad 
+		\theta_3 = m_1 (s_1 - s_0) v_1^{-1/2},\quad  
+		\tilde{k} = s_0 - s_1, \\
+		h^{(i)} = \dfrac{h}{R_2^{(i)} - R_1^{(2)}},\quad  
+	    f(\xi) = \dfrac{\xi^3 B_2}{\big(R_2^{(i)} - R_1^{(i)}\big)^3 (1 - F(\xi))}, \\
+		s_0 = \dfrac{1 + m_2}{1 + m_1},\quad
+	    s_1 = \dfrac{m_1 - 1}{m_1},\quad 
+	    \rho = \dfrac{r - R_1^{(2)}}{R_2^{(i)} - R_1^{(2)}}, \quad 0 \le \rho \le 1.
+	\end{array}
+\end{equation*}
+
+The function \( f(\zeta) \) is unknown. For the theory of finite (large) deformations, the parameters \( q_i = \lambda_i^{-1} \), for \( i = 1,2,3 \); for the first variant of the small initial deformations theory, \( q_i = \lambda_i \); and for the second variant of the small initial deformations theory, \( q_i = 1 \), for \( i = 1,2,3 \).
+
+The form of the function \( F(\xi) \) is determined from the boundary conditions~\eqref{YaretskaEq4.1.1}–\eqref{YaretskaEq4.1.6}.
+
+From the solution for the punch \eqref{YaretskaEq4.2.1} and the additional boundary conditions \eqref{YaretskaEq4.1.1} and \eqref{YaretskaEq4.1.4}, the eigenvalues of the problem \eqref{YaretskaEq4.1.1}–\eqref{YaretskaEq4.1.6} for the case \( n_1 \ne n_2 \) are obtained as:
+\[
+\gamma_k = \frac{\pi k}{H^{(i)}}, \quad \alpha_k = \frac{\mu_k R_2^{(i)}}{R_1^{(i)}}, \;\; \text{where} \;\; J_1(\mu_k) Y_1\left(\frac{\mu_k R_2^{(i)}}{R_1^{(i)}}\right) - Y_1(\mu_k) J_1\left(\frac{\mu_k R_2^{(i)}}{R_1^{(i)}}\right) = 0.
+\]
+
+From the boundary condition \eqref{YaretskaEq4.2.1}, we assume \( C_0 = C_k = 0 \). From the first condition \eqref{YaretskaEq4.1.1}, the function \( f(\xi) \) in \eqref{YaretskaEq4.2.2} is determined from the triple integral equations:
+\begin{equation}
+	\begin{aligned}
+		\int_0^\infty f(\xi) J_0(\xi r)\, d\xi &= 0, && \quad r > R_2^{(i)}, \\
+		\int_0^\infty \frac{f(\xi)}{\xi} J_0(\xi r)\, d\xi &= g(r), && \quad R_1^{(i)} < r < R_2^{(i)}, \\
+		\int_0^\infty f(\xi) J_0(\xi r)\, d\xi &= 0, && \quad 0 < r < R_1^{(i)},
+	\end{aligned}
+	\label{YaretskaEq4.2.3}
+\end{equation}
+where
+\begin{align*}
+t_1 &= \frac{m_1 - m_2}{n_2 (1 + m_1)},
+\\
+g(r) &= 
+\begin{multlined}[t]
+\dfrac{\omega_2}{R_2^{(i)} - R_1^{(i)}} \bigg( \varepsilon^{(i)} + t_1 \sum_{k=1}^\infty \alpha_k^2 \tilde{K}(r) M_k 
+\\
++ \dfrac{R_2^{(i)} - R_1^{(i)}}{\omega_2} \int_0^\infty \frac{f(\xi)}{\xi} F(\xi h^{(i)}) J_1(\xi r)\, d\xi \bigg),
+\end{multlined}
+\\
+\tilde{K}(x) &= \frac{Y_1\big(\Omega(R_1^{(i)})\big)}{J_1\big(\Omega(R_1^{(i)})\big)} J_0(\Omega(x)) - Y_0(\Omega(x)), \quad \Omega(x) = \frac{\alpha_k x}{R_2^{(i)}}.
+\end{align*}
+
+As shown in \cite{YaretskaRef2}, the integral system \eqref{YaretskaEq4.2.3} can be reduced to a single equation.
+
+The function \( f(\xi) \) is sought in the form \cite{YaretskaRef20}:
+\begin{equation}
+	f(\xi) = R_2^{(i)} \xi \sum_{n=0}^\infty W_{2n} J_{2n}\left( \xi \frac{R_2^{(i)} - R_1^{(i)}}{2} \right) J_{2n}\left( \xi \frac{R_2^{(i)} + R_1^{(i)}}{2} \right),
+	\label{YaretskaEq4.2.5}
+\end{equation}
+where \( W_{2n} \) are unknown constants.
+
+Satisfying the second boundary condition \eqref{YaretskaEq4.1.1} gives:
+\begin{samepage}
+\begin{multline}
+	\sum_{n=0}^\infty W_{2n} P_{2n-0.5}^{0.5}(0) = \frac{\omega_2 \pi \sqrt{2\pi} (R_2^{(i)} + R_1^{(i)})}{8} \Bigg( \varepsilon^{(i)} 
+	\\
+	+ t_1 \sum_{k=1}^\infty \alpha_k^2 \left( \frac{Y_1\big(\alpha_k R_1^{(i)} / R_2^{(i)}\big)}{J_1\big(\alpha_k R_1^{(i)} / R_2^{(i)}\big)} - 1 \right) M_k \Bigg).
+	\label{YaretskaEq4.2.8}
+\end{multline}
+\end{samepage}
+
+The unknown function \( f(\xi)/\xi \) is computed using successive approximations \cite{YaretskaRef1}:
+\begin{equation*}
+	\begin{aligned}
+		\frac{f^{(0)}(\xi)}{\xi} &= \frac{\omega_2}{R_2^{(i)} - R_1^{(i)}} \Bigg\{ \varepsilon^{(i)} \left[ \big(R_2^{(i)}\big)^2 - \big(R_1^{(i)}\big)^2 \right] \\
+		&\quad + R_2^{(i)} t_1 \sum_{k=1}^\infty \alpha_k \Bigg[
+		\frac{Y_1\big( \alpha_k R_1^{(i)}/R_2^{(i)} \big)}{J_1\big( \alpha_k R_1^{(i)}/R_2^{(i)} \big)} 
+		\left( R_2^{(i)} J_1(\alpha_k) - R_1^{(i)} J_1\big( \alpha_k R_1^{(i)}/R_2^{(i)} \big) \right) \\
+		&\quad - R_2^{(i)} Y_1(\alpha_k) + R_1^{(i)} Y_1\big( \alpha_k R_1^{(i)}/R_2^{(i)} \big)
+		\Bigg] M_k \Bigg\}, \\
+		\frac{f^{(n)}(\xi)}{\xi} &= \frac{2}{\pi} \int_0^\infty \frac{f^{(n-1)}(t)}{t} F(th^{(i)})\, \tilde{\psi}(\xi t)\, dt
+	\end{aligned}
+\end{equation*}
+where
+\[
+\tilde{\psi}(\xi) = -\frac{\pi}{2\xi} \sum_{m=1}^{2} \left[ J_1(\xi R_m^{(i)}) H_0(\xi R_m^{(i)}) - J_0(\xi R_m^{(i)}) H_1(\xi R_m^{(i)}) \right] R_m^{(i)} (-1)^{m+1},
+\]
+and
+\[
+H_\alpha(x) = \frac{2(0.5x)^\alpha}{\sqrt{\pi}(\alpha + 0.5)} \int_0^1 (1 - t^2)^{\alpha - 0.5} \sin(xt)\, dt
+\]
+are Struve functions.
+
+Thus, the full solution is represented as:
+\[
+\frac{f(\xi)}{\xi} = \sum_{n=0}^\infty \frac{f^{(n)}(\xi)}{\xi}.
+\]
+
+To determine the constants \( M_i \), \( W_{2i} \) (\( i = 0,1,2,\dots \)) from \eqref{YaretskaEq4.2.1}–\eqref{YaretskaEq4.2.3}, we solve an infinite system of linear algebraic equations, including \eqref{YaretskaEq4.2.8}, by the reduction method.
+
+Finally, from the equilibrium condition \eqref{YaretskaEq4.1.5}, the relationship between the applied force \( P \) and the settlement is:
+\[
+P = -2\pi \theta_1 \omega_2 \varepsilon^{(i)} (R_2^{(i)} + R_1^{(i)}) \left[ J_0\left((R_2^{(i)})^2\right) - 2J_0(R_2^{(i)} R_1^{(i)}) + J_0\left((R_1^{(i)})^2\right) \right].
+\]
+
+After determining the constants \( M_i \), \( W_{2i} \), the displacements and stresses in both the annular punches and the prestressed elastic layer are computed using \eqref{YaretskaEq4.2.1}–\eqref{YaretskaEq4.2.2}. The complete solution is expressed in series form using the computed constants.
+
+It should be noted that the coefficients depend on the structure of the elastic potential as well as the geometrical parameters of the punches.
+
+\section{Numerical Results}
+
+In this study, the system of linear algebraic equations was solved numerically using the reduction (truncation) method. Calculations were performed for the Treloar elastic potential with the following parameters:
+\[
+\begin{array}{l}
+	R_{1}^{(1)} = R_{1}^{(2)} = 1, \quad R_{2}^{(1)} = R_{2}^{(2)} = 2, \quad H^{(1)} = H^{(2)} = 10, \quad \varepsilon = 10^{-3}, 
+	\\
+	 E = E^{(i)} = 8 \cdot 10^{-5} \ \text{MPa} \;\; (i = 1,2).
+\end{array}
+\]
+The stretch ratio coefficient was varied as $\lambda_1 = 0.8,\ 1.0,\ 1.2$. The computational algorithm was implemented in \texttt{Maple 15}.
+
+\begin{figure}[!h]
+	\sidecaption[b]
+	\includegraphics[width=0.5\textwidth]{40_Yaretska/YaretskaFig4}
+	\caption{Distribution of contact stresses in the elastic layer for various stretch ratio coefficients $\lambda_1$.}
+	\label{YareskaFig4}
+\end{figure}
+
+ As shown in Fig.~\ref{YareskaFig4}, both the magnitude and distribution of the contact stresses are influenced by the initial stress state of the bodies. The absolute values of the stresses attain their maximum near the edges of the annular punches. Furthermore, the stress peaks remain nearly equal across different values of $\lambda_1$, indicating a symmetric response in the contact region despite the varying prestrain levels.
+
+\section{Conclusions}
+
+The general conclusions for the considered problems are as follows:
+
+\begin{enumerate}
+	\item Solutions to the fundamental equations of the linearized theory of elasticity for annular bodies have been derived.
+	\item Solutions to the fundamental equations of the linearized theory of elasticity for an elastic layer and a half-space have been presented.
+	\item Solutions to contact problems have been proposed for:
+	\begin{enumerate}
+		\item the pressure of two pre-stressed half-spaces on an elastic annular cylinder with initial stresses;
+		\item the pressure of two elastic coaxial cylindrical punches on an elastic layer with initial stresses.
+	\end{enumerate}
+	These problems are essential for the analysis of foundations (e.g., soil bases) and slab structures with annular footings.
+	
+	\item The correctness of using the reduction (truncation) method for solving infinite algebraic systems has not been addressed in this chapter due to the complexity and bulkiness of the mathematical expressions for the coefficients of unknown quantities. However, it is proven in~\cite{YaretskaRef1} that the use of orthogonal polynomials leads to quasi-regular systems of linear algebraic equations.
+	
+	\item In the presented problems, it was assumed that the additional external load (relative to the initial state) induces perturbations in the stress-strain state of the pre-stressed bodies that are significantly smaller than the corresponding quantities of the initial state. Nevertheless, near regions with abrupt boundary condition changes, this assumption may not hold. This issue is discussed in detail in~\cite{YaretskaRef1, YaretskaRef20}.
+\end{enumerate}
+
+Thus, this chapter presents a study of contact interaction problems involving elastic pre-stressed annular cylinders in contact with elastic bodies (a layer and two half-spaces) also having initial stresses. Future research in deformable solid mechanics is expected to progress through the study of more complex problems, taking into account the influence of additional physical and mechanical factors such as friction, temperature, etc. Solving such problems will likely require the use of advanced mathematical methods and computational tools.
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter40}

@@ -1,0 +1,965 @@
+% !TeX root = BookN.tex
+
+\title{Contact With Adhesion and Sliding of Interface Crack Faces Under Complex Loading}
+
+\titlerunning{Contact With Adhesion and Sliding} 
+
+\author{Volodymyr Ostryk}
+
+\institute{%
+	Volodymyr Ostryk 
+	\at 
+	\AffAppliedPhysics
+	\\
+	\email{v.i.ostryk@gmail.com}
+}
+
+\graphicspath{{30_Ostryk/}}
+
+\maketitle
+
+\abstract{ The problem of the contact of the faces of an interface crack in a piecewise homogeneous elastic plane under the action of tensile stresses set at infinity and two concentrated compressive forces applied near the crack is considered. Frictional sliding of its faces occurs in two contact domains near the tips of the crack, and the third contact domain inside the crack is divided into zones of adhesion and slip. An analytical solution to the problem was found using the Wiener--Hopf method. The dimensions of the contact domains and the adhesion zone are determined. The contact stress distributions and shear stress intensity factor were obtained.}
+
+\section{Introduction}
+
+Partial contact of the faces of cracks or fissures in an elastic homogeneous plane has been studied by various authors. V.I.~Mossakovsky and P.A.~Zagubyzhenko, in their works \cite{Ostryk1, Ostryk2} considered the problem of compression of an elastic plane with a rectilinear crack of finite width under the condition of contact of the faces of the crack in its middle part both without \cite{Ostryk1} and with the friction forces \cite{Ostryk2}. The problems of smooth contact of the faces of a straight crack were solved analytically by O.~Eksogan \cite{Ostryk3}, O.L.~Bu and S.E.~Friz \cite{Ostryk4}, M.D.~Grylitsky and G.S.~Kit \cite{Ostryk5}. In \cite{Ostryk6}, friction and partial adhesion of the contacting faces of the crack were taken into account. Numerical solutions of the problems of smooth contact of the faces of a straight crack in a homogeneous plate under tension, compression, shear, and bending conditions were obtained in \cite{Ostryk7, Ostryk8, Ostryk9, Ostryk10, Ostryk11, Ostryk12, Ostryk13, Ostryk14, Ostryk15}. Contact problems for curved cracks are considered in \cite{Ostryk16, Ostryk17, Ostryk18, Ostryk19} without taking into account friction and in \cite{Ostryk20, Ostryk21} with taking into account friction and adhesion.
+
+Solutions to equilibrium problems of elastic bodies with cracks located at the interface of media made of different materials are characterized by a singular oscillation of stresses and an amplitude-limited oscillation of displacements in the vicinity of the crack tips \cite{Ostryk22}. Oscillatory solutions cannot be considered physically admissible since they indicate mutual penetration of the media near the crack tips.
+
+In the works of M. Comninou, reviewed in \cite{Ostryk23}, it was proposed to introduce contact domains of the crack faces near its tips to find correct solutions. In this case, the models of smooth and frictional contact were numerically investigated. Analytical solutions for an interface crack in a homogeneous stress field were obtained in \cite{Ostryk24, Ostryk25}. In works \cite{Ostryk26, Ostryk27, Ostryk28, Ostryk29, Ostryk30}, closed-form solutions were obtained for a crack with a single contact zone between dissimilar isotropic, orthotropic, and piezoelectric materials. In \cite{Ostryk31}, an analytical solution was found for a system of interface cracks in a field of concentrated forces and moments, and the case of a single crack was numerically analyzed, taking into account only one contact zone. The interaction of interface cracks with contact zones in isotropic and anisotropic bimaterials in the field of tension and shear was considered in \cite{Ostryk32,Ostryk33,Ostryk34}, and the corresponding periodic problems were considered in \cite{Ostryk35,Ostryk36,Ostryk37}. In \cite{Ostryk38,Ostryk39,Ostryk40,Ostryk41,Ostryk42,Ostryk43}, using smooth and frictional contact models, exact and asymptotically accurate solutions of problems for semi-infinite and finite interface cracks under the action of normal concentrated forces applied to the crack faces were obtained. In the papers \cite{Ostryk44, Ostryk45, Ostryk46}, the frictional contact of the faces of an interface crack in a field of shear and tensile or compressive stresses was studied, when the contact domain near one of the crack tips can occupy a significant part of the crack. Dynamic contact problems for an interface crack were studied in the works \cite{Ostryk47, Ostryk48, Ostryk49, Ostryk50, Ostryk51, Ostryk52, Ostryk53}. In all the mentioned studies, plane deformation problems for two rigidly connected heterogeneous half-planes with a rectilinear crack at the boundary were considered. The solution of the axisymmetric contact problem for a circular crack at the boundary of two heterogeneous half-spaces was obtained numerically in \cite{Ostryk54, Ostryk55} and analytically in \cite{Ostryk56,Ostryk57,Ostryk58}. Contact problems for a semi-infinite interface crack in an elastic strip were solved in \cite{Ostryk59, Ostryk60, Ostryk61, Ostryk62}. The contact of the faces of an interface curvilinear crack was considered in \cite{Ostryk63, Ostryk64, Ostryk65, Ostryk66, Ostryk67, Ostryk68, Ostryk69, Ostryk70}.
+
+Below, using the Wiener--Hopf method, the solution to the problem of contact with adhesion and sliding of the faces of an interface crack with the formation of contact domains both near the crack tips and in its middle is presented.
+
+\section{Problem Statement}
+
+A piecewise homogeneous plane is composed of two heterogeneous half-planes $y\ge 0$, $y\le 0$ ($-\infty <x<\infty $), whose shear moduli are $G_{1} $, $G_{2} $, and Poisson's ratios are $\nu _{1} $, $\nu _{2} $, respectively (Fig.~\ref{OstrykFig1}). The half-planes on parts $l\le x<\infty $, $-\infty <x\le -l$ of their common boundary $y=0$ are perfectly connected, and on the other part $-l<x<l$ of it the piecewise homogeneous plane has a crack. Tensile stresses $p_{\infty } $ are applied at infinity, and at points $x=0$, $y=\pm y_{0} $ there are two concentrated forces $P$ directed towards each other.
+
+\begin{figure}[t]
+\sidecaption
+\includegraphics[width=.5\textwidth]{30_Ostryk/Ostryk1.jpg}
+\caption{ Interface crack with contacting faces}\label{OstrykFig1}
+\end{figure}
+
+
+
+We assume that the crack is partially open at intervals $l_{2} <x<l_{1} $, $-l_{1} <x<-l_{2} $ ($0<l_{2} <l_{1} <l$), and at intervals $-l_{2} \le x\le l_{2} $, $l_{1} \le x<l$, $-l<x\le -l_{1} $ its faces are in contact. The contact domain $-l_{2} \le x\le l_{2} $ inside the crack faces due to the action of concentrated forces, and the other two contact domains $l_{1} \le x<l$, $-l<x\le -l_{1} $ near the crack tips are introduced according to the Comninou model \cite{Ostryk23}. We also assume that the lower half-plane is stiffer than the upper half-plane, i.e. $G_{2} (1-2\nu _{1} )>G_{1} (1-2\nu _{2} )$. Therefore, taking into account the friction forces according to Amonton's law, in the contact domains adjacent to the crack tips, we have a sliding of the upper face of the crack relative to the lower face in the direction towards its middle \cite{Ostryk23}. The contact domain $-l_{2} \le x\le l_{2} $ inside the crack under the influence of friction is divided into a zone of adhesion $-l_{3} \le x\le l_{3} $ in its middle and two zones of slippage $l_{3} <x\le l_{2} $, $-l_{2} \le x<-l_{3} $ ($0<l_{3} <l_{2} $) at the edges. We assume that in zones $l_{3} <x\le l_{2} $ and $-l_{2} \le x<-l_{3} $ the slip of the upper crack face relative to the lower face occurs in the direction of the crack tips. The lengths $2l_{2}$, $l-l_{1}$, and $2l_{3}$ of the contact domains and the adhesion zone are unknown in advance and must be determined.
+
+We write the boundary conditions of the problem in the form
+\begin{equation} \label{Ostryk_Eq_1_} 
+\begin{array}{l}
+	\sigma_{y}^{(1)} \Big|_{y=0} = \sigma_{y}^{(2)} \Big|_{y=0} ,\quad    
+	\tau _{xy}^{(1)} \Big|_{y=0} = \tau _{xy}^{(2)} \Big|_{y=0}   \quad (\left|x\right|<\infty ),
+	\\
+	u_{y}^{(1)} \Big|_{y=0} = u_{y}^{(2)} \Big|_{y=0} \quad (\left|x\right|\le l_{2} ,\; \left|x\right|\ge l_{1} ),  
+	\\
+	u_{x}^{(1)} \Big|_{y=0} = u_{x}^{(2)} \Big|_{y=0} \quad (\left|x\right|\le l_{3} ,\; \left|x\right|\ge l),  
+	\\
+	\tau _{xy}^{(1)} \Big|_{y=0} = \sign\left(x(x^{2} -l_{1}^{2} )\right)\mu _{0}  \sigma _{y}^{(1)} \Big|_{y=0}  \quad (l_{3} <\left|x\right|<l),  
+	\\ 
+	\sigma _{y}^{(1)} \Big|_{y=0} =0  \quad (l_{2} <\left|x\right|<l_{1} ),
+\end{array}
+\end{equation}  
+where $\mu _{0} $ is the friction coefficient. The sign before the coefficient $\mu _{0} $ in the last of the boundary conditions \eqref{Ostryk_Eq_1_} corresponds to the above-chosen direction of mutual sliding of the crack faces on each of the intervals $l_{1} <x<l$, $-l<x<l_{1} $, $l_{3} <x<l_{2} $, $-l_{2} <x<-l_{3} $. To make sure that this choice is correct, after solving the problem, it is necessary to check whether the followingcondition is fulfilled:
+\begin{equation} \label{Ostryk_Eq_2_} 
+\sign\left(x\left(x^{2} -l_{1}^{2} \right)\right) \left(u_{x}^{(1)} -u_{x}^{(2)} \right)\Big|_{y=0} <0 \quad (l_{1} <\left|x\right|<l,\;  l_{3} <\left|x\right|<l_{2} ).  
+\end{equation} 
+
+\section{System of Integral Equations}
+
+Let us introduce two unknown functions
+\begin{equation} \label{Ostryk_Eq_3_} 
+\begin{array}{rcl}
+	u_{1}(x)&=&\dfrac{d}{dx} \left(u_{y}^{(1)} -u_{y}^{(2)} \right)\Big|_{y=0}\quad   (l_{2} <\left|x\right|<l_{1} ),
+	\\
+	u_{1}(x)&=&0 \quad (\left|x\right|\le l_{2} ,\;  l_{1} \le \left|x\right|\le l),
+	\\
+	u_{2}(x)&=&\dfrac{d}{dx} \left(u_{x}^{(1)} -u_{x}^{(2)}\right)\Big|_{y=0}  \quad (l_{3} <\left|x\right|<l),\\
+	u_{2}(x)&=&0 \quad  (\left|x\right|\le l_{3} ).  
+\end{array}
+\end{equation} 
+
+Let us turn to bipolar coordinates $\alpha $, $\beta $, which are related to Cartesian coordinates by the relations
+\begin{equation} \label{Ostryk_Eq_4_} 
+x=l\dfrac{\sinh \alpha }{\cosh \alpha +\cos \beta } , \quad   y=l\dfrac{\sin \beta }{\cosh \alpha +\cos \beta }  
+\end{equation} 
+and have poles $\alpha =\pm \infty $ at points $x=\pm l$, $y=0$ changes in boundary conditions. The upper half-plane is given by the inequalities $-\infty <\alpha <\infty $, $0\le \beta \le \pi $; for the lower half-plane $-\infty <\alpha <\infty $, $-\pi \le \beta \le 0$. On the interval $-l<x<l$ of the axis $Ox$ coordinate $\beta =0$, and the coordinate $\alpha $ varies from $-\infty $ to $\infty $. Outside this interval ($\left|x\right|>l$, $y=0$) $\beta =\pi $ and $\beta =-\pi $ ($-\infty <\alpha <\infty $) for the boundary points of the upper and lower half-planes. If $x\to \pm \infty $ along the axis $Ox$, then $\alpha \to \pm 0$. On the boundary of half-planes
+
+\begin{equation} \label{Ostryk_Eq_5_} 
+\begin{array}{l}
+	x=l\tanh \dfrac{\alpha }{2} , \quad  \alpha =\ln \dfrac{l+x}{l-x} \quad   (-l<x<l,\; y=0;\;  -\infty <\alpha <\infty ,\; \beta =0),
+	\\
+	x=l\coth \dfrac{\alpha }{2} ,\quad   \alpha =\ln \dfrac{x+l}{x-l}   \quad (\left|x\right|>l,\; y=0;\;  -\infty <\alpha <\infty ,\; \beta =\pm \pi ).  
+\end{array}
+\end{equation} 
+
+The integral representation of the solution to the problem is found by the methodology of Ya.S. Uflyand \cite{Ostryk71}, using the Papkovich--Neiber representation and the integral Fourier transform in the coordinate $\alpha $. In particular, on the boundary of the half-planes, we obtain
+
+\begin{equation} \label{Ostryk_Eq_6_}
+\begin{array}{l}
+	\left(\sigma_y^{(1)} + i\tau_{xy}^{(1)} \right)\Big|_{\beta = 0} 
+	= \begin{multlined}[t]	
+		\left(\sigma_y^{0\,(1)} + i\tau_{xy}^{0\,(1)} \right)\Big|_{y=0} 
+		+ \frac{2G_1 G_2'}{i l \sqrt{2\pi}} (\cosh \alpha + 1)
+		\\[-1em]
+		\times \int\limits_{-\infty}^{\infty} 
+		\frac{\cosh \pi (\lambda - \theta)}{\sinh \pi \lambda} \,
+		\tilde{u}(\lambda) \, e^{-i\lambda \alpha} \, d\lambda,
+	\end{multlined}
+	\\
+	\left(\sigma_y^{(1)} + i\tau_{xy}^{(1)} \right)\Big|_{\beta = \pi} 
+	= \begin{multlined}[t]
+		\left(\sigma_y^{0\,(1)} + i\tau_{xy}^{0\,(1)} \right)\Big|_{y=0} 
+		+ \dfrac{2i G_1 G_2'}{l \sqrt{2\pi}} (\cosh \alpha - 1)
+		\\[-1em]
+		\times \int\limits_{-\infty}^{\infty} 
+		\frac{\cosh \pi \theta}{\sinh \pi \lambda} \,
+		\tilde{u}(\lambda) \, e^{-i\lambda \alpha} \, d\lambda,
+	\end{multlined}
+	\\[1ex]
+	\sigma_y^{0\,(1)}\Big|_{y=0} = p_\infty 
+	- \dfrac{P}{\pi} \dfrac{y_0}{x^2 + y_0^2} 
+	\left(1 + G^+ \dfrac{y_0^2 - x^2}{x^2 + y_0^2} \right), 
+	\\[0.5ex]
+	\tau_{xy}^{0\,(1)}\Big|_{y=0} = \dfrac{2P}{\pi} \dfrac{y_0^2 G^- x}{(x^2 + y_0^2)^2},
+\end{array}
+\end{equation}
+where
+
+\[
+\begin{aligned}
+\tilde{u}(\lambda) &= \tilde{u}_1(\lambda) + i \tilde{u}_2(\lambda), 
+\\
+\tilde{u}_j(\lambda) &= 
+\dfrac{l}{\sqrt{2\pi}}\displaystyle \int\limits_{-\infty}^{\infty} 
+\dfrac{u_j(l \tanh (\tau / 2))}{\cosh \tau + 1} \,
+\mathrm{e}^{i \lambda \tau} \, d\tau \quad (j = 1, 2),
+\\
+G_2' &= \dfrac{G_2}{\sqrt{G_3 G_4}}, \quad 
+\theta = \dfrac{1}{2\pi} \ln \dfrac{G_3}{G_4},\quad
+G^{\pm} = \dfrac{G_2}{G_3} \pm \dfrac{G_1}{G_4},
+\\
+G_3 &= G_1 + G_2 (3 - 4\nu_1), \quad 
+G_4 = G_1 (3 - 4\nu_2) + G_2.
+\end{aligned}
+\]
+
+The solution representation \eqref{Ostryk_Eq_6_} ensures the fulfillment of the boundary conditions \eqref{Ostryk_Eq_1_}, except for the last two of them.
+
+Let us do the replacements
+\begin{equation} \label{Ostryk_Eq_7_}
+\begin{array}{c}
+	\tau =\alpha _{3} +\eta , \quad    \alpha =\alpha _{3} +\xi , \quad   l_{m} =l\tanh ({\alpha _{m}/2} ) \quad  (m=1,2,3),
+	\\
+	a=\alpha _{2} -\alpha _{3} , \quad    b=\alpha _{1} -\alpha _{3} ,  \quad  c=2\alpha _{3}  
+\end{array}
+\end{equation} 
+and move on to the new unknown functions
+\begin{equation} \label{Ostryk_Eq_8_} 
+\varphi _{j} (\eta )=\dfrac{u_{j} (l\tanh ({(\alpha _{3} +\eta )\mathord{\left/ {\vphantom {(\alpha _{3} +\eta ) 2}} \right. \kern-\nulldelimiterspace} 2} ))}{\cosh (\alpha _{3} +\eta )+1}  \quad (j=1,2).  
+\end{equation} 
+
+Having satisfied the last two boundary conditions \eqref{Ostryk_Eq_1_} with representation \eqref{Ostryk_Eq_6_}, we obtain a system of integral equations
+\begin{equation}\label{Ostryk_Eq_9_} 
+\begin{array}{l}
+	\displaystyle
+	L_{1}(\xi) \equiv 
+	\begin{multlined}[t]
+		\left( \int\limits_{a}^{b} + \int\limits_{-b-c}^{-a-c} \;\right) 
+		k_{11}(\xi - \eta) \, \varphi_{1}(\eta) \, d\eta 
+		+ \varphi_{2}(\xi) = f_{1}(\xi) 
+		\\[-1em]
+		(a < \xi < b),
+	\end{multlined}
+	\\
+	L_{2}(\xi) \equiv 
+	\begin{multlined}[t]
+		\left( \int\limits_{a}^{b} + \int\limits_{-b-c}^{-a-c} \;\right) 
+		k_{21}(\xi - \eta)  \varphi_{1}(\eta) \, d\eta 
+		\\[-1em]
+		+ \left( \int\limits_{0}^{\infty} + \int\limits_{-\infty}^{-c} \;\right)
+		k_{22}(\xi - \eta)  \varphi_{2}(\eta) d\eta = f_{2}(\xi) \quad (a < \xi < \infty),
+	\end{multlined}
+	\\
+	L_{3}(\xi) \equiv 
+	\begin{multlined}[t]
+		\left( \int\limits_{a}^{b} + \int\limits_{-b-c}^{-a-c} \;\right) 
+		k_{31}(\xi - \eta) \varphi_{1}(\eta)  d\eta 
+		\\[-1em]
+		+ \left( \int\limits_{0}^{\infty} + \int\limits_{-\infty}^{-c} \;\right)
+		k_{32}(\xi - \eta)  \varphi_{2}(\eta)  d\eta = f_{3}(\xi)
+		\quad
+		(0 < \xi < b).
+	\end{multlined}
+\end{array}
+\end{equation}
+the kernels and right-hand sides of which have the form
+\begin{equation} \label{Ostryk_Eq_10_} 
+k_{mj} (\xi -\eta )=\dfrac{1}{2\pi } \int _{-\infty }^{\infty }K_{mj} (\lambda )e^{-i\lambda (\xi -\eta )} d\lambda  \quad  (m=1,2,3;\;  j=1,2),
+\end{equation}  
+where
+\[
+\begin{aligned}
+K_{11} (\lambda )&=i\dfrac{\coth \pi \lambda }{\tanh \pi \theta } , \quad  K_{21} (\lambda )=D_{1} \dfrac{\sinh \pi (\lambda +i\rho )}{\sinh \pi \lambda } ,  \quad K_{22} (\lambda )=D\dfrac{\cosh \pi (\lambda +i\gamma )}{i\sinh \pi \lambda } ,
+\\
+K_{31} (\lambda )&=D_{1} \dfrac{\sinh \pi (\lambda -i\rho )}{\sinh \pi \lambda } ,  \quad  K_{32} (\lambda )=D\dfrac{\cosh \pi (\lambda -i\gamma )}{i\sinh \pi \lambda } ,
+\\
+D&=\sqrt{\cosh ^{2} \pi \theta +\mu _{0}^{2} \sinh ^{2} \pi \theta } ,  \quad  D_{1} =\sqrt{\sinh ^{2} \pi \theta +\mu _{0}^{2} \cosh ^{2} \pi \theta } ,
+\\
+\gamma &=\dfrac{1}{\pi } \arctan \left(\mu _{0} \tanh \pi \theta \right),  \quad  \rho =\dfrac{1}{\pi } \arctan \left(\mu _{0} \coth \pi \theta \right),
+\\
+f_{1} (\xi )&=\dfrac{f(\xi )}{\sinh \pi \theta } \left. \sigma _{y}^{0\, (1)} \right|_{y=0} ,  \quad f_{2,3} (\xi )=-f(\xi )\left. \left(\tau _{xy}^{0\, (1)} \mp \mu _{0} \sigma _{y}^{0\, (1)} \right)\right|_{y=0} ,
+\\
+f(\xi )&=\dfrac{1}{q(\xi )} ,   \quad q(\xi )=2G_{1} G'_{2} [\cosh (\alpha _{3} +\xi )+1].  
+\end{aligned}
+\]
+
+For the right-hand sides of the system of equations \eqref{Ostryk_Eq_9_}, the following expansions are valid
+\begin{equation} \label{Ostryk_Eq_11_} 
+f_{m} (\xi )=\sum _{k=1}^{\infty }f_{mk} \mathrm{e}^{-k\xi }  \quad   (m=1,2,3),
+\end{equation}  
+where
+\[
+\begin{aligned}
+f_{1k} &=\dfrac{e^{-kl_{3} } }{G_{1} G'_{2} \sinh \pi \theta } \left\{(-1)^{k+1} p_{\infty } k+\dfrac{P}{\pi l} \Re \left[\left(\dfrac{i}{2} +\dfrac{G^{+} ly_{0} }{l^{2} +y_{0}^{2} } k\right)\bigg(\dfrac{l+iy_{0} }{l-iy_{0} } \bigg)^{k} \right]\right\},
+\\
+f_{mk} &=
+\begin{multlined}[t]
+	\Bigg\{(-1)^{k+m+1} \mu _{0} p_{\infty } k+\dfrac{P}{\pi l} \Re \Bigg[\Bigg((-1)^{m} \dfrac{i\mu _{0} }{2} 
+	\\[-1em]
+	+\dfrac{ly_{0} }{l^{2} +y_{0}^{2} } \big(iG^{-} +(-1)^{m} \mu _{0} G^{+} \big)k\Bigg)\bigg(\dfrac{l+iy_{0} }{l-iy_{0} } \bigg)^{k} \Bigg]\Bigg\}  \quad (m=2,3).  
+\end{multlined}
+\end{aligned}
+\]
+
+\section{Solving a System of Integral Equations}
+
+The system of equations \eqref{Ostryk_Eq_9_} using the generalized scheme \cite{Ostryk72} of the Wiener--Hopf method \cite{Ostryk73} will be reduced to an infinite system of algebraic equations.
+
+Let us spread equation \eqref{Ostryk_Eq_9_} over the entire number axis, placing $\varphi _{1} (\xi )=0$ ($-\infty <\xi \le -b-c$, $-a-c\le \xi \le a$, $b\le \xi <\infty $), $\varphi _{2} (\xi )=0$ ($-c\le \xi \le 0$), and apply the integral Fourier transform to them. Let us introduce the unknown functions of the complex variable:
+
+\begin{equation*}
+\begin{array}{ll}
+	\Phi _{11}^{+} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits_{0}^{b-a}\varphi _{1} (\xi +a)e^{iz\xi } d\xi, & \Phi _{11}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{a-b}^{0}\varphi _{1} (\xi +b)e^{iz\xi } d\xi  ,
+	\\
+	\Phi _{12}^{+} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{0}^{b-a}\varphi _{1} (\xi -b-c)e^{iz\xi } d\xi, & \Phi _{12}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{a-b}^{0}\varphi _{1} (\xi -a-c)e^{iz\xi } d\xi  ,
+	\\
+	\Phi _{2}^{+} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits_{0}^{\infty }\varphi _{2} (\xi )e^{iz\xi } d\xi, & \Phi _{2}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{-\infty }^{0}\varphi _{2} (\xi -c)e^{iz\xi } d\xi  ,
+\end{array}
+\end{equation*}
+
+\begin{equation} \label{Ostryk_Eq_12_} 
+\begin{array}{ll}
+	\Psi _{1}^{+} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{0}^{\infty }L_{1} (\xi +b)e^{iz\xi } d\xi  ,  &  \Psi _{1}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{-\infty }^{0}L_{1} (\xi +a)e^{iz\xi } d\xi  ,
+	\\
+	\Psi _{2}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{-\infty }^{0}L_{2} (\xi +a)e^{iz\xi } d\xi  ,  & 
+	\\
+	\Psi _{3}^{+} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{0}^{\infty }L_{3} (\xi +b)e^{iz\xi } d\xi  , &
+	\Psi _{3}^{-} (z)={\tfrac{1}{\sqrt{2\pi } }} \int\limits _{-\infty }^{0}L_{3} (\xi )e^{iz\xi } d\xi  .  
+\end{array}
+\end{equation} 
+
+The first four functions from \eqref{Ostryk_Eq_12_} are integers, and all others are analytic in the half-plane $\Im z>c^{+} $ ($c^{+} <0$) if they have a superscript ``+'', or in the half-plane $\Im z<c^{-} $ ($c^{-} >0$) if their superscript is ``--''. Using the convolution theorem, denoting
+\begin{equation} \label{Ostryk_Eq_13_} 
+\Phi _{1}^{+} (z)=e^{iza} \Phi _{11}^{+} (z)+e^{-iz(b+c)} \Phi _{12}^{+} (z), \quad   \Phi _{2} (z)=\Phi _{2}^{+} (z)+e^{-izc} \Phi _{2}^{-} (z),  
+\end{equation} 
+we obtain a system of functional equations
+\begin{equation} \label{Ostryk_Eq_14_} 
+\begin{aligned}
+	K_{11} (z)\Phi _{1}^{+} (z)+\Phi _{2} (z)-e^{izb} \Psi _{1}^{+} (z)-e^{iza} \Psi _{1}^{-} (z)&=F_{1} (z),
+	\\
+	K_{21} (z)\Phi _{1}^{+} (z)+K_{22} (z)\Phi _{2} (z)-e^{iza} \Psi _{2}^{-} (z)&=F_{2} (z),
+	\\
+	K_{31} (z)\Phi _{1}^{+} (z)+K_{32} (z)\Phi _{2} (z)-e^{izb} \Psi _{3}^{+} (z)-\Psi _{3}^{-} (z)&=F_{3} (z),
+	\\
+	\Phi _{11}^{+} (z)=e^{iz(b-a)} \Phi _{11}^{-} (z),  \quad  \Phi _{12}^{+} (z)=e^{iz(b-a)} \Phi _{12}^{-} (z)  \quad & (c^{+} <\Im z<c^{-} )  
+\end{aligned}
+\end{equation} 
+with right-hand sides
+
+\begin{equation} \label{Ostryk_Eq_15_} 
+\begin{aligned}
+	F_{1} (z)&=e^{iza} F_{11}^{+} (z)+e^{izb} F_{12}^{+} (z), 
+	\\
+	F_{2} (z)&=e^{iza} F_{2}^{+} (z), 
+	\\
+	F_{3} (z)&=F_{31}^{+} (z)+e^{izb} F_{32}^{+} (z),
+\end{aligned}
+\end{equation} 
+where
+\[
+\begin{array}{ll}
+F_{11}^{+} (z)=\frac{1}{\sqrt{2\pi } } \displaystyle\sum\limits_{k=0}^{\infty }\frac{f_{1k} }{k-iz} e^{-ka}  ,  &  F_{12}^{+} (z)=-\frac{1}{\sqrt{2\pi } } \displaystyle\sum\limits_{k=0}^{\infty }\frac{f_{1k} }{k-iz} e^{-kb}  ,
+\\
+F_{2}^{+} (z)=\frac{1}{\sqrt{2\pi } } \displaystyle\sum\limits_{k=0}^{\infty }\frac{f_{2k} }{k-iz} e^{-ka}  ,  &  F_{31}^{+} (z)=\frac{1}{\sqrt{2\pi } } \displaystyle\sum\limits_{k=0}^{\infty }\frac{f_{3k} }{k-iz}  ,
+\\
+F_{32}^{+} (z)=-\frac{1}{\sqrt{2\pi } } \displaystyle\sum\limits_{k=0}^{\infty }\frac{f_{3k} }{k-iz} e^{-kb}  .  
+\end{array}
+\]
+
+From the symmetry conditions
+\begin{equation} \label{Ostryk_Eq_16_} 
+\varphi _{1} (-\xi )\equiv -\varphi _{1} (\xi -c),    \varphi _{2} (-\xi )\equiv \varphi _{2} (\xi -c) 
+\end{equation} 
+the identities follow
+\begin{equation} \label{Ostryk_Eq_17_} 
+\Phi _{12}^{+} (z)\equiv -\Phi _{11}^{-} (-z),  \quad  \Phi _{12}^{-} (z)\equiv -\Phi _{11}^{+} (-z),  \quad  \Phi _{2}^{-} (z)\equiv \Phi _{2}^{+} (-z).  
+\end{equation} 
+
+We write the system of equations \eqref{Ostryk_Eq_14_} in the form
+\begin{equation} \label{Ostryk_Eq_18_}
+\begin{aligned}
+	\begin{multlined}[b]
+		K_{32}(z) \Phi_2(z) + K_{31}(z)\left[ e^{i z a} \Phi_{11}^{+}(z) + e^{-i z(a + c)} \Phi_{12}^{-}(z) \right] 
+		\\
+		- e^{i z b} \Psi_3^{+}(z) - \Psi_3^{-}(z) 
+	\end{multlined}
+	&= F_3(z),
+	\\
+	\begin{multlined}[b]
+		\tilde{K}(z) \Phi_1^{+}(z) - e^{i z b} \Psi_1^{+}(z) - e^{i z a} \Psi_1^{-}(z) 
+		\\
+		+ \dfrac{1}{K_{32}(z)}\left[ e^{i z b} \Psi_3^{+}(z) - \Psi_3^{-}(z) + F_3(z) \right] 
+	\end{multlined}
+	&= F_1(z),
+	\\
+	\begin{multlined}[b]
+		K(z)\left[ \Phi_{11}^{-}(z) + e^{-i z(a + b + c)} \Phi_{12}^{-}(z) \right] - \Psi_1^{+}(z)
+		\\
+		- e^{i z(a - b)} \Psi_1^{-}(z)+ \dfrac{e^{i z(a - b)}}{K_{22}(z)} \left[ \Psi_2^{-}(z) + F_2^{+}(z) \right] 
+	\end{multlined}
+	&=e^{-i z b} F_1(z),
+	\\
+	\begin{multlined}[b]
+		\widehat{K}(z)\left[ \Phi_{11}^{+}(z) + e^{-i z(2a + c)} \Phi_{12}^{-}(z) \right] 
+		\\
+		+ e^{-i z a} \dfrac{K_{22}(z)}{K_{32}(z)} \left[ e^{i z b} \Psi_3^{+}(z) + \Psi_3^{-}(z) + F_3(z) \right]- \Psi_2^{-}(z) 
+	\end{multlined}
+	&= F_2^{+}(z),
+	\\
+	\begin{multlined}[b]
+		\breve{K}(z)\left[ \Phi_{11}^{-}(z) + e^{-i z(a + b + c)} \Phi_{12}^{-}(z) \right] 	- e^{i z(a - b)}\dfrac{K_{32}(z)}{K_{22}(z)}
+		\\
+		\times \left[ \Psi_2^{-}(z) + F_2^{+}(z) \right]+ \Psi_3^{+}(z) + e^{-i z b} \left[ \Psi_3^{-}(z) + F_3(z) \right] 
+	\end{multlined}
+	&= 0
+\end{aligned}
+\end{equation}
+($c^{+} <\Im z<c^{-} $). Here,
+\begin{equation} \label{Ostryk_Eq_19_} 
+\begin{aligned}
+	\tilde{K}(z)&=K_{11} (z)-\dfrac{K_{31} (z)}{K_{32} (z)} =\dfrac{i}{D\sinh \pi \theta } \dfrac{\cosh \pi (z-\theta )\cosh \pi (z+\theta )}{\sinh \pi z\cosh \pi (z-i\gamma )} ,
+	\\
+	\hat{K}(z)&=K_{21} (z)-\dfrac{K_{31} (z)K_{22} (z)}{K_{32} (z)} =2\mu _{0} \sinh \pi \theta \cdot \tilde{K}(z),  
+	\\
+	K(z)&=K_{11} (z)-\dfrac{K_{21} (z)}{K_{22} (z)} =-\tilde{K}(-z),  
+	\\
+	\breve{K}(z)&=\hat{K}(z)\dfrac{K_{32} (z)}{K_{22} (z)} =2\mu _{0} \sinh \pi \theta \cdot K(z).
+\end{aligned}
+\end{equation} 
+
+Factoring the coefficients $K_{32} (z)$, $\tilde{K}(z)$, $K(z)$, $\hat{K}(z)$, $\breve{K}(z)$:
+
+\begin{equation} \label{Ostryk_Eq_20_} 
+\begin{aligned}
+	zK_{32} (z)&=K_{32}^{+} (z)K_{32}^{-} (z),  &
+	\\
+	z\tilde{K}(z)&=\tilde{K}^{+} (z)\tilde{K}^{-}
+	(z), &	zK(z)=K^{+} (z)K^{-} (z), 
+	\\
+	z\hat{K}(z)&=\hat{K}^{+} (z)\hat{K}^{-} (z), &    
+	z\breve{K}(z)=\breve{K}^{+} (z)\breve{K}^{-} (z),
+\end{aligned}
+\end{equation}
+where
+
+\[
+\begin{aligned}
+K_{32}^{+} (z) &= -iD\dfrac{\Gamma (1-iz)}{\Gamma (1/2 -iz-\gamma )} ,\quad    K_{32}^{-} (z)=\dfrac{\Gamma (1+iz)}{\Gamma (1/2 +iz+\gamma )} ,
+\\
+\left\{\begin{array}{l} {\tilde{K}^{+} (z)} \\ {K^{+} (z)} \end{array}\right\}&=
+\begin{multlined}[t]
+	\dfrac{1}{2\mu _{0} \sinh \pi \theta } \left\{\begin{array}{l} {\hat{K}^{+} (z)} \\ {\breve{K}^{+} (z)} \end{array}\right\}
+	\\
+	=\dfrac{i}{D\sinh \pi \theta } \dfrac{\Gamma (1-iz)\Gamma (1/2 -iz\mp \gamma )}{\Gamma (1/2 -iz+i\theta )\Gamma (1/2 -iz-i\theta )} , 
+\end{multlined}
+\\
+\left\{\begin{array}{l} {\tilde{K}^{-} (z)} \\ {K^{-} (z)} \end{array}\right\}&=\left\{\begin{array}{l} {\hat{K}^{-} (z)} \\ {\breve{K}^{-} (z)} \end{array}\right\}=\dfrac{\Gamma (1+iz)\Gamma (1/2 +iz\pm \gamma )}{\Gamma (1/2 +iz+i\theta )\Gamma (1/2 +iz-i\theta )} . 
+\end{aligned} 
+\] 
+
+Here, factorization factors with a superscript ``+'' are analytic and nonzero in the half-plane $\Im z>c^{+} $, and factors with a superscript ``--'' are so in the half-plane $\Im z<c^{-} $.
+
+Taking into account \eqref{Ostryk_Eq_20_}, the system of equations \eqref{Ostryk_Eq_18_} takes the form
+
+\begin{equation} \label{Ostryk_Eq_21_} 
+\begin{aligned}
+	\begin{multlined}[b]
+		K_{32}^{+} (z)\Phi _{2} (z)+\dfrac{zK_{31} (z)}{K_{32}^{-} (z)} \left[e^{iza} \Phi _{11}^{+} (z)+e^{-iz(a+c)} \Phi _{12}^{-} (z)\right]
+		\\
+		-\dfrac{ze^{izb} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]}{K_{32}^{-} (z)} -\dfrac{z\Psi _{3}^{-} (z)}{K_{32}^{-} (z)} 
+	\end{multlined}  &= \dfrac{zF_{31}^{+} (z)}{K_{32}^{-} (z)} ,
+	\\ 
+	\begin{multlined}[b]
+		\tilde{K}^{+} (z)\left[\Phi _{11}^{+} (z)+e^{-iz(2a+c)} \Phi _{12}^{-} (z)\right]
+		\\
+		+\dfrac{ze^{iz(b-a)} }{\tilde{K}^{-} (z)} \Bigg\{ \dfrac{\Psi _{3}^{+} (z)+F_{32}^{+} (z)+e^{-izb} \left[\Psi _{3}^{-} (z)+F_{31}^{+} (z)\right] }{K_{32} (z)}  
+		\\
+		-\Psi _{1}^{+} (z)-F_{12}^{+} (z)\Bigg\} -\dfrac{z\Psi _{1}^{-} (z)}{\tilde{K}^{-} (z)}
+	\end{multlined} &= \dfrac{zF_{11}^{+} (z)}{\tilde{K}^{-} (z)} ,
+	\\
+	\begin{multlined}[b]
+		K^{-} (z)\left[\Phi _{11}^{-} (z)+e^{-iz(a+b+c)} \Phi _{12}^{-} (z)\right]-\dfrac{ze^{iz(a-b)} }{K^{+} (z)} \Bigg\{\Psi _{1}^{-} (z)
+		\\
+		+F_{11}^{+} (z) -\dfrac{\Psi _{2}^{-} (z)+F_{2}^{+} (z)}{K_{22} (z)} \Bigg\}-\dfrac{z\left[\Psi _{1}^{+} (z)+F_{12}^{+} (z)\right] }{K^{+} (z)} 
+	\end{multlined}&=0,
+	\\
+	\begin{multlined}[b]
+		\hat{K}^{+} (z)\left[\Phi _{11}^{+} (z)+e^{-iz(2a+c)} \Phi _{12}^{-} (z)\right]+\dfrac{z}{\hat{K}^{-} (z)} \dfrac{K_{22} (z)}{K_{32} (z)} 
+		\\
+		\times\Big\{e^{iz(b-a)} \big[\Psi _{3}^{+} (z) +F_{32}^{+} (z)\big]
+		\\
+		+e^{-iza} \left[\Psi _{3}^{-} (z)+F_{31}^{+} (z)\right]\Big\}-\dfrac{z\Psi _{2}^{-} (z)}{\hat{K}^{-} (z)} 
+	\end{multlined} &=\dfrac{zF_{2}^{+} (z)}{\hat{K}^{-} (z)} ,
+	\\ 
+	\begin{multlined}[b]
+		\breve{K}^{-} (z)\left[\Phi _{11}^{-} (z)+e^{-iz(a+b+c)} \Phi _{12}^{-} (z)\right]+\dfrac{z}{\breve{K}^{+} (z)}
+		\\
+		\times\bigg\{e^{-izb} \left[\Psi _{3}^{-} (z)+F_{31}^{+} (z)\right] -e^{iz(a-b)} \dfrac{K_{32} (z)}{K_{22} (z)} 
+		\\
+		\times\left[\Psi _{2}^{-} (z)+F_{2}^{+} (z)\right]\bigg\}+\dfrac{z}{\breve{K}^{+} (z)} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]
+	\end{multlined} &=0 
+\end{aligned}
+\end{equation}
+($c^{+} <\Im z<c^{-}$).  
+
+
+The individual components of the system of equations \eqref{Ostryk_Eq_21_}, which are not analytic functions in half-planes $\Im z>c^{+} $, $\Im z<c^{-} $, are represented as differences of functions analytic in these half-planes:
+
+\begin{equation}\label{Ostryk_Eq_22_} 
+\begin{aligned}
+	\dfrac{z}{K_{32}^{-} (z)} \left\{e^{iza} K_{31} (z)\Phi _{11}^{+} (z)-e^{izb} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]\right\}&=\chi _{11}^{+} (z)-\chi _{11}^{-} (z),
+	\\
+	e^{-izc} K_{32}^{+} (z)\Phi _{2}^{-} (z)+e^{-iz(a+c)} \dfrac{zK_{31} (z)}{K_{32}^{-} (z)} \Phi _{12}^{-} (z)&=\chi _{12}^{+} (z)-\chi _{12}^{-} (z),
+	\\
+	\begin{multlined}[b]
+		\dfrac{ze^{iz(b-a)} }{\tilde{K}^{-} (z)} \bigg\{\dfrac{1}{K_{32} (z)} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]
+		\\
+		-\Psi _{1}^{+} (z)-F_{12}^{+} (z)\bigg\}
+	\end{multlined}&=\chi _{21}^{+} (z)-\chi _{21}^{-} (z),
+	\\
+	\begin{multlined}[b]
+		e^{-iz(2a+c)} \tilde{K}^{+} (z)\Phi _{12}^{-} (z)
+		\\
+		+\dfrac{ze^{-iza} }{\tilde{K}^{-} (z)K_{32} (z)} \left[\Psi _{3}^{-} (z)+F_{31}^{+} (z)\right]
+	\end{multlined}&=\chi _{22}^{+} (z)-\chi _{22}^{-} (z),
+	\\
+	\begin{multlined}[b]
+		\dfrac{ze^{iz(a-b)} }{K^{+} (z)} \bigg\{\Psi _{1}^{-} (z)+F_{11}^{+} (z)
+		\\
+		-\dfrac{1}{K_{22} (z)} \left[\Psi _{2}^{-} (z)+F_{2}^{+} (z)\right]\bigg\}
+	\end{multlined}&=\chi _{3}^{+} (z)-\chi _{3}^{-} (z),
+	\\
+	\dfrac{ze^{iz(b-a)} }{\hat{K}^{-} (z)} \dfrac{K_{22} (z)}{K_{32} (z)} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]&=\chi _{41}^{+} (z)-\chi _{41}^{-} (z),
+	\\
+	\begin{multlined}[b]
+		e^{-iz(2a+c)} \hat{K}^{+} (z)\Phi _{12}^{-} (z)
+		\\
+		+\dfrac{ze^{-iza} }{\hat{K}^{-} (z)} \dfrac{K_{22} (z)}{K_{32} (z)} \left[\Psi _{3}^{-} (z)+F_{31}^{+} (z)\right]
+	\end{multlined}&=\chi _{42}^{+} (z)-\chi _{42}^{-} (z),
+	\\
+	\begin{multlined}[b]
+		\dfrac{ze^{-izb} }{\breve{K}^{+} (z)} \bigg\{e^{iza} \dfrac{K_{32} (z)}{K_{22} (z)} \left[\Psi _{2}^{-} (z)+F_{2}^{+} (z)\right]
+		\\
+		-\Psi _{3}^{-} (z)-F_{31}^{+} (z)\bigg\}\end{multlined}&=\chi _{5}^{+} (z)-\chi _{5}^{-} (z),
+	\\
+	\dfrac{zF_{31}^{+} (z)}{K_{32}^{-} (z)} = f_{1}^{+} (z)-f_{1}^{-} (z),
+	\quad
+	\dfrac{zF_{11}^{+} (z)}{\tilde{K}^{-} (z)} &= f_{2}^{+} (z)-f_{2}^{-} (z), 
+	\\
+	\dfrac{zF_{2}^{+} (z)}{\hat{K}^{-} (z)} &= f_{4}^{+} (z)-f_{4}^{-} (z).
+\end{aligned}
+\end{equation}
+
+
+These functions are found in the form of corresponding Cauchy-type integrals \cite{Ostryk73}. Expanding the integrals into series according to the theory of residues, we obtain
+
+\begin{equation}\label{Ostryk_Eq_23_} 
+\begin{aligned}
+	\chi_{11}^{-}(z)&=\displaystyle\frac{1}{\pi i}\sum_{k=0}^{\infty}\frac{\alpha_{1k}z_{1k}+\alpha_{7k}z_{7k}}{\gamma_{k}^{+}+iz},\\
+	\chi_{12}^{+}(z)&=\displaystyle\frac{1}{\pi i}\sum_{k=0}^{\infty}\frac{\alpha_{2k}(z_{2k}-\mu_{0}z_{3k}e^{-(k+1)a})}{k+1-iz},\\
+	\chi_{21}^{-}(z)&=\displaystyle\frac{\cos\pi\gamma}{2\pi i}\sum_{k=0}^{\infty}\Bigl(\frac{\alpha_{4k}z_{4k}+\alpha_{8k}z_{8k}}{\theta_{k}^{-}+iz}+\frac{\overline{\alpha}_{4k}\,\overline{z}_{4k}+\overline{\alpha}_{8k}\,\overline{z}_{8k}}{\theta_{k}^{+}+iz}\Bigr),\\
+	\chi_{22}^{+}(z)&=\displaystyle\frac{\cos\pi\gamma}{\pi i}\sum_{k=0}^{\infty}\Bigl(\frac{\alpha_{3k}z_{3k}}{k+1-iz}+\frac{\alpha_{5k}z_{5k}}{\gamma_{k}^{-}-iz}\Bigr),\\
+	\chi_{3}^{+}(z)&=\displaystyle -\frac{\cosh\pi\theta}{2\pi}\sum_{k=0}^{\infty}\Bigl(\frac{\alpha_{6k}z_{6k}}{\theta_{k}^{+}-iz}+\frac{\overline{\alpha}_{6k}\,\overline{z}_{6k}}{\theta_{k}^{-}-iz}\Bigr),\\
+	\chi_{41}^{-}(z)&=\displaystyle -\frac{\sinh2\pi\theta}{4\pi iD}\sum_{k=0}^{\infty}\Bigl((1+i\mu_{0})\frac{\alpha_{8k}z_{8k}}{\theta_{k}^{-}+iz}+(1-i\mu_{0})\frac{\overline{\alpha}_{8k}\,\overline{z}_{8k}}{\theta_{k}^{+}+iz}\Bigr),\\
+	\chi_{42}^{+}(z)&=\displaystyle 2\mu_{0}\sinh\pi\theta\,\chi_{22}^{+}(z)-\frac{i}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{\widehat{\Gamma}_{k}f_{3,k+1}}{k+1-iz}e^{-(k+1)a},\\
+	\chi_{5}^{+}(z)&=\displaystyle -\frac{\cosh\pi\theta}{4\pi\mu_{0}}\sum_{k=0}^{\infty}\Bigl(\frac{\alpha_{9k}z_{9k}}{\theta_{k}^{+}-iz}+\frac{\overline{\alpha}_{9k}\,\overline{z}_{9k}}{\theta_{k}^{-}-iz}\Bigr),\\
+	f_{1}^{+}(z)&=\displaystyle -\frac{i}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{\Gamma_{k}f_{3,k+1}}{k+1-iz},\\
+	f_{2}^{+}(z)&=\displaystyle -\frac{i}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{\widehat{\Gamma}_{k}f_{1,k+1}}{k+1-iz}e^{-(k+1)a},\\
+	f_{4}^{+}(z)&=\displaystyle -\frac{i}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{\widehat{\Gamma}_{k}f_{2,k+1}}{k+1-iz}.
+\end{aligned}
+\end{equation}
+where
+\[
+\begin{aligned}
+\alpha _{1k} &=(2D)^{-1} (1+\mu _{0}^{2} )\sinh 2\pi \theta \cdot \Gamma _{k} e^{-\gamma _{k}^{+} a} ,\quad   \alpha _{2k} =-\cosh \pi \theta \cdot \Gamma _{k} e^{-(k+1)c} ,
+\\
+\alpha _{3k} &=-D(\sinh \pi \theta )^{-1} \hat{\Gamma }_{k} e^{-(k+1)(2a+c)} ,\quad     \alpha _{4k} =-(1-i\mu _{0} )\Gamma _{k}^{-} e^{-\theta _{k}^{-} (b-a)} , 
+\\
+\alpha _{5k}& =D^{-1} \Gamma '_{k} e^{-\gamma _{k}^{-} a} ,\quad     \alpha _{6k} =\Gamma _{k}^{+} e^{-\theta _{k}^{+} (b-a)} ,\quad     \alpha _{7k} =-D^{-1} \cosh \pi \theta \cdot \Gamma _{k} e^{-\gamma _{k}^{+} b} ,
+\\
+\alpha_{8k} &=i(\sinh \pi \theta )^{-1} \Gamma _{k}^{-} e^{-\theta _{k}^{-} (b-a)} , \quad    \alpha _{9k} =\Gamma _{k}^{+} e^{-\theta _{k}^{+} (b-a)} ,
+\end{aligned}
+\] 
+
+\begin{align*}
+z_{1k} &=\Phi _{11}^{+} (i\gamma _{k}^{+} ),\quad    z_{2k} =\Phi _{2}^{+} (i(k+1)),    
+\\
+z_{3k}&=\Phi _{11}^{+} (i(k+1)),\quad  z_{4k} =\Psi _{1}^{+} (i\theta _{k}^{-} )+F_{12}^{+} (i\theta _{k}^{-} ),   
+\\
+z_{5k} &=(1+\mu _{0}^{2} )\sinh \pi \theta \cdot \Phi _{11}^{+} (i\gamma _{k}^{-} )e^{-\gamma _{k}^{-} (a+c)} +\Psi _{3}^{-} (-i\gamma _{k}^{-} )+F_{31}^{+} (-i\gamma _{k}^{-} ),
+\\
+z_{6k} &=
+\begin{multlined}[t]
+	(1+i\mu _{0} )\sinh \pi \theta \cdot \left[\Psi _{1}^{-} (-i\theta _{k}^{+} )+F_{11}^{+} (-i\theta _{k}^{+} )\right]
+	\\
+	-i\left[\Psi _{2}^{-} (-i\theta _{k}^{+} )+F_{2}^{+} (-i\theta _{k}^{+} )\right],
+\end{multlined}
+\\
+z_{7k} &=\Psi _{3}^{+} (i\gamma _{k}^{+} )+F_{32}^{+} (i\gamma _{k}^{+} ), \quad   z_{8k} =\Psi _{3}^{+} (i\theta _{k}^{-} )+F_{32}^{+} (i\theta _{k}^{-} ),
+\\
+z_{9k} &=
+\begin{multlined}[t]
+	(1-i\mu _{0} )\left[\Psi _{2}^{-} (-i\theta _{k}^{+} )+F_{2}^{+} (-i\theta _{k}^{+} )\right]
+	\\
+	-(1+i\mu _{0} )\left[\Psi _{3}^{-} (-i\theta _{k}^{+} )+F_{31}^{+} (-i\theta _{k}^{+} )\right]e^{-\theta _{k}^{+} a} ,
+\end{multlined}
+\end{align*}
+
+
+\begin{equation} \label{Ostryk_Eq_24_} 
+\begin{aligned}
+	\Gamma _{k} &=\dfrac{\Gamma (\gamma _{k}^{+} +1)}{k!} ,\quad  \hat{\Gamma }_{k} =\dfrac{\left|\Gamma (\theta _{k}^{+} +1)\right|^{2} }{\Gamma (\gamma _{k}^{+} +1)k!} ,  
+	\\
+	\Gamma _{k}^{\pm }& =\dfrac{\Gamma (\theta _{k}^{\pm } +1)\Gamma (\gamma _{k}^{-} +\theta _{0}^{\pm } )}{\Gamma (\theta _{k}^{\pm } +\theta _{0}^{\pm } )k!} ,\quad  \Gamma '_{k} =\dfrac{\left|\Gamma (\gamma _{k}^{-} +\theta _{0}^{+} )\right|^{2} }{\Gamma (\gamma _{k}^{-} )k!} ,
+\end{aligned}
+\end{equation} 
+$\gamma _{k}^{\pm } =k+1/2 \pm \gamma $,    $\theta _{k}^{\pm } =k+1/2 \pm i\theta$   ($k=0,1,\dots$).  
+
+Finally, the system of functional equations \eqref{Ostryk_Eq_14_} reduces to the following:
+\begin{equation} \label{Ostryk_Eq_25_} 
+\begin{array}{l}
+	\begin{multlined}[t]
+		K_{32}^{+} (z)\Phi _{2}^{+} (z)+\chi _{11}^{+} (z)+\chi _{12}^{+} (z)-f_{1}^{+} (z)
+		\\[-1em]
+		\hspace{9em}=\dfrac{z\Psi _{3}^{-} (z)}{K_{32}^{-} (z)} +\chi _{11}^{-} (z)+\chi _{12}^{-} (z)-f_{1}^{-} (z),
+	\end{multlined}
+	\\
+	\begin{multlined}[t]
+		\tilde{K}^{+} (z)\Phi _{11}^{+} (z)+\chi _{21}^{+} (z)+\chi _{22}^{+} (z)-f_{2}^{+} (z)
+		\\[-1em]
+		\hspace{9em}=\dfrac{z\Psi _{1}^{-} (z)}{\tilde{K}^{-} (z)} +\chi _{21}^{-} (z)+\chi _{22}^{-} (z)-f_{2}^{-} (z),
+	\end{multlined}
+	\\
+	\begin{multlined}[t]
+		K^{-} (z)\left[\Phi _{11}^{-} (z)+e^{-iz(a+b+c)} \Phi _{12}^{-} (z)\right]+\chi _{3}^{-} (z)
+		\\[-1em]
+		\hspace{9em}=\dfrac{z}{K^{+} (z)} \left[\Psi _{1}^{+} (z)+F_{12}^{+} (z)\right]+\chi _{3}^{+} (z),
+	\end{multlined}
+	\\
+	\begin{multlined}[t]
+		\hat{K}^{+} (z)\Phi _{11}^{+} (z)+\chi _{41}^{+} (z)+\chi _{42}^{+} (z)-f_{4}^{+} (z)
+		\\[-1em]
+		\hspace{9em}=\dfrac{z\Psi _{2}^{-} (z)}{\hat{K}^{-} (z)} +\chi _{41}^{-} (z)+\chi _{42}^{-} (z)-f_{4}^{-} (z),
+	\end{multlined}	
+	\\
+	\begin{multlined}[t]
+		\breve{K}^{-} (z)\left[\Phi _{11}^{-} (z)+e^{-iz(a+b+c)} \Phi _{12}^{-} (z)\right]+\chi _{5}^{-} (z)
+		\\[-1em]
+		\hspace{9em}=-\dfrac{z}{\breve{K}^{+} (z)} \left[\Psi _{3}^{+} (z)+F_{32}^{+} (z)\right]+\chi _{5}^{+} (z)
+	\end{multlined}	
+\end{array}
+\end{equation} 
+($c^{+} <\Im z<c^{-}$ ).  
+
+The left and right sides of each of the equations \eqref{Ostryk_Eq_25_} are analytic in the half-planes $\Im z>c^{+} $ and $\Im z<c^{-} $, respectively, that is, they analytically extend each other to the entire complex plane and are equal to an arbitrary entire function. From the asymptotic estimates
+\begin{equation} \label{Ostryk_Eq_26_} 
+\begin{aligned}
+	K_{32}^{+} (z)&=\mathrm{O}(z^{1/2 +\gamma } ),
+	\\ \tilde{K}^{+} (z), \hat{K}^{+} (z), K^{-} (z), \breve{K}^{-} (z)&=\mathrm{O}(z^{1/2 -\gamma } ),
+	\\
+	\Phi _{2}^{+} (z), \Phi _{11}^{\pm } (z), \Phi _{12}^{-} (z)&=\mathrm{o}(z^{-1} ),
+	\\
+	\chi _{11}^{+} (z), \chi _{12}^{+} (z), \chi _{21}^{+} (z), \chi _{22}^{+} (z), \chi _{3}^{-} (z), \chi _{41}^{-} (z), \chi _{42}^{-} (z), \chi _{5}^{-} (z)&=\mathrm{O}(z^{-1} ),
+	\\
+	f_{1}^{+} (z), f_{2}^{+} (z), f_{4}^{+} (z)&=\mathrm{O}(z^{-1} )\quad    
+\end{aligned}\end{equation} 
+($|z|\to \infty$) it follows that these entire functions are identically equal to zero. Thus, we find the solution of the system of functional equations \eqref{Ostryk_Eq_14_}:
+\begin{equation} \label{Ostryk_Eq_27_} 
+\begin{aligned}
+	\Phi _{2}^{+} (z)&=\dfrac{f_{1}^{+} (z)-\chi _{11}^{+} (z)-\chi _{12}^{+} (z)}{K_{32}^{+} (z)} ,   
+	\\
+	\Psi _{3}^{-} (z)&=\dfrac{K_{32}^{-} (z)}{z} \left[f_{1}^{-} (z)-\chi _{11}^{-} (z)-\chi _{12}^{-} (z)\right],
+	\\
+	\Phi _{11}^{+} (z)&=\dfrac{f_{2}^{+} (z)-\chi _{21}^{+} (z)-\chi _{22}^{+} (z)}{\tilde{K}^{+} (z)} ,  
+	\\
+	\Psi _{1}^{-} (z)&=\dfrac{\tilde{K}^{-} (z)}{z} \left[f_{2}^{-} (z)-\chi _{21}^{-} (z)-\chi _{22}^{-} (z)\right],
+	\\
+	\Phi _{11}^{-} (z)+e^{-iz(a+b+c)} \Phi _{12}^{-} (z)&=-\dfrac{\chi _{3}^{-} (z)}{K^{-} (z)} , 
+	\\
+	\Psi _{1}^{+} (z)&=-\dfrac{K^{+} (z)}{z} \chi _{3}^{+} (z)-F_{12}^{+} (z),
+	\\
+	\Psi _{2}^{-} (z)&=\dfrac{\hat{K}^{-} (z)}{z} \left[f_{4}^{-} (z)-\chi _{41}^{-} (z)-\chi _{42}^{-} (z)\right],
+	\\
+	\Psi _{3}^{+} (z)&=\dfrac{\breve{K}^{+} (z)}{z} \chi _{5}^{+} (z)-F_{32}^{+} (z).  
+\end{aligned}
+\end{equation} 
+%
+In this case, for the functions $\Psi _{1}^{\pm } (z)$, $\Psi _{3}^{\pm } (z)$ to be analytic at the point $z=0$, additional conditions must be fulfilled:
+\begin{equation} \label{Ostryk_Eq_28_}
+	\begin{aligned}
+	\chi _{11}^{-} (0)+\chi _{12}^{-} (0)-f_{1}^{-} (0)=0,   \quad  \chi _{21}^{-} (0)+\chi _{22}^{-} (0)-f_{2}^{-} (0)=0,
+ \\
+\chi _{3}^{+} (z)=0,\quad    \chi _{5}^{+} (z)=0.  
+\end{aligned}
+\end{equation} 
+
+Another additional condition
+\begin{equation} \label{Ostryk_Eq_29_} 
+\chi _{21}^{+} (0)+\chi _{22}^{+} (0)-f_{2}^{+} (0)=0 
+\end{equation} 
+follows from the condition of uniqueness of normal displacements
+\begin{equation} \label{Ostryk_Eq_30_} 
+\int _{l_{2} }^{l_{1} }u_{1} (x)dx =0,  
+\end{equation} 
+which, in turn, is equivalent to the condition
+\begin{equation} \label{Ostryk_Eq_31_} 
+\Phi _{11}^{+} (0)=0.  
+\end{equation} 
+
+As follows from \eqref{Ostryk_Eq_22_}, \eqref{Ostryk_Eq_27_}, among the additional conditions \eqref{Ostryk_Eq_28_}, \eqref{Ostryk_Eq_29_}, the first, third conditions \eqref{Ostryk_Eq_28_} and condition \eqref{Ostryk_Eq_29_} are independent. These conditions are necessary to determine the sizes of the contact domains and the adhesion zone.
+
+In the solution \eqref{Ostryk_Eq_27_} of the system of functional equations \eqref{Ostryk_Eq_14_}, the quantities $z_{mk} $ ($m=1,2, \dots 9$; $k=0,1,\dots$) from \eqref{Ostryk_Eq_24_} remain unknown. Substituting the values $z=i\gamma _{n}^{+} ,\, \, i(n+1), i\theta _{n}^{-} , \pm i\gamma _{n}^{-} , -i\theta _{n}^{+} $ ($n=0,1,\dots$) into equality \eqref{Ostryk_Eq_27_}, we obtain an infinite system of algebraic equations
+
+\begin{equation} \label{Ostryk_Eq_32_} 
+\begin{aligned}
+	z_{1n} +\beta _{1n} \displaystyle\sum _{k=0}^{\infty }\bigg(\dfrac{\alpha _{3k} z_{3k} }{k+1+\gamma _{n}^{+} } +\dfrac{\alpha _{5k} z_{5k} }{k+n+1} +\Re \dfrac{\alpha _{4k} z_{4k} +\alpha _{8k} z_{8k} }{\theta _{k}^{-} -\gamma _{n}^{+} } \bigg) &=g_{1n} ,
+	\\
+	\begin{multlined}[b]
+		z_{2n} +\mu _{0} z_{3n} e^{-(n+1)a} +\beta _{2n} \sum _{k=0}^{\infty }\bigg(\dfrac{\alpha _{1k} z_{1k} +\alpha _{7k} z_{7k} }{\gamma _{k}^{+} -n-1} 
+		\\[-1.2em]
+		+\dfrac{\alpha _{2k} (z_{2k} -\mu _{0} z_{3k} e^{-(k+1)a} )}{k+n+2} \bigg) 
+	\end{multlined}&=g_{2n} ,
+	\\
+	z_{3n} +\beta _{3n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{3k} z_{3k} }{k+n+2} +\dfrac{\alpha _{5k} z_{5k} }{\gamma _{k}^{+} +n+1} +\Re \dfrac{\alpha _{4k} z_{4k} +\alpha _{8k} z_{8k} }{\theta _{k}^{-} -n-1} \right) &=g_{3n} ,
+	\\
+	z_{4n} +\beta _{4n} \sum _{k=0}^{\infty }\left(\dfrac{\alpha _{6k} z_{6k} }{k+n+1} +\dfrac{\bar{\alpha }_{6k} \bar{z}_{6k} }{\theta _{k}^{-} +\theta _{n}^{-} } \right)&=0,
+	\\
+	z_{5n} +\beta _{5n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{1k} z_{1k} +\alpha _{7k} z_{7k} }{k+n+1} +\dfrac{\alpha _{2k} (z_{2k} -\mu _{0} z_{3k} e^{-(k+1)a} )}{k+1-\gamma _{n}^{-} } \right) &=g_{5n} ,
+	\\
+	\begin{multlined}[b]
+		z_{6n} +\beta _{6n}^{(1)} \sum _{k=0}^{\infty }\bigg(\dfrac{2\alpha _{3k} z_{3k} }{k+1-\theta _{n}^{+} } +\dfrac{2\alpha _{5k} z_{5k} }{\gamma _{k}^{-} -\theta _{n}^{+} } +\dfrac{\alpha _{4k} z_{4k} +\alpha _{8k} z_{8k} }{k+n+1} 
+		\\[-1.2em]
+		+\dfrac{\bar{\alpha }_{4k} \bar{z}_{4k} +\bar{\alpha }_{8k} \bar{z}_{8k} }{\theta _{k}^{+} +\theta _{n}^{+} } \bigg) +\beta _{6n}^{(2)} \sum _{k=0}^{\infty }\bigg(\dfrac{2\alpha _{3k} z_{3k} }{k+1-\theta _{n}^{+} } +\dfrac{2\alpha _{5k} z_{5k} }{\gamma _{k}^{-} -\theta _{n}^{+} } 
+		\\[-.5em]
+		+\dfrac{\alpha '_{8k} z_{8k} }{k+n+1} +\dfrac{\bar{\alpha }'_{8k} \bar{z}_{8k} }{\theta _{k}^{+} +\theta _{n}^{+} } \bigg)
+	\end{multlined} &=g_{6n} ,
+	\\
+	z_{7n} +\beta _{7n} \displaystyle\sum _{k=0}^{\infty }\Re \dfrac{\alpha _{9k} z_{9k} }{\theta _{k}^{+} +\gamma _{n}^{+} }  &=0,
+	\\
+	z_{8n} +\beta _{8n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{9k} z_{9k} }{k+n+1} +\dfrac{\bar{\alpha }_{9k} \bar{z}_{9k} }{\theta _{k}^{-} +\theta _{n}^{-} } \right) &=0,
+	\\
+	z_{9n} +\beta _{9n} \sum _{k=0}^{\infty }\left(\dfrac{2\alpha _{3k} z_{3k} }{k+1-\theta _{n}^{+} } +\dfrac{2\alpha _{5k} z_{5k} }{\gamma _{k}^{-} -\theta _{n}^{+} } +\dfrac{\alpha '_{8k} z_{8k} }{k+n+1} +\dfrac{\bar{\alpha }'_{8k} \bar{z}_{8k} }{\theta _{k}^{+} +\theta _{n}^{+} } \right)& =g_{9n}   
+\end{aligned}
+\end{equation} 
+($n=0,1,\dots$). 
+The following notations are introduced here:
+\begin{equation} \label{Ostryk_Eq_33_} 
+\begin{array}{l}
+	\beta _{1n} =\dfrac{\cos \pi \gamma }{\pi i\tilde{K}^{+} (i\gamma _{n}^{+} )} , \quad   \beta _{2n} =\dfrac{1}{\pi iK_{32}^{+} (i(n+1))} ,\quad    \beta _{3n} =\dfrac{\cos \pi \gamma }{\pi i\tilde{K}^{+} (i\gamma _{n}^{+} )} ,
+	\\
+	\beta _{4n} =-\dfrac{\cosh \pi \theta }{2\pi i\theta _{n}^{-} } K^{+} (i\theta _{n}^{-} ),\quad    \beta _{5n} =\dfrac{K_{32}^{-} (-i\gamma _{n}^{-} )}{\pi \gamma _{n}^{-} } ,
+	\\
+	\beta _{6n}^{(1)} =(1+i\mu _{0} )\dfrac{\sinh 2\pi \theta }{4\pi D\theta _{n}^{+} } \tilde{K}^{-} (-i\theta _{n}^{+} ), \quad   \beta _{6n}^{(2)} =\mu _{0} \dfrac{\sinh 2\pi \theta }{2\pi iD\theta _{n}^{+} } \hat{K}^{-} (-i\theta _{n}^{+} ),
+	\\
+	\beta _{7n} =\dfrac{\cosh \pi \theta }{4\pi i\mu _{0} \gamma _{n}^{+} } \breve{K}^{+} (i\gamma _{n}^{+} ),\quad    \beta _{8n} =\dfrac{\cosh \pi \theta }{4\pi i\mu _{0} \theta _{n}^{-} } \breve{K}^{+} (i\theta _{n}^{-} ),   
+	\\
+	\beta _{9n} =2\mu _{0} \left(\beta _{6n}^{(1)} +\beta _{6n}^{(2)} \right),
+	\\
+	g_{1n} =\sqrt{\dfrac{\pi }{2} } \dfrac{\beta _{1n} }{\cos \pi \gamma } \displaystyle\sum _{k=0}^{\infty }\dfrac{\hat{\Gamma }_{k} f_{1, k+1} }{k+1+\gamma _{n}^{+} } e^{-(k+1)a} , 
+	\\
+	g_{2n} =\sqrt{\dfrac{\pi }{2} }  \beta _{2n}  \displaystyle\sum _{k=0}^{\infty }\dfrac{\Gamma _{k} f_{3, k+1} }{k+n+2}  ,
+	\\
+	g_{3n} =\sqrt{\dfrac{\pi }{2} } \dfrac{\beta _{3n} }{\cos \pi \gamma } \sum _{k=0}^{\infty }\dfrac{\hat{\Gamma }_{k} f_{1,\, k+1} }{k+n+2} e^{-(k+1)a} ,
+	\\
+	g_{5n} =\sqrt{\dfrac{\pi }{2} } \beta _{5n} \displaystyle\sum _{k=0}^{\infty }\dfrac{\Gamma _{k} f_{3,\, k+1} }{k+1-\gamma _{n}^{-} } ,
+	\\
+	g_{6n} =\dfrac{g_{9n} }{2\mu _{0} } =\dfrac{\sqrt{2\pi } }{\cos \pi \gamma } \left(\beta _{6n}^{(1)} +\beta _{6n}^{(2)} \right)\displaystyle\sum _{k=0}^{\infty }\dfrac{\hat{\Gamma }_{k} f_{1,k+1} }{k+1-\theta _{n}^{+} } e^{-(k+1)a},
+	\\
+	\alpha '_{8k} =\dfrac{1+i\mu _{0} }{2i\mu _{0} } \alpha _{8k} 
+\end{array}
+\end{equation} 
+($n=0,1,\dots$, $k=0,1,\dots$).
+
+The system of equations \eqref{Ostryk_Eq_32_}, \eqref{Ostryk_Eq_28_}, and \eqref{Ostryk_Eq_29_}, whose coefficients decrease exponentially with increasing $k$, is regular of the Poincaré--Koch type and therefore can be solved by reduction and successive approximation methods \cite{Ostryk74}. Numerical analysis of this system of equations shows that the relative length $\bar{l}_{1} =(l-l_{1} )/l$ of the contact domains near the crack tips is extremely small, less than $10^{-7}$. Therefore, the above relations obtained with high accuracy (of the order of $\bar{l}_{1} $) can be asymptotically simplified. Neglecting the factor $e^{-b} $ compared to 1 in formulas \eqref{Ostryk_Eq_24_}, we find
+\begin{equation} \label{Ostryk_Eq_34_} 
+\alpha _{mk} =0  \quad (m=4,6,7, 8,9),\quad    z_{mk} =0 \quad  (m=4,7,8;\; k=0,1,\dots).  
+\end{equation} 
+
+The infinite system of equations \eqref{Ostryk_Eq_32_} simplifies to the following:
+\begin{equation} \label{Ostryk_Eq_35_} 
+\begin{aligned}
+	z_{1n} +\beta _{1n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{3k} z_{3k} }{k+1+\gamma _{n}^{+} } +\dfrac{\alpha _{5k} z_{5k} }{k+n+1} \right) &=g_{1n} ,
+	\\
+	\begin{multlined}[b]
+		z_{2n} +\mu _{0} z_{3n} e^{-(n+1)a} 
+		\\
+		+\beta _{2n} \sum _{k=0}^{\infty }\left(\dfrac{\alpha _{1k} z_{1k} }{\gamma _{k}^{+} -n-1} 
+		+\dfrac{\alpha _{2k} (z_{2k} -\mu _{0} z_{3k} e^{-(k+1)a} )}{k+n+2} \right) 
+	\end{multlined}&=g_{2n} ,
+	\\
+	z_{3n} +\beta _{3n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{3k} z_{3k} }{k+n+2} +\dfrac{\alpha _{5k} z_{5k} }{\gamma _{k}^{+} +n+1} \right) &=g_{3n} ,
+	\\
+	z_{5n} +\beta _{5n} \displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{1k} z_{1k} }{k+n+1} +\dfrac{\alpha _{2k} (z_{2k} -\mu _{0} z_{3k} e^{-(k+1)a} )}{k+1-\gamma _{n}^{-} } \right) &=g_{5n}  
+\end{aligned}
+\end{equation}
+($n=0,1,\dots$),  
+and the unknowns $z_{6k} $, $z_{9k} $ are expressed through the solution of the system of equations \eqref{Ostryk_Eq_35_}:
+\begin{equation} \label{Ostryk_Eq_36_} 
+z_{6n} =\dfrac{z_{9n} }{2\mu _{0} } =-\dfrac{\beta _{9n} }{\mu _{0} } \sum _{k=0}^{\infty }\left(\dfrac{\alpha _{3k} z_{3k} }{k+1-\theta _{n}^{+} } +\dfrac{\alpha _{5k} z_{5k} }{\gamma _{k}^{-} -\theta _{n}^{+} } \right) +g_{6n}     
+\end{equation} 
+($n=0,1,\dots$).
+
+We will supplement the system of equations \eqref{Ostryk_Eq_35_} with the first of the conditions \eqref{Ostryk_Eq_28_} and condition \eqref{Ostryk_Eq_29_}, which we will write in the form
+\begin{equation} \label{Ostryk_Eq_37_} 
+\begin{aligned}{rcl}
+	\displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{1k} z_{1k} }{\gamma _{k}^{+} } +\dfrac{\alpha _{2k} (z_{2k} -\mu _{0} z_{3k} e^{-(k+1)a} )}{k+1} -\sqrt{\dfrac{\pi }{2} } \dfrac{\Gamma _{k} f_{3,\, k+1} }{k+1} \right)&=0 ,
+	\\
+	\displaystyle\sum _{k=0}^{\infty }\left(\dfrac{\alpha _{3k} z_{3k} }{k+1} +\dfrac{\alpha _{5k} z_{5k} }{\gamma _{k}^{-} } -\sqrt{\dfrac{\pi }{2} } \dfrac{\hat{\Gamma }_{k} f_{1,\, k+1} }{(k+1)\cos \pi \gamma } e^{-(k+1)a} \right) &=0.  
+\end{aligned}
+\end{equation} 
+These conditions serve to determine the relative sizes of the contact domain within the crack and the adhesion zone
+\begin{equation} \label{Ostryk_Eq_38_} 
+\bar{l}_{2} =\dfrac{l_{2} }{l} =\tanh \dfrac{2a+c}{4} ,\quad    \bar{l}_{3} =\dfrac{l_{3} }{l} =\tanh \dfrac{c}{4} .  
+\end{equation} 
+
+We transform the third condition \eqref{Ostryk_Eq_28_} to the form
+\begin{equation} \label{Ostryk_Eq_39_} 
+\cos \left\{\theta (b-a+2\ln 2)-\arg \dfrac{\Gamma (1-\gamma +i\theta )z_{60} }{\Gamma (1+i\theta )} \right\}=0.  
+\end{equation} 
+Choosing the root ${\pi \mathord{\left/ {\vphantom {\pi  2}} \right. \kern-\nulldelimiterspace} 2} $ of this equation, we find
+\begin{equation} \label{Ostryk_Eq_40_} 
+b=a+\dfrac{\pi }{2\theta } -2\ln 2+\dfrac{1}{\theta } \arg \dfrac{\Gamma (1-\gamma +i\theta )z_{60} }{\Gamma (1+i\theta )} .  
+\end{equation} 
+From here we determine the size of the contact domains near the crack tips
+\begin{equation} \label{Ostryk_Eq_41_} 
+\bar{l}_{1} =\dfrac{l-l_{1} }{l} =2e^{-(b+{c\mathord{\left/ {\vphantom {c 2}} \right. \kern-\nulldelimiterspace} 2} )} .  
+\end{equation} 
+Other roots of equation \eqref{Ostryk_Eq_40_} are unacceptable, since its negative roots correspond to the size of the contact domain, which is larger than the crack size, and the positive roots, except for ${\pi \mathord{\left/ {\vphantom {\pi  2}} \right. \kern-\nulldelimiterspace} 2} $, to the mutual overlap of the crack faces outside the contact domain \cite{Ostryk38}.
+
+
+
+
+
+\section{Stress and Displacement Jump at the Boundary of Half-Planes}
+
+The stresses in the contact domains of the crack faces can be found by the formulas
+\begin{equation} \label{Ostryk_Eq_42_} 
+\begin{aligned}
+	\sigma _{y}^{(1)} \big|_{y=0}& =
+	\begin{multlined}[t]
+		\sigma _{y}^{0\, (1)} \big|_{y=0} -\sinh \pi \theta \cdot q(\xi )L_{1} (\xi )
+		\\
+		(0<x<l_{2} ,\;  l_{1} <x<l;\;  -c/2 <\xi <a,\;  b<\xi <\infty ),
+	\end{multlined}
+	\\
+	\tau _{xy}^{(1)} \big|_{y=0} &=
+	\begin{multlined}[t]\tau _{xy}^{0(1)} \big|_{y=0} -q(\xi )\left[L_{3} (\xi )-\mu _{0} \sinh \pi \theta \cdot L_{1} (\xi )\right]  
+		\\
+		(0<x<l_{3} ; \; -c/2 <\xi <0),
+	\end{multlined}
+\end{aligned}
+\end{equation} 
+
+
+\begin{align*}
+L_{1} (\xi )&=\dfrac{1}{\sqrt{2\pi } } \displaystyle\int _{-\infty }^{\infty }\left\{\left[\Psi _{1}^{-} (\tau )+F_{11}^{+} (\tau )\right]e^{i\tau a} +\left[\Psi _{1}^{+} (\tau )+F_{12}^{+} (\tau )\right]e^{i\tau b} \right\}e^{-i\tau \xi } d\tau  ,
+\\
+L_{3} (\xi )&=\dfrac{1}{\sqrt{2\pi } } \displaystyle\int _{-\infty }^{\infty }\left[\Psi _{3}^{-} (\tau )+F_{31}^{+} (\tau )\right]e^{-i\tau \xi } d\tau  ,    \xi =\ln \dfrac{l+x}{l-x} -\alpha _{3} .
+\end{align*} 
+
+
+
+Having calculated the integrals from \eqref{Ostryk_Eq_42_} using the theory of residues, we obtain the contact stresses in the right half of the adhesion zone
+\begin{equation} \label{Ostryk_Eq_43_} 
+\begin{aligned}
+	\sigma _{y}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		\sigma _{y}^{0 (1)} \Big|_{y=0} +\cosh \pi \theta \cdot q(\xi )\sqrt{\dfrac{2}{\pi } } 
+		\\
+		\times\sum _{k=0}^{\infty }z_{3k} \left(e^{-(k+1)(a-\xi )} +e^{-(k+1)(\xi +a+c)} \right) ,
+	\end{multlined}
+	\\
+	\tau _{xy}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		\tau _{xy}^{0 (1)} \Big|_{y=0} +\cosh \pi \theta \cdot q(\xi )\sqrt{\dfrac{2}{\pi } } \sum _{k=0}^{\infty }\Big[z_{2k} \Big(e^{(k+1)\xi } 
+		\\
+		+e^{-(k+1)(\xi +c)} \Big)-2\mu _{0} z_{3k} e^{-(k+1)(\xi +a+c)} \Big]\quad   (0<x<l_{3} )  
+	\end{multlined}
+\end{aligned}
+\end{equation} 
+and in the slip zones
+
+\begin{equation} \label{Ostryk_Eq_44_} 
+\begin{aligned}
+	\sigma _{y}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		-\dfrac{1}{\mu _{0} } \left. \tau _{xy}^{(1)} \right|_{y=0} =\left. \sigma _{y}^{0\, (1)} \right|_{y=0} +\cosh \pi \theta \cdot q(\xi ) \sqrt{\dfrac{2}{\pi } } 
+		\\
+		\times\sum _{k=0}^{\infty }\bigg\{z_{3k} \left(e^{-(k+1)(a-\xi )} +e^{-(k+1)(\xi +a+c)} \right) 	
+		\\
+		-\dfrac{\sinh \pi \theta }{D^{2} } \left[(1+\mu _{0}^{2} )\sinh \pi \theta \cdot z_{1k} e^{-\gamma _{k}^{+} (a-\xi )} +z_{5k} e^{-\gamma _{k}^{-} \xi } \right]\bigg\} \\ (l_{3} <x<l_{2} ),
+	\end{multlined}
+	\\
+	\sigma _{y}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		\dfrac{1}{\mu _{0} }  \tau _{xy}^{(1)} \Big|_{y=0} =-G_{1} G'_{2} \theta \sqrt{\dfrac{2}{\pi } } \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|e^{(a+b+c)/2} 
+		\\
+		\times\bigg[\dfrac{\pi }{\Gamma (1/2 +\gamma )\left|\Gamma (1-\gamma +i\theta )\right|^{2} } 
+		\\
+		\times {}_{2}F_{1} \left(\gamma +i\theta , \gamma -i\theta ; 1/2 +\gamma;  \dfrac{l-x}{l-l_{1} } \right)\left(\dfrac{l-x}{l-l_{1} } \right)^{-1/2 +\gamma }  
+		\\
+		-\dfrac{\cosh \pi \theta }{\Gamma (3/2 -\gamma )}  {}_{2} F_{1} \left(1/2 +i\theta , 1/2 -i\theta; 3/2 -\gamma ; \dfrac{l-x}{l-l_{1} } \right)\bigg] \\ (l_{1} <x<l),  
+	\end{multlined}
+\end{aligned}
+\end{equation} 
+where ${}_{2} F_{1} \left(a_{1} ,\, \, a_{2} ;\, \, a_{3} ;\, \, x\right)$ is the hypergeometric Gaussian function \cite{Ostryk75}.
+
+Let us find the stress on the crack extension. From the second equality \eqref{Ostryk_Eq_6_} taking into account \eqref{Ostryk_Eq_8_}, \eqref{Ostryk_Eq_12_} we have
+\begin{multline} \label{Ostryk_Eq_45_} 
+\left(\sigma _{y}^{(1)} +i\tau _{xy}^{(1)} \right)\Big|_{\beta =\pi } =\left. \left(\sigma _{y}^{0\, (1)} +i\tau _{xy}^{0\, (1)} \right)\right|_{y=0} 
+\\
++\dfrac{2iG_{1} G'_{2} }{\sqrt{2\pi } } \cosh \pi \theta \cdot (\cosh \alpha -1) \int _{-\infty }^{\infty }\big[\Phi _{11}^{+} (\tau )e^{i\tau a} +\Phi _{12}^{-} (\tau )e^{-i\tau (a+c)} 
+\\
++i\Phi _{2}^{+} (\tau )+i\Phi _{2}^{-} (\tau )e^{-i\tau c} \big]\dfrac{e^{i\tau (\alpha _{3} -\alpha )} }{\sinh \pi \tau } d\tau  .  
+\end{multline} 
+Expanding the integral in a series by remainders, we obtain
+
+\begin{equation} \label{Ostryk_Eq_46_} 
+\begin{aligned}
+	\sigma _{y}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		G_{1} G'_{2} \sqrt{\dfrac{2}{\pi } } \dfrac{\theta \cosh \pi \theta }{\Gamma (3/2 -\gamma )} \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|e^{(a+b+c)/2}  
+		\\
+		\times {}_{2} F_{1} \left(1/2 +i\theta , 1/2 -i\theta ; 3/2 -\gamma ; \dfrac{l-x}{l-l_{1} } \right),
+	\end{multlined}
+	\\
+	\tau _{xy}^{(1)} \Big|_{y=0} &=
+	\begin{multlined}[t]
+		\mu _{0}  \sigma _{y}^{(1)} \Big|_{y=0}
+		\\
+		-\sqrt{2\pi } \dfrac{G_{1} G'_{2} D\theta }{\sinh \pi \theta } \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|\dfrac{e^{(a+b+c)/2}} {\Gamma (1/2 +\gamma )\left|\Gamma (1-\gamma +i\theta )\right|^{2} } 
+		\\
+		\times {}_{2} F_{1} \left(\gamma +i\theta , \gamma -i\theta ; 1/2 +\gamma; \dfrac{l-x}{l-l_{1} } \right)\left(\dfrac{x-l}{l-l_{1} } \right)^{-1/2 +\gamma } 
+		\\
+		(l<x<2l-l_{1} ). 
+	\end{multlined}
+\end{aligned}
+\end{equation} 
+
+From relations \eqref{Ostryk_Eq_44_}, \eqref{Ostryk_Eq_46_} follows the behavior of stresses in the vicinity of the crack tip:
+\begin{equation} \label{Ostryk_Eq_47_} 
+\begin{aligned}
+	\tau _{xy}^{(1)} \Big|_{y=0} &\sim \dfrac{K_{{\rm II}} }{[2(x-l)]^{1/2 -\gamma } } \sigma _{y}^{(1)} \Big|_{y=0} \sim \sigma _{0} ,\quad  x\to l+0,
+	\\
+	\sigma _{y}^{(1)} \Big|_{y=0} &\sim {\dfrac{K_{0} }{[2(l-x)]^{1/2 -\gamma } }} , \quad x\to l-0, \quad   K_{0} =K_{{\rm II}} \tanh\pi \theta \cos \pi \gamma ,
+\end{aligned}
+\end{equation}  
+
+\begin{align*}
+K_{{\rm II}} &=-\sqrt{2\pi } \dfrac{G_{1} G'_{2} D\theta }{\sinh \pi \theta } \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|\dfrac{\left[2(l-l_{1} )\right]^{1/2 -\gamma } e^{(a+b+c)/2} }{\Gamma (1/2 +\gamma )\left|\Gamma (1-\gamma +i\theta )\right|^{2} } ,
+\\
+\sigma _{0} &=G_{1} G'_{2} \sqrt{\dfrac{2}{\pi } } \dfrac{\theta \cosh \pi \theta }{\Gamma (3/2 -\gamma )} \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|e^{(a+b+c)/2 } .  
+\end{align*}
+%
+Here $K_{{\rm II}} $ is the intensity factor of shear stresses, $K_{0} $ is the intensity factor of normal contact stresses. In the extension of the crack beyond its tip, the tangential stresses have a power singularity with an exponent $1/2 -\gamma $ (a root singularity in the case of a smooth contact), and the normal stresses are finite. The contact stresses are unbounded at the crack tip with the same singularity index $1/2 -\gamma $. The specified singularities are characteristic of contact problems about interface cracks \cite{Ostryk23}. Through the factor $K_{{\rm II}} $ the distributions of stresses and displacements inside the half-planes near the crack tip can be determined by well-known formulas \cite{Ostryk23,Ostryk76}.
+
+The jump of tangential displacements on the crack in the slip zones is found according to \eqref{Ostryk_Eq_3_}, \eqref{Ostryk_Eq_8_}, \eqref{Ostryk_Eq_12_} from the equality
+\begin{multline} \label{Ostryk_Eq_48_} 
+\dfrac{d}{dx} \left(u_{x}^{(1)} -u_{x}^{(2)}\right)\Big|_{y=0} =\dfrac{1}{\sqrt{2\pi } } \left[\cosh (\alpha _{3} +\xi )+1\right]\int _{-\infty }^{\infty }\Phi _{2}^{+} (\tau )e^{-i\tau \xi } d\tau  
+\\
+(l_{3} <x<l_{2} ,\;  l_{1} <x<l;\;  0<\xi <a,\;  b<\xi <\infty ).  
+\end{multline} 
+After calculating the integral from \eqref{Ostryk_Eq_48_} and integrating, we obtain
+\begin{equation} \label{Ostryk_Eq_49_} 
+\begin{aligned}
+	\left(u_{x}^{(1)} -u_{x}^{(2)} \right)\Big|_{y=0} &=
+	\begin{multlined}[t]
+		\dfrac{l\cos \pi \gamma }{D} \sqrt{\dfrac{2}{\pi } } \sum _{k=0}^{\infty }\bigg((1+\mu _{0}^{2} )\sinh \pi \theta
+		\\
+		\times \dfrac{z_{1k} }{\gamma _{k}^{+} } e^{-\gamma _{k}^{+} (a-\xi )} -\dfrac{z_{5k} }{\gamma _{k}^{-} } e^{-\gamma _{k}^{-} \xi } \bigg) 
+		\\
+		(l_{3} <x<l_{2} ;\;  0<\xi <a),
+	\end{multlined} 
+	\\
+	\left(u_{x}^{(1)} -u_{x}^{(2)}\right)\Big|_{y=0} &=
+	\begin{multlined}[t]
+		-l(1+\mu _{0}^{2} )\theta \sinh \pi \theta \cos ^{2} \pi \gamma 
+		\\
+		\times \sqrt{\dfrac{2}{\pi ^{3} } } \left|\dfrac{\Gamma _{0}^{+} z_{60} }{\theta _{0}^{+} } \right|e^{(a-b)/2}  \dfrac{\left|\Gamma (\gamma +i\theta )\right|^{2} }{\Gamma (3/2 +\gamma )}
+		\\
+		\times {}_{2} F_{1} \left(\gamma +i\theta , \gamma -i\theta ; 3/2 +\gamma ; \dfrac{l-x}{l-l_{1} } \right)\left(\tfrac{l-x}{l-l_{1} } \right)^{1/2 +\gamma } 
+		\\
+		(l_{1} <x<l;\;  b<\xi <\infty ).  
+	\end{multlined}
+\end{aligned}
+\end{equation} 
+
+Due to the fact that the hypergeometric function from the second equality \eqref{Ostryk_Eq_49_} for given values of its parameters and argument takes only real positive values on the interval $l_{1} <x<l$, the jump of tangential displacements on this interval is negative. This confirms the assumption formulated when formulating the problem about the direction of mutual slip of the crack faces in the contact domains near the crack tips. We will verify a similar assumption for the contact domain inside the crack by calculations using the first of the formulas \eqref{Ostryk_Eq_49_}.
+
+
+
+
+
+\section{Numerical Results}
+
+Calculations were performed for the value $\tanh\pi \theta =0.25$ (if, for example, $\nu _{1} =0.25$, $\nu _{2} =0.3$, then $G_{2}/G_{1}=6$) in the case when the distance between the points of application of forces is $2y_{0} =1$, and the relative value of the forces is $\bar{P}={P/(p_{\infty } l)} =5$.
+
+Figure \ref{Ostryk_Fig2a} shows the distributions of relative normal $\bar{\sigma }=p_{\infty }^{-1} \sigma _{y}{}^{(1)} |_{y=0} $ (solid and dash-dotted curves) and tangential $\bar{\tau }=-p_{\infty }^{-1} \tau _{xy}{}^{(1)} |_{y=0} $ (dashed curves) contact stresses inside the crack. Curves 1--3 correspond to the friction coefficient $\mu _{0} =0.25$, 0.5, 0.75 dash-dotted curve -- $\mu _{0} =0$. At the corresponding points of transition from the adhesion zone to the slip zone ($x/l_{2} =0.218, 0.493, 0.642$), the stress graphs have characteristic breaks \cite{Ostryk42, Ostryk77}.
+
+\begin{figure}[t]
+	\centering
+\begin{subfigure}[t]{.35\textwidth}
+	\includegraphics[width=\textwidth]{30_Ostryk/Ostryk2.jpg}
+	\caption{Contact stress distributions} \label{Ostryk_Fig2a}     
+\end{subfigure}\hspace{1em}
+\begin{subfigure}[t]{.35\textwidth}
+	\includegraphics[width=\textwidth]{30_Ostryk/Ostryk3.jpg}
+	\caption{Tangential displacement jump}\label{Ostryk_Fig2b}        
+\end{subfigure}
+\caption{Problem solutions.}
+\label{Ostryk_Fig2}        
+\end{figure}
+
+The relative sizes of the contact domains $\bar{l}_{1} =(l-l_{1} )/l $, $\bar{l}_{2} =l_{2}/l $ near the tips and inside the crack, the adhesion zone $\bar{l}_{3} =l_{3}/l $ and the normalized stress intensity factor $\bar{K}_{{\rm II}} = K_{\rm II}((2l)^{1/2 -\gamma } p_{\infty } ) $ for different values of the friction coefficient $\mu _{0} $ are given in Table \ref{Ostryk_Tab}. The fact that the contact domains near the crack tips are too small is typical for problems of interface cracks in the case of normal tensile loading \cite{Ostryk23}. It should be noted that the presence of friction has almost no effect on the relative size $\bar{l}_{2} $ of the contact domain inside the crack. At the same time, the dependence of the factor $\bar{K}_{{\rm II}} $ on $\mu _{0} $ is significant.
+
+\begin{table}[!h]
+	\centering 
+\caption{Relative sizes of contact and adhesion domains and normalized stress intensity factor}\label{Ostryk_Tab}
+\begin{tabular*}{.7\textwidth}{@{\extracolsep{\fill}}lllll} 
+	\toprule 
+	$\mu _{0} $ & 0 & 0.25 & 0.5 & 0.75 \\ \midrule 
+	$\bar{l}_{1} $ & 2.9·10$^{-10}$ & 5.7·10$^{-9}$ & 9.4·10$^{-8}$ & 9.3·10$^{-7}$ \\ 
+	$\bar{l}_{2} $ & 0.5596 & 0.5498 & 0.5607 & 0.5679 \\ 
+	$\bar{l}_{3} $ & 0 & 0.1201 & 0.2767 & 0.3646 \\ 
+	$-\bar{K}_{{\rm II}} $ & 0.1505 & 0.2209 & 0.3236 & 0.4474 \\ \bottomrule
+\end{tabular*}
+\end{table}
+
+Figure \ref{Ostryk_Fig2b}  shows a jump in dimensionless tangential displacements $\bar{u}=(G_{1}/P)(u_{x}{}^{(1)} -u_{x}{}^{(2)} )|_{y=0} $ in the slip zone $l_{3} <x\le l_{2} $. The correspondence of the curves to the parameter $\mu _{0} $ values is the same as in Fig.~\ref{Ostryk_Fig2}. The fact that the value $\bar{u}$ turns out to be positive ensures that condition \eqref{Ostryk_Eq_2_} on the direction of mutual slip of the crack edges in the zones $l_{3} <\left|x\right|<l_{2} $ is fulfilled.
+
+\section{Conclusions}
+
+Using the Wiener--Hopf method, an analytical solution to the problem of contact with adhesion and sliding of the faces of an interface crack was found. Unlike the well-known Galin problem of contact with adhesion and sliding of a punch and an elastic half-plane \cite{Ostryk78}, in the considered problem the relative size of the adhesion zone turned out to be much smaller. Thus, for a friction coefficient of 0.5, it is 0.49 instead of 0.94 in the Galin problem for a half-plane with a Poisson's ratio of 0.3.
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter30}

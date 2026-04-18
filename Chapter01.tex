@@ -1,0 +1,552 @@
+\title{Numerical Analysis of Fracture Parameters of Partially Electroded Interfacial Crack in Piezoelectric Bimaterial}
+\titlerunning{Fracture of Interfacial Crack in Piezoelectric Bimaterial}
+
+\author{Victor Adlucky, Volodymyr Loboda, and Alla Sheveleva}
+
+\institute{%
+	Victor Adlucky \at
+	\AffDnipro \\
+	\email{adluckiivy_kkt@dnu.dp.ua}
+	\and
+	Volodymyr Loboda \at
+	\AffDnipro \\
+	\email{loboda@dnu.dp.ua}
+	\and
+	Alla Sheveleva \at
+	\AffDnipro \\
+	\email{shevelevaae@dnu.dp.ua}
+}
+
+\maketitle
+
+\abstract{The plane strain state of a partially electroded interfacial crack in a piezoelectric bimaterial is analyzed. The structure consists of two piezoelectric half-planes with coinciding poling directions oriented perpendicular to the interface. Two configurations are considered: (a) symmetrical—conducting zones are formed on both crack faces due to electrode delamination; and (b) asymmetrical—a conducting zone appears only on one crack face as a result of electrode exfoliation. The bimaterial is subjected to remote axial stress and an electric field normal to the crack, while additional in-plane axial stresses are applied to ensure compatibility conditions at infinity. A computational model based on the finite element method is developed to evaluate the fracture response. The influence of electromechanical load levels, as well as the length and location of the conducting zone, on fracture parameters—specifically crack opening displacements and energy release rates—is systematically investigated.}
+
+\section{Introduction}
+
+Piezoelectric materials are extensively used in modern microelectronic devices such as piezoresonators, sensors, transducers, and actuators. During operation, these devices are subjected to significant mechanical and electrical loads. Moreover, various material discontinuities—such as pores, cracks, and delaminations—can develop, making these materials highly susceptible to brittle fracture. Consequently, the application of fracture mechanics concepts becomes essential in analyzing the strength and reliability of piezoelectric structures.
+
+Over the past decades, numerous studies have addressed these issues, primarily employing linear models of deformation and fracture in piezoelectric materials. Among these, two-dimensional infinite models have gained widespread use, as they allow effective application of complex variable theory and complex potential methods to reduce boundary value problems to systems of linear relationships between piecewise analytical functions \cite{Adlucky16}. The complex Fourier transformation has also proven effective for solving such problems \cite{Adlucky25,Adlucky56}. These analytical approaches, along with a comprehensive review of challenges and key results in the field, are summarized in monographs \cite{Adlucky12,Adlucky57} and review articles \cite{Adlucky8,Adlucky16,Adlucky18,Adlucky34,Adlucky69,Adlucky70}.
+
+A considerable body of work has focused on analyzing cracks both within homogeneous piezoelectric materials and along interfaces between dissimilar piezoelectrics. Foundational studies \cite{Adlucky63,Adlucky64}, utilizing the generalized Stroh formalism \cite{Adlucky62}, have identified the types of crack-tip stress and electric displacement singularities that may arise at such interfaces. These works have led to a classification of piezoelectric bimaterials into two groups: those exhibiting oscillatory behavior in the generalized crack-tip stress field, and those that do not \cite{Adlucky48,Adlucky49,Adlucky50,Adlucky51,Adlucky52}.
+
+In addition to mechanical boundary conditions, three primary types of electrostatic boundary conditions are typically applied at crack faces \cite{Adlucky16}: (a) electric insulation, (b) electric permeability (either full or limited), and (c) electric conductivity. Electrically insulated (impermeable) cracks have been studied in \cite{Adlucky14,Adlucky22,Adlucky43,Adlucky53,Adlucky60,Adlucky63}, while problems involving full or limited electric permeability are addressed in \cite{Adlucky6,Adlucky15,Adlucky16,Adlucky20,Adlucky21,Adlucky23,Adlucky35,Adlucky36,Adlucky38,Adlucky40,Adlucky65,Adlucky66}. Electrically conducting cracks are considered in \cite{Adlucky5,Adlucky24,Adlucky42,Adlucky64}. Some studies also explore mixed boundary conditions on different crack faces \cite{Adlucky17,Adlucky58}. While most of these models assume uniform boundary conditions along the crack, solving problems where boundary condition types vary along the crack length is far more complex. Exact solutions for special cases involving anti-plane mechanical and in-plane electrical loading have been obtained in \cite{Adlucky46,Adlucky47}, but, to the best of the authors’ knowledge, no exact plane strain solutions currently exist.
+
+Identifying an adequate fracture criterion for dissimilar piezoelectric materials remains an open problem. As noted in \cite{Adlucky8}, no single fracture criterion can comprehensively explain all experimental observations. For low mechanical loading levels, criteria based solely on the mechanical component of the energy release rate (ERR) are often used \cite{Adlucky55,Adlucky56}. Alternative failure criteria have been proposed for interface cracks in \cite{Adlucky26,Adlucky71}. Efficient algorithms for computing fracture parameters—including crack opening displacements, stress intensity factors (SIFs), J-integrals, and ERRs—are presented in \cite{Adlucky7,Adlucky14,Adlucky32,Adlucky33,Adlucky34,Adlucky45}.
+
+The interaction between crack faces under frictionless contact has been explored in \cite{Adlucky22,Adlucky42,Adlucky47}, while contact with friction has been examined in the context of piecewise homogeneous non-piezoelectric bodies in \cite{Adlucky27}.
+
+Due to the complexity of piezoelectric equations, exact analytical solutions are generally limited to idealized cases. Hence, the development of reliable numerical techniques is of great interest. The finite element method (FEM) \cite{Adlucky72} has been most widely used for such purposes \cite{Adlucky19,Adlucky28,Adlucky29,Adlucky30,Adlucky31}. More recently, the extended finite element method (X-FEM) has been introduced to facilitate crack modeling via enrichment functions that account for discontinuities and asymptotic behavior near the crack tip \cite{Adlucky4,Adlucky44}. Additionally, the boundary element method (BEM), based on Green’s functions for anisotropic piezoelectric media, has proven effective for infinite domains, half-planes, and bimaterial configurations \cite{Adlucky9,Adlucky10,Adlucky37,Adlucky54}.
+
+Electrical loads are often applied to piezoelectric devices via thin, foil-shaped metal electrodes embedded along interfaces. Several models have been proposed to simulate piezoelectric structures with electrodes \cite{Adlucky11,Adlucky17,Adlucky39,Adlucky41,Adlucky58,Adlucky59}. In some cases, electrode delamination can lead to partial or complete exfoliation, forming an interfacial crack with conducting zones.
+
+In this study, we use FEM to investigate two configurations: (a) two conducting zones formed on both crack faces due to electrode delamination, and (b) a conducting zone formed on one crack face as a result of electrode exfoliation. We analyze the influence of electromechanical load magnitude, as well as the length and location of the conducting zone, on key fracture parameters.
+
+\section{Problem Formulation}
+
+The plane strain state of a bimaterial composed of $x_{3} > 0$ and $x_{3} < 0$ half-spaces bonded at the interface $x_{3} = 0$ and filled with piezoelectric materials 1 and 2 is considered. An interfacial crack is located along the interface segment $AB$, defined by $x_{1} \in L = (-l, l)$ (Fig.~\ref{AdluckyFig1}).
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.8\textwidth]{01_Adlucky/AdluckyFig1.png}
+	\caption{Loading scheme of the piezoelectric bimaterial}
+	\label{AdluckyFig1}
+\end{figure}
+
+The governing equations for a linearly elastic piezoelectric material under small strains, and in the absence of body forces and free charges, are given as follows \cite{Adlucky12}:
+
+\begin{equation}
+	\begin{array}{lll}
+	&\sigma_{ij,i} = 0,            &\quad  D_{i,i} = 0,
+	 \\
+	&\sigma_{ij}   = c_{ijkl} \varepsilon_{kl} - e_{kij} E_k,
+	&\quad   D_i  = e_{ikl} \varepsilon_{kl} + \kappa_{ik} E_k,
+	 \\
+	&\varepsilon_{ij} = \tfrac{1}{2}(u_{i,j} + u_{j,i}),
+	&\quad  E_i  = -\varphi_{,i}
+	\end{array}
+	\label{AdluckyEq1}
+\end{equation}
+with $i,j,k,l = 1,3$. Here, \( u_i \) are the components of the mechanical displacement vector, while \( \sigma_{ij} \) and \( \varepsilon_{ij} \) denote the components of the stress and strain tensors, respectively. The quantities \( E_i \) and \( D_i \) represent the components of the electric field vector and the electric displacement vector. The scalar quantity \( \varphi \) denotes the electric potential. Material properties are characterized by the fourth-order tensor \( c_{ijkl} \) of elastic stiffness constants, the third-order tensor \( e_{ijk} \) of piezoelectric coupling coefficients, and the second-order tensor \( \kappa_{ij} \) of dielectric permittivity. Subscripts following commas indicate partial differentiation with respect to the corresponding spatial coordinates.
+
+
+Under plane strain conditions, the following assumptions hold:
+\[
+u_2 = 0,\quad \sigma_{12} = \sigma_{23} = 0,\quad \varepsilon_{12} = \varepsilon_{23} = 0,\quad E_2 = D_2 = 0,
+\]
+and all remaining field variables depend only on $x_1$ and $x_3$.
+
+Eliminating stress and strain variables, the system reduces to the coupled partial differential equations:
+
+\begin{equation}
+    (c_{ijkl} u_k + e_{lij} \varphi)_{,li} = 0, \quad
+(e_{ikl} u_k - \kappa_{il} \varphi)_{,li} = 0.
+\label{AdluckyEq2}
+\end{equation}
+
+
+At infinity, the remote mechanical and electric fields $\sigma_{11}^{(1)\infty}$, $\sigma_{11}^{(2)\infty}$, $\sigma_{33}^{\infty}$, and $E_3^{(\infty)}$ are prescribed. A segment of the crack, $C_1BC_2$ in Fig.~\ref{AdluckyFig2a} or $C_2B$ in Fig.~\ref{AdluckyFig2b}, of length $d$, is electrically conducting; the remainder is electrically insulated.
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig2a.png}
+		\caption{Symmetrical conducting zone}
+		\label{AdluckyFig2a}
+	\end{subfigure}
+	\hspace{1em}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig2b.png}
+		\caption{Asymmetrical conducting zone}
+		\label{AdluckyFig2b}
+	\end{subfigure}
+	\caption{Two configurations of conducting zone location along the crack $AB$.}
+	\label{fig:AdluckyFig2}
+\end{figure}
+
+
+The interface boundary conditions for the open crack take the form:
+\begin{equation}
+	\begin{array}{rcl}
+        \sigma_{i3}^{(1)}(x_1, 0) &=& \sigma_{i3}^{(2)}(x_1, 0), \\
+	\varphi^{(1)}(x_1, 0) &=& \varphi^{(2)}(x_1, 0),  \\
+	D_3^{(1)}(x_1, 0) &=& D_3^{(2)}(x_1, 0),  \\
+	u_i^{(1)}(x_1, 0) &=& u_i^{(2)}(x_1, 0), \quad x_1 \in \mathbb{R} \setminus L,
+    \end{array}
+	\label{AdluckyEq3}
+\end{equation}
+and
+\[
+\sigma_{i3}^{(m)}(x_1, 0) = 0, \quad x_1 \in L\quad (m = 1,2;\; i = 1,3).
+\]
+
+The electrostatic boundary conditions are:
+\begin{itemize}
+	\item On the insulated part of the crack:
+	\begin{equation}
+		D_3(x_1, 0) = 0
+		\label{AdluckyEq4}
+	\end{equation}
+
+	\item On the conducting part (assumed grounded):
+	\begin{equation}
+		\varphi(x_1, 0) = 0
+		\label{AdluckyEq5}
+	\end{equation}
+\end{itemize}
+
+Frictionless contact between the crack faces is allowed. The corresponding mechanical boundary conditions in the contact zones are:
+\begin{equation}
+\begin{array}{l}
+    u_3^{(1)}(x_1, 0) = u_3^{(2)}(x_1, 0),
+    \\
+	\sigma_{13}^{(1)}(x_1, 0) = \sigma_{13}^{(2)}(x_1, 0) = 0, \quad
+	\sigma_{33}^{(1)}(x_1, 0) = \sigma_{33}^{(2)}(x_1, 0)
+\end{array}
+	\label{AdluckyEq6}
+\end{equation}
+
+Fracture parameters such as the crack opening displacement
+\[
+\Delta(x_1) = \left| u_3^{(2)}(x_1, 0) - u_3^{(1)}(x_1, 0) \right|,
+\]
+and the energy release rates $G(A)$ and $G(B)$ at the crack tips $A$ and $B$, respectively, are computed by solving the formulated boundary value problem.
+
+We consider piezoelectric materials with hexagonal crystal symmetry (point group 6mm), for which the material tensors take the following forms using reduced index notation \cite{Adlucky12}:
+\begin{equation}
+    \begin{array}{rcl}
+        \|c_{ij}\| &=&
+    \begin{pmatrix}
+    	c_{11} & c_{12} & c_{13} & 0 & 0 & 0 \\
+    	c_{12} & c_{11} & c_{13} & 0 & 0 & 0 \\
+    	c_{13} & c_{13} & c_{33} & 0 & 0 & 0 \\
+    	0 & 0 & 0 & c_{44} & 0 & 0 \\
+    	0 & 0 & 0 & 0 & c_{44} & 0 \\
+    	0 & 0 & 0 & 0 & 0 & \tfrac{1}{2}(c_{11} - c_{12})
+    \end{pmatrix},
+    \vspace{1ex}
+    \\
+	\|e_{ij}\| &=&
+	\begin{pmatrix}
+		0 & 0 & 0 & 0 & e_{15} & 0 \\
+		0 & 0 & 0 & e_{15} & 0 & 0 \\
+		e_{31} & e_{31} & e_{33} & 0 & 0 & 0
+	\end{pmatrix}, \quad
+	\|\kappa_{ij}\| =
+	\begin{pmatrix}
+		\kappa_{11} & 0 & 0 \\
+		0 & \kappa_{11} & 0 \\
+		0 & 0 & \kappa_{33}
+	\end{pmatrix}
+    \end{array}
+	\label{AdluckyEq7}
+\end{equation}
+
+The piezoelectric constitutive relations take the form:
+\begin{equation}
+    \begin{array}{ll}
+	\sigma_{11} &= c_{11} \varepsilon_{11} + c_{13} \varepsilon_{33} - e_{31} E_3, \\
+	\sigma_{33} &= c_{13} \varepsilon_{11} + c_{33} \varepsilon_{33} - e_{33} E_3, \\
+	\sigma_{13} &= c_{44} \varepsilon_{13} - e_{15} E_1,
+    \\
+	D_1 &= e_{15} \varepsilon_{13} + \kappa_{11} E_1,
+    \\
+	D_3 &= e_{31} \varepsilon_{11} + e_{33} \varepsilon_{33} + \kappa_{33} E_3.
+\end{array}
+ \label{AdluckyEq8}
+\end{equation}
+
+To ensure compatibility between the two materials at the interface under remote loading, we impose:
+\begin{equation}
+	\varepsilon_{11}^{(1)\infty} = \varepsilon_{11}^{(2)\infty} = \varepsilon_{11}^{\infty}
+	\label{AdluckyEq9}
+\end{equation}
+and
+
+\begin{equation}
+	E_3^{(1)\infty} = E_3^{(2)\infty} = E_3^{\infty}.
+	\label{AdluckyEq10}
+\end{equation}
+
+Continuity of normal stress and electric displacement at the interface implies:
+\begin{equation}
+	\sigma_{33}^{(1)\infty} = \sigma_{33}^{(2)\infty} = \sigma_{33}^{\infty}, \quad
+	D_3^{(1)\infty} = D_3^{(2)\infty} = D_3^{\infty}
+	\label{AdluckyEq11}
+\end{equation}
+
+From \eqref{AdluckyEq8}–\eqref{AdluckyEq11}, we derive:
+\begin{align}
+	\sigma_{11}^{(m)\infty} &= c_{11}^{(m)} \varepsilon_{11}^{\infty} + c_{13}^{(m)} \varepsilon_{33}^{(m)\infty} - e_{31}^{(m)} E_3^{\infty}, \nonumber \\
+	\sigma_{33}^{\infty} &= c_{13}^{(m)} \varepsilon_{11}^{\infty} + c_{33}^{(m)} \varepsilon_{33}^{(m)\infty} - e_{33}^{(m)} E_3^{\infty}, \label{AdluckyEq12} \\
+	D_3^{\infty} &= e_{31}^{(m)} \varepsilon_{11}^{\infty} + e_{33}^{(m)} \varepsilon_{33}^{(m)\infty} + \kappa_{33}^{(m)} E_3^{\infty} \quad (m = 1,2). \nonumber
+\end{align}
+
+Finally, if $\sigma_{33}^{\infty}$ and $E_3^{\infty}$ are taken as independent variables, the stress $\sigma_{11}^{(m)\infty}$ is expressed as:
+\begin{equation}
+	\sigma_{11}^{(m)\infty} = k_1^{(m)} E_3^{\infty} + k_2^{(m)} \sigma_{33}^{\infty} \quad (m = 1,2),
+	\label{AdluckyEq13}
+\end{equation}
+where
+
+\begin{align*}
+    k_{1}^{(1)} &= g \Big\{
+    c_{33}^{(1)} c_{33}^{(2)} e_{33}^{(1)} (e_{31}^{(1)} - e_{31}^{(2)})
+    + c_{11}^{(1)} \left[ c_{33}^{(2)} (e_{33}^{(1)})^2 - c_{33}^{(1)} (e_{33}^{(2)})^2 \right]
+    \\
+    &\qquad + c_{13}^{(1)} \left[
+    c_{33}^{(2)} e_{33}^{(1)} (e_{31}^{(2)} - 2 e_{31}^{(1)})
+    + e_{33}^{(2)} (c_{13}^{(1)} e_{33}^{(2)} - c_{13}^{(2)} e_{33}^{(1)})
+    \right]
+    \\
+    &\qquad + c_{33}^{(1)} c_{13}^{(2)} e_{31}^{(1)} e_{33}^{(2)}
+    + c_{33}^{(2)} \left[ (c_{13}^{(1)})^2 - c_{11}^{(1)} c_{33}^{(1)} \right]
+    (\kappa_{33}^{(2)} - \kappa_{33}^{(1)})
+    \Big\},
+    \\[1ex]
+    k_{1}^{(2)} &= -g \Big\{
+    c_{33}^{(2)} c_{33}^{(1)} e_{33}^{(2)} (e_{31}^{(2)} - e_{31}^{(1)})
+    + c_{11}^{(2)} \left[ c_{33}^{(1)} (e_{33}^{(2)})^2 - c_{33}^{(2)} (e_{33}^{(1)})^2 \right]
+    \\
+    &\qquad + c_{13}^{(2)} \left[
+    c_{33}^{(1)} e_{33}^{(2)} (e_{31}^{(1)} - 2 e_{31}^{(2)})
+    + e_{33}^{(1)} (c_{13}^{(2)} e_{33}^{(1)} - c_{13}^{(1)} e_{33}^{(2)})
+    \right]
+    \\
+    &\qquad + c_{33}^{(2)} c_{13}^{(1)} e_{31}^{(2)} e_{33}^{(1)}
+    + c_{33}^{(1)} \left[ (c_{13}^{(2)})^2 - c_{11}^{(2)} c_{33}^{(2)} \right]
+    (\kappa_{33}^{(1)} - \kappa_{33}^{(2)})
+    \Big\},
+    \\[1ex]
+    k_{2}^{(1)} &= g \Big[
+    c_{13}^{(1)} c_{33}^{(2)} (e_{31}^{(2)} - e_{31}^{(1)})
+    + c_{11}^{(1)} c_{33}^{(2)} e_{33}^{(1)} \notag \\
+    &\qquad - e_{33}^{(1)} \left( c_{13}^{(1)} c_{13}^{(2)} + c_{11}^{(1)} c_{33}^{(1)} - (c_{13}^{(1)})^2 \right)
+    \Big],
+    \\
+    k_{2}^{(2)} &= -g \Big[
+    c_{13}^{(2)} c_{33}^{(1)} (e_{31}^{(1)} - e_{31}^{(2)})
+    + c_{11}^{(2)} c_{33}^{(1)} e_{33}^{(2)} \notag \\
+    &\qquad - e_{33}^{(2)} \left( c_{13}^{(1)} c_{13}^{(2)} + c_{11}^{(2)} c_{33}^{(2)} - (c_{13}^{(2)})^2 \right)
+    \Big],
+    \\
+    g &= \left[
+    c_{33}^{(1)} c_{33}^{(2)} (e_{31}^{(2)} - e_{31}^{(1)})
+    + c_{13}^{(1)} c_{33}^{(2)} e_{33}^{(1)}
+    - c_{13}^{(2)} c_{33}^{(1)} e_{33}^{(2)}
+    \right]^{-1}. \label{AdluckyEq_g}
+\end{align*}
+
+\section{Numerical Realization}
+
+Modeling of the piezoelectric bimaterial with an interfacial crack was carried out using Abaqus software. The infinite plane was approximated by a finite rectangular domain $W: |x_1| \le w,\; |x_3| \le w$, where $w = 20l$. Numerical experiments confirmed that this choice yields sufficient agreement with analytical results for the infinite domain.
+
+Electromechanical boundary conditions representing the remote fields were imposed on the boundaries of the region $W$. The electric field component was defined via the potential difference between the top and bottom edges:
+\begin{equation*}
+    E_3^{\infty} = -\frac{\left.\varphi\right|_{x_3=w} - \left.\varphi\right|_{x_3=-w}}{2w}.
+\end{equation*}
+
+Other boundary conditions were applied as follows:
+\begin{align*}
+    \left. \sigma_{11} \right|_{x_1 = \pm w} &= \sigma_{11}^{(1)\infty}, \quad x_3 > 0, \\
+    \left. \sigma_{11} \right|_{x_1 = \pm w} &= \sigma_{11}^{(2)\infty}, \quad x_3 < 0, \\
+    \left. \sigma_{33} \right|_{x_3 = \pm w} &= \sigma_{33}^{\infty}, \\
+    \left. \sigma_{13} \right|_{x_1 = \pm w} &= 0, \quad
+    \left. \sigma_{13} \right|_{x_3 = \pm w} = 0, \quad
+    \left. D_1 \right|_{x_1 = \pm w} = 0.
+\end{align*}
+
+To prevent rigid-body motion, weak horizontal and vertical springs were added at each corner of the boundary. Their stiffness values were chosen to be several orders of magnitude smaller than that of the bulk material, ensuring negligible influence on the stress–strain state.
+
+The finite element mesh was built using 8-node quadrilateral piezoelectric elements (CPE8E) with second-order interpolation. Nodal degrees of freedom included the displacement components $u_1$, $u_3$, and the electric potential $\varphi$. The mesh was refined near the crack and coarsened toward the outer boundary. Near the crack tips, a concentric mesh was used with radial side lengths decreasing from $0.3l$ to $\delta = 10^{-4}l$ and an arc span of $0.0625\pi$. Mesh sensitivity studies confirmed that the relative variation in computed energy release rates (ERRs) did not exceed 0.25\% for further refinements.
+
+Frictionless contact between the crack faces was modeled using surface-to-surface contact pairs with non-penetration constraints. Boundary conditions on the crack faces were specified as follows: $\varphi = 0$ on conducting zones and $D_3 = 0$ on insulated zones.
+
+The finite element analysis was conducted in the geometrically linear regime under static loading conditions.
+
+Calculation of ERRs was performed using the virtual crack closure technique (VCCT) \cite{Adlucky32,Adlucky33,Adlucky34,Adlucky57,Adlucky61}. At the crack tip $B$, the total ERR was decomposed into mechanical and electrical contributions:
+\begin{equation}
+    G(B) = G^{M}(B) + G^{E}(B),
+    \label{AdluckyEq14}
+\end{equation}
+with
+\begin{equation}\label{AdluckyEq15}
+	\begin{aligned}
+		G^M(B) &= G^M_{\mathrm{I}}(B) + G^M_{\mathrm{II}}(B), 
+		 \\
+		G^M_{\mathrm{I}}(B) &= \frac{1}{2\delta} \int_0^{\delta} \sigma_{33}(s) \Delta u_3(s - \delta)\, ds,
+		\\
+		G^M_{\mathrm{II}}(B) &= \frac{1}{2\delta} \int_0^{\delta} \sigma_{13}(s) \Delta u_1(s - \delta)\, ds, \\\
+		G^E(B) &= \frac{1}{2\delta} \int_0^{\delta} \big[
+		D_3(s) \Delta \varphi(s - \delta)
+		- D_3^{(1)}(s - \delta) \varphi^{(1)}(s - \delta)  \\
+		&\qquad + D_3^{(2)}(s - \delta) \varphi^{(2)}(s - \delta)
+		- \Delta D_3(s - \delta) \varphi(s)
+		\big] ds,
+	\end{aligned}
+	\end{equation}
+where
+\begin{align*}
+	\Delta u_i(s) &= u_i^{(1)}(s) - u_i^{(2)}(s) \quad (i = 1,3), \nonumber \\
+	\Delta \varphi(s) &= \varphi^{(1)}(s) - \varphi^{(2)}(s), \quad
+	\Delta D_3(s) = D_3^{(1)}(s) - D_3^{(2)}(s).
+\end{align*}
+In \eqref{AdluckyEq15} , $\delta$ is the length of the virtual crack extension, and $s$ is the distance from the crack tip $B$ along the crack extension direction. The mechanical ERR components $G^M_{\mathrm{I}}$ and $G^M_{\mathrm{II}}$ correspond to Mode I (opening) and Mode II (shearing) deformation, respectively.
+
+Following the procedure described in \cite{Adlucky1,Adlucky2}, all field quantities in the VCCT integrals were approximated using least-squares fits to finite element values at nodes and Gauss points of elements adjacent to the crack tips.
+
+
+\section{Numerical Results}
+
+Some understanding about the accuracy of the used FEM model can be obtained by considering the test problem for fully insulated crack ($d=0$) in homogeneous piezomaterial PZT-5H. The related analytical results for ERR are presented in \cite{Adlucky3}:
+\[
+\begin{array}{rl}
+	G^{M} &= \dfrac{\pi l}{2} \left[1.9571 \times 10^{-11} \left(\sigma_{33}^{\infty}\right)^2 
+	+ 2.6179 \times 10^{-10} \sigma_{33}^{\infty} E_{3}^{\infty} \right] \; \text{N/m}, 
+	\\[1ex]
+	G^{E} &= 
+	\begin{multlined}[t]
+		\dfrac{\pi l}{2} \Big[5.2489 \times 10^{-14} \left(\sigma_{33}^{\infty}\right)^2 
+	- 2.5397 \times 10^{-10} \sigma_{33}^{\infty} E_{3}^{\infty}
+	\\[-1.2em]
+	- 1.9224 \times 10^{-8} \left(E_{3}^{\infty}\right)^2 \Big] \; \text{N/m}.
+	\end{multlined}
+\end{array}
+\]
+
+For $E_{3}{}^{\infty} = -10^4$ V/m, $\sigma_{33}{}^{\infty} = 10^6$ Pa, and $l=0.01$ m, it can be found that $G^M = 0.2663$ N/m, $G^E = 0.0105$ N/m. Corresponding FEM results are $G^M = 0.2680$ N/m and $G^E = 0.0107$ N/m.
+
+All results below refer to the interfacial crack of length $l=0.01$ m in bimaterial PZT-4/PZT-5H. The corresponding factors in \eqref{AdluckyEq13} for additional loads $\sigma_{11}{}^{(m)\infty}$ are:
+\[
+\begin{array}{ll}
+	k_{1}^{(1)} = 960.37~\text{Pa}\cdot\text{m/V}, &\quad k_{2}^{(1)} = 7.59, \\
+k_{1}^{(2)} = 1085.46~\text{Pa}\cdot\text{m/V}, &\quad k_{2}^{(2)} = 8.30.
+\end{array}
+\]
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=0.64\textwidth]{01_Adlucky/AdluckyFig3.png}
+	\caption{Deformed crack with symmetrical conducting zone.}
+	\label{AdluckyFig3}
+\end{figure}
+
+Consider first the case of a symmetrical conducting zone (Fig.~\ref{AdluckyFig2a}). A typical view of the deformed crack for the case $d = l$ under the loading $\sigma_{33}{}^{\infty} = 0.5 \cdot 10^{6}$~Pa and $E_{3}{}^{\infty} = -10^{4}$~V/m is shown in Fig.~\ref{AdluckyFig3}, with a magnification factor of 4000. 
+
+The variation of the crack opening displacement $\Delta$ along the crack is presented in Fig.~\ref{AdluckyFig4} for different values of $\sigma_{33}{}^{\infty}$, $E_{3}{}^{\infty}$, and $d$. 
+
+\newlength{\AdluckyWidth}
+\setlength{\AdluckyWidth}{0.32\textwidth}
+
+\begin{figure}[t]
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig4a.png}
+		\caption{}
+		\label{AdluckyFig4a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig4b.png}
+		\caption{}
+		\label{AdluckyFig4b}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig4c.png}
+		\caption{}
+		\label{AdluckyFig4c}
+	\end{subfigure}
+	
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig4d.png}
+		\caption{}
+		\label{AdluckyFig4d}
+	\end{subfigure}
+	\hspace{1em}
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig4e.png}
+		\caption{}
+		\label{AdluckyFig4e}
+	\end{subfigure}
+	
+	\caption{Variation of crack opening $\Delta$ along the crack region for different values of $\sigma_{33}^{\infty}$, $E_{3}^{\infty}$, and $d$ in the case of symmetrically electroded crack.}
+	\label{AdluckyFig4}
+\end{figure}
+
+The results indicate that the crack opening within the conducting zone is insensitive to the magnitude of the remote electric field $E_{3}{}^{\infty}$ and is governed entirely by the mechanical load $\sigma_{33}{}^{\infty}$. In contrast, the opening in the insulated region exhibits a strong dependence on $E_{3}{}^{\infty}$. For the fully conducting crack ($d = 2l$), the curves corresponding to $E_{3}{}^{\infty} = -0.5 \cdot 10^{4}$~V/m and $E_{3}{}^{\infty} = -10^{4}$~V/m coincide; therefore, the former is not shown in the plots. Overall, the crack opening shows only a weak dependence on the length of the conducting zone $d$, with the maximum displacement observed in the fully insulated case.
+
+
+
+The variation of the ERR at the crack tips for the symmetrically electroded case, as a function of the electromechanical load levels and the length of the conducting zone $d$, is presented in Table~\ref{AdluckyTab1}. Compared to the homogeneous piezomaterial PZT-5H, the ERR values for the considered bimaterial are significantly higher, which can be attributed to the influence of shear deformation in the vicinity of the crack tips.
+
+\begin{table}[t]
+	\centering
+	\caption{Variation of ERR at the crack tips for symmetrically electroded crack with respect to the electromechanical loads and the length of the conducting zone.}
+	\label{AdluckyTab1}
+	\begin{tabular}{p{3em}p{4em}p{6em}p{5em}p{5em}p{5em}p{5em}}
+		\toprule
+		$d/l$ & $\sigma_{33}^{\infty}$ & $E_{3}^{\infty}$ & $G^M(A)$ & $G^E(A)$ & $G^M(B)$ & $G^E(B)$ \\
+		& (MPa)                  & (V/m)            & (N/m)    & (N/m)    & (N/m)    & (N/m)    \\
+		\midrule
+		\multirow{4}{*}{0}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.11 & -0.04 & 0.11 & -0.04 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.20 & -0.21 & 0.20 & -0.21 \\
+		& 0.5 & $-10^4$           & 0.42 & -1.23 & 0.42 & -1.23 \\
+		& 1.0 & $-10^4$           & 0.44 & -0.16 & 0.44 & -0.16 \\
+		\midrule
+		\multirow{4}{*}{0.5}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.10 & -0.03 & 0.08 &  0.00 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.21 & -0.13 & 0.34 &  0.00 \\
+		& 0.5 & $-10^4$           & 0.32 & -0.91 & 0.09 &  0.00 \\
+		& 1.0 & $-10^4$           & 0.42 & -0.13 & 0.33 &  0.00 \\
+		\midrule
+		\multirow{4}{*}{1.0}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.10 & -0.02 & 0.08 &  0.00 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.23 & -0.06 & 0.33 &  0.00 \\
+		& 0.5 & $-10^4$           & 0.25 & -0.62 & 0.08 &  0.00 \\
+		& 1.0 & $-10^4$           & 0.40 & -0.09 & 0.33 &  0.00 \\
+		\midrule
+		\multirow{4}{*}{1.5}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.09 & -0.01 & 0.08 &  0.00 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.26 &  0.00 & 0.33 &  0.00 \\
+		& 0.5 & $-10^4$           & 0.19 & -0.32 & 0.08 &  0.00 \\
+		& 1.0 & $-10^4$           & 0.38 & -0.06 & 0.33 &  0.00 \\
+		\midrule
+		\multirow{4}{*}{2.0}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.08 &  0.00 & 0.08 &  0.00 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.33 &  0.00 & 0.33 &  0.00 \\
+		& 0.5 & $-10^4$           & 0.08 &  0.00 & 0.08 &  0.00 \\
+		& 1.0 & $-10^4$           & 0.33 &  0.00 & 0.33 &  0.00 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Now consider the case of an asymmetrical conducting zone (Fig.~\ref{AdluckyFig2b}). A representative view of the deformed crack for $d = l$ under $\sigma_{33}{}^{\infty} = 0.5 \cdot 10^{6}$~Pa and $E_{3}{}^{\infty} = -10^{4}$~V/m is shown in Fig.~\ref{AdluckyFig5}, with a magnification factor of 4000. The variation of the crack opening displacement $\Delta$ along the crack, for different values of $\sigma_{33}{}^{\infty}$, $E_{3}{}^{\infty}$, and $d$, is presented in Fig.~\ref{AdluckyFig6}. Unlike the symmetrical case, the crack opening within the conducting zone now depends on both the mechanical and electrical load levels.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.64\textwidth]{01_Adlucky/AdluckyFig5.png}
+	\caption{Deformed crack with asymmetrical conducting zone.}
+	\label{AdluckyFig5}
+\end{figure}
+
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig6a.png}
+		\caption{}
+		\label{AdluckyFig6a}
+	\end{subfigure}
+	\hspace{1cm}
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig6b.png}
+		\caption{}
+		\label{AdluckyFig6b}
+	\end{subfigure}
+	
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig6c.png}
+		\caption{}
+		\label{AdluckyFig6c}
+	\end{subfigure}
+\hspace{1cm}
+	\begin{subfigure}{\AdluckyWidth}
+		\includegraphics[width=\textwidth]{01_Adlucky/AdluckyFig6d.png}
+		\caption{}
+		\label{AdluckyFig6d}
+	\end{subfigure}
+	
+	\caption{Variation of crack opening $\Delta$ along the crack region for different values of $\sigma_{33}^{\infty}$, $E_{3}^{\infty}$, and $d$ in the case of asymmetrically electroded crack}
+	\label{AdluckyFig6}
+\end{figure}
+
+The corresponding ERR values for the asymmetrically electroded crack are given in Table~\ref{AdluckyTab2}. Compared to the results in Table~\ref{AdluckyTab1}, the mechanical components of the ERR are consistently higher in the asymmetrical case. According to the fracture criterion proposed in~\cite{Adlucky55}, which is based on the mechanical part of the ERR, the asymmetrical configuration represents a more critical scenario.
+
+\begin{table}[t]
+	\centering
+	\caption{Variation of ERR at the crack tips for asymmetrically electroded crack with respect to electromechanical load levels and conducting zone length.}
+	\label{AdluckyTab2}
+	\begin{tabular}{p{3em}p{4em}p{6em}p{5em}p{5em}p{5em}p{5em}}
+		\toprule
+		$d/l$ & $\sigma_{33}^{\infty}$ & $E_{3}^{\infty}$ & $G^M(A)$ & $G^E(A)$ & $G^M(B)$ & $G^E(B)$ \\
+		& (MPa)                  & (V/m)            & (N/m)    & (N/m)    & (N/m)    & (N/m)    \\
+		\midrule
+		\multirow{4}{*}{0.5}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.10 & -0.04 & 0.15 & -0.07 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.21 & -0.18 & 0.01 &  0.19 \\
+		& 0.5 & $-10^4$           & 0.40 & -1.11 & 1.02 & -1.33 \\
+		& 1.0 & $-10^4$           & 0.43 & -0.15 & 0.60 & -0.28 \\
+		\midrule
+		\multirow{4}{*}{1.0}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.11 & -0.03 & 0.16 & -0.08 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.22 & -0.16 & 0.02 &  0.22 \\
+		& 0.5 & $-10^4$           & 0.38 & -1.02 & 1.14 & -1.42 \\
+		& 1.0 & $-10^4$           & 0.43 & -0.14 & 0.63 & -0.31 \\
+		\midrule
+		\multirow{4}{*}{1.5}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.11 & -0.03 & 0.15 & -0.08 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.22 & -0.14 & 0.02 &  0.24 \\
+		& 0.5 & $-10^4$           & 0.37 & -0.95 & 1.19 & -1.46 \\
+		& 1.0 & $-10^4$           & 0.43 & -0.13 & 0.63 & -0.31 \\
+		\midrule
+		\multirow{4}{*}{2.0}
+		& 0.5 & $-0.5 \cdot 10^4$ & 0.15 & -0.07 & 0.15 & -0.07 \\
+		& 1.0 & $-0.5 \cdot 10^4$ & 0.01 &  0.20 & 0.01 &  0.20 \\
+		& 0.5 & $-10^4$           & 0.86 & -1.28 & 0.86 & -1.28 \\
+		& 1.0 & $-10^4$           & 0.59 & -0.28 & 0.59 & -0.28 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\section{Conclusions}
+
+The behavior of a partially electroded interfacial crack in the piezoelectric bimaterial PZT-4/PZT-5H has been investigated. The poling directions of both piezomaterials are aligned and oriented orthogonally to the crack. Two configurations were considered: (a) a symmetrically electroded crack, where conducting zones are present on both crack faces due to electrode delamination; and (b) an asymmetrically electroded crack, where the conducting zone is located on one face only, due to electrode exfoliation. The corresponding plane strain states under remote electromechanical loading were analyzed using the finite element method (FEM), with applied loads satisfying the conditions of continuity for longitudinal strains $\varepsilon_{11}{}^{(m)\infty}$ and electric fields $E_{3}{}^{(m)\infty}$ at infinity ($m = 1,2$). Energy release rates (ERRs) at the crack tips were computed via post-processing using the virtual crack closure technique.
+
+The crack opening displacements, evaluated for various electromechanical load levels and conducting zone lengths, are presented graphically. The corresponding ERR values at the crack tips are summarized in tabular form.
+
+The results indicate that the crack opening is only weakly affected by the length of the conducting zone, and it attains maximum values for a fully insulated crack in both the symmetrical and asymmetrical configurations. In the symmetrical case, the opening within the conducting zone is independent of the remote electric field and is governed solely by the mechanical load level. Conversely, in the insulated region, the opening is strongly influenced by the electric field magnitude. In the asymmetrical case, the crack opening along the conducting zone depends on both the electrical and mechanical loads, in contrast to the symmetrical case.
+
+Compared to the homogeneous piezomaterial PZT-5H, the ERR values in the PZT-4/PZT-5H bimaterial are significantly higher due to the contribution of shear deformation near the crack tips. Furthermore, the mechanical component of the ERR is consistently greater in the asymmetrical case. According to the fracture criterion proposed in~\cite{Adlucky55}, which is based on the mechanical part of the ERR, the asymmetrically electroded crack poses a higher risk of failure.
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter01}

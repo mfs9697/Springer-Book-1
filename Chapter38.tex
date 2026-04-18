@@ -1,0 +1,1163 @@
+% !TeX root = BookN.tex
+
+
+\title{Elastic Analysis of Finite Domains with Corner Points and Eigenstrains}
+
+\titlerunning{Finite Domains with Corner Points and Eigenstrains}
+
+\author{Mykola Yuzvyak and Yuriy Tokovyy}
+
+\institute{
+	Mykola Yuzvyak \at 
+	\AffPidstryhach \\
+	\email{yuzvyak@iapmm.lviv.ua}
+	\and
+	Yuriy Tokovyy \at 
+	\AffPidstryhach \\
+	\email{tokovyy@iapmm.lviv.ua}
+}
+
+\maketitle
+
+\abstract{
+	A generalized {direct-integration method} is presented for two-dimensional
+	elasticity and thermoelasticity problems in a rectangular domain whose
+	elastic moduli are arbitrary functions of both in-plane coordinates.
+	The generalization hinges on two ideas.  
+	First, all stress components are expressed through a single scalar
+	potential—the {Vihak function}.  
+	Second, the {method of additional strains} transfers the spatial
+	variation of the material constants into initially unknown eigen-strain
+	fields, leaving the governing operator with constant coefficients.
+	The resulting boundary-value problem for the Vihak function reduces to a
+	sequence of second-order integro-differential equations
+	supplemented by integral side conditions that follow systematically from
+	the original boundary data on the stresses.
+	This framework yields closed-form representations for the stresses and
+	is readily implemented in an iterative scheme for strongly
+	inhomogeneous or layered materials.}%
+
+
+\graphicspath{{38_Yuzvyak/}}
+
+\section{Introduction}
+
+The fracture behaviour of structural materials is governed by an interplay of physical, mechanical, and geometric factors \cite{Yuzvyak20}.  
+Geometric factors are primarily associated with surface stress concentrators such as corner lines and points.  
+Within a mathematical model these concentrators coincide with the intersection lines or points of dissimilar coordinate surfaces \cite{Yuzvyak3}.  
+The stress field in their neighbourhood differs markedly from that in the surrounding volume, and its evaluation is complicated by discontinuous boundary conditions and surface singularities \cite{Yuzvyak10}.
+
+Spatially varying material properties further influence the mechanical response and fracture resistance of components \cite{Yuzvyak8,Yuzvyak15,Yuzvyak18}.  
+Inhomogeneous solids—whose elastic moduli change continuously or step-wise within the body—are increasingly employed in aerospace, biomedical, and structural applications, where tailored gradients enable an improved compromise between competing performance requirements \cite{Yuzvyak9,Yuzvyak27}.  
+Comprehensive surveys of fabrication techniques, application areas, and modelling strategies for functionally graded materials (FGMs) are provided in \cite{Yuzvyak6,Yuzvyak13}, while the most recent review dedicated to additively manufactured FGMs emphasises optimisation of gradient profiles for internal-stress control \cite{Yuzvyak1}.
+
+Exact analytical solutions of linear elasticity for non-homogeneous media are scarce because the governing equations contain position-dependent coefficients composed of elastic-moduli profiles \cite{Yuzvyak27,Yuzvyak28}.  
+Since these coefficients do not commute with differential operators, many classical techniques become inapplicable \cite{Yuzvyak19}.  
+Closed-form results have therefore been obtained only for a few special gradients and geometries.  
+Considerable attention has been devoted to media with one-dimensional property variation—typical of FGMs and multilayer assemblies—where separation of variables remains possible \cite{Yuzvyak14,Yuzvyak25}.  
+Problems involving oblique \cite{Yuzvyak11,Yuzvyak12,Yuzvyak17} or fully two-/three-dimensional gradients \cite{Yuzvyak34} are substantially more demanding.
+
+This chapter presents an algorithm for the plane-strain analysis of a rectangular domain whose elastic moduli are arbitrary functions of both in-plane coordinates.  
+The problem combines two major challenges: corner singularities and multi-directional inhomogeneity.  
+The procedure integrates the direct integration method \cite{Yuzvyak35} with the method of additional (eigen)strains, also referred to as the flexibility method \cite{Yuzvyak2,Yuzvyak5,Yuzvyak21,Yuzvyak22}.  
+Position-dependent stiffness terms in the constitutive relations are treated as unknown additional strains, whereas the basic elastic strains are evaluated with constant material parameters.  
+An explicit solution is first derived for the homogeneous auxiliary problem with prescribed additional strains by means of the direct integration method, which is particularly suited to domains containing corner points.  
+The additional strains are then determined iteratively through a successive-approximation scheme, each step requiring the solution of a system with constant coefficients.
+
+\section{Governing Equations of the Problem}
+
+\noindent
+A plane problem of the elasticity theory is considered for the rectangle  
+\(
+\mathcal{D}=\{(x,y)\in[-a_x,a_x]\times[-a_y,a_y]\},
+\)
+whose elastic moduli are prescribed as arbitrary functions of the in-plane coordinates \(x\) and \(y\).
+The Cartesian stresses \(\sigma_{xx},\sigma_{yy},\sigma_{xy}\) obey the equilibrium relations
+\begin{equation}
+	\frac{\partial\sigma_{xx}}{\partial x}+\frac{\partial\sigma_{xy}}{\partial y}=0, 
+	\qquad
+	\frac{\partial\sigma_{xy}}{\partial x}+\frac{\partial\sigma_{yy}}{\partial y}=0,
+	\label{YuzvyakEq1}
+\end{equation}
+together with eight boundary conditions on \(\partial\mathcal{D}\),
+\begin{equation}
+	\begin{array}{cc}
+		\sigma_{xx}(\pm a_x,y)=-p_x^{\pm}(y), & \quad
+		\sigma_{xy}(\pm a_x,y)=\tau_{xy}^{\pm}(y),\\[2pt]
+		\sigma_{yy}(x,\pm a_y)=-p_y^{\pm}(x), & \quad
+		\sigma_{xy}(x,\pm a_y)=\tau_{yx}^{\pm}(x),
+	\end{array}
+	\label{YuzvyakEq2}
+\end{equation}
+where \(p_x^{\pm},p_y^{\pm}\) and \(\tau_{xy}^{\pm},\tau_{yx}^{\pm}\) are prescribed normal and tangential tractions.
+
+The total strains comprise elastic and thermal parts.  
+With Young’s modulus \(E(x,y)\), Poisson’s ratio \(\nu(x,y)\), and thermal-expansion coefficient \(\alpha_T(x,y)\), the constitutive relations for the \emph{plane-stress} hypothesis read
+\begin{equation}
+	\varepsilon_{xx}= \frac{\sigma_{xx}-\nu\sigma_{yy}}{E}+\varepsilon_T,\quad
+	\varepsilon_{yy}= \frac{\sigma_{yy}-\nu\sigma_{xx}}{E}+\varepsilon_T,\quad
+	\varepsilon_{xy}= \frac{1+\nu}{E} \sigma_{xy},
+	\label{YuzvyakEq3}
+\end{equation}
+with \(\varepsilon_T=\alpha_T T(x,y)\) produced by the stationary (or quasi-stationary) temperature field \(T(x,y)\).
+For the \emph{plane-strain} formulation one substitutes
+\(
+E \to  E/(1-\nu^{2}),\;
+\nu \to \nu/(1+\nu),\;
+\varepsilon_T \to (1+\nu) \varepsilon_T.
+\)
+
+Compatibility of strains imposes
+\begin{equation}
+	2 \frac{\partial^{2}\varepsilon_{xy}}{\partial x \partial y}=
+	\frac{\partial^{2}\varepsilon_{xx}}{\partial y^{2}}+
+	\frac{\partial^{2}\varepsilon_{yy}}{\partial x^{2}},
+	\label{YuzvyakEq4}
+\end{equation}
+and substitution of Eq.~\eqref{YuzvyakEq3} into \eqref{YuzvyakEq4}, followed by use of Eq.~\eqref{YuzvyakEq1}, yields a compatibility equation expressed through stresses.  
+For inhomogeneous media this equation is nonlinear because derivatives of the spatially varying moduli appear explicitly, rendering direct analytical treatment difficult.
+
+To bypass this difficulty the \emph{method of additional (eigen)strains} is employed.  
+Let
+ \[E_0=\displaystyle\max_{(x,y)\in\mathcal{D}}E(x,y)\]
+ and let \(\nu_{0}\) denote the value of \(\nu\) taken at the point where \(E(x,y)\) attains its maximum.
+   
+The constitutive relations are rewritten as
+\begin{equation}
+	\begin{array}{ll}
+		\varepsilon_{xx}&=\dfrac{\sigma_{xx}-\nu_0\sigma_{yy}}{E_0}+\varepsilon_{xx}^{0},\quad
+		\varepsilon_{yy}=\dfrac{\sigma_{yy}-\nu_0\sigma_{xx}}{E_0}+\varepsilon_{yy}^{0},
+		\\
+		\varepsilon_{xy}&=\dfrac{1+\nu_0}{E_0} \sigma_{xy}+\varepsilon_{xy}^{0},
+	\label{YuzvyakEq5}
+	\end{array}
+\end{equation}
+where the additional strains  
+\begin{align}
+	\varepsilon_{xx}^{0}&=\varepsilon_T+\left(\frac{1}{E}-\frac{1}{E_0}\right)\sigma_{xx}-\left(\frac{\nu}{E}-\tfrac{\nu_0}{E_0}\right)\sigma_{yy},\nonumber\\
+	\varepsilon_{yy}^{0}&=\varepsilon_T+\left(\frac{1}{E}-\frac{1}{E_0}\right)\sigma_{yy}-\left(\frac{\nu}{E}-\frac{\nu_0}{E_0}\right)\sigma_{xx},\label{YuzvyakEq6}
+	\\
+	\varepsilon_{xy}^{0}&=\left(\frac{1+\nu}{E}-\frac{1+\nu_0}{E_0}\right))\sigma_{xy},\nonumber
+\end{align}
+collect all effects of material inhomogeneity and temperature.
+
+Eliminating strains from Eqs.~\eqref{YuzvyakEq1}, \eqref{YuzvyakEq4}, and \eqref{YuzvyakEq5} gives the governing equation
+\begin{equation}
+	\Delta\left(\sigma_{xx}+\sigma_{yy}\right)=
+	E_0 \left(
+	2\frac{\partial^{2}\varepsilon_{xy}^{0}}{\partial x\partial y}
+	-\frac{\partial^{2}\varepsilon_{xx}^{0}}{\partial y^{2}}
+	-\frac{\partial^{2}\varepsilon_{yy}^{0}}{\partial x^{2}}
+	\right),
+	\quad
+	\Delta=\frac{\partial^{2}}{\partial x^{2}}+\frac{\partial^{2}}{\partial y^{2}},
+	\label{YuzvyakEq7}
+\end{equation}
+which is linear in the stresses but contains the yet unknown additional strains on the right-hand side.
+
+
+Equation \eqref{YuzvyakEq7} is solved iteratively.  
+At every approximation the \(\varepsilon_{ij}{}^{0}\) are regarded as independent functions; the corresponding constant-coefficient problem is tackled analytically through the direct-integration method with the aid of Vihak’s functions, whose use is particularly convenient in rectangles with corner points.  
+The updated stresses are then substituted into Eq.~\eqref{YuzvyakEq6} to refine \(\varepsilon_{ij}{}^{0}\); the cycle is repeated until convergence.  
+In this way both the influence of corners and the nonlinear impact of arbitrary spatial variation of the elastic moduli are captured within a fully analytic framework.
+
+\section{Vihak Function}
+
+When the compatibility relation \eqref{YuzvyakEq7} was obtained, the
+equilibrium equations \eqref{YuzvyakEq1} were differentiated to remove
+the shear stress.  On a finite domain this operation is admissible only
+if the resulting derivatives satisfy additional boundary constraints
+\cite{Yuzvyak16,Yuzvyak26}.  For the rectangle
+\(\mathcal{D}=[-a_x,a_x] \times [-a_y,a_y]\) these read  
+\begin{equation}
+	\left.\frac{\partial\sigma_{xx}}{\partial x}\right|_{x=\pm a_x}= -\frac{d\tau_{xy}^{\pm}(y)}{dy},\qquad
+	\left.\frac{\partial\sigma_{yy}}{\partial y}\right|_{y=\pm a_y}= -\frac{d\tau_{yx}^{\pm}(x)}{dx},
+	\label{YuzvyakEq8}
+\end{equation}
+and are equivalent to the traction conditions
+\((\ref{YuzvyakEq2})_2\) and \((\ref{YuzvyakEq2})_4\).
+
+Differentiating \((\ref{YuzvyakEq1})_1\) with respect to \(x\) and
+\((\ref{YuzvyakEq1})_2\) with respect to \(y\) yields
+\[
+\frac{\partial^{2}\sigma_{xx}}{\partial x^{2}}=-\frac{\partial^{2}\sigma_{xy}}{\partial x \partial y},\qquad
+\frac{\partial^{2}\sigma_{yy}}{\partial y^{2}}=-\frac{\partial^{2}\sigma_{xy}}{\partial x \partial y}.
+\]
+Hence we define the \emph{Vihak function}
+\begin{equation}
+	\mathcal{V}(x,y)=
+	\frac{\partial^{2}\sigma_{xx}}{\partial x^{2}}
+	=\frac{\partial^{2}\sigma_{yy}}{\partial y^{2}}
+	=-\frac{\partial^{2}\sigma_{xy}}{\partial x \partial y},
+	\label{YuzvyakEq9}
+\end{equation}
+after \cite{Yuzvyak29,Yuzvyak35}.  Once \(\mathcal{V}\) is fixed, the
+stress components satisfy the Poisson problems  
+\begin{align}
+	\frac{\partial^{2}\sigma_{xy}}{\partial x \partial y}&= -\mathcal{V},
+	&\text{with BCs }(\ref{YuzvyakEq2})_{2,4},
+	\label{YuzvyakEq10}
+	\\
+	\frac{\partial^{2}\sigma_{xx}}{\partial x^{2}}&=\;\;\mathcal{V},
+	&\text{with BCs }(\ref{YuzvyakEq2})_1,\;(\ref{YuzvyakEq8})_1,
+	\label{YuzvyakEq11}
+	\\
+	\frac{\partial^{2}\sigma_{yy}}{\partial y^{2}}&=\;\;\mathcal{V},
+	&\text{with BCs }(\ref{YuzvyakEq2})_3,\;(\ref{YuzvyakEq8})_2.
+	\label{YuzvyakEq12}
+\end{align}
+Each is a two-dimensional Poisson equation with mixed boundary data; the
+next subsections integrate these relations to express the full stress
+field in terms of~\(\mathcal{V}\).
+
+%-----------------------------------------------------------------
+%--- Shear-stress integration and sectional constraints (calculus notation)
+Integrating Eq.~\eqref{YuzvyakEq10} with respect to \(x\) and using the
+boundary data \((\ref{YuzvyakEq2})_2\) gives
+\begin{equation}
+	2\frac{\partial \sigma_{xy}(x,y)}{\partial y}=
+	\frac{d\tau_{xy}^{+}(y)}{dy}+\frac{d\tau_{xy}^{-}(y)}{dy}
+	-\int_{-a_x}^{a_x}\mathcal{V}(\xi,y) \operatorname{sgn}(x-\xi) d\xi ,
+	\label{YuzvyakEq13}
+\end{equation}
+which is compatible with \((\ref{YuzvyakEq2})_2\) provided
+\begin{equation}
+	\int_{-a_x}^{a_x}\mathcal{V}(x,y) dx=
+	\frac{d\tau_{xy}^{-}(y)}{dy}-\frac{d\tau_{xy}^{+}(y)}{dy}.
+	\label{YuzvyakEq14}
+\end{equation}
+
+A single integration of Eq.~\eqref{YuzvyakEq10} with respect to \(y\) and
+the boundary data \((\ref{YuzvyakEq2})_4\) yields
+\begin{equation}
+	2\frac{\partial \sigma_{xy}(x,y)}{\partial x}=
+	\frac{d\tau_{yx}^{+}(x)}{dx}+\frac{d\tau_{yx}^{-}(x)}{dx}
+	-\int_{-a_y}^{a_y}\mathcal{V}(x,\eta) \operatorname{sgn}(y-\eta) d\eta ,
+	\label{YuzvyakEq15}
+\end{equation}
+and hence
+\begin{equation}
+	\int_{-a_y}^{a_y}\mathcal{V}(x,y) dy=
+	\frac{d\tau_{yx}^{-}(x)}{dx}-\frac{d\tau_{yx}^{+}(x)}{dx}.
+	\label{YuzvyakEq16}
+\end{equation}
+
+%-----------------------------------------------------------------
+%--- Domain resultant and corner coupling
+Integrating Eq.~\eqref{YuzvyakEq14} over \(y\) and Eq.~\eqref{YuzvyakEq16}
+over \(x\) gives
+\begin{align}
+	\iint_{\mathcal{D}}\mathcal{V}(x,y) dx dy&=
+	\tau_{yx}^{+}(-a_x)-\tau_{yx}^{+}(a_x)+\tau_{yx}^{-}(a_x)-\tau_{yx}^{-}(-a_x)
+	\notag\\
+	&=\tau_{xy}^{+}(-a_y)-\tau_{xy}^{+}(a_y)+\tau_{xy}^{-}(a_y)-\tau_{xy}^{-}(-a_y),
+	\label{YuzvyakEq17}
+\end{align}
+which forces the corner relations
+\begin{equation}\label{YuzvyakEq18}
+	\begin{array}{ll}
+	\tau_{xy}^{+}(a_y)=\tau_{yx}^{+}(a_x)=\tau_{+}^{+},&\quad
+	\tau_{xy}^{+}(-a_y)=\tau_{yx}^{-}(a_x)=\tau_{-}^{+},\\
+	\tau_{xy}^{-}(a_y)=\tau_{yx}^{+}(-a_x)=\tau_{+}^{-},&\quad
+	\tau_{xy}^{-}(-a_y)=\tau_{yx}^{-}(-a_x)=\tau_{-}^{-},
+	\end{array}	
+\end{equation}
+so that Eq.~\eqref{YuzvyakEq17} reduces to
+\begin{equation}
+	\iint_{\mathcal{D}}\mathcal{V}(x,y) dx dy=
+	\tau_{+}^{-}-\tau_{+}^{+}+\tau_{-}^{+}-\tau_{-}^{-}.
+	\label{YuzvyakEq19}
+\end{equation}
+
+%-----------------------------------------------------------------
+%--- Explicit shear stress
+A second integration of Eq.~\eqref{YuzvyakEq13} with respect to \(y\) and
+Eq.~\eqref{YuzvyakEq15} with respect to \(x\) provides the shear stress:
+\begin{align}
+	\sigma_{xy}(x,y)&=
+	\frac{\tau_{xy}^{+}(y)+\tau_{xy}^{-}(y)+\tau_{yx}^{+}(x)+\tau_{yx}^{-}(x)}{2}
+	-\frac{\tau_{+}^{+}+\tau_{+}^{-}+\tau_{-}^{+}+\tau_{-}^{-}}{4}
+	\notag\\
+	&\qquad-\frac{1}{4}\iint_{\mathcal{D}}
+	\mathcal{V}(\xi,\eta) 
+	\operatorname{sgn}(x-\xi)\operatorname{sgn}(y-\eta) d\xi d\eta .
+	\label{YuzvyakEq20}
+\end{align}
+
+Formula \eqref{YuzvyakEq20} expresses the shear stress through the
+Vihak function.  It satisfies the traction conditions
+$(\ref{YuzvyakEq2})_{2,4}$ whenever the sectional resultants
+\eqref{YuzvyakEq14}, \eqref{YuzvyakEq16}, the corner couplings
+\eqref{YuzvyakEq18}, and the domain‐resultant condition
+\eqref{YuzvyakEq19} are fulfilled.
+
+
+Solving the remaining Poisson problems
+\eqref{YuzvyakEq11}–\eqref{YuzvyakEq12} in the same manner gives the
+normal stresses
+\begin{align}
+	\sigma_{xx}(x,y)
+	&=-\frac{p_{x}^{+}(y)+p_{x}^{-}(y)}{2}
+	-\frac{x-a_{x}}{2} \frac{d\tau_{xy}^{+}(y)}{dy}
+	-\frac{x+a_{x}}{2} \frac{d\tau_{xy}^{-}(y)}{dy} \notag\\
+	&\qquad
+	+\frac{1}{2}\int_{-a_{x}}^{a_{x}}
+	\mathcal{V}(\xi,y) \lvert x-\xi\rvert d\xi,
+	\label{YuzvyakEq21}\\[3pt]
+	%
+	\sigma_{yy}(x,y)
+	&=-\frac{p_{y}^{+}(x)+p_{y}^{-}(x)}{2}
+	-\frac{y-a_{y}}{2} \frac{d\tau_{yx}^{+}(x)}{dx}
+	-\frac{y+a_{y}}{2} \frac{d\tau_{yx}^{-}(x)}{dx} \notag\\
+	&\qquad
+	+\frac{1}{2}\int_{-a_{y}}^{a_{y}}
+	\mathcal{V}(x,\eta) \lvert y-\eta\rvert d\eta.
+	\label{YuzvyakEq22}
+\end{align}
+
+\noindent which comply with the mixed boundary data
+$(\ref{YuzvyakEq2})_1,(\ref{YuzvyakEq8})_1$ and
+$(\ref{YuzvyakEq2})_3,(\ref{YuzvyakEq8})_2$ provided
+\begin{align}
+	\int_{-a_{x}}^{a_{x}} x \mathcal{V}(x,y) dx&=
+	p_{x}^{+}(y)-p_{x}^{-}(y)
+	-a_{x} \frac{d}{dy}\bigl[\tau_{xy}^{+}(y)+\tau_{xy}^{-}(y)\bigr],
+	\label{YuzvyakEq23}
+\\
+	\int_{-a_{y}}^{a_{y}} y \mathcal{V}(x,y) dy&=
+	p_{y}^{+}(x)-p_{y}^{-}(x)
+	-a_{y} \frac{d}{dx}\bigl[\tau_{yx}^{+}(x)+\tau_{yx}^{-}(x)\bigr].
+	\label{YuzvyakEq24}
+\end{align}
+Relations \eqref{YuzvyakEq23}–\eqref{YuzvyakEq24} represent the first
+moments of the Vihak function in the horizontal and vertical
+cross-sections; higher-order moments are discussed next.
+
+The sectional constraints \eqref{YuzvyakEq14} and \eqref{YuzvyakEq16}
+give the \emph{resultants} of the Vihak function in the
+$y = \text{const}$ and $x = \text{const}$ cross-sections,
+respectively.  
+The relations \eqref{YuzvyakEq23} and \eqref{YuzvyakEq24} provide the
+corresponding first \emph{moments}, whereas
+\eqref{YuzvyakEq19} is the domain-wide resultant.
+Combining Eqs.~\eqref{YuzvyakEq23}–\eqref{YuzvyakEq24} with the corner
+couplings \eqref{YuzvyakEq18} yields the higher-order identities
+
+\begin{align}
+	\iint_{\mathcal D} y \mathcal V dx dy
+	&=\int_{-a_y}^{a_y} \bigl[\tau_{xy}^{+}(y)-\tau_{xy}^{-}(y)\bigr] dy
+	-a_y\bigl(\tau_{+}^{+}+\tau_{-}^{+}-\tau_{+}^{-}-\tau_{-}^{-}\bigr)
+	\notag\\
+	&=\int_{-a_x}^{a_x} \bigl[p_{y}^{+}(x)-p_{y}^{-}(x)\bigr] dx
+	-a_y\bigl(\tau_{+}^{+}+\tau_{-}^{+}-\tau_{+}^{-}-\tau_{-}^{-}\bigr),
+	\label{YuzvyakEq24y}
+	\\[6pt]
+	%
+	\iint_{\mathcal D} x \mathcal V dx dy
+	&=\int_{-a_x}^{a_x} \bigl[\tau_{yx}^{+}(x)-\tau_{yx}^{-}(x)\bigr] dx
+	-a_x\bigl(\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{+}-\tau_{-}^{-}\bigr)
+	\notag\\
+	&=\int_{-a_y}^{a_y} \bigl[p_{x}^{+}(y)-p_{x}^{-}(y)\bigr] dy
+	-a_x\bigl(\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{+}-\tau_{-}^{-}\bigr),
+	\label{YuzvyakEq24x}
+	\\[6pt]
+	%
+	\iint_{\mathcal D} x y \mathcal V dx dy
+	&=\int_{-a_y}^{a_y} y\bigl[p_{x}^{+}(y)-p_{x}^{-}(y)\bigr] dy
+	+a_x \int_{-a_y}^{a_y} \bigl[\tau_{xy}^{+}(y)+\tau_{xy}^{-}(y)\bigr] dy
+	\notag\\
+	&\qquad\qquad-a_xa_y\bigl(\tau_{+}^{+}+\tau_{-}^{+}+\tau_{+}^{-}+\tau_{-}^{-}\bigr)\notag\\
+	&=\int_{-a_x}^{a_x} x\bigl[p_{y}^{+}(x)-p_{y}^{-}(x)\bigr] dx
+	+a_y \int_{-a_x}^{a_x} \bigl[\tau_{yx}^{+}(x)+\tau_{yx}^{-}(x)\bigr] dx\notag\\
+	&\qquad\qquad-a_ya_x\bigl(\tau_{+}^{+}+\tau_{-}^{+}+\tau_{+}^{-}+\tau_{-}^{-}\bigr).
+	\label{YuzvyakEq24xy}
+\end{align}
+
+From Eqs.~\eqref{YuzvyakEq24y}–\eqref{YuzvyakEq24xy} we deduce three
+global-equilibrium conditions for the boundary tractions:
+
+\begin{align}
+	&\int_{-a_x}^{a_x} \bigl[p_{y}^{+}(x)-p_{y}^{-}(x)\bigr] dx
+	=\int_{-a_y}^{a_y} \bigl[\tau_{xy}^{+}(y)-\tau_{xy}^{-}(y)\bigr] dy,
+	\label{YuzvyakEq25}
+	\\
+	&\int_{-a_y}^{a_y} \bigl[p_{x}^{+}(y)-p_{x}^{-}(y)\bigr] dy
+	=\int_{-a_x}^{a_x} \bigl[\tau_{yx}^{+}(x)-\tau_{yx}^{-}(x)\bigr] dx,
+	\label{YuzvyakEq26}
+	\\
+	&\int_{-a_y}^{a_y} y\bigl[p_{x}^{+}(y)-p_{x}^{-}(y)\bigr] dy
+	+a_x \int_{-a_y}^{a_y} \bigl[\tau_{xy}^{+}(y)+\tau_{xy}^{-}(y)\bigr] dy \notag
+	\\
+	&\qquad=\int_{-a_x}^{a_x} x\bigl[p_{y}^{+}(x)-p_{y}^{-}(x)\bigr] dx
+	+a_y \int_{-a_x}^{a_x} \bigl[\tau_{yx}^{+}(x)+\tau_{yx}^{-}(x)\bigr] dx.
+	\label{YuzvyakEq27}
+\end{align}
+
+
+The stress representations \eqref{YuzvyakEq20}–\eqref{YuzvyakEq22} now
+depend solely on the Vihak potential
+\(\mathcal{V}\) \eqref{YuzvyakEq9}.  Inserting them into the
+compatibility relation \eqref{YuzvyakEq7} turns the original mixed
+boundary-value problem into a single governing equation for
+\(\mathcal{V}\), subject to the integral constraints
+\eqref{YuzvyakEq14}, \eqref{YuzvyakEq16},
+\eqref{YuzvyakEq23}, and \eqref{YuzvyakEq24}.  Consistency of those
+constraints is guaranteed by the corner couplings
+\eqref{YuzvyakEq18} together with the global-equilibrium conditions
+\eqref{YuzvyakEq25}–\eqref{YuzvyakEq27}.  The same integral
+relations were derived earlier from overall-equilibrium considerations
+for a rectangular plate \cite{Yuzvyak32,Yuzvyak33}.
+
+\section{Solution Representation}
+
+To solve the boundary–value problem for the Vihak function we apply
+variable separation with the complete systems of eigen- and associated
+functions  
+\(\{1,t,\cos(\gamma_{t,n}t),\sin(\lambda_{t,n}t)\}\)  
+(\(t=x,y;\;n=1,2,\dots\)) introduced in
+\cite{Yuzvyak29,Yuzvyak30}.  Here
+\(\gamma_{t,n}=n\pi/a_{t}\) and \(\lambda_{t,n}>0\) is the \(n\)-th root
+of \(\tan(\lambda_{t}a_{t})=\lambda_{t}a_{t}\).
+For a generic field \(f(x,y)\) the expansion in the \(x\)-direction
+reads
+\begin{equation}
+	f(x,y)=f^{0}(x,y)+f^{\mathrm e}(x,y),
+	\label{YuzvyakEq28}
+\end{equation}
+with the \emph{elementary} part
+\begin{equation}
+	f^{0}(x,y)=
+	\frac{1}{4a_{x}}\int_{-a_{x}}^{a_{x}}f(x,y) dx
+	+\frac{3x}{4a_{x}}\int_{-a_{x}}^{a_{x}}x f(x,y) dx,
+	\label{YuzvyakEq29}
+\end{equation}
+and the \emph{self-equilibrated} part
+\begin{equation}
+	f^{\mathrm e}(x,y)=
+	\sum_{n=1}^{\infty} \Bigl[
+	f_{n}^{\mathrm c}(y)\cos(\gamma_{x,n}x)
+	+f_{n}^{\mathrm s}(y)\sin(\lambda_{x,n}x)
+	\Bigr],
+	\label{YuzvyakEq30}
+\end{equation}
+where
+\begin{equation}\label{YuzvyakEq31}
+\begin{array}{ll}
+	f_{n}^{\mathrm c}(y)&=\frac{1}{a_{x}}
+	\int_{-a_{x}}^{a_{x}}f(x,y)\cos(\gamma_{x,n}x) dx,
+	\\
+	f_{n}^{\mathrm s}(y)&=\frac{1}{a_{x}\sin^{2}(\lambda_{x,n}a_{x})}
+	\int_{-a_{x}}^{a_{x}}f(x,y)\sin(\lambda_{x,n}x) dx.
+\end{array}
+\end{equation}
+
+\emph{Decomposition of boundary tractions.}
+Using Eqs.~\eqref{YuzvyakEq28}–\eqref{YuzvyakEq31} we split the prescribed
+tractions into elementary and self-equilibrated parts:
+\begin{align}
+	p_{x}^{\pm}(y)&=p_{x}^{\pm0}(y)+p_{x}^{\pm\mathrm e}(y), &
+	p_{y}^{\pm}(x)&=p_{y}^{\pm0}(x)+p_{y}^{\pm\mathrm e}(x),\notag\\
+	\tau_{xy}^{\pm}(y)&=\tau_{xy}^{\pm0}(y)+\tau_{xy}^{\pm\mathrm e}(y), &
+	\tau_{yx}^{\pm}(x)&=\tau_{yx}^{\pm0}(x)+\tau_{yx}^{\pm\mathrm e}(x).
+	\label{YuzvyakEq32}
+\end{align}
+
+\noindent
+Elementary parts are
+\begin{equation}
+	\begin{array}{ll}
+		p_x^{\pm0}(y)
+		&= \frac{1}{2a_y}\int_{-a_y}^{a_y}p_x^\pm(y) dy
+		+ \frac{3y}{2a_y^3}\int_{-a_y}^{a_y}y p_x^\pm(y) dy,
+		\\[8pt]
+		p_y^{\pm0}(x)
+		&= \frac{1}{2a_x}\int_{-a_x}^{a_x}p_y^\pm(x) dx
+		+ \frac{3x}{2a_x^3}\int_{-a_x}^{a_x}x p_y^\pm(x) dx,
+		\\[8pt]
+		\tau_{xy}^{\pm0}(y)
+		&= \frac{1}{2}\big[\tau_{xy}^{\pm}(a_y)+\tau_{xy}^{\pm}(-a_y)\big]
+		+ \frac{y}{2a_y}\bigl[\tau_{xy}^{\pm}(a_y)-\tau_{xy}^{\pm}(-a_y)\bigr]
+		\\
+		&\quad+ \frac{3 (y^2-a_y^2)}{4a_y^2}\left[
+		\tau_{xy}^{\pm}(a_y)+\tau_{xy}^{\pm}(-a_y)
+		-\frac{1}{a_y}\int_{-a_y}^{a_y}\tau_{xy}^{\pm}(y) dy
+		\right],
+		\\[8pt]
+		\tau_{yx}^{\pm0}(x)
+		&= \frac{1}{2}\big[\tau_{yx}^{\pm}(a_x)+\tau_{yx}^{\pm}(-a_x)\big]
+		 + \frac{x}{2a_x}\bigl[\tau_{yx}^{\pm}(a_x)-\tau_{yx}^{\pm}(-a_x)\bigr]
+		\\
+		&\quad+ \frac{3 (x^2-a_x^2)}{4a_x^2}\left[
+		\tau_{yx}^{\pm}(a_x)+\tau_{yx}^{\pm}(-a_x)
+		-\frac{1}{a_x}\int_{-a_x}^{a_x}\tau_{yx}^{\pm}(x) dx
+		\right].
+	\end{array}
+	\label{YuzvyakEq32a}
+\end{equation}
+
+\noindent
+Self-equilibrated parts read
+\begin{equation}\label{YuzvyakEq32b}
+	\begin{aligned}
+		p_{x}^{\pm\mathrm e}(y)&=
+		{\textstyle\sum_{m=1}^{\infty}}
+		\bigl(p_{x\mathrm c,m}^{\pm}\cos\gamma_{y,m}y
+		+p_{x\mathrm s,m}^{\pm}\sin\lambda_{y,m}y\bigr),
+		\\
+		p_{y}^{\pm\mathrm e}(x)&=
+		{\textstyle\sum_{n=1}^{\infty}}
+		\bigl(p_{y\mathrm c,n}^{\pm}\cos\gamma_{x,n}x
+		+p_{y\mathrm s,n}^{\pm}\sin\lambda_{x,n}x\bigr),
+		\\
+		\tau_{xy}^{\pm\mathrm e}(y)&=
+		{\textstyle\sum_{m=1}^{\infty}}
+		\Bigl(
+		\tau_{xy\mathrm c,m}^{\pm}\tfrac{\sin\gamma_{y,m}y}{\gamma_{y,m}}
+		+\tau_{xy\mathrm s,m}^{\pm}
+		\tfrac{\cos\lambda_{y,m}a_{y}-\cos\lambda_{y,m}y}{\lambda_{y,m}}
+		\Bigr),
+		\\
+		\tau_{yx}^{\pm\mathrm e}(x)&=
+		{\textstyle\sum_{n=1}^{\infty}}
+		\Bigl(
+		\tau_{yx\mathrm c,n}^{\pm}\tfrac{\sin\gamma_{x,n}x}{\gamma_{x,n}}
+		+\tau_{yx\mathrm s,n}^{\pm}
+		\tfrac{\cos\lambda_{x,n}a_{x}-\cos\lambda_{x,n}x}{\lambda_{x,n}}
+		\Bigr).
+	\end{aligned}
+\end{equation}
+
+Fourier coefficients (e.g. \(p_{x\mathrm c,m}^{\pm}\),  
+\(\tau_{xy\mathrm c,m}^{\pm}\)) follow directly from
+Eq.~\eqref{YuzvyakEq31}; for instance
+\[
+\begin{array}{ll}
+	\tau_{xy\mathrm c ,m}^{\pm}
+	&=\tfrac{\gamma_{y,m}}{a_y}
+	\int_{-a_y}^{a_y} \tau_{xy}^{\pm}(y)\sin(\gamma_{y,m}y) dy,\\[3pt]
+	\tau_{xy\mathrm s ,m}^{\pm}
+	&=\tfrac{2\lambda_{y,m}^{2}}
+	{ 2\lambda_{y,m}a_y-\sin(2\lambda_{y,m}a_y) }
+	\int_{-a_y}^{a_y} \tau_{xy}^{\pm}(y)
+	\bigl[\cos(\lambda_{y,m}a_y)-\cos(\lambda_{y,m}y)\bigr] dy,\\[3pt]
+	\tau_{yx\mathrm c ,n}^{\pm}
+	&=\tfrac{\gamma_{x,n}}{a_x}
+	\int_{-a_x}^{a_x} \tau_{yx}^{\pm}(x)\sin(\gamma_{x,n}x) dx,\\[3pt]
+	\tau_{yx\mathrm s ,n}^{\pm}
+	&=\tfrac{2\lambda_{x,n}^{2}}
+	{ 2\lambda_{x,n}a_x-\sin(2\lambda_{x,n}a_x) }
+	\int_{-a_x}^{a_x} \tau_{yx}^{\pm}(x)
+	\bigl[\cos(\lambda_{x,n}a_x)-\cos(\lambda_{x,n}x)\bigr] dx.
+\end{array}
+\]
+
+%-----------------------------------------------------------------
+\emph{Decomposition of additional strains.}
+The additional-strain set
+\[\Phi=\left\{\varepsilon_{xx}^{0}, \varepsilon_{yy}^{0},
+\partial^{2}\varepsilon_{xy}^{0}/\partial x\partial y\right\}\]
+is expanded as
+\begin{align}
+	\Phi={}&
+	\Phi_{00}+x\Phi_{10}+y\Phi_{01}+xy\Phi_{11}\notag\\
+	&+\sum_{n=1}^{\infty}
+	\bigl[(\Phi_{n}^{\mathrm c0}+y\Phi_{n}^{\mathrm c1})\cos\gamma_{x,n}x
+	+(\Phi_{n}^{\mathrm s0}+y\Phi_{n}^{\mathrm s1})\sin\lambda_{x,n}x
+	\bigr]\notag\\
+	&+\sum_{m=1}^{\infty}
+	\bigl[(\Phi_{m}^{0\mathrm c}+x\Phi_{m}^{1\mathrm c})\cos\gamma_{y,m}y
+	+(\Phi_{m}^{0\mathrm s}+x\Phi_{m}^{1\mathrm s})\sin\lambda_{y,m}y
+	\bigr]\notag\\
+	&+\sum_{n=1}^{\infty}\sum_{m=1}^{\infty}
+	\Bigl[
+	\Phi_{nm}^{\mathrm{cc}}\cos\gamma_{x,n}x \cos\gamma_{y,m}y
+	+\Phi_{nm}^{\mathrm{cs}}\cos\gamma_{x,n}x \sin\lambda_{y,m}y\notag\\
+	&\qquad+\Phi_{nm}^{\mathrm{sc}}\sin\lambda_{x,n}x \cos\gamma_{y,m}y
+	+\Phi_{nm}^{\mathrm{ss}}\sin\lambda_{x,n}x \sin\lambda_{y,m}y
+	\Bigr].
+	\label{YuzvyakEq33}
+\end{align}
+
+%-----------------------------------------------------------------
+\emph{Partition of the solution.}
+With \eqref{YuzvyakEq33} we split the Vihak function and stresses into
+three mutually orthogonal groups,
+\begin{align}
+	\mathcal V(x,y)&=\mathcal V^{0}(x,y)+\mathcal V^{\mathrm e}(x,y)
+	+\tilde{\mathcal V}(x,y),
+	\label{YuzvyakEq34}\\
+	\sigma_{ij}(x,y)&=\sigma_{ij}^{0}(x,y)+\sigma_{ij}^{\mathrm e}(x,y)
+	+\tilde{\sigma}_{ij}(x,y)\qquad (i,j=x,y),
+	\label{YuzvyakEq35}
+\end{align}
+where  
+
+* \(^{0}\) : elementary terms generated by the associated functions
+\(1,x,y\);  
+
+* \(^{\mathrm e}\) : self-equilibrated terms coming from the single
+Fourier sums;  
+
+* \(\tilde{\phantom{V}}\) : hybrid terms arising from the double Fourier
+sums.
+
+Because the governing equations are linear, the three subsystems can be
+solved independently and superposed to construct the complete solution
+for the rectangular domain~\(\mathcal D\).
+
+\subsection{Elementary Solution}
+
+First, we construct the elementary part of the Vihak function
+\begin{equation}
+	\mathcal V^{0}(x,y)
+	= \mathcal V_{0}(x,y)
+	+ x \mathcal V_{1}(x,y)
+	+ y \mathcal V_{2}(x,y)
+	+ xy \mathcal V_{3}(x,y),
+	\label{YuzvyakEq36}
+\end{equation}
+corresponding to the decomposition in~Eq.~\eqref{YuzvyakEq34}.
+Here
+\begin{align*}
+	\mathcal V_{0}(x,y)
+	&= \tfrac{1}{4 a_{x} a_{y}}
+	{\textstyle\iint_{\mathcal D}}  \mathcal V(x,y) dx dy
+	= \tfrac{1}{4 a_{x} a_{y}}
+	\bigl(\tau_{-}^{+}-\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{-}\bigr),
+	\\[6pt]
+	%
+	\mathcal V_{1}(x,y)
+	&= \tfrac{3}{4 a_{x}^{3} a_{y}}
+	{\textstyle\iint_{\mathcal D}}  x \mathcal V(x,y) dx dy
+	\\
+	&= \tfrac{3}{4 a_{x}^{3} a_{y}}
+	\Bigl[
+	{\textstyle\int_{-a_{y}}^{a_{y}}} \bigl(p_{x}^{+}(y)-p_{x}^{-}(y)\bigr) dy
+	- a_{x}\bigl(\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{+}-\tau_{-}^{-}\bigr)
+	\Bigr]
+	\\
+	&= \tfrac{3}{4 a_{x}^{3} a_{y}}
+	\Bigl[
+	{\textstyle\int_{-a_{x}}^{a_{x}}} \bigl(\tau_{yx}^{+}(x)-\tau_{yx}^{-}(x)\bigr) dx
+	- a_{x}\bigl(\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{+}-\tau_{-}^{-}\bigr)
+	\Bigr],
+	\\[6pt]
+	%
+	\mathcal V_{2}(x,y)
+	&= \tfrac{3}{4 a_{y}^{3} a_{x}}
+	{\textstyle\iint_{\mathcal D}}  y \mathcal V(x,y) dx dy
+	\\
+	&= \tfrac{3}{4 a_{y}^{3} a_{x}}
+	\Bigl[
+	{\textstyle\int_{-a_{x}}^{a_{x}}} \bigl(p_{y}^{+}(x)-p_{y}^{-}(x)\bigr) dx
+	- a_{y}\bigl(\tau_{+}^{+}-\tau_{+}^{-}+\tau_{-}^{+}-\tau_{-}^{-}\bigr)
+	\Bigr]
+	\\
+	&= \tfrac{3}{4 a_{y}^{3} a_{x}}
+	\Bigl[
+	{\textstyle\int_{-a_{y}}^{a_{y}}} \bigl(\tau_{xy}^{+}(y)-\tau_{xy}^{-}(y)\bigr) dy
+	- a_{y}\bigl(\tau_{+}^{+}+\tau_{-}^{+}-\tau_{+}^{-}-\tau_{-}^{-}\bigr)
+	\Bigr],
+	\\[6pt]
+	%
+	\mathcal V_{3}(x,y)
+	&= \tfrac{9}{4 a_{x}^{3} a_{y}^{3}}
+	{\textstyle\iint_{\mathcal D}}  x y \mathcal V(x,y) dx dy
+	\\
+	&= \tfrac{9}{4 a_{x}^{3} a_{y}^{3}}
+	\Bigl[
+	{\textstyle\int_{-a_{y}}^{a_{y}}}  y\bigl(p_{x}^{+}(y)-p_{x}^{-}(y)\bigr) dy
+	+ a_{x} {\textstyle\int_{-a_{y}}^{a_{y}}} \bigl(\tau_{xy}^{+}(y)+\tau_{xy}^{-}(y)\bigr) dy
+	\\[-2pt]
+	&\qquad
+	- a_{x} a_{y}\bigl(\tau_{+}^{+}+\tau_{-}^{+}+\tau_{+}^{-}+\tau_{-}^{-}\bigr)
+	\Bigr]
+	\\
+	&= \tfrac{9}{4 a_{x}^{3} a_{y}^{3}}
+	\Bigl[
+	{\textstyle\int_{-a_{x}}^{a_{x}}}  x\bigl(p_{y}^{+}(x)-p_{y}^{-}(x)\bigr) dx
+	+ a_{y} {\textstyle\int_{-a_{x}}^{a_{x}}} \bigl(\tau_{yx}^{+}(x)+\tau_{yx}^{-}(x)\bigr) dx
+	\\
+	&\qquad
+	- a_{x} a_{y}\bigl(\tau_{+}^{+}+\tau_{-}^{+}+\tau_{+}^{-}+\tau_{-}^{-}\bigr)
+	\Bigr].
+\end{align*}
+
+\noindent These expressions follow from the decomposition algorithm
+\eqref{YuzvyakEq28}--\eqref{YuzvyakEq31}
+and the integral conditions
+\eqref{YuzvyakEq17}, \eqref{YuzvyakEq24y}--\eqref{YuzvyakEq24xy}.
+
+By substituting Eq.~\eqref{YuzvyakEq36} into the stress representations
+\eqref{YuzvyakEq20}--\eqref{YuzvyakEq22}, and considering the ``0'' parts of
+Eq.~\eqref{YuzvyakEq32}, the compatibility equation \eqref{YuzvyakEq7} implies
+$\mathcal V_{\ell}=0$, $\ell=0,1,2,3$, which leads to the conditions
+\begin{align}
+	a_{x}\tau_{y}
+	&= a_{x}\bigl(\tau_{+}^{+}+\tau_{+}^{-}-\tau_{-}^{+}-\tau_{-}^{-}\bigr)\notag\\
+	&= {\textstyle\int_{-a_{x}}^{a_{x}}} (\tau_{yx}^{+}-\tau_{yx}^{-}) dx
+	\notag\\
+	&= {\textstyle\int_{-a_{y}}^{a_{y}}} (p_{x}^{+}-p_{x}^{-}) dy,
+	\notag\\[4pt]
+	%
+	a_{y}\tau_{x}
+	&= a_{y}\bigl(\tau_{+}^{+}+\tau_{-}^{+}-\tau_{+}^{-}-\tau_{-}^{-}\bigr)\notag\\
+	&= {\textstyle\int_{-a_{y}}^{a_{y}}} (\tau_{xy}^{+}-\tau_{xy}^{-}) dy\notag\\
+	&= {\textstyle\int_{-a_{x}}^{a_{x}}} (p_{y}^{+}-p_{y}^{-}) dx,
+	\notag\\[4pt]
+	%
+	a_{x}a_{y}\tau
+	&= a_{x}a_{y}\bigl(\tau_{+}^{+}+\tau_{-}^{+}+\tau_{+}^{-}+\tau_{-}^{-}\bigr)\notag\\
+	&= {\textstyle\int_{-a_{y}}^{a_{y}}}  y (p_{x}^{+}-p_{x}^{-}) dy
+	+ a_{x} {\textstyle\int_{-a_{y}}^{a_{y}}} (\tau_{xy}^{+}+\tau_{xy}^{-}) dy\notag\\
+	&= {\textstyle\int_{-a_{x}}^{a_{x}}}  x (p_{y}^{+}-p_{y}^{-}) dx
+	+ a_{y} {\textstyle\int_{-a_{x}}^{a_{x}}} (\tau_{yx}^{+}+\tau_{yx}^{-}) dx,
+	\notag\\[4pt]
+	%
+	\tau_{+}^{+}-\tau_{-}^{+}-\tau_{+}^{-}+\tau_{-}^{-} &= 0.
+	\label{YuzvyakEq37}
+\end{align}
+
+
+These conditions ensure the \textit{compatibility of the applied loadings}.
+Hence, $\mathcal V^{0}\equiv 0$, and the elementary stress components
+\eqref{YuzvyakEq35} are
+\begin{align}
+	\sigma_{xx}^{0}(x,y)
+	&= -\frac{a_{x}+x}{2a_{x}} p_{x}^{+0}(y)
+	-\frac{a_{x}-x}{2a_{x}} p_{x}^{-0}(y),
+	\label{YuzvyakEq38}
+	\\
+	\sigma_{yy}^{0}(x,y)
+	&= -\frac{a_{y}+y}{2a_{y}} p_{y}^{+0}(x)
+	-\frac{a_{y}-y}{2a_{y}} p_{y}^{-0}(x),
+	\label{YuzvyakEq39}
+	\\
+	\sigma_{xy}^{0}(x,y)
+	&= \frac{1}{4}\left(\tau + x \frac{\tau_{x}}{a_{x}}
+	+ y \frac{\tau_{y}}{a_{y}}\right)
+	\notag\\
+	&\qquad
+	+ \frac{3(x^{2}-a_{x}^{2})}{8 a_{x}^{3}}
+	\left[a_{x}\tau-\int_{-a_{x}}^{a_{x}} \bigl(\tau_{yx}^{+}+\tau_{yx}^{-}\bigr) dx\right]\nonumber
+	\\
+	&\qquad
+	+ \frac{3(y^{2}-a_{y}^{2})}{8 a_{y}^{3}}
+	\left[a_{y}\tau-\int_{-a_{y}}^{a_{y}} \bigl(\tau_{xy}^{+}+\tau_{xy}^{-}\bigr) dy\right].
+	\label{YuzvyakEq40}
+\end{align}
+These results coincide with those reported in
+\cite{Yuzvyak30,Yuzvyak31,Yuzvyak32}
+and satisfy the global equilibrium conditions.
+
+\subsection{Self-equilibrated Solution} 
+
+For constructing the self-equilibrated parts of the solution
+\eqref{YuzvyakEq34} and \eqref{YuzvyakEq35}, 
+we involve only the self-equilibrated parts of the external loadings, 
+which satisfy the following equilibrium conditions:
+\begin{align}
+	\int_{-a_\xi}^{a_\xi} p_\eta^{\pm\mathrm e}(\xi) d\xi
+	&= \int_{-a_\xi}^{a_\xi} \xi p_\eta^{\pm\mathrm e}(\xi) d\xi
+	= \int_{-a_\xi}^{a_\xi} \tau_{\eta\xi}^{\pm\mathrm e}(\xi) d\xi
+	\notag\\
+	&= \tau_{\eta\xi}^{\pm\mathrm e}(\pm a_\eta)
+	= 0
+	\quad (\eta,\xi = x,y,\ \eta\neq\xi).
+	\label{YuzvyakEq41}
+\end{align}
+
+Based on the decomposition algorithm 
+\eqref{YuzvyakEq28}--\eqref{YuzvyakEq31}, 
+within the context of Eq.~\eqref{YuzvyakEq41}, 
+the self-equilibrated part of the Vihak function is
+\begin{align}
+	\mathcal V^{\mathrm e}(x,y)
+	&= -\frac{1}{2a_x}\frac{d}{dy}\Bigl(
+	\tau_{xy}^{+\mathrm e}(y)-\tau_{xy}^{-\mathrm e}(y)\Bigr)
+	-\frac{1}{2a_y}\frac{d}{dx}\Bigl(
+	\tau_{yx}^{+\mathrm e}(x)-\tau_{yx}^{-\mathrm e}(x)\Bigr)\notag\\
+	&\quad +\frac{3x}{2a_x^3}\Bigl[
+	p_x^{+\mathrm e}(y)-p_x^{-\mathrm e}(y)
+	-a_x\frac{d}{dy}\bigl(\tau_{xy}^{+\mathrm e}(y)+\tau_{xy}^{-\mathrm e}(y)\bigr)
+	\Bigr]\notag\\
+	&\quad +\frac{3y}{2a_y^3}\Bigl[
+	p_y^{+\mathrm e}(x)-p_y^{-\mathrm e}(x)
+	-a_y\frac{d}{dx}\bigl(\tau_{yx}^{+\mathrm e}(x)+\tau_{yx}^{-\mathrm e}(x)\bigr)
+	\Bigr].
+	\label{YuzvyakEq42}
+\end{align}
+
+The self-equilibrated parts of the stress-tensor components are then
+
+\begin{align}
+	\sigma_{xx}^{\mathrm e}(x,y)
+	&= -\frac{(x+a_x)^2(2a_x-x)}{4a_x^3} p_x^{+\mathrm e}(y)
+	-\frac{(x-a_x)^2(2a_x+x)}{4a_x^3} p_x^{-\mathrm e}(y) \notag\\
+	&\quad -\frac{(x-a_x)^2}{4a_x^2}\biggl[
+	(x+a_x)\frac{d\tau_{xy}^{+\mathrm e}}{dy}
+	+(x-a_x)\frac{d\tau_{xy}^{-\mathrm e}}{dy}
+	\biggr] \notag\\
+	&\quad -\frac{1}{4a_y}
+	\int_{-a_x}^{a_x} 
+	\bigl(\tau_{yx}^{+\mathrm e}(\xi)-\tau_{yx}^{-\mathrm e}(\xi)\bigr)
+	 \mathrm{sgn}(x-\xi) d\xi 
+	\notag\\
+	&\quad -\frac{3y}{4a_y^3}\biggl[
+	a_y \int_{-a_x}^{a_x} 
+	\bigl(\tau_{yx}^{+\mathrm e}(\xi)+\tau_{yx}^{-\mathrm e}(\xi)\bigr)
+	\mathrm{sgn}(x-\xi) d\xi 
+	\notag\\
+	&\qquad\qquad
+	+ \int_{-a_x}^{a_x} 
+	\bigl(p_y^{+\mathrm e}(\xi)-p_y^{-\mathrm e}(\xi)\bigr)
+	|x-\xi| d\xi
+	\biggr], 
+	\label{YuzvyakEq43}\\
+	%
+	\sigma_{yy}^{\mathrm e}(x,y)
+	&= -\frac{(y+a_y)^2(2a_y-y)}{4a_y^3} p_y^{+\mathrm e}(x)
+	-\frac{(y-a_y)^2(2a_y+y)}{4a_y^3} p_y^{-\mathrm e}(x) \notag\\
+	&\quad -\frac{(y-a_y)^2}{4a_y^2}\biggl[
+	(y+a_y)\frac{d\tau_{yx}^{+\mathrm e}}{dx}
+	+(y-a_y)\frac{d\tau_{yx}^{-\mathrm e}}{dx}
+	\biggr] \notag\\
+	&\quad -\frac{1}{4a_x}
+	\int_{-a_y}^{a_y} 
+	\bigl(\tau_{xy}^{+\mathrm e}(\eta)-\tau_{xy}^{-\mathrm e}(\eta)\bigr)
+	 \mathrm{sgn}(y-\eta) d\eta \notag\\
+	&\quad -\frac{3x}{4a_x^3}\biggl[
+	a_x \int_{-a_y}^{a_y} 
+	\bigl(\tau_{xy}^{+\mathrm e}(\eta)+\tau_{xy}^{-\mathrm e}(\eta)\bigr)
+	\mathrm{sgn}(y-\eta) d\eta \notag\\
+	&\qquad\qquad
+	- \int_{-a_y}^{a_y} 
+	\bigl(p_x^{+\mathrm e}(\eta)-p_x^{-\mathrm e}(\eta)\bigr)
+	|y-\eta| d\eta
+	\biggr], 
+	\label{YuzvyakEq44}\\
+	%
+	\sigma_{xy}^{\mathrm e}(x,y)
+	&= \frac{a_y+y}{2a_y} \tau_{yx}^{+\mathrm e}(x)
+	+\frac{a_y-y}{2a_y} \tau_{yx}^{-\mathrm e}(x)
+	\notag\\
+	&\quad+\frac{a_x+x}{2a_x} \tau_{xy}^{+\mathrm e}(y)
+	+\frac{a_x-x}{2a_x} \tau_{xy}^{-\mathrm e}(y) 
+	\notag\\
+	&\quad +\frac{3(x^2-a_x^2)}{4a_x^3}\biggl[
+	a_x\bigl(\tau_{xy}^{+\mathrm e}(y)+\tau_{xy}^{-\mathrm e}(y)\bigr)
+	\notag\\
+	&\qquad\qquad-\frac12\int_{-a_y}^{a_y} 
+	\bigl(p_x^{+\mathrm e}(\eta)-p_x^{-\mathrm e}(\eta)\bigr)
+	\mathrm{sgn}(y-\eta) d\eta
+	\biggr] 
+	\notag\\
+	&\quad +\frac{3(y^2-a_y^2)}{4a_y^3}\biggl[
+	a_y\bigl(\tau_{yx}^{+\mathrm e}(x)+\tau_{yx}^{-\mathrm e}(x)\bigr)
+	\notag\\
+	&\qquad\qquad-\frac12\int_{-a_x}^{a_x} 
+	\bigl(p_y^{+\mathrm e}(\xi)-p_y^{-\mathrm e}(\xi)\bigr)
+	\mathrm{sgn}(x-\xi) d\xi
+	\biggr].
+	\label{YuzvyakEq45}
+\end{align}
+
+The obtained expressions for the self‑equilibrated parts \eqref{YuzvyakEq43}--\eqref{YuzvyakEq45} of the stress‑tensor components \eqref{YuzvyakEq35} represent the local response of the structure to the self‑equilibrated external loadings given in Eq.~\eqref{YuzvyakEq32b}.
+
+\subsection{Hybrid Solution}
+
+The hybrid constituent $\tilde{\mathcal{V}}$ of Eq.~\eqref{YuzvyakEq34} satisfies the homogeneous integral conditions in both directions  
+\begin{align}
+	\int_{-a_x}^{a_x}\tilde{\mathcal{V}} dx
+	=\int_{-a_x}^{a_x}x \tilde{\mathcal{V}} dx
+	=\int_{-a_y}^{a_y}\tilde{\mathcal{V}} dy
+	=\int_{-a_y}^{a_y}y \tilde{\mathcal{V}} dy
+	=0,
+	\label{YuzvyakEq46}
+\end{align}
+which follow from conditions \eqref{YuzvyakEq14}, \eqref{YuzvyakEq16}, \eqref{YuzvyakEq23}, and \eqref{YuzvyakEq24}.
+
+Using Eqs.~\eqref{YuzvyakEq20}--\eqref{YuzvyakEq22}, the corresponding stress components in Eq.~\eqref{YuzvyakEq35} are
+\begin{align}
+	\tilde{\sigma}_{xx}(x,y)
+	&=\frac{1}{2}\int_{-a_x}^{a_x}\tilde{\mathcal{V}}(\xi ,y) |x-\xi| d\xi,
+	\notag\\
+	\tilde{\sigma}_{yy}(x,y)
+	&=\frac{1}{2}\int_{-a_y}^{a_y}\tilde{\mathcal{V}}(x,\eta) |y-\eta| d\eta,
+	\notag\\
+	\tilde{\sigma}_{xy}(x,y)
+	&=-\frac{1}{4}\iint_{\mathcal D}
+	\tilde{\mathcal{V}}(\xi ,\eta )
+	 \mathrm{sgn}(x-\xi) \mathrm{sgn}(y-\eta)
+	 d\xi d\eta.
+	\label{YuzvyakEq47}
+\end{align}
+
+By substituting the decompositions \eqref{YuzvyakEq33} and \eqref{YuzvyakEq34} into the compatibility equation \eqref{YuzvyakEq7} within the context of the self‑equilibrated solution \eqref{YuzvyakEq42}, we obtain
+\begin{align}
+	&2\tilde{\mathcal{V}}(x,y)
+	+\frac{1}{2}\int_{-a_x}^{a_x}
+	\frac{\partial^2\tilde{\mathcal{V}}(\xi ,y)}{\partial y^2}
+	 |x-\xi| d\xi
+	+\frac{1}{2}\int_{-a_y}^{a_y}
+	\frac{\partial^2\tilde{\mathcal{V}}(x,\eta)}{\partial x^2}
+	 |y-\eta| d\eta
+	\notag\\
+	&\qquad =-E_0\Biggl(
+	\frac{\partial^2\varepsilon_{xx}^0}{\partial y^2}
+	+\frac{\partial^2\varepsilon_{yy}^0}{\partial x^2}
+	-2\frac{\partial^2\varepsilon_{xy}^0}{\partial x \partial y}
+	\Biggr)
+	\notag\\
+	&\qquad\quad-\frac{3x}{a_x^3}\bigl(p_x^{+\mathrm e}(y)-p_x^{-\mathrm e}(y)\bigr)
+	+\frac{3x+a_x}{a_x^2}\frac{d\tau_{xy}^{+\mathrm e}(y)}{dy}
+	+\frac{3x-a_x}{a_x^2}\frac{d\tau_{xy}^{-\mathrm e}(y)}{dy}
+	\notag\\
+	&\qquad\quad+\frac{d^2}{dy^2}\Biggl[
+	\frac{(2a_x-x)(x+a_x)^2}{4a_x^3}p_x^{+\mathrm e}(y)
+	+\frac{(2a_x+x)(x-a_x)^2}{4a_x^3}p_x^{-\mathrm e}(y)
+	\notag\\
+	&\qquad\quad
+	+\frac{(x+a_x)(x-a_x)^2}{4a_x^2}\frac{d\tau_{xy}^{+\mathrm e}(y)}{dy}
+	+\frac{(x-a_x)(x+a_x)^2}{4a_x^2}\frac{d\tau_{xy}^{-\mathrm e}(y)}{dy}
+	\Biggr]
+	\notag\\
+	&\qquad\quad-\frac{3y}{a_y^3}\bigl(p_y^{+\mathrm e}(x)-p_y^{-\mathrm e}(x)\bigr)
+	+\frac{3y+a_y}{a_y^2}\frac{d\tau_{yx}^{+\mathrm e}(x)}{dx}
+	+\frac{3y-a_y}{a_y^2}\frac{d\tau_{yx}^{-\mathrm e}(x)}{dx}
+	\notag\\
+	&\qquad\quad+\frac{d^2}{dx^2}\Biggl[
+	\frac{(2a_y-y)(y+a_y)^2}{4a_y^3}p_y^{+\mathrm e}(x)
+	+\frac{(2a_y+y)(y-a_y)^2}{4a_y^3}p_y^{-\mathrm e}(x)
+	\notag\\
+	&\qquad\quad +\frac{(y+a_y)(y-a_y)^2}{4a_y^2}\frac{d\tau_{yx}^{+\mathrm e}(x)}{dx}
+	+\frac{(y-a_y)(y+a_y)^2}{4a_y^2}\frac{d\tau_{yx}^{-\mathrm e}(x)}{dx}
+	\Biggr],
+	\label{YuzvyakEq48}
+\end{align}
+subject to the integral constraints \eqref{YuzvyakEq46}.
+
+A solution to Eq.~\eqref{YuzvyakEq48} can be expressed in the closed form
+\begin{align}
+	\tilde{\mathcal{V}}(x,y)
+	&=\sum_{n=1}^{\infty}\sum_{m=1}^{\infty}\Bigl[
+	\mathcal{V}_{nm}^{cc}\cos\gamma_{x,n}x \cos\gamma_{y,m}y
+	+\mathcal{V}_{nm}^{cs}\cos\gamma_{x,n}x \sin\lambda_{y,m}y
+	\notag\\
+	&\qquad
+	+\mathcal{V}_{nm}^{sc}\sin\lambda_{x,n}x \cos\gamma_{y,m}y
+	+\mathcal{V}_{nm}^{ss}\sin\lambda_{x,n}x \sin\lambda_{y,m}y
+	\Bigr],
+	\label{YuzvyakEq49}
+\end{align}
+and the corresponding stress‑tensor components follow by substitution into Eq.~\eqref{YuzvyakEq47}.
+
+\section{Numerical Examples and Discussion}
+\noindent
+Consider the case study when the stress field in the rectangular domain $\mathcal{D}$ is induced solely by the thermal field, with the external boundary tractions set to zero.  
+Assume the thermal strains to be
+\begin{align}
+	\varepsilon_T(x,y)=1-\frac{x^2y^2}{a_x^2a_y^2},
+	\label{YuzvyakEq50}
+\end{align}
+and the material properties in the form
+\begin{align}
+	E=E_0\exp(\varkappa xy),\qquad
+	\nu=\nu_0=0.3,\qquad
+	E_0=\mathrm{const},
+	\label{YuzvyakEq51}
+\end{align}
+where $\varkappa$ is the non‑homogeneity parameter.  
+If $\varkappa=0$, the material is homogeneous; otherwise, the Young modulus varies in both planar coordinates. 
+
+\begin{figure}[b]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig1a.png}
+		\caption{Normal stress $\sigma_{xx}/E_0$ for the homogeneous material ($\varkappa=0$).}
+		\label{YuzvyakFig1a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig1b.png}
+		\caption{Tangential stress $\sigma_{xy}/E_0$ for the homogeneous material ($\varkappa=0$).}
+		\label{YuzvyakFig1b}
+	\end{subfigure}
+	\caption{Full‑field distribution of the dimensionless stresses in the rectangular domain for the homogeneous material ($\varkappa=0$ in Eq.~\eqref{YuzvyakEq51}).}
+	\label{YuzvyakFig1}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig2a.png}
+		\caption{Normal stress $\sigma_{xx}/E_0$ for the inhomogeneous material ($\varkappa=1$).}
+		\label{YuzvyakFig2a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig2b.png}
+		\caption{Tangential stress $\sigma_{xy}/E_0$ for the inhomogeneous material ($\varkappa=1$).}
+		\label{YuzvyakFig2b}
+	\end{subfigure}
+	\caption{Full‑field distribution of the dimensionless stresses in the rectangular domain for the inhomogeneous material ($\varkappa=1$ in Eq.~\eqref{YuzvyakEq51}).}
+	\label{YuzvyakFig2}
+\end{figure}
+
+
+The normal and tangential stresses $\sigma_{xx}/E_0$ and $\sigma_{xy}/E_0$ computed in a square domain ($a_x=a_y=1$) are shown in Fig.~\ref{YuzvyakFig1} for a homogeneous material ($\varkappa=0$).  
+Both stresses satisfy the boundary conditions: $\sigma_{xx}=0$ at $x=\pm a_x$ and $\sigma_{xy}=0$ on the entire periphery.  
+The stress $\sigma_{xx}$ is nonzero at $y=\pm a_y$ due to thermal expansion and equilibrium requirements.  
+Because of the symmetric thermal field, $\sigma_{yy}$ is obtained from $\sigma_{xx}$ by exchanging $x$ and $y$.  
+The normal stresses are even in each coordinate, while $\sigma_{xy}$ is odd.
+
+The effect of inhomogeneity ($\varkappa=1$) is illustrated in Fig.~\ref{YuzvyakFig2}.  
+The stresses lose symmetry: $\sigma_{xx}$ is no longer even, and $\sigma_{xy}$ is no longer odd.  
+Moreover, the peak of $\sigma_{xx}$ on the edges $y=\pm a_y$ increases, highlighting how inhomogeneity strongly affects the stress field under the same loading.
+
+\medskip
+
+Next, consider a rectangular domain $\mathcal{D}$ with $a_x=0.2$~m and $a_y=0.1$~m subjected to the force loadings
+\begin{align}
+	p_x^+(y) &= \frac{3p_0}{2}\left(1-\frac{y^2}{a_y^2}\right), 
+	\quad p_x^-(y)=p_0,
+	\notag\\
+	p_y^\pm(x) &= \tau_{xy}^\pm(y) = \tau_{yx}^\pm(x) = 0,
+	\label{YuzvyakEq52}
+\end{align}
+which satisfy the equilibrium conditions \eqref{YuzvyakEq25}--\eqref{YuzvyakEq27} for the resultant forces and moments.  
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig3a.png}
+		\caption{Normal stress $\sigma_{yy}/E_0$ for a homogeneous material ($\nu_0=0.3$).}
+		\label{YuzvyakFig3a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig3b.png}
+		\caption{Tangential stress $\sigma_{xy}/E_0$ for a homogeneous material ($\nu_0=0.3$).}
+		\label{YuzvyakFig3b}
+	\end{subfigure}
+	\caption{Full‑field distribution of the dimensionless stresses for a homogeneous material ($\nu_0=0.3$) under the force loading \eqref{YuzvyakEq52}.}
+	\label{YuzvyakFig3}
+\end{figure}
+
+
+Because the side $y=-a_y$ carries a uniform pressure equal to the resultant of the non‑uniform load on $y=+a_y$, the stress distribution is more disturbed near the latter side (Fig.~\ref{YuzvyakFig3}).
+
+\medskip
+
+Now, consider an inhomogeneous material with the variable Young modulus
+\begin{align}
+	E = E_0\left(2 + 3 \frac{y^2}{a_y^2}\right),
+	\label{YuzvyakEq53}
+\end{align}
+while $\nu_0=\mathrm{const}$.  
+The corresponding stresses are shown in Fig.~\ref{YuzvyakFig4}.  
+Compared to Fig.~\ref{YuzvyakFig3}, the variation of $E(y)$ causes a visible distortion of the stress field near $y=-a_y$ and alters the peak values of both $\sigma_{yy}$ and $\sigma_{xy}$.
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig4a.png}
+		\caption{Normal stress $\sigma_{yy}/E_0$ for the inhomogeneous material.}
+		\label{YuzvyakFig4a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig4b.png}
+		\caption{Tangential stress $\sigma_{xy}/E_0$ for the inhomogeneous material.}
+		\label{YuzvyakFig4b}
+	\end{subfigure}
+	\caption{Full‑field distribution of the dimensionless stresses for the inhomogeneous material with $E(y)$ from Eq.~\eqref{YuzvyakEq53} and $\nu_0=0.3$ under the force loading \eqref{YuzvyakEq52}.}
+	\label{YuzvyakFig4}
+\end{figure}
+
+
+\medskip
+
+Finally, consider a two‑layer plate $\mathcal D = \mathcal D_1 \cup \mathcal D_2$ with  
+\[
+\mathcal{D}_1=[-a_x,a_x]\times[-a_y,0],\quad
+\mathcal{D}_2=[-a_x,a_x]\times[0,a_y],
+\]
+perfectly bonded along $y=0$.  
+Let the piecewise material properties be represented as
+\begin{align}
+	f(x,y)= f_1(x,y) + \bigl(f_2(x,y)-f_1(x,y)\bigr)H(y),
+	\label{YuzvyakEq54}
+\end{align}
+where $H(y)$ is the Heaviside step function and $f_\ell$ denotes either $E_\ell$ or $\nu_\ell$ in layer $\mathcal D_\ell$ ($\ell=1,2$).  
+Assume
+\[
+\nu_1=0.3,\quad E_1=6.5E_0,\quad
+\nu_2=0.28,\quad E_2=E_0\Bigl(2+11(y/a_y)^2\Bigr).
+\]
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig5a.png}
+		\caption{Normal stress $\sigma_{xx}/E_0$.}
+		\label{YuzvyakFig5a}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig5b.png}
+		\caption{Normal stress $\sigma_{yy}/E_0$.}
+		\label{YuzvyakFig5b}
+	\end{subfigure}
+	
+	\begin{subfigure}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{YuzvyakFig5c.png}
+		\caption{Tangential stress $\sigma_{xy}/E_0$.}
+		\label{YuzvyakFig5c}
+	\end{subfigure}
+	\caption{Full‑field distribution of the dimensionless stresses in a two‑layer plate with material properties \eqref{YuzvyakEq54} under the loading \eqref{YuzvyakEq52}.}
+	\label{YuzvyakFig5}
+\end{figure}
+
+
+Figure~\ref{YuzvyakFig5} shows the stress patterns for the two‑layer plate.  
+Under the perfect bonding condition, $\sigma_{yy}$ and $\sigma_{xy}$ remain continuous across $y=0$, while $\sigma_{xx}$ exhibits a discontinuity at the interface.  
+This discontinuity may trigger residual strains and, if unrelieved, potential fracture initiation.  
+The most pronounced change in $\sigma_{yy}$ appears near $y=0$ and close to the vertical edges $x=\pm a_x$.
+
+\section{Conclusions}
+\noindent
+A hybrid analytical–numerical algorithm has been developed for evaluating plane-stress/plane-strain fields in an arbitrarily inhomogeneous rectangular domain with corner points.  
+The approach synergistically combines the \emph{method of additional (eigen)strains} with Vihak’s \emph{direct-integration method}.  
+
+\begin{itemize}
+	\item  The additional-strain formulation rewrites the constitutive law of an inhomogeneous solid in the form valid for a reference homogeneous medium, shifting all spatially varying elastic moduli into initially unknown strain fields.  
+	\item  Applying direct integration then introduces a single scalar potential—the \emph{Vihak function}—whose governing boundary-value problem involves only a second-order integro-differential equation with integral side constraints.  This bypasses the usual difficulties of enforcing boundary conditions near the rectangle’s corners.  
+	\item  Separation of variables in a complete system of eigen- and associated functions splits the solution into \emph{elementary}, \emph{self-equilibrated}, and \emph{hybrid} parts, each available in closed form.  The successive-approximation loop explicitly updates the additional strains, ensuring rapid convergence even for steep property gradients.  
+\end{itemize}
+
+Benchmark studies confirm the algorithm’s efficiency for (i) one- and two-dimensional material gradients and (ii) multilayer stacks with piecewise-constant or smoothly varying moduli.  Because a multilayer assembly is treated as a single domain with stepwise properties, the computational cost grows only mildly with the number of layers—making the method attractive for verifying homogenization or layered-composite models.
+
+\bigskip
+\section*{Acknowledgement}
+This research was partially supported by the budget programme of Ukraine
+``Support for the Development of Priority Research Areas''
+(CPCEC 6451230) under grant No.~0125U000322
+\emph{``Mathematical modelling and identification of protective surface and structural
+	properties of materials with respect to mechanical, thermal, acoustic and electromagnetic influences''}.
+
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter38}

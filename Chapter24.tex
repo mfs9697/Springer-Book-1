@@ -1,0 +1,1412 @@
+% !TeX root = BookN.tex
+
+\title{Boundary Element Method for 2D Fracture Mechanics Analysis in Quasicrystalline Materials}
+\titlerunning{Boundary Element Method for 2D Fracture Mechanics Analysis}
+
+\author{
+	Roman Kushnir,
+	Iaroslav Pasternak,
+	Heorhiy Sulym, and
+	Ihor Hotsyk
+}
+
+\institute{
+	Roman Kushnir 
+	\at
+	\AffPidstryhach
+    \\
+	\email{dyrector@iapmm.lviv.ua}
+	\and
+	Iaroslav Pasternak 
+	\at
+	\AffVolyn
+	\\
+	\email{iaroslav.pasternak@vnu.edu.ua}
+	\and
+	Heorhiy Sulym 
+	\at
+	\AffPidstryhach
+	\\
+	\email{gtsulym@gmail.com}
+	\and
+	Ihor Hotsyk 
+	\at
+	\AffVolyn
+	\\
+	\email{gotsyk.igor@vnu.edu.ua}
+}
+
+\maketitle
+
+\graphicspath{{24_Kushnir/}}
+
+\abstract{ An efficient boundary element formulation is developed for the analysis
+	of quasicrystalline bodies containing cracks under thermomechanical
+	loading. A specialized numerical technique is proposed for the accurate
+	computation of phonon--phason stress intensity factors near crack tips.
+	The approach demonstrates high accuracy and numerical stability, and
+	the obtained results are validated through comparison with available
+	analytical solutions. It enables a detailed investigation of the effect
+	of crack size on generalized stress intensity factors in finite
+	domains. The developed framework also provides new insight into
+	thermomechanical phenomena specific to quasicrystals.
+}
+
+%\keywords{quasicrystals, boundary element method, phonon--phason stress intensity factors, thermomechanical loading, fracture mechanics}
+
+\section{Introduction}
+
+Quasicrystals constitute a unique class of solid materials characterized
+by a non-periodic yet long-range ordered atomic structure. Since their
+discovery in the early 1980s \cite{Kushnir1}, quasicrystals have attracted
+considerable attention owing to their unusual physical properties and
+their potential applications in various technological fields. One of
+the most notable features of quasicrystalline materials is their
+exceptionally low thermal conductivity, which makes them suitable for
+high-temperature applications and energy-efficient technologies
+\cite{Kushnir40}.
+
+Unlike conventional crystals, quasicrystals exhibit symmetries that
+are forbidden in periodic lattices, such as fivefold and icosahedral
+symmetries. This structural peculiarity leads to distinctive physical
+behavior, including low thermal conductivity \cite{Kushnir40}, high
+hardness \cite{Kushnir41}, and significant resistance to wear and
+corrosion \cite{Kushnir42}. The aperiodic atomic arrangement impedes
+phonon propagation and thus reduces the ability of the material to
+conduct heat. As a result, quasicrystals are promising candidates for
+thermal barrier coatings and insulating layers in aerospace and power
+generation technologies.
+
+The brittle behavior of quasicrystals is commonly attributed to the
+absence of conventional dislocation-mediated plasticity
+\cite{Kushnir40}. Instead, deformation is often governed by defects
+specific to quasiperiodic structures, such as phasons. However,
+phason-related processes are typically slow and inefficient in
+relaxing stress concentrations near crack tips. Consequently, cracks
+in quasicrystals may propagate abruptly once a critical stress level
+is reached \cite{Kushnir39}. Therefore, given their numerous potential
+applications, studying the fracture mechanics of quasicrystals under
+combined thermal and mechanical loading is of significant importance.
+
+In recent years, substantial progress has been made in developing
+analytical and numerical approaches for fracture analysis in cracked
+quasicrystals. Fan et al.~\cite{Kushnir5} investigated crack behavior
+in one-dimensional hexagonal quasicrystals by reducing the governing
+problem to the determination of four harmonic potentials. Pi et
+al.~\cite{Kushnir7} applied complex variable techniques to plane
+electroelastic problems in 6mm one-dimensional quasicrystal solids.
+Fan and Mai~\cite{Kushnir8} introduced a Lekhnitskii-type method for
+plane elasticity problems in quasicrystals, whereas Gao et
+al.~\cite{Kushnir9} generalized the Stroh formalism for
+one-dimensional quasicrystal media. These approaches were further
+extended to icosahedral and decagonal quasicrystals by Li and Liu
+\cite{Kushnir10,Kushnir11}. A Stroh-like formalism was also employed
+by Radi and Mariano~\cite{Kushnir12} for crack analysis, while Zhang
+et al.~\cite{Kushnir13} derived fundamental solutions for
+one-dimensional piezoelectric quasicrystals within the same framework.
+
+Comparatively fewer studies have addressed plane thermoelasticity
+problems in quasicrystals. In \cite{Kushnir6}, an axisymmetric
+thermoelastic problem was analyzed to determine thermal stresses in
+a homogeneous disk composed of a cubic quasicrystal. Guo et
+al.~\cite{Kushnir22} applied a Stroh-type formalism to solve the plane
+thermoelastic problem for a two-dimensional quasicrystal containing
+an elliptic hole. The stress singularity induced by thermal effects
+in one-dimensional hexagonal piezoelectric quasicrystal composites
+was examined by Mu et al.~\cite{Kushnir23} using an extended Stroh
+formalism. Lu et al.~\cite{Kushnir38} employed Kachanov's method to
+investigate crack interaction in one-dimensional thermoelastic
+quasicrystals. Pasternak et al.~\cite{Kushnir34} developed a general
+boundary integral equation approach for thermoelastic problems in
+cracked quasicrystals.
+
+However, to the best of the authors' knowledge, a general boundary
+element formulation for fracture mechanics analysis in thermoelastic
+quasicrystals has not yet been developed. To address this gap, the
+present study builds upon the boundary integral equations proposed
+by Pasternak et al.~\cite{Kushnir34} and develops a boundary element
+method for two-dimensional fracture analysis in thermoelastic
+quasicrystals with general material configurations, including
+one-, two-, and three-dimensional quasicrystalline structures.
+
+\section{Governing Relations and Boundary Integral Equations}
+
+Since thermal effects may significantly influence the fracture
+behavior of quasicrystals, they must be properly taken into account
+in fracture mechanics analyses. In this study, steady-state plane heat
+conduction and static plane thermoelasticity problems are considered
+for quasicrystalline materials with a general three-dimensional
+internal structure.
+
+Following the formulations in \cite{Kushnir6,Kushnir21}, quasicrystal
+solids are assumed to obey the classical Fourier law for steady-state
+heat conduction,
+\begin{equation}
+	h_i = -k_{ij}\theta_{,j},
+	\label{KushnirEq1}
+\end{equation}
+where $\theta$ denotes the temperature change with respect to a
+reference temperature and $k_{ij}$ are the thermal conductivity
+coefficients. The conductivity tensor is assumed to be symmetric,
+i.e., $k_{ij}=k_{ji}$.
+
+The heat flux vector field ${\bf h}$ must satisfy the stationary heat
+balance equation
+\begin{equation}
+	\mathrm{div}\,{\bf h} - f_h \equiv h_{i,i} - f_h = 0,
+	\label{KushnirEq2}
+\end{equation}
+where $f_h$ denotes the volumetric heat source density.
+
+Following the formulation presented in \cite{Kushnir34}, the
+thermoelastic constitutive relations for quasicrystalline materials
+can be written in a unified generalized form as
+\begin{equation}
+	\tilde{\sigma}_{Ij}
+	=
+	\tilde{C}_{IjKm}\tilde{u}_{K,m}
+	-
+	\tilde{\beta}_{Ij}\theta,
+	\label{KushnirEq3}
+\end{equation}
+together with the equilibrium equations
+\begin{equation}
+	\tilde{\sigma}_{Ij,j}=-\tilde{f}_{I}.
+	\label{KushnirEq4}
+\end{equation}
+
+In this formulation, all field variables are expressed in terms of
+generalized quantities (denoted by tildes), which simultaneously
+describe both phonon and phason contributions. These quantities are
+defined as
+\begin{equation}
+	\begin{array}{l}
+		\tilde{\sigma}_{ij}=\sigma_{ij}, \qquad
+		\tilde{\sigma}_{(i+3)j}=H_{ij}, \qquad
+		\tilde{u}_{i}=u_{i}, \qquad
+		\tilde{u}_{i+3}=w_{i}, \\[3pt]
+		\tilde{C}_{ijkm}=C_{ijkm}, \qquad
+		\tilde{C}_{ij(k+3)m}=R_{ijkm}, \\[3pt]
+		\tilde{C}_{(i+3)jkm}=R_{kmij}, \qquad
+		\tilde{C}_{(i+3)j(k+3)m}=K_{ijkm} \qquad
+		(i,j,k,m=1,2,3).
+	\end{array}
+	\label{KushnirEq5}
+\end{equation}
+%
+Here $\sigma_{ij}$ is the phonon stress tensor (symmetric),
+$H_{ij}$ is the phason stress tensor,
+$\varepsilon_{ij}=\tfrac12(u_{i,j}+u_{j,i})$ is the phonon strain tensor
+(symmetric), and $w_{i,j}$ is the phason strain tensor.
+Furthermore, $C_{ijkm}$ denotes the tensor of phonon elastic constants,
+$K_{ijkm}$ is the tensor of phason elastic constants, and
+$R_{ijkm}$ together with $R'_{ijkm}=R_{kmij}$ describe the
+phonon–phason coupling. Finally, $f_i$ and $g_i$ denote the components
+of the phonon and phason body force vectors, respectively.
+
+The generalized thermal moduli of quasicrystals are defined as
+\begin{equation}
+	\begin{array}{rcl}
+		\tilde{\beta}_{ij}&=&C_{ijkm}\alpha_{km}+R_{ijkm}\alpha'_{km},\\[4pt]
+		\tilde{\beta}_{(i+3)j}&=&R_{kmij}\alpha_{km}+K_{ijkm}\alpha'_{km},
+	\end{array}
+	\label{KushnirEq6}
+\end{equation}
+where $\alpha_{ij}$ and $\alpha'_{ij}$ denote the phonon and phason
+components of the linear thermal expansion tensor, respectively.
+Based on symmetry considerations of the quasicrystalline structure,
+the phason thermal expansion components are commonly assumed to vanish,
+i.e., $\alpha'_{ij}\equiv0$ (see \cite{Kushnir20} for further details).
+In the present work, only weak coupling between the thermal and
+mechanical fields is considered.
+
+Throughout this work, the Einstein summation convention is adopted,
+where repeated indices imply summation over the range $1$ to $3$.
+Partial differentiation with respect to spatial coordinates is
+indicated by a subscript comma. For example,
+\[
+u_{i,j}=\frac{\partial u_i}{\partial x_j}.
+\]
+
+Using complex variable methods in combination with the extended Stroh
+formalism, boundary integral equations for the Stroh complex potentials
+were derived in \cite{Kushnir34}. By employing the relationships
+between these complex potentials and the physical fields -- such
+as temperature, heat flux, extended displacement, and extended stress
+-- the corresponding boundary integral equations for plane heat conduction
+and plane thermoelasticity in quasicrystals can be formulated.
+
+Thus, the boundary integral equations for plane heat conduction of
+a cracked quasicrystal solid are as follows.
+\begin{itemize}
+	\item For a collocation point $\mathbf{y}\in\Gamma$, assuming the boundary
+	$\Gamma$ of a solid is smooth at $\mathbf{y}$, the following boundary
+	integral equation holds:
+\end{itemize}
+\begin{multline}
+	\frac{1}{2}\theta(\mathbf{y})
+	=
+	\mathrm{RPV}\!\int_{\Gamma}
+	\Theta^{*}(\mathbf{x},\mathbf{y})\,h_n(\mathbf{x})\,d\Gamma(\mathbf{x})
+	-
+	\mathrm{CPV}\!\int_{\Gamma}
+	H^{*}(\mathbf{x},\mathbf{y})\,\theta(\mathbf{x})\,d\Gamma(\mathbf{x})
+	\\
+	+
+	\int_{\Gamma_C}
+	\left[
+	\Theta^{*}(\mathbf{x},\mathbf{y})\,\Sigma h_n(\mathbf{x})
+	-
+	H^{*}(\mathbf{x},\mathbf{y})\,\Delta\theta(\mathbf{x})
+	\right] d\Gamma(\mathbf{x})
+	\\
+	-
+	\iint_{S}
+	\Theta^{*}(\mathbf{x},\mathbf{y})\,f_h(\mathbf{x})\,dS(\mathbf{x}).
+	\label{KushnirEq7}
+\end{multline}
+\begin{itemize}
+	
+	\item For a collocation point $\mathbf{y}_{C}\in\Gamma_{C}$ located on
+	a smooth crack surface $\Gamma_{C}$, the boundary integral equation
+	takes the form
+	\begin{multline}
+		\frac{1}{2}\Delta h_n(\mathbf{y}_C)
+		=
+		n_i^{+}(\mathbf{y}_C)
+		\bigg[
+		\mathrm{CPV}\!\int_{\Gamma_C}
+		\Theta_i^{**}(\mathbf{x},\mathbf{y}_C)
+		\,\Sigma h_n(\mathbf{x})\,d\Gamma(\mathbf{x})
+		\\
+		-
+		\mathrm{HPV}\!\int_{\Gamma_C}
+		H_i^{**}(\mathbf{x},\mathbf{y}_C)
+		\,\Delta\theta(\mathbf{x})\,d\Gamma(\mathbf{x})
+		\\
+		+
+		\int_{\Gamma}
+		\big(
+		\Theta_i^{**}(\mathbf{x},\mathbf{y}_C)h_n(\mathbf{x})
+		-
+		H_i^{**}(\mathbf{x},\mathbf{y}_C)\theta(\mathbf{x})
+		\big)
+		\,d\Gamma(\mathbf{x})
+		\\
+		-
+		\iint_{S}
+		\Theta_i^{**}(\mathbf{x},\mathbf{y}_C)
+		f_h(\mathbf{x})\,dS(\mathbf{x})
+		\bigg].
+		\label{KushnirEq8}
+	\end{multline}
+	
+\end{itemize}
+
+Boundary integral equations for plane thermoelasticity of quasicrystals
+can be written as follows.
+
+\begin{itemize}
+	
+	\item For a collocation point $\mathbf{y}\in\Gamma$, assuming that the
+	boundary $\Gamma$ is smooth at $\mathbf{y}$, the boundary integral
+	representation of the extended displacement field is
+\begin{multline}
+	\frac{1}{2}\tilde{u}_I(\mathbf{y})
+	=
+	\mathrm{RPV}\!\int_{\Gamma}
+	U_{IJ}(\mathbf{x},\mathbf{y})\tilde{t}_J(\mathbf{x})\,d\Gamma(\mathbf{x})
+	-
+	\mathrm{CPV}\!\int_{\Gamma}
+	T_{IJ}(\mathbf{x},\mathbf{y})\tilde{u}_J(\mathbf{x})\,d\Gamma(\mathbf{x})
+	\\
+	+
+	\mathrm{RPV}\!\int_{\Gamma}
+	R_I(\mathbf{x},\mathbf{y})\theta(\mathbf{x})\,d\Gamma(\mathbf{x})
+	+
+	\int_{\Gamma}
+	V_I(\mathbf{x},\mathbf{y})h_n(\mathbf{x})\,d\Gamma(\mathbf{x})
+	\\
+	+
+	\int_{\Gamma_C}
+	\big(
+	U_{IJ}(\mathbf{x},\mathbf{y})\Sigma\tilde{t}_J(\mathbf{x})
+	-
+	T_{IJ}(\mathbf{x},\mathbf{y})\Delta\tilde{u}_J(\mathbf{x})
+	\big)\,d\Gamma(\mathbf{x})
+	\\
+	+
+	\int_{\Gamma_C}
+	\big(
+	R_I(\mathbf{x},\mathbf{y})\Delta\theta(\mathbf{x})
+	+
+	V_I(\mathbf{x},\mathbf{y})\Sigma h_n(\mathbf{x})
+	\big)\,d\Gamma(\mathbf{x})
+	\\
+	+
+	\iint_{S}
+	U_{IJ}(\mathbf{x},\mathbf{y})\tilde{f}_J(\mathbf{x})\,dS(\mathbf{x})
+	-
+	\iint_{S}
+	V_I(\mathbf{x},\mathbf{y})f_h(\mathbf{x})\,dS(\mathbf{x}).
+	\label{KushnirEq9}
+\end{multline}
+	
+	\item For a collocation point $\mathbf{y}_C\in\Gamma_C$, assuming that
+	the crack surface $\Gamma_C$ is smooth at $\mathbf{y}_C$, the boundary
+	integral equation for the extended stress discontinuity is
+	\begin{multline}
+		\frac{1}{2}\Delta\tilde{t}_I(\mathbf{y}_C)
+		=
+		n_j^{+}(\mathbf{y}_C)
+		\bigg[
+		\mathrm{CPV}\!\int_{\Gamma_C}
+		D_{IjK}(\mathbf{x},\mathbf{y}_C)
+		\,\Sigma\tilde{t}_K(\mathbf{x})\,d\Gamma(\mathbf{x})
+		\\
+		-
+		\mathrm{HPV}\!\int_{\Gamma_C}
+		S_{IjK}(\mathbf{x},\mathbf{y}_C)
+		\,\Delta\tilde{u}_K(\mathbf{x})\,d\Gamma(\mathbf{x})
+		+
+		\mathrm{CPV}\!\int_{\Gamma_C}
+		Q_{Ij}(\mathbf{x},\mathbf{y}_C)
+		\,\Delta\theta(\mathbf{x})\,d\Gamma(\mathbf{x})
+		\\
+		+
+		\mathrm{RPV}\!\int_{\Gamma_C}
+		W_{Ij}(\mathbf{x},\mathbf{y}_C)
+		\,\Sigma h_n(\mathbf{x})\,d\Gamma(\mathbf{x})
+		\\
+		+
+		\int_{\Gamma}
+		\big(
+		D_{IjK}(\mathbf{x},\mathbf{y}_C)\tilde{t}_K(\mathbf{x})
+		-
+		S_{IjK}(\mathbf{x},\mathbf{y}_C)\tilde{u}_K(\mathbf{x})
+		\big)
+		\,d\Gamma(\mathbf{x})
+		\\
+		+
+		\int_{\Gamma}
+		\big(
+		Q_{Ij}(\mathbf{x},\mathbf{y}_C)\theta(\mathbf{x})
+		+
+		W_{Ij}(\mathbf{x},\mathbf{y}_C)h_n(\mathbf{x})
+		\big)
+		\,d\Gamma(\mathbf{x})
+		\\
+		+
+		\iint_{S}
+		D_{IjK}(\mathbf{x},\mathbf{y}_C)
+		\,\tilde{f}_K(\mathbf{x})\,dS(\mathbf{x})
+		-
+		\iint_{S}
+		W_{Ij}(\mathbf{x},\mathbf{y}_C)
+		\,f_h(\mathbf{x})\,dS(\mathbf{x})
+		\bigg].
+		\label{KushnirEq10}
+	\end{multline}
+	%
+\end{itemize}
+
+	In (\ref{KushnirEq9}–\ref{KushnirEq12}) and throughout the text, RPV denotes the Riemann
+	principal value of an improper integral, CPV denotes the Cauchy
+	principal value of a weakly singular integral, and HPV denotes the
+	Hadamard principal value (or finite part) of a hypersingular integral. The quantity
+	$\tilde{t}_{I}=\tilde{\sigma}_{Ij}n_{j}$
+	represents the extended surface traction vector, where $n_{j}$ is
+	the outward unit normal vector to the boundary $\Gamma$ or to the
+	crack surface $\Gamma_{C}$. The superscript ``+'' indicates evaluation
+	on the positive face of the crack.
+	
+	The symbols $\Sigma$ and $\Delta$ denote, respectively, the sum
+	\[
+	\Sigma f = f^{+}+f^{-}
+	\]
+	and the jump (difference)
+	\[
+	\Delta f = f^{+}-f^{-}
+	\]
+	of a field quantity across the crack surface $\Gamma_{C}$, where
+	$f^{+}$ and $f^{-}$ represent the values on the upper and lower crack
+	faces.
+	
+
+	
+	The kernels appearing in the boundary integral equations are defined as follows.
+	
+	\begin{equation}
+		\begin{array}{rclrcl}
+			\Theta^{*}(\mathbf{x},\boldsymbol{\xi}) 
+			&=& \dfrac{1}{2\pi k_t}
+			\ln\left|Z_t(\mathbf{x}-\boldsymbol{\xi})\right|,
+			\quad &
+			H^{*}(\mathbf{x},\boldsymbol{\xi})
+			&=& -k_{ij}\Theta^{*}_{,j}(\mathbf{x},\boldsymbol{\xi})\,n_i(\mathbf{x}),
+			\\[1em]
+			\Theta_i^{**}(\mathbf{x},\boldsymbol{\xi})
+			&=& -k_{ij}\dfrac{\partial}{\partial \xi_j}
+			\Theta^{*}(\mathbf{x},\boldsymbol{\xi}),
+			\quad &
+			H_i^{**}(\mathbf{x},\boldsymbol{\xi})
+			&=& -k_{ij}\dfrac{\partial}{\partial \xi_j}
+			H^{*}(\mathbf{x},\boldsymbol{\xi}).
+		\end{array}
+		\label{KushnirEq11}
+	\end{equation}
+	
+	\begin{align}
+		\notag
+		U_{IJ}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\frac{1}{\pi}
+		\Im\!\left[
+		A_{I\alpha}A_{J\alpha}
+		\ln Z_\alpha(\mathbf{x}-\boldsymbol{\xi})
+		\right],
+		\\[.2em]
+		\notag
+		T_{IQ}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{C}_{IjKm}\tilde{U}_{KQ,m}(\mathbf{x},\boldsymbol{\xi})\,n_j
+		\\[.2em]
+		\notag
+		k_{pq}V_{I,pq}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{\beta}_{Jk}U_{IJ,k}(\mathbf{x},\boldsymbol{\xi}),
+		\\[.2em]
+		\notag
+		R_I(\mathbf{x},\boldsymbol{\xi})
+		&=
+		k_{pq}V_{I,q}(\mathbf{x},\boldsymbol{\xi})\,n_p(\mathbf{x})
+		\\
+		\label{KushnirEq12}
+		D_{IjK}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{C}_{IjMp}
+		\frac{\partial}{\partial\xi_p}
+		U_{MK}(\mathbf{x},\boldsymbol{\xi}),
+		\\
+		\notag
+		S_{IjK}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{C}_{IjMp}
+		\frac{\partial}{\partial\xi_p}
+		T_{MK}(\mathbf{x},\boldsymbol{\xi})
+			\\
+			\notag
+		Q_{Ij}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{C}_{IjMp}
+		\frac{\partial}{\partial\xi_p}
+		R_M(\mathbf{x},\boldsymbol{\xi})
+		+
+		\tilde{\beta}_{Ij}
+		H^{*}(\mathbf{x},\boldsymbol{\xi})
+		\\
+		\notag
+		W_{Ij}(\mathbf{x},\boldsymbol{\xi})
+		&=
+		\tilde{C}_{IjMp}
+		\frac{\partial}{\partial\xi_p}
+		V_M(\mathbf{x},\boldsymbol{\xi})
+		-
+		\tilde{\beta}_{Ij}
+		\Theta^{*}(\mathbf{x},\boldsymbol{\xi}).
+	\end{align}
+	%
+	Here,
+	\[
+	k_t=\sqrt{k_{11}k_{22}-k_{12}^{2}},
+	\]
+	and
+	\[
+	Z_t(\mathbf{x}) = x_1 + p_t x_2
+	\]
+	is a complex variable introduced for the heat conduction problem.
+	The parameter $p_t$ is the root with a positive imaginary part of
+	the characteristic equation for anisotropic heat conduction,
+	\[
+	k_{22}p_t^2 + 2k_{12}p_t + k_{11} = 0 .
+	\]
+	
+	In the thermoelastic case, $A_{I\alpha}$ and $p_{\alpha}$ are,
+	respectively, the eigenvectors and eigenvalues of the extended Stroh
+	eigenvalue problem \cite{Kushnir34}. The quantity
+	\[
+	Z_{\alpha}(\mathbf{x}) = x_{1} + p_{\alpha}x_{2}
+	\]
+	denotes the complex argument associated with the $\alpha$th eigenvalue.
+	
+	Boundary conditions provide only half of the boundary data required
+	for the field functions $\theta$, $h_{n}$, $\tilde{u}_{I}$, and
+	$\tilde{t}_{I}$. Therefore, the boundary integral equations for heat
+	conduction~\eqref{KushnirEq7} and  \eqref{KushnirEq8} are solved to determine
+	either the unknown temperature $\theta$ (when the heat flux $h_{n}$
+	is prescribed on the boundary $\Gamma$) or the unknown normal heat
+	flux $h_{n}$ (when the boundary temperature $\theta$ is specified).
+	Similarly, on the crack surface $\Gamma_{C}$ these equations are used
+	to determine either the temperature discontinuity $\Delta\theta$
+	(for a thermally insulated crack) or the heat flux discontinuity
+	$\Sigma h_{n}$ (for a thermally conductive crack).
+	
+	The boundary integral equations for thermoelasticity
+    \eqref{KushnirEq9} and \eqref{KushnirEq10} are solved in an analogous manner.
+	Specifically, they are used to determine the unknown extended
+	displacement $\tilde{u}_{I}$ (when the surface tractions $\tilde{t}_{I}$
+	are prescribed) or the unknown extended traction $\tilde{t}_{I}$ (when
+	the displacements $\tilde{u}_{I}$ are prescribed) on the boundary
+	$\Gamma$. On the crack surface $\Gamma_{C}$, the equations determine
+	the displacement discontinuity $\Delta\tilde{u}_{I}$. In the present
+	study, symmetric crack loading is assumed, meaning that the traction
+	is continuous across the crack faces, i.e.,
+	\[
+	\Sigma\tilde{t}_{I}\equiv 0 .
+	\]
+
+\section{Field Singularity at the Tips of Incisions}
+
+In \cite{Kushnir34}, it was shown that in the most general case of
+three-dimensional quasicrystals both the heat flux and the extended
+stress fields exhibit a square-root singularity near the crack tips.
+Such behavior is characteristic of fracture problems and is consistent
+with classical results of linear elastic fracture mechanics, extended
+to complex materials such as quasicrystals.
+
+The explicit expressions for the extended stress components near the
+crack tip are given by \cite{Kushnir34}
+\begin{equation}
+	\begin{array}{rcl}
+		\tilde{\boldsymbol{\sigma}}_{1}=[\tilde{\sigma}_{I1}]
+		&=&
+		-\dfrac{1}{\sqrt{2\pi}}
+		\Re\!\left\{
+		\mathbf{B}
+		\left\langle p_{*}Z_{*}^{-1/2}\right\rangle
+		\mathbf{B}^{-1}
+		\tilde{\mathbf{k}}^{(1)}
+		\right\}
+		+ O(1),
+		\\[1em]
+		\tilde{\boldsymbol{\sigma}}_{2}=[\tilde{\sigma}_{I2}]
+		&=&
+		\dfrac{1}{\sqrt{2\pi}}
+		\Re\!\left\{
+		\mathbf{B}
+		\left\langle Z_{*}^{-1/2}\right\rangle
+		\mathbf{B}^{-1}
+		\tilde{\mathbf{k}}^{(1)}
+		\right\}
+		+ O(1),
+	\end{array}
+	\label{KushnirEq13}
+\end{equation}
+%
+where
+\[
+\begin{array}{rcl}
+\left\langle \sqrt{Z_{*}} \right\rangle
+&=&
+\mathrm{diag}\!\left[
+\sqrt{Z_{1}},\sqrt{Z_{2}},\ldots,\sqrt{Z_{6}}
+\right],
+\\[1em]
+\left\langle \sqrt{p_{*}Z_{*}} \right\rangle
+&=&
+\mathrm{diag}\!\left[
+\sqrt{p_{1}Z_{1}},\sqrt{p_{2}Z_{2}},\ldots,\sqrt{p_{6}Z_{6}}
+\right].
+\end{array}
+\]
+
+The vector of extended stress intensity factors (SIFs) is defined as
+\begin{equation}
+	\tilde{\mathbf{k}}^{(1)}
+	=
+	\left[
+	K_{\mathrm{II}}^{\sigma},
+	K_{\mathrm{I}}^{\sigma},
+	K_{\mathrm{III}}^{\sigma},
+	K_{\mathrm{II}}^{H},
+	K_{\mathrm{I}}^{H},
+	K_{\mathrm{III}}^{H}
+	\right],
+	\label{KushnirEq14}
+\end{equation}
+where the superscripts $\sigma$ and $H$ correspond to the phonon and
+phason parts of the stress intensity factors, respectively, and the
+subscripts I, II, and III denote the classical fracture modes:
+opening (I), sliding (II), and tearing (III).
+
+The extended stress intensity factors (SIFs) are defined based on the
+asymptotic behavior of the extended stress field evaluated along the
+crack extension line (i.e., ahead of the crack tip). Specifically,
+\begin{equation}
+	\tilde{\boldsymbol{\sigma}}_{2}(x'_1)
+	=
+	\frac{\tilde{\mathbf{k}}^{(1)}}{\sqrt{2\pi x'_1}}
+	+ O(1),
+	\label{KushnirEq15}
+\end{equation}
+where $x'_1$ is the local coordinate measured along the crack
+extension line. The leading singular term is directly proportional
+to the extended SIF vector $\tilde{\mathbf{k}}^{(1)}$, which
+characterizes both the mechanical and thermal loading modes in
+quasicrystalline solids.
+
+The square-root singularity of the heat flux and extended stress
+fields must be explicitly taken into account in the numerical solution
+of the boundary integral equations. The corresponding discontinuity
+functions defined on the crack surface (such as $\Delta\theta$ or
+$\Delta\tilde{u}_{I}$) also exhibit square-root behavior near the
+crack tips. Neglecting this feature would significantly reduce the
+accuracy of the numerical solution.
+
+Furthermore, the extended stress intensity factors serve as the key
+fracture parameters in the mechanics of quasicrystals, in the same
+way that classical SIFs characterize fracture behavior in conventional
+materials. Their accurate evaluation is therefore essential for
+predicting crack initiation and propagation and for performing
+reliable fracture analysis of quasicrystalline solids.
+
+\section{Boundary Element Method for Solution of the Obtained Equations}
+
+The system of boundary integral equations
+(\ref{KushnirEq7})--(\ref{KushnirEq10})
+is solved using the boundary element method (BEM).
+For this purpose, the boundary curves $\Gamma$ and $\Gamma_{C}$ are
+discretized into $n$ and $n_{C}$ straight line segments, respectively,
+called boundary elements $\Gamma_{q}$:
+\[
+\Gamma \cup \Gamma_{C}
+\approx
+\bigcup_{q=1}^{n+n_{C}} \Gamma_{q}.
+\]
+
+Each boundary element is defined by three nodal points: one located
+at the center of the element and the other two positioned symmetrically
+at one-third of the element length on either side of the center.
+This leads to the use of discontinuous quadratic boundary elements
+(also referred to as three-node discontinuous elements).
+
+With this configuration, the collocation point—i.e., the point at
+which the boundary integral equation is enforced—always lies on a
+smooth portion of the piecewise-linear approximation of the boundary.
+This ensures the correct enforcement of boundary conditions in the
+discretized form of the integral equations.
+
+The boundary functions $\theta$, $h_{n}$, $\Delta\theta$, $\Sigma h_{n}$,
+$\tilde{u}_{I}$, $\tilde{t}_{I}$, and $\Delta\tilde{u}_{I}$ are
+approximated within each element using their nodal values:
+\begin{multline}
+	\left[
+	\theta,\, h_{n},\, \Delta\theta,\, \Sigma h_{n},\,
+	\tilde{t}_{I},\, \tilde{u}_{I},\, \Delta\tilde{u}_{I}
+	\right](\xi)
+	\\
+	\approx
+	\sum_{p=1}^{3}
+	\left[
+	\theta^{q,p},\, h_{n}^{q,p},\, \Delta\theta^{q,p},\, \Sigma h_{n}^{q,p},\,
+	\tilde{t}_{I}^{q,p},\, \tilde{u}_{I}^{q,p},\, \Delta\tilde{u}_{I}^{q,p}
+	\right]
+	\phi_{p}(\xi).
+	\label{KushnirEq16}
+\end{multline}
+%
+Here $\xi$ is the local coordinate on the element, varying within
+the standard interval $-1 \leq \xi \leq 1$, and $\phi_{p}(\xi)$ are
+the corresponding shape functions. The differential arc-length element
+on $\Gamma_{q}$ is expressed as
+\[
+d\Gamma_{q} = J_{q}\, d\xi,
+\]
+where $J_{q}$ denotes the Jacobian (i.e., the modulus of the Jacobian
+determinant) associated with the transformation from the global
+coordinate system to the local element coordinate $\xi$.
+
+Using this approach, the system of singular boundary integral equations
+(\ref{KushnirEq7})--(\ref{KushnirEq10}) is reduced to a system of
+linear algebraic equations with respect to the unknown nodal values
+$\theta^{q,p}$, $h_{n}^{q,p}$, $\Delta\theta^{q,p}$, $\Sigma h_{n}^{q,p}$,
+$\tilde{t}_{I}^{q,p}$, $\tilde{u}_{I}^{q,p}$, and $\Delta\tilde{u}_{I}^{q,p}$
+of the boundary functions $\theta$, $h_{n}$, $\Delta\theta$, $\Sigma h_{n}$,
+$\tilde{u}_{I}$, $\tilde{t}_{I}$, and $\Delta\tilde{u}_{I}$.
+
+Thus, the resulting linear algebraic equations for plane heat conduction
+in a cracked quasicrystal solid are obtained as follows.
+
+\begin{itemize}
+	
+	\item For a collocation point $\mathbf{y}^{s,r}\in\Gamma$:
+	
+	\begin{multline}
+		\frac{1}{2}\theta^{s,r}
+		=
+		\sum_{q=1}^{n}\sum_{p=1}^{3}
+		\left[
+		\Theta^{qpsr}h_{n}^{q,p}
+		-
+		H^{qpsr}\theta^{q,p}
+		\right]
+		\\
+		+
+		\sum_{q=n+1}^{n+n_{C}}\sum_{p=1}^{3}
+		\left[
+		\Theta^{qpsr}\Sigma h_{n}^{q,p}
+		-
+		H^{qpsr}\Delta\theta^{q,p}
+		\right]
+		\\
+		-
+		\iint_{S}
+		\Theta^{*}(\mathbf{x},\mathbf{y}^{s,r})
+		f_{h}(\mathbf{x})
+		\,dS(\mathbf{x}).
+		\label{KushnirEq17}
+	\end{multline}
+	
+	\item For a collocation point $\mathbf{y}^{s,r}\in\Gamma_{C}$ on a crack
+	surface $\Gamma_{C}$:
+	
+	\begin{multline}
+		\frac{1}{2}\Delta h_{n}^{s,r}
+		=
+		\sum_{q=1}^{n}\sum_{p=1}^{3}
+		\left[
+		\Theta_{1}^{qpsr}h_{n}^{q,p}
+		-
+		H_{1}^{qpsr}\theta^{q,p}
+		\right]
+		\\
+		+
+		\sum_{q=n+1}^{n+n_{C}}\sum_{p=1}^{3}
+		\left[
+		\Theta_{1}^{qpsr}\Sigma h_{n}^{q,p}
+		-
+		H_{1}^{qpsr}\Delta\theta^{q,p}
+		\right]
+		\\
+		-
+		n_{i}^{+}(\mathbf{y}^{s,r})
+		\iint_{S}
+		\Theta_{i}^{**}(\mathbf{x},\mathbf{y}^{s,r})
+		f_{h}(\mathbf{x})
+		\,dS(\mathbf{x}).
+		\label{KushnirEq18}
+	\end{multline}
+	
+\end{itemize}
+%
+Here
+
+\begin{equation}
+	\begin{aligned}
+		\Theta^{qpsr}
+		&=
+		\int_{-1}^{1}
+		\Theta^{*}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		H^{qpsr}
+		&=
+		\int_{-1}^{1}
+		H^{*}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		\Theta_{1}^{qpsr}
+		&=
+		n_{i}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		\Theta_{i}^{**}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		H_{1}^{qpsr}
+		&=
+		n_{i}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		H_{i}^{**}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}).
+	\end{aligned}
+	\label{KushnirEq19}
+\end{equation}
+
+The same procedure yields the following linear algebraic equations
+for plane thermoelasticity of quasicrystals.
+
+\begin{itemize}
+	
+	\item For a collocation point $\mathbf{y}^{s,r}\in\Gamma$:
+	
+	\begin{multline}
+		\frac{1}{2}\tilde{u}_{I}^{s,r}
+		=
+		\sum_{q=1}^{n}\sum_{p=1}^{3}
+		\left[
+		U_{IJ}^{qpsr}\tilde{t}_{J}^{q,p}
+		-
+		T_{IJ}^{qpsr}\tilde{u}_{J}^{q,p}
+		+
+		R_{I}^{qpsr}\theta^{q,p}
+		+
+		V_{I}^{qpsr}h_{n}^{q,p}
+		\right]
+		\\
+		+
+		\sum_{q=n+1}^{n+n_{C}}\sum_{p=1}^{3}
+		\left[
+		-
+		T_{IJ}^{qpsr}\Delta\tilde{u}_{J}^{q,p}
+		+
+		R_{I}^{qpsr}\Delta\theta^{q,p}
+		+
+		V_{I}^{qpsr}\Sigma h_{n}^{q,p}
+		\right]
+		\\
+		+
+		\iint_{S}
+		U_{IJ}(\mathbf{x},\mathbf{y}^{s,r})
+		\tilde{f}_{J}(\mathbf{x})
+		\,dS(\mathbf{x})
+		-
+		\iint_{S}
+		V_{I}(\mathbf{x},\mathbf{y}^{s,r})
+		f_{h}(\mathbf{x})
+		\,dS(\mathbf{x}).
+		\label{KushnirEq20}
+	\end{multline}
+	
+	\item For a collocation point $\mathbf{y}^{s,r}\in\Gamma_{C}$:
+	
+	\begin{multline}
+		\frac{1}{2}\Delta\tilde{t}_{I}^{s,r}
+		=
+		\sum_{q=1}^{n}\sum_{p=1}^{3}
+		\left[
+		D_{IJ}^{qpsr}\tilde{t}_{J}^{q,p}
+		-
+		S_{IJ}^{qpsr}\tilde{u}_{J}^{q,p}
+		+
+		Q_{I}^{qpsr}\theta^{q,p}
+		+
+		W_{I}^{qpsr}h_{n}^{q,p}
+		\right]
+		\\
+		+
+		\sum_{q=n+1}^{n+n_{C}}\sum_{p=1}^{3}
+		\left[
+		-
+		S_{IJ}^{qpsr}\Delta\tilde{u}_{J}^{q,p}
+		+
+		Q_{I}^{qpsr}\Delta\theta^{q,p}
+		+
+		W_{I}^{qpsr}\Sigma h_{n}^{q,p}
+		\right]
+		\\
+		+
+		n_{i}^{+}(\mathbf{y}^{s,r})
+		\bigg[
+		\iint_{S}
+		D_{IjK}(\mathbf{x},\mathbf{y}^{s,r})
+		\tilde{f}_{K}(\mathbf{x})
+		\,dS(\mathbf{x})
+		-
+		\iint_{S}
+		W_{Ij}(\mathbf{x},\mathbf{y}^{s,r})
+		f_{h}(\mathbf{x})
+		\,dS(\mathbf{x})
+		\bigg].
+		\label{KushnirEq21}
+	\end{multline}
+	
+\end{itemize}
+
+Here
+
+\begin{equation}
+	\begin{aligned}
+		U_{IJ}^{qpsr}
+		&=
+		\int_{-1}^{1}
+		U_{IJ}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\
+		T_{IJ}^{qpsr}
+		&=
+		\int_{-1}^{1}
+		T_{IJ}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		V_{I}^{qpsr}
+		&=
+		\int_{-1}^{1}
+		V_{I}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		R_{I}^{qpsr}
+		&=
+		\int_{-1}^{1}
+		R_{I}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		D_{IJ}^{qpsr}
+		&=
+		n_{k}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		D_{IkJ}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		S_{IJ}^{qpsr}
+		&=
+		n_{k}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		S_{IkJ}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		Q_{I}^{qpsr}
+		&=
+		n_{k}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		Q_{Ik}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}),
+		\\ 
+		W_{I}^{qpsr}
+		&=
+		n_{k}^{+}(\mathbf{y}^{s,r})
+		\int_{-1}^{1}
+		W_{Ik}(\mathbf{x}(\xi),\mathbf{y}^{s,r})
+		\phi_{p}(\xi)
+		J_{q}(\xi)
+		\,d\xi(\Gamma_{q}).
+	\end{aligned}
+	\label{KushnirEq22}
+\end{equation}
+
+This numerical discretization transforms the original boundary value
+problem into a matrix form that can be efficiently solved using standard
+linear algebra techniques.
+
+For boundary elements that are not adjacent to the crack tips, standard
+Lagrange polynomials are used as shape functions in the approximation
+(\ref{KushnirEq16}). These functions are defined for a three-node
+discontinuous boundary element with nodal positions
+\[
+\xi_{p}=\left[-\tfrac{2}{3},\,0,\,\tfrac{2}{3}\right].
+\]
+The corresponding shape functions are
+\begin{equation}
+	\phi_{1}=\xi\!\left(\frac{9}{8}\xi-\frac{3}{4}\right),\quad
+	\phi_{2}=\left(1-\frac{3}{2}\xi\right)\!\left(1+\frac{3}{2}\xi\right),\quad
+	\phi_{3}=\xi\!\left(\frac{9}{8}\xi+\frac{3}{4}\right).
+	\label{KushnirEq23}
+\end{equation}
+
+To improve the accuracy of the method and to facilitate the extraction
+of extended stress intensity factors, specialized three-node discontinuous
+boundary elements are introduced for modeling the vicinity of the crack
+tips.
+
+According to the asymptotic relations (\ref{KushnirEq13}), the shape
+functions for these special elements are designed to reproduce the
+known crack-tip behavior.
+
+\begin{itemize}
+	
+	\item For displacement or temperature discontinuities, the shape
+	functions are chosen as
+	\begin{equation}
+		\phi_{p}^{\Delta}
+		=
+		\Phi_{p1}^{\Delta}\sqrt{\rho}
+		+
+		\Phi_{p2}^{\Delta}\rho
+		+
+		\Phi_{p3}^{\Delta}\rho^{3/2},
+		\qquad p=1,2,3.
+		\label{KushnirEq24}
+	\end{equation}
+	
+	\item For heat flux jumps in the case of thermally conductive cracks,
+	the following approximation is used:
+	\begin{equation}
+		\phi_{p}^{\Sigma}
+		=
+		\Phi_{p1}^{\Sigma}\rho^{-1/2}
+		+
+		\Phi_{p2}^{\Sigma}
+		+
+		\Phi_{p3}^{\Sigma}\sqrt{\rho},
+		\qquad p=1,2,3.
+		\label{KushnirEq25}
+	\end{equation}
+	
+\end{itemize}
+%
+Here $\rho=1\pm\xi$, where the sign depends on whether the element
+is located near the left or the right crack tip.
+
+The matrices of constants $\Phi_{pj}^{\Delta}$ and $\Phi_{pj}^{\Sigma}$
+are uniquely determined from the interpolation conditions
+\begin{equation}
+	\phi_{p}(\xi_{p})=1,
+	\qquad
+	\phi_{p}(\xi_{j\ne p})=0,
+	\label{KushnirEq26}
+\end{equation}
+where $\xi_{p}$ are the local coordinates of the nodal points on the
+boundary element.
+
+These singular shape functions ensure that the approximation accurately
+captures the square-root singularity characteristic of the physical
+fields near the crack tips, which is essential for achieving high
+accuracy in the numerical solution.
+
+With the introduction of the singular shape functions
+(\ref{KushnirEq24}) and (\ref{KushnirEq25}) into the boundary element
+scheme (\ref{KushnirEq17})--(\ref{KushnirEq21}), it becomes necessary
+to evaluate the following types of singular integrals:
+\begin{equation}
+	\begin{array}{rclrcl}
+		
+		I_{1} &=& \displaystyle\mathrm{RPV}\int_{-1}^{1} F(\ln\xi)\,
+		\phi^{\Sigma}(\xi)\,d\xi,
+		\quad &
+		I_{2} &=& \displaystyle\mathrm{CPV}\int_{-1}^{1} F\!\left(\frac{1}{\xi}\right)
+		\phi^{\Delta}(\xi)\,d\xi,
+		\\[1em]
+		I_{3} &=& \displaystyle\mathrm{CPV}\int_{-1}^{1} F\!\left(\frac{1}{\xi}\right)
+		\phi^{\Sigma}(\xi)\,d\xi,
+		\quad &
+		I_{4} &=& \displaystyle\mathrm{HPV}\int_{-1}^{1} F\!\left(\frac{1}{\xi^{2}}\right)
+		\phi^{\Delta}(\xi)\,d\xi .
+	\end{array}
+	\label{KushnirEq27}
+\end{equation}
+
+For integrals of type $I_{1}$, nonlinear transformations have proven
+effective for smoothing the integrand in the vicinity of the
+singularity. However, such transformations typically regularize the
+integrand only at the singular point $\xi_{p}$ and do not eliminate
+the end-point singularities that arise due to the specific form of
+the shape functions (\ref{KushnirEq25}). To address this difficulty,
+the integration interval $(-1,1)$ is first divided into two
+subintervals at the singular point $\xi_{p}$. Each subinterval is then
+normalized to the standard range $(0,1)$ so that the singular point
+is mapped to the new origin $\xi=0$.
+
+After normalization, each interval is mapped onto itself using the
+nonlinear transformation
+\begin{equation}
+	\xi = 3s^{2}-2s^{3},
+	\qquad
+	d\xi = 6(s-s^{2})\,ds,
+	\label{KushnirEq28}
+\end{equation}
+which smooths the integrand at both ends of the integration domain.
+This transformation improves the accuracy and stability of the
+numerical integration, particularly when singular shape functions are
+used to model the behavior near crack tips.
+
+To evaluate the other singular integrals $I_{2}$, $I_{3}$, and $I_{4}$,
+special interpolation-type quadrature formulas based on Chebyshev nodes
+are constructed. These quadratures approximate integrals interpreted
+in the sense of the Cauchy principal value (CPV) or the Hadamard
+finite part (HPV):
+\begin{equation}
+	\int_{-1}^{1}\frac{f(s)}{s}\,ds
+	=
+	\sum_{k=1}^{n}A_{k}^{\mathrm{CPV}}\,f(\sigma_{k}),
+	\qquad
+	\int_{-1}^{1}\frac{f(s)}{s^{2}}\,ds
+	=
+	\sum_{k=1}^{n}A_{k}^{\mathrm{HPV}}\,f(\sigma_{k}),
+	\label{KushnirEq29}
+\end{equation}
+where the Chebyshev nodes are defined by
+\[
+\sigma_{k}
+=
+\cos\!\left(\frac{(2k-1)\pi}{2n}\right),
+\]
+and $n$ is a positive even integer.
+
+These quadrature rules (\ref{KushnirEq29}) are exact when the integrand
+$f(s)$ is a polynomial of degree less than $n$. The weights
+$A_{k}^{\mathrm{CPV}}$ and $A_{k}^{\mathrm{HPV}}$ are determined by
+substituting monomials of degree less than $n$ into the quadrature
+formulas and equating the resulting expressions on both sides. This
+procedure yields linear systems for the quadrature weights.
+
+For the CPV integral we obtain the following system:
+\begin{equation}
+	\begin{aligned}
+		\int_{-1}^{1}\frac{1}{s}\,ds
+		&=
+		\sum_{k=1}^{n}A_{k}^{\mathrm{CPV}}
+		=
+		0,
+		\\
+		\int_{-1}^{1}\frac{s^{j}}{s}\,ds
+		&=
+		\sum_{k=1}^{n}A_{k}^{\mathrm{CPV}}\sigma_{k}^{j}
+		=
+		\frac{1-(-1)^{j}}{j}
+		\qquad
+		(j=1,\ldots,n-1).
+	\end{aligned}
+	\label{KushnirEq30}
+\end{equation}
+
+For the HPV integral we obtain
+\begin{equation}
+	\begin{aligned}
+		\int_{-1}^{1}\frac{s}{s^{2}}\,ds
+		&=
+		\sum_{k=1}^{n}A_{k}^{\mathrm{HPV}}\sigma_{k}
+		=
+		0,
+		\\
+		\int_{-1}^{1}\frac{s^{j}}{s^{2}}\,ds
+		&=
+		\sum_{k=1}^{n}A_{k}^{\mathrm{HPV}}\sigma_{k}^{j}
+		=
+		\frac{1+(-1)^{j}}{j-1}
+		\qquad
+		(j=0,2,3,\ldots,n-1).
+	\end{aligned}
+	\label{KushnirEq31}
+\end{equation}
+
+These systems can be solved numerically to determine the quadrature
+weights with high accuracy. The resulting formulas allow accurate
+and efficient evaluation of the singular integrals $I_{2}$, $I_{3}$,
+and $I_{4}$.
+
+The use of specially constructed shape functions
+(\ref{KushnirEq24}) and (\ref{KushnirEq25}) enables significantly more
+accurate evaluation of the phonon–phason (extended) stress intensity
+factors, which appear as coefficients of the singular term
+$\sqrt{\rho}$. These factors play a key role in characterizing the
+coupled phonon–phason fields near singularities such as crack tips
+or sharp inclusion edges.
+
+For a terminal straight boundary element whose vertex corresponds to
+$\xi=1$, the asymptotic relations (\ref{KushnirEq13}) together with
+the displacement discontinuity shape functions
+(\ref{KushnirEq24}) lead to the following computational formula for
+the phonon–phason stress intensity factor:
+\begin{equation}
+	\tilde{\mathbf{k}}^{(1)}
+	=
+	\frac{\sqrt{\pi}}{4\sqrt{J}}
+	\mathbf{L}
+	\left(
+	\Delta\tilde{\mathbf{u}}^{3-3'}\Phi_{11}^{\Delta u}
+	+
+	\Delta\tilde{\mathbf{u}}^{2-2'}\Phi_{21}^{\Delta u}
+	+
+	\Delta\tilde{\mathbf{u}}^{1-1'}\Phi_{31}^{\Delta u}
+	\right),
+	\label{KushnirEq32}
+\end{equation}
+where $\mathbf{L}$ is the extended Barnett–Lothe tensor for
+quasicrystals, which accounts for the coupling between the phonon
+and phason fields.
+
+\section{Numerical Example}
+
+Consider a square-shaped body with side length $2W$, composed of a
+one-dimensional hexagonal quasicrystal. In this material, the atomic
+structure is periodic in the $Ox_{1}x_{2}$ plane and quasiperiodically
+arranged along the $Ox_{3}$ direction. The material properties are
+listed in Table~\ref{KushnirTab1} \cite{Kushnir5}. The domain contains
+a centrally located thermally insulated crack of length $2a$, as
+shown in Figure~\ref{KushnirFig1}. The two sides of the square are
+aligned parallel to the direction of quasiperiodic ordering, denoted
+by the axis $Ox_{3}$, while the crack is oriented perpendicular to
+this direction and lies along the axis $Ox_{1}$.
+
+\begin{table}[h]
+	\caption{Material constants for the 1D hexagonal quasicrystal \cite{Kushnir5}}
+	\label{KushnirTab1}
+	
+	\centering
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ll}
+		\toprule
+		Property & 1D hexagonal quasicrystal \\
+		\midrule
+		Phonon elastic moduli (GPa)
+		& $c_{11}=150$,\;\; $c_{12}=55$,\;\; $c_{13}=45$,\;\; $c_{33}=90$,\;\; $c_{44}=50$ \\
+		
+		Phason elastic moduli (GPa)
+		& $K_{1}=0.084$,\;\; $K_{2}=0.036$ \\
+		
+		Thermal moduli (MPa/K)
+		& $\beta_{1}=1.798$,\;\; $\beta_{3}=1.383$ \\
+		
+		Phonon--phason coupling (GPa)
+		& $R_{1}=-1.68$,\;\; $R_{2}=1.2$,\;\; $R_{3}=1.2$ \\
+		
+		Heat conduction (W/m/K)
+		& $k_{11}=12.4$,\;\; $k_{33}=12.4$ \\
+		\bottomrule
+	\end{tabular*}
+\end{table}
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\centering
+	\includegraphics[width=.5\linewidth]{KushnirFig1}
+	\caption{Sketch of the problem}
+	\label{KushnirFig1}
+\end{figure}
+
+All four boundaries of the square are assumed to be mechanically free,
+i.e., no external mechanical tractions are applied. On the two opposite
+sides parallel to the quasiperiodic direction, constant values of
+the normal components $h_{1}$ and $h_{3}$ of the heat flux density
+vector are prescribed, simulating a steady-state thermal loading
+across the domain.
+
+Table~\ref{KushnirTab2} presents the values of the non-zero normalized
+phonon–phason stress intensity factors at the right-hand crack tip
+as functions of the crack-to-side length ratio $a/W$. These extended
+stress intensity factors characterize the singular behavior of the
+stress fields in the vicinity of the crack tip in a quasicrystalline
+medium.
+
+\begin{table}[h]
+	\caption{Phonon--phason stress intensity factors for a thermally insulated crack
+		in a square quasicrystal domain}
+	\label{KushnirTab2}
+	
+	\centering
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccccccccc}
+		\toprule
+		${a/W}$ 
+		& 0.1 & 0.2 & 0.3 & 0.4 & 0.5 & 0.6 & 0.7 & 0.8 & 0.9 \\
+		\midrule
+		
+		\multicolumn{10}{c}{$h_{1}=0$, $h_{3}=h_{0}$} \\
+		
+		$-{K_{\mathrm{II}}^{\sigma}/K^{0}}$
+		& 0.0946 & 0.0934 & 0.0919 & 0.0912 & 0.0923 & 0.0967 & 0.1069 & 0.1287 & 0.1841 \\
+		
+		\midrule
+		
+		\multicolumn{10}{c}{$h_{1}=h_{0}$, $h_{3}=0$} \\
+		
+		$10^{3}{K_{\mathrm{I}}^{\sigma}/K^{0}}$
+		& 0.354 & 0.348 & 0.336 & 0.318 & 0.292 & 0.258 & 0.218 & 0.173 & 0.134 \\
+		
+		$10^{3}{K_{\mathrm{I}}^{H}/K^{0}}$
+		& 0.038 & 0.040 & 0.043 & 0.048 & 0.055 & 0.064 & 0.076 & 0.093 & 0.122 \\
+		
+		\bottomrule
+	\end{tabular*}
+\end{table}
+
+The normalization factor used for these extended SIFs is given by
+\[
+K^{0}=\frac{h_{0}\beta_{11}a\sqrt{\pi a}}{k_{11}}.
+\]
+
+In the boundary element model, the boundary of the square domain is
+discretized into 80 uniformly distributed elements, while the crack
+faces are represented by 20 elements, two of which are specially
+designed to capture the singular thermal and mechanical behavior near
+the crack tips.
+
+
+
+When the heat flux is applied perpendicular to the crack surface
+($h_{1}=0$, $h_{3}=h_{0}$), the thermally insulated crack disturbs
+the thermal field in the body. Since heat cannot pass through the
+crack, the heat flux is diverted around it, which leads to a
+concentration of thermal stresses near the crack tips. For a short
+crack ($a/W=0.1$), the obtained results are in good agreement with
+the analytical solution for an infinite domain containing a single
+crack \cite{Kushnir34}. For this case, the analytical solution gives
+the normalized stress intensity factor
+$K_{\mathrm{II}}^{\sigma}/K^{0}=-0.0949$.
+
+As the ratio $a/W$ increases, the normalized phonon stress intensity
+factor $K_{\mathrm{II}}^{\sigma}/K^{0}$ initially decreases and then
+begins to increase after reaching a minimum value. This behavior is
+explained by the fact that the normalization coefficient $K^{0}$
+depends on the crack length. The actual (non-normalized) stress
+intensity factors always increase with increasing crack length.
+Only the phonon component $K_{\mathrm{II}}^{\sigma}$ is non-zero in
+this case, while the first-mode (opening-mode) stress intensity
+factors vanish.
+
+In contrast, when the heat flux is applied along the crack
+($h_{1}=h_{0}$, $h_{3}=0$), the crack does not disturb the thermal
+field. Nevertheless, non-zero stress fields still arise due to
+thermoelastic effects specific to quasicrystals
+\cite{Kushnir43}. Such effects do not occur in ordinary crystalline
+materials. In conventional crystals, the stress intensity factors
+in this situation would be zero. However, in quasicrystals both
+phonon and phason components become non-zero. The normalized phonon
+component decreases with increasing $a/W$, whereas the phason
+component increases. In addition, in this case only first-mode
+stress intensity factors appear, in contrast to the previous case
+where only second-mode components were observed.
+
+\section{Conclusions}
+
+An efficient boundary element method has been developed for the analysis
+of quasicrystalline bodies containing cracks under thermomechanical
+loading. A specialized numerical technique has been proposed for the
+accurate computation of phonon--phason stress intensity factors. This
+approach enables reliable extraction of generalized stress intensity
+factors in the presence of singular thermal and mechanical fields near
+crack tips.
+
+The accuracy of the method has been validated through comparison with
+available analytical solutions. In particular, excellent agreement was
+obtained for small crack lengths, confirming the reliability of the
+proposed formulation. The method exhibits good numerical stability and
+convergence over a wide range of crack sizes. It therefore allows a
+detailed investigation of the influence of crack length on the
+phonon--phason stress intensity factors, which is especially important
+in engineering applications where defect geometry and scale can
+significantly affect the mechanical behavior of materials.
+
+The proposed approach also extends the capabilities for analyzing
+finite-sized quasicrystalline domains that more closely represent
+practical systems. The method successfully captures the coupled thermal
+and mechanical interactions in the vicinity of cracks. It is therefore
+well suited for fracture mechanics analyses of quasicrystals, whose
+distinctive thermoelastic behavior cannot be adequately described by
+classical crystalline models. Furthermore, the approach provides
+additional insight into thermomechanical phenomena specific to
+quasicrystals, such as stress generation induced by a uniform
+temperature gradient.
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter24}

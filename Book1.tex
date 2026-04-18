@@ -1,0 +1,135 @@
+% arara: pdflatex
+% arara: bibtex: { files: [ "Chapter01","Chapter04","Chapter06","Chapter08","Chapter09","Chapter13","Chapter14","Chapter18","Chapter24","Chapter30","Chapter31","Chapter36","Chapter38","Chapter39","Chapter40" ] }
+% arara: pdflatex
+% arara: pdflatex
+
+\documentclass[graybox]{svmult}
+
+% ---------- Encoding / fonts ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage[varvw]{newtxmath}
+
+% ---------- Math ----------
+\usepackage{amsmath,amsbsy,bm}
+\usepackage{mathtools}
+\allowdisplaybreaks[1]
+
+% ---------- Figures / tables ----------
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{siunitx}
+\usepackage{longtable}
+
+% ---------- Lists / footnotes ----------
+\usepackage{enumitem}
+\usepackage[bottom]{footmisc}
+
+% ---------- Captions ----------
+\usepackage[size=small,labelfont=bf]{caption}
+\captionsetup[figure]{labelsep=space}
+
+% ---------- Index ----------
+\usepackage{makeidx}
+\makeindex
+
+% ---------- Numbering per chapter ----------
+\usepackage{chngcntr}
+\counterwithin{section}{chapter}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\numberwithin{equation}{chapter}
+
+% ---------- Per-chapter bibliographies ----------
+\usepackage{chapterbib}
+\usepackage[numbers,sort]{natbib}
+
+\makeatletter
+\AtBeginDocument{%
+	\renewcommand{\bibsection}{\section*{\refname}}
+}
+\makeatother
+
+\usepackage{etoolbox}
+
+% ---------- Hyperref ----------
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linktoc=all,
+	linkcolor=blue,
+	citecolor=violet,
+}
+\usepackage{url}
+
+\makeatletter
+\let\l@title\@gobbletwo
+\let\l@author\@gobbletwo
+\makeatother
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sign}{sign}
+
+
+\begin{document}
+	
+	\title*{Fracture Mechanics and Adjacent Fields:\\
+		Volume 1: Foundations and Interface Phenomena}
+	
+	\titlerunning{Fracture Mechanics — Volume 1}
+	\authorrunning{H. Altenbach et al.}
+	
+	\author{Holm Altenbach,
+		Viacheslav Bogdanov,
+		Volodymyr Nazarenko,
+		Roman Kushnir,
+		Alexandr Grigorenko,
+		and
+		Mikhailo Selivanov}
+	
+	\maketitle
+	
+	\input{preface_vol1}
+	
+	\setcounter{tocdepth}{2}
+	\tableofcontents
+	
+	\input{affiliations}
+	
+	%========================================================
+	% Part I
+	%========================================================
+	\part{Fundamentals of Fracture Mechanics}
+	
+	\include{Chapter04}
+	\include{Chapter08}
+	\include{Chapter18}
+	\include{Chapter24}
+	\include{Chapter31}
+	\include{Chapter39}
+	\include{Chapter38}
+	
+	%========================================================
+	% Part II
+	%========================================================
+	\part{Interface Cracks, Contact, and Adhesion}
+	
+	\include{Chapter01}
+	\include{Chapter06}
+	\include{Chapter09}
+	\include{Chapter13}
+	\include{Chapter14}
+	\include{Chapter30}
+	\include{Chapter36}
+	\include{Chapter40}
+	
+	\backmatter
+	\printindex
+	
+\end{document}

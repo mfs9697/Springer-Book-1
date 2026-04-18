@@ -1,0 +1,1179 @@
+% !TeX root = BookT.tex
+
+\title{Fracture Mechanics Under Action of Dynamic Loads with Considering for Crack Edge Contact Interaction}
+\titlerunning{Fracture Mechanics with Crack Edge Contact Interaction}
+
+\author{Alexander Guz and Volodymyr Zozulya}
+
+\institute{%
+	Alexander Guz
+	\at \AffIMech \\
+	\email{guz@inmech.kyiv.ua}
+	\and
+	Volodymyr Zozulya
+	\at \AffPolito \\
+	\email{vzozulya@hotmail.com}
+}
+
+\maketitle
+
+\abstract{
+This chapter develops a unified variational framework for transient fracture–wave interaction in cracked elastic media with unilateral, possibly frictional, crack-face contact.  Starting from a generalized variational principle with a non-smooth functional, we derive the full set of elastodynamic field equations together with mixed boundary and contact constraints.  Harmonic P-waves (mode~I) and horizontally polarised SH-waves (modes II and III) incident normal to a finite crack are examined under both plane and antiplane deformation.  The resulting boundary-value problems are reduced to frequency–domain boundary–integral equations and solved with fast iterative schemes.  Numerical results show that crack-face contact can alter dynamic stress-intensity factors by more than 30 \% in certain wave-number ranges, shifting resonance peaks and introducing pronounced minima not captured by open-crack models.  The study demonstrates the strong frequency dependence of contact effects and underscores the necessity of including them in dynamic fracture assessment.  The presented formulation and solution strategy provide a reliable foundation for large-scale simulations aimed at the safe design of structures subjected to high-frequency excitation.
+}
+
+
+\graphicspath{{14_GuzZozulya/}}
+
+
+\section{Introduction}
+
+Classical approaches to fracture mechanics typically assume stress-free crack faces, modeled with equality-type boundary conditions \cite{GuzZozulyaRef1,GuzZozulyaRef8,GuzZozulyaRef9,GuzZozulyaRef15,GuzZozulyaRef16,GuzZozulyaRef23,GuzZozulyaRef24,GuzZozulyaRef27,GuzZozulyaRef28,GuzZozulyaRef29}.  
+However, this assumption neglects the possibility of crack-face contact interaction, which can lead to physically inconsistent predictions such as interpenetration of crack surfaces.  
+In reality, the nonpenetration condition must be satisfied, especially under loading conditions that promote crack closure.
+
+Studies of static fracture problems demonstrate that crack-face contact can significantly affect fracture criteria.  
+In dynamic problems, the influence of such interactions is even more pronounced.  
+Under harmonic loading, it is practically impossible to avoid partial crack closure; even if the initial crack opening equals the amplitude of the harmonic excitation, contact regions invariably appear near the crack tips, potentially leading to adhesion or sliding.
+
+Consider the physical phenomena that arise when a harmonic tension-compression $P$-wave interacts with a planar crack.  
+We analyze an infinite, linearly elastic, isotropic medium in a Cartesian coordinate system, containing a planar crack of finite length along the $x_1$-axis and infinite along the $x_3$-axis.  
+A harmonic tension-compression wave propagates perpendicularly to the crack plane and is uniform along the $x_3$-coordinate, which reduces the problem to plane strain for an infinite body with a finite-length crack under harmonic excitation.
+
+When crack-face contact is ignored, all field quantities (stresses and displacements) exhibit singular behavior near the crack tips of the form $e^{i \omega t}$ \cite{GuzZozulyaRef15,GuzZozulyaRef24,GuzZozulyaRef27,GuzZozulyaRef28}.  
+To better understand the dynamics, three characteristic phases are distinguished:
+
+\begin{enumerate}[label=(\roman*)]
+	\item the initial undeformed state (Figure~\ref{GuzZozulyaFig1a}),
+	\item the tensile phase corresponding to maximum crack opening (Figure~\ref{GuzZozulyaFig1b}),
+	\item the compressive phase corresponding to maximum crack closure (Figure~\ref{GuzZozulyaFig1c}).
+\end{enumerate}
+
+Phase (iii) occurs half a period after phase (ii).  
+As shown in Fig.~\ref{GuzZozulyaFig1c}, near the crack tip the displacement discontinuities in tension and compression become equal at certain points, which implies that crack-face contact occurs.
+
+\begin{figure}[b]
+	\centering
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GuzZozulyaFig1a}
+		\caption{Initial state}
+		\label{GuzZozulyaFig1a}
+	\end{subfigure}%
+	\hspace{0.02\textwidth}
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GuzZozulyaFig1b}
+		\caption{Maximum opening}
+		\label{GuzZozulyaFig1b}
+	\end{subfigure}%
+	\hspace{0.02\textwidth}
+	\begin{subfigure}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GuzZozulyaFig1c}
+		\caption{Maximum closure}
+		\label{GuzZozulyaFig1c}
+	\end{subfigure}
+	\caption{Crack tip behavior under harmonic loading.}
+	\label{GuzZozulyaFig1}
+\end{figure}
+
+
+These phases generate significant displacement discontinuities that cannot be captured if crack-face interaction is neglected.  
+Ignoring this interaction results in nonphysical solutions, motivating the need for a realistic mathematical formulation.
+
+A consistent formulation of elastodynamic crack problems that accounts for contact, adhesion, and friction between crack edges was developed in our earlier works \cite{GuzZozulyaRef18,GuzZozulyaRef19,GuzZozulyaRef20}.  
+Recent developments are presented in \cite{GuzZozulyaRef11,GuzZozulyaRef32}.  
+Under harmonic excitation, the system exhibits a steady-state periodic response, which is generally non-harmonic, requiring a full Fourier series representation.
+
+These contact problems are nonlinear, as both the contact areas and reaction forces are unknown a priori.  
+Their rigorous formulation relies on variational inequalities and nonsmooth analysis \cite{GuzZozulyaRef5,GuzZozulyaRef6,GuzZozulyaRef26,GuzZozulyaRef30}.  
+Iterative solution algorithms have been developed based on subdifferential calculus and convex analysis \cite{GuzZozulyaRef19,GuzZozulyaRef20,GuzZozulyaRef13,GuzZozulyaRef14,GuzZozulyaRef21,GuzZozulyaRef30}.  
+
+A typical iterative procedure consists of two stages:
+
+\begin{enumerate}
+	\item Linear elastodynamic solution without contact constraints, solvable via FEM or BEM \cite{GuzZozulyaRef2,GuzZozulyaRef3,GuzZozulyaRef4,GuzZozulyaRef22,GuzZozulyaRef12,GuzZozulyaRef25}.  
+	BEM is particularly advantageous, as the crack surfaces are part of the boundary, and the unconstrained problem remains linear.  
+	\item Projection onto the admissible contact set (unilateral and frictional).  
+	Multiple projection operators and iterative schemes have been proposed \cite{GuzZozulyaRef30}.  
+	Their convergence and efficiency have been established theoretically and numerically \cite{GuzZozulyaRef11,GuzZozulyaRef19,GuzZozulyaRef20,GuzZozulyaRef32}.
+\end{enumerate}
+
+Another challenge in the BEM approach is the treatment of singular boundary integrals caused by kernel behavior near the crack tips.  
+These have been rigorously analyzed using the framework of generalized functions \cite{GuzZozulyaRef10}, and efficient regularization methods have been developed \cite{GuzZozulyaRef31}.
+
+The effect of crack-face interaction on stress intensity factors (SIFs) has been thoroughly investigated under various crack modes and loading conditions \cite{GuzZozulyaRef11,GuzZozulyaRef18,GuzZozulyaRef19,GuzZozulyaRef20,GuzZozulyaRef32}.  
+Results consistently demonstrate that neglecting contact introduces significant errors in predicting crack propagation and failure criteria.
+
+In this chapter, we present a rigorous mathematical formulation of the two-dimensional elastodynamic contact problem for cracked bodies under harmonic loading.  
+A generalized variational principle with nonsmooth functionals is employed to derive the governing equations, boundary conditions, and contact constraints.  
+The interaction of harmonic P-waves and SH-waves with cracks in unbounded elastic media is analyzed.  
+Finally, SIFs are computed, and their dependence on wave number and crack-face interaction is examined for all three fracture modes (I, II, III).
+
+\section{Mathematical Formulation of the Problem}
+
+We consider a body with arbitrarily oriented cracks in the three-dimensional Euclidean space $\mathbb{R}^{3}$.  
+The body is homogeneous, linearly elastic, and occupies a region $V$ with boundary $\partial V$.  
+The boundary is piecewise smooth and consists of two parts,
+\[
+\partial V = \partial V_{u} \cup \partial V_{p},
+\]
+where the displacement vector $\mathbf{u}(\mathbf{x},t)$ is prescribed on $\partial V_u$ and the traction vector $\mathbf{p}(\mathbf{x},t)$ is prescribed on $\partial V_p$.
+
+The cracks are represented by the surfaces
+\[
+\Omega_n^{+} \cup \Omega_n^{-}, \quad n = 1,\dots,N,
+\]
+where $\Omega_n^{+}$ and $\Omega_n^{-}$ denote the opposite faces of the $n$-th crack.  
+The elastic body may be subjected to volume forces
+\[
+\mathbf{b}(\mathbf{x},t) = b_i(\mathbf{x},t) \mathbf{e}_i
+\]
+and surface forces
+\[
+\mathbf{p}(\mathbf{x},t) = p_i(\mathbf{x},t) \mathbf{e}_i.
+\]
+
+The stress–strain state of the elastic body is described by the stress tensor
+\[
+\boldsymbol{\upsigma}(\mathbf{x},t) = \sigma_{ij}(\mathbf{x},t) \mathbf{e}_i \otimes \mathbf{e}_j,
+\]
+the strain tensor
+\[
+\boldsymbol{\upvarepsilon}(\mathbf{x},t) = \varepsilon_{ij}(\mathbf{x},t) \mathbf{e}_i \otimes \mathbf{e}_j,
+\]
+the displacement vector
+\[
+\mathbf{u}(\mathbf{x},t) = u_i(\mathbf{x},t) \mathbf{e}_i,
+\]
+and the traction vector
+\[
+\mathbf{p}(\mathbf{x},t) = p_i(\mathbf{x},t) \mathbf{e}_i,
+\]
+which can be written in matrix–vector form as
+\begin{equation}\label{GuzZozulyaEq1}
+	\bm{\upsigma} =
+	\begin{bmatrix}
+		\sigma_{11} & \sigma_{21} & \sigma_{31} \\
+		\sigma_{12} & \sigma_{22} & \sigma_{32} \\
+		\sigma_{13} & \sigma_{23} & \sigma_{33}
+	\end{bmatrix},\quad
+	\bm{\upvarepsilon} =
+	\begin{bmatrix}
+		\varepsilon_{11} & \varepsilon_{21} & \varepsilon_{31} \\
+		\varepsilon_{12} & \varepsilon_{22} & \varepsilon_{32} \\
+		\varepsilon_{13} & \varepsilon_{23} & \varepsilon_{33}
+	\end{bmatrix},\quad
+	\mathbf{u} =
+	\begin{bmatrix} u_1 \\ u_2 \\ u_3 \end{bmatrix},\quad
+	\mathbf{p} =
+	\begin{bmatrix} p_1 \\ p_2 \\ p_3 \end{bmatrix}.
+\end{equation}
+
+The forces acting on the crack faces during contact interaction are defined as
+\begin{equation}\label{GuzZozulyaEq2}
+	\mathbf{q}(\mathbf{x},t) = -  \bm{\upsigma}(\mathbf{x},t) \!\cdot\! \mathbf{n}(\mathbf{x}),
+\end{equation}
+where $\mathbf{n}(\mathbf{x}) = n_i(\mathbf{x}) \mathbf{e}_i$ is the unit normal to the crack surface.  
+Its orientation satisfies
+\[
+n_i(\mathbf{x}) = n_i^{+}(\mathbf{x}), \quad \mathbf{x}\in \Omega^+,
+\qquad
+n_i(\mathbf{x}) = - n_i^{-}(\mathbf{x}), \quad \mathbf{x}\in \Omega^-,
+\]
+and the complete crack surfaces are
+\[
+\Omega^+ = \bigcup_{n=1}^{N} \Omega_n^+,
+\qquad
+\Omega^- = \bigcup_{n=1}^{N} \Omega_n^-.
+\]
+
+The crack opening is described by the displacement discontinuity vector
+\begin{equation}\label{GuzZozulyaEq3}
+	\Delta \mathbf{u}(\mathbf{x},t) = \mathbf{u}^{+}(\mathbf{x},t) - \mathbf{u}^{-}(\mathbf{x},t),
+\end{equation}
+where $\mathbf{u}^{+}(\mathbf{x},t)$ and $\mathbf{u}^{-}(\mathbf{x},t)$ are the displacements of the opposite crack faces.
+
+The contact force vector $\mathbf{q}(\mathbf{x},t)$ and the displacement discontinuity $\Delta \mathbf{u}(\mathbf{x},t)$ must satisfy unilateral contact conditions with friction \cite{GuzZozulyaRef5,GuzZozulyaRef20,GuzZozulyaRef26}:
+\begin{equation}\label{GuzZozulyaEq4}
+	\begin{aligned}
+		& \Delta u_n \ge -h_0, \quad q_n \ge 0, \quad (\Delta u_n + h_0) q_n = 0, \\
+		& \|\mathbf{q}_\tau\| \le k_\tau q_n \Rightarrow \partial_t \Delta \mathbf{u}_\tau = \mathbf{0}, \\
+		& \|\mathbf{q}_\tau\| = k_\tau q_n \Rightarrow \partial_t \Delta \mathbf{u}_\tau = - \lambda_t \mathbf{q}_\tau, \\
+		& \forall  \mathbf{x} \in \Omega^+\cup\Omega^-,\quad \forall  t\in\mathcal{I}=[t_0,t_1],
+	\end{aligned}
+\end{equation}
+where
+$q_n$ and $\Delta u_n$ are the \textit{normal components} of the contact force and displacement discontinuity,
+$\mathbf{q}_\tau$ and $\Delta \mathbf{u}_\tau$ are the \textit{tangential vectors} in the crack-face plane,
+$h_0$ is the initial crack opening,
+$k_\tau$ and $\lambda_t$ are friction-related coefficients.
+
+\medskip
+\emph{Superpotentials and Variational Formulation.} To express the unilateral contact conditions with friction \eqref{GuzZozulyaEq4} in the framework of \emph{nonsmooth analysis},  
+we introduce two \emph{superpotentials} \cite{GuzZozulyaRef6,GuzZozulyaRef26,GuzZozulyaRef30}:
+
+\begin{equation}\label{GuzZozulyaEq5} % ZEqnNum697831
+	j_{n}(\Delta u_{n})=
+	\begin{cases}
+		0, & \Delta u_{n} \ge h_{0},\\
+		\infty, & \text{otherwise},
+	\end{cases}
+\end{equation}
+
+\begin{equation}\label{GuzZozulyaEq6} % ZEqnNum921220
+	j_{\tau} \bigl(\partial_t \Delta \mathbf{u}_{\tau}\bigr)=k_{\tau} |q_{n}| \bigl|\partial_t \Delta \mathbf{u}_{\tau}\bigr|.
+\end{equation}
+
+All equations of linear elastodynamics together with the contact conditions \eqref{GuzZozulyaEq4}  
+follow from the generalized functional
+
+\begin{align}
+	\Phi_{F}=
+	\int_{\mathcal{I}}
+	\biggl[
+	&\int_{V}
+	\left(
+	\bm{\upsigma}:\bigl(\nabla\mathbf{u}- \bm{\upvarepsilon}\bigr)
+	+U( \bm{\upvarepsilon})
+	-\mathbf{b} \!\cdot\! \mathbf{u}
+	+\frac{\rho}{2} \partial_{t}\mathbf{u} \!\cdot\! \partial_{t}\mathbf{u}
+	\right)\;dV
+	\notag \\
+	- &\int_{\partial V_{p}} \mathbf{p} \!\cdot\! \mathbf{u} \;dS
+	- \int_{\partial V_{u}} (\bm{\upsigma} \!\cdot\! \mathbf{n})\!\cdot\! (\mathbf{u}-\bm{\upvarphi}) \;dS
+	\biggr]\;dt
+	+\Phi(\Delta\mathbf{u}),
+	\label{GuzZozulyaEq7} % ZEqnNum297511
+\end{align}
+where
+\begin{equation}\label{GuzZozulyaEq8} % ZEqnNum295604
+	\Phi(\Delta\mathbf{u})=
+	\int_{\mathcal{I}}
+	\biggl[
+	\int_{\Omega} j_{n}(\Delta u_{n}) \;dS
+	+
+	\int_{\Omega} j_{\tau} \bigl(\partial_{t}\Delta \mathbf{u}_{\tau}\bigr) \;dS
+	\biggr]\;dt.
+\end{equation}
+
+Varying \eqref{GuzZozulyaEq7} and treating $\delta\mathbf{u}$, $\delta\bm{\upsigma}$,  
+and $\delta \bm{\upvarepsilon}$ as independent gives
+
+\begin{equation}\label{GuzZozulyaEq9} % ZEqnNum811082
+	\begin{aligned}
+		\delta\Phi_{F} =
+		\int_{\mathcal{I}}
+		\biggl[
+		\int_{V}
+		\biggl(
+		\delta\bm{\upsigma}:(\nabla\mathbf{u}- \bm{\upvarepsilon})
+		-\left(\nabla \!\cdot\! \bm{\upsigma}+\mathbf{b}-\rho \partial_{t}^{2}\mathbf{u}\right) \!\cdot\! \delta\mathbf{u}
+		\\
+		+\left(\frac{\partial U}{\partial \bm{\upvarepsilon}}-\bm{\upsigma}\right):\delta \bm{\upvarepsilon}
+		\biggr)\;dV
+		+\int_{\partial V_{p}}(\bm{\upsigma} \!\cdot\! \mathbf{n}-\mathbf{p}) \!\cdot\! \delta\mathbf{u} \;dS		
+		\\
+		-\int_{\partial V_{u}}(\delta\bm{\upsigma} \!\cdot\! \mathbf{n})\!\cdot\! (\mathbf{u}-\bm{\upvarphi}) \;dS
+		\biggr]\;dt
+		+\delta\Phi(\Delta\mathbf{u})=0.
+	\end{aligned}
+\end{equation}
+
+In \eqref{GuzZozulyaEq9}, we have used
+
+\begin{equation}\label{GuzZozulyaEq10} % ZEqnNum226463
+	\int_{V}\bm{\upsigma}:\nabla\delta\mathbf{u} \;dV
+	=
+	\int_{\partial V_{p}}(\bm{\upsigma}\!\cdot\!\mathbf{n}) \!\cdot\! \delta\mathbf{u}   \;dS
+	+\int_{\partial V_{u}}(\bm{\upsigma}\!\cdot\!\mathbf{n}) \!\cdot\! \delta\mathbf{u} \;dS
+	-\int_{V}\bigl(\nabla \!\cdot\! \bm{\upsigma}\bigr) \!\cdot\! \delta\mathbf{u} \;dV.
+\end{equation}
+
+The kinetic energy of the elastic medium is
+
+\begin{equation}\label{GuzZozulyaEq11} % (11)
+	K=\frac{\rho}{2}\int_{V}\partial_{t}\mathbf{u} \!\cdot\! \partial_{t}\mathbf{u} \;dV,
+\end{equation}
+and its variation satisfies \cite{GuzZozulyaRef1,GuzZozulyaRef15}
+
+\begin{equation}\label{GuzZozulyaEq12} % ZEqnNum357004
+	\int_{\mathcal{I}}\delta K \;dt
+	=
+	-\rho\int_{\mathcal{I}}\int_{V}\partial_{t}^{2}\mathbf{u} \!\cdot\! \delta\mathbf{u} \;dV \;dt.
+\end{equation}
+
+Since the variations are independent, \eqref{GuzZozulyaEq9} leads to the Cauchy kinematic and constitutive relations,  
+equations of motion, and boundary conditions:
+
+\begin{equation}\label{GuzZozulyaEq13} % ZEqnNum766702
+	 \begin{array}{l}
+	 	\bm{\upvarepsilon}=\frac12\bigl(\nabla\mathbf{u}+\nabla\mathbf{u}^{ \top}\bigr),
+	 	\\
+		\bm{\upsigma}={\partial U}/{\partial \bm{\upvarepsilon}},
+		\\
+		\nabla \!\cdot\! \bm{\upsigma}-\mathbf{b}=\rho \ddot{\mathbf{u}},
+		\\
+		\bm{\upsigma} \!\cdot\! \mathbf{n}-\bm{\uppsi}=0,\quad
+		\mathbf{u}-\bm{\upvarphi}=0.
+	 \end{array}
+\end{equation}
+
+The local strain‐energy density is
+
+\begin{equation}\label{GuzZozulyaEq14} % ZEqnNum820309
+	U( \bm{\upvarepsilon})=\mu ( \bm{\upvarepsilon} :  \bm{\upvarepsilon})
+	+\frac{\lambda}{2}\bigl[ \tr( \bm{\upvarepsilon})\bigr]^{2},
+\end{equation}
+with $\lambda$ and $\mu$ the Lamé constants, leading to the generalized Hooke law
+
+\begin{equation}\label{GuzZozulyaEq15} % ZEqnNum616816
+	\bm{\upsigma}=\lambda  \tr( \bm{\upvarepsilon}) \mathbf{I}+2\mu  \bm{\upvarepsilon}.
+\end{equation}
+Substituting into \eqref{GuzZozulyaEq13}, we obtain the displacement form of the motion equations
+
+\begin{equation}\label{GuzZozulyaEq16} % ZEqnNum644987
+	\mathbf{L}_{u} \mathbf{u}+\mathbf{b}=\rho \partial_{t}^{2}\mathbf{u},
+	\quad\forall \mathbf{x}\in V,\;\forall t\in\mathcal{I},
+\end{equation}
+with differential operator (homogeneous isotropic medium)
+
+\begin{equation}\label{GuzZozulyaEq17} % ZEqnNum625802
+	L_{ij}u_{j}=(\lambda+\mu)\nabla_{i}\nabla_{j}u_{j}+\mu \Delta u_{i},\quad \nabla_{k}=\partial/\partial x_{k}.
+\end{equation}
+
+For a finite body, the mixed boundary conditions are
+
+\begin{equation}\label{GuzZozulyaEq18} % ZEqnNum906338
+	\begin{aligned}
+		\mathbf{u}(\mathbf{x},t)&=\bm{\upvarphi}(\mathbf{x},t),\quad \mathbf{x}\in\partial V_{u},
+		\\
+		\mathbf{p}(\mathbf{x},t)&=\bm{\upsigma}(\mathbf{x},t) \!\cdot\! \mathbf{n}(\mathbf{x})
+		=\mathbf{P}[\mathbf{u}(\mathbf{x},t)]=\bm{\uppsi}(\mathbf{x},t),\quad \mathbf{x}\in\partial V_{p},
+	\end{aligned}
+\end{equation}
+where $\bm{\upvarphi}$ and $\bm{\uppsi}$ are prescribed displacements and tractions. The differential operator that maps displacements to boundary tractions is the \emph{stress (traction) operator}
+\[
+\mathbf{P}=P_{ij}\,\mathbf{e}_{i}\otimes\mathbf{e}_{j},
+\qquad
+\mathbf{p}=\mathbf{P}\,[\mathbf{u}],
+\]
+where $\mathbf{u}$ is the displacement vector and $\mathbf{p}$ is the resulting traction vector.
+For a homogeneous, isotropic body its components are
+\begin{equation}\label{GuzZozulyaEq19}% ZEqnNum340446
+	P_{ij}= \lambda\,\delta_{ij} n_{k}\nabla_{k}
+	+ \mu\bigl(n_{i}\nabla_{j}+n_{j}\nabla_{i}\bigr).
+\end{equation}
+ 
+The initial conditions are
+
+\begin{equation}\label{GuzZozulyaEq20} % ZEqnNum516072
+	\mathbf{u}(\mathbf{x},t_{0})=\mathbf{u}^{0}(\mathbf{x}),\quad
+	\partial_{t}\mathbf{u}(\mathbf{x},t_{0})=\mathbf{v}^{0}(\mathbf{x}),\quad
+	\mathbf{x}\in V.
+\end{equation}
+
+For an unbounded medium, the decay conditions are
+
+\begin{equation}\label{GuzZozulyaEq21} % (21)
+	\|\mathbf{u}(\mathbf{x},t)\|\le C_{u}r^{-1},\qquad
+	\|\bm{\upsigma}(\mathbf{x},t)\|\le C_{\sigma}r^{-2},\qquad
+	r\to\infty.
+\end{equation}
+
+Exact fulfillment of \eqref{GuzZozulyaEq16}--\eqref{GuzZozulyaEq21} requires that  
+$\mathbf{u}\in C^{2,2}(V\times\mathcal{I})\cap C^{1,0}((\partial V\cup\Omega)\times\mathcal{I})$,  
+which is very restrictive.  
+Consequently, elastodynamic problems with unilateral constraints and friction admit no classical solutions,  
+and a \emph{weakened (variational) formulation} is adopted.
+
+\section{Variational Formulation and Algorithm of the Problem Solution}
+
+Variational formulations of unilateral contact elastodynamic problems with friction have been studied extensively 
+\cite{GuzZozulyaRef5,GuzZozulyaRef6,GuzZozulyaRef11,GuzZozulyaRef18,GuzZozulyaRef20,GuzZozulyaRef26,GuzZozulyaRef30}, 
+addressing both mathematical analysis and numerical solution. 
+For unilateral contact problems, where boundary conditions are expressed as inequalities, 
+the variational formulation leads to a \emph{variational inequality}. 
+In contrast, in classical elasticity with equality boundary conditions, the variational formulation produces 
+\emph{variational equations} \cite{GuzZozulyaRef1,GuzZozulyaRef10,GuzZozulyaRef15,GuzZozulyaRef17}.
+
+Typically, variational formulations for elastodynamic contact problems are based on the 
+Hamilton--Ostrogradskii principle or the complementary Tupin principle 
+\cite{GuzZozulyaRef26,GuzZozulyaRef30}. 
+These are useful both for mathematical analysis and for numerical simulation of elastodynamic problems 
+with unilateral constraints and friction. 
+A disadvantage for numerical implementation is that unilateral constraints are imposed on the boundary, 
+while the unknown displacements and tractions must be computed throughout the domain in each iteration.
+
+To overcome this drawback, a \emph{boundary variational principle}---formulated solely in terms of boundary 
+unknowns, including those on the crack surfaces---was proposed in \cite{GuzZozulyaRef30}. 
+In the present work, we adopt a variational formulation based on this principle. 
+
+We consider the admissible displacement set
+\begin{equation}\label{GuzZozulyaEq22}
+	\begin{aligned}
+		K_H(\mathbf{u})=\bigl\{\, \mathbf{u}:\;
+		& \bm{\upvarepsilon}=\tfrac12(\nabla\mathbf{u}+\nabla\mathbf{u}^{\!\top}), \quad
+		\bm{\upsigma}=\lambda\,\mathrm{tr}(\bm{\upvarepsilon})\,\mathbf{I}+2\mu\,\bm{\upvarepsilon}, \\
+		& \nabla\!\cdot\!\bm{\upsigma}-\mathbf{b}=\rho\,\ddot{\mathbf{u}}, \quad
+		\mathbf{v}=\dot{\mathbf{u}}, \\
+		& \mathbf{u}(\mathbf{x},t_0)=\mathbf{u}^0(\mathbf{x}),\quad 
+		\dot{\mathbf{u}}(\mathbf{x},t_0)=\mathbf{v}^0(\mathbf{x})
+		\,\bigr\},
+	\end{aligned}
+\end{equation}
+where $\lambda$ and $\mu$ are the Lamé constants and $\mathbf{u}^0,\mathbf{v}^0$ are the prescribed initial values. 
+
+Under these restrictions, the variational functional \eqref{GuzZozulyaEq7} can be transformed into the boundary form
+\begin{align}
+	\Phi_B(\mathbf{p},\mathbf{u},\mathbf{q},\Delta\mathbf{u}) =
+	\int_{\mathcal{I}}
+	\biggl[
+	&\int_{\partial V_p} \bigl(\tfrac12\,\mathbf{p}-\bm{\uppsi}\bigr)\!\cdot\!\mathbf{u}\,dS
+	-
+	\int_{\partial V_u} \bigl(\tfrac12\,\mathbf{u}-\bm{\upvarphi}\bigr)\!\cdot\!\mathbf{p}\,dS
+	\nonumber\\
+	-&
+	\int_{\Omega} \mathbf{q} \!\cdot\! \Delta\mathbf{u}\,dS
+	\biggr]\,dt .
+	\label{GuzZozulyaEq23}
+\end{align}
+
+
+The variational formulation of the elastodynamic contact problem based on the functional 
+\eqref{GuzZozulyaEq23} is known as a \emph{dual} or \emph{complementary} formulation. 
+Since this functional is nonconvex and nonsmooth, solving the elastodynamic contact problem for a body with cracks 
+reduces to finding a \emph{saddle point} of $\Phi_B$. 
+A Uzawa‐type nonsmooth optimization algorithm is used to compute the solution 
+\cite{GuzZozulyaRef30}; see also \cite{GuzZozulyaRef7,GuzZozulyaRef12,GuzZozulyaRef21} 
+for background and theoretical justification.
+
+The algorithm proceeds as follows:
+
+\begin{enumerate}
+	\item \textit{Initialization.}  
+	Specify an initial $\mathbf{q}^{0}$ satisfying the unilateral constraints with friction \eqref{GuzZozulyaEq4}.
+	
+	\item \textit{Minimization for given $\mathbf{q}^{n}$.}  
+	Solve the minimization problem and compute $\mathbf{p}^{n}$, $\mathbf{u}^{n}$, $\Delta\mathbf{u}^{n}$:
+	\begin{equation}\label{GuzZozulyaEq24}
+		\Phi_B(\mathbf{p}^{n},\mathbf{u}^{n},\Delta\mathbf{u}^{n})
+		=
+		\inf_{\mathbf{u}\in K_H(\mathbf{u})}\,
+		\sup_{\mathbf{p}}
+		\Phi_B(\mathbf{p},\mathbf{u},\mathbf{q}^{n},\Delta\mathbf{u}) .
+	\end{equation}
+	
+	\item \textit{Projection (Uzawa step).}  
+	Update $\mathbf{q}^{n}$ by projecting onto the admissible set:
+	\begin{equation}\label{GuzZozulyaEq25}
+		\mathbf{q}^{\,n+1} 
+		=
+		\mathbf{P}_{n,\tau}\bigl[\mathbf{q}^{\,n} + \eta\, \Phi(\Delta\mathbf{u}^{\,n})\bigr],
+	\end{equation}
+	where $\mathbf{P}_{n,\tau}$ is the projection operator enforcing Eq.~\eqref{GuzZozulyaEq4}, 
+	and $\eta$ is chosen for optimal convergence.
+	
+	\item \textit{Iterate.}  
+	Repeat steps 2–3 until convergence.
+\end{enumerate}
+
+The algorithm consists essentially of two components:  
+(i) solving the unconstrained elastodynamic problem \eqref{GuzZozulyaEq16}, and  
+(ii) projecting the result onto the admissible set of contact and friction constraints.  
+In this work, the unconstrained problem is solved using the Boundary Element Method (BEM).  
+The next section reviews the fundamental boundary integral equations of BEM for cracked elastic bodies.
+
+\section{Representation of Displacement in Terms of Scalar and Vector Potentials}
+
+The elastodynamic equations of motion in displacement form
+\eqref{GuzZozulyaEq16} are difficult to integrate directly because the
+operators \eqref{GuzZozulyaEq17} couple all displacement components.  A
+standard simplification employs the \emph{Helmholtz decomposition}, which
+represents the displacement field as
+\cite{GuzZozulyaRef1,GuzZozulyaRef15,GuzZozulyaRef18}
+\begin{equation}\label{GuzZozulyaEq26}
+	\mathbf{u} = \nabla \varphi + \nabla \times \bm{\uppsi},
+	\qquad
+	\nabla \cdot \bm{\uppsi} = 0,
+\end{equation}
+where $\varphi$ is a \emph{scalar potential} and
+$\bm{\uppsi}$ an \emph{upright-bold vector potential}.
+
+Substituting \eqref{GuzZozulyaEq26} into
+\eqref{GuzZozulyaEq16} and using
+\begin{equation}\label{GuzZozulyaEq27}
+\nabla \cdot (\nabla \times \bm{\uppsi}) = 0,
+\qquad
+\nabla \times (\nabla \varphi) = \mathbf{0},
+\end{equation}
+we obtain the uncoupled wave equations
+\begin{equation}\label{GuzZozulyaEq28}
+	c_1^{2}\,\Delta\varphi + \rho^{-1}\,\Phi
+	\;=\;
+	\partial_{t}^{2}\varphi,
+	\qquad
+	c_2^{2}\,\Delta\bm{\uppsi} + \rho^{-1}\,\boldsymbol{\Psi}
+	\;=\;
+	\partial_{t}^{2}\bm{\uppsi},
+\end{equation}
+with
+\[
+c_1 = \sqrt{\frac{\lambda+2\mu}{\rho}},
+\qquad
+c_2 = \sqrt{\frac{\mu}{\rho}},
+\]
+the P- and SH-wave speeds.  The body force is decomposed as
+\begin{equation}\label{GuzZozulyaEq29}
+	\mathbf{b} = \nabla\Phi + \nabla \times \boldsymbol{\Psi},
+\end{equation}
+where $\Phi$ and $\boldsymbol{\Psi}$ are scalar and vector body-force
+potentials.
+
+Hence
+\begin{equation}\label{GuzZozulyaEq30}
+	\mathbf{u} = \mathbf{u}_1 + \mathbf{u}_2,
+	\qquad
+	\nabla \times \mathbf{u}_1 = \mathbf{0},
+	\qquad
+	\nabla \cdot \mathbf{u}_2 = 0,
+\end{equation}
+so $\mathbf{u}_1$ is the irrotational (P-wave) part and $\mathbf{u}_2$ the
+solenoidal (SH-wave) part.
+
+\medskip
+\emph{Two-dimensional reduction.} Assume all fields depend only on
+$\mathbf{x}=(x_1,x_2)\in V\subset\mathbb{R}^{2}$.  The displacement equations
+split into
+\begin{align}
+	L_{\alpha\beta}u_\beta + b_\alpha &= \rho\,\partial_t^{2}u_\alpha,
+	&\forall\mathbf{x}\in V,\; t\in\mathcal{I},
+	\label{GuzZozulyaEq31}\\
+	\mu\,\Delta u_3 + b_3           &= \rho\,\partial_t^{2}u_3,
+	&\forall\mathbf{x}\in V,\; t\in\mathcal{I},
+	\label{GuzZozulyaEq32}
+\end{align}
+with Greek indices $\alpha,\beta\in\{1,2\}$.  System
+\eqref{GuzZozulyaEq31} is the \emph{plane} problem; \eqref{GuzZozulyaEq32}
+is the \emph{antiplane} problem.
+
+If the initial and boundary conditions also depend only on $(x_1,x_2)$ and are
+specified separately for $(u_\alpha,p_\alpha)$ and $(u_3,p_3)$, the two
+sub-problems remain decoupled.
+
+Because the out-of-plane component of $\bm{\uppsi}$ is the only one that
+survives in 2-D, we set
+\[
+\psi := (\bm{\uppsi})_3.
+\]
+Then \eqref{GuzZozulyaEq26} becomes
+\begin{equation}\label{GuzZozulyaEq33}
+	u_\alpha = \nabla_\alpha \varphi + e_{\alpha\beta}\nabla_\beta \psi,
+	\qquad
+	u_3      = \nabla_1 \psi_2 - \nabla_2 \psi_1
+	= \nabla_1 \psi_2 - \nabla_2 \psi_1
+	= 0,
+\end{equation}
+and the 2-D wave equations are
+\begin{equation}\label{GuzZozulyaEq34}
+	c_1^{2}\,\Delta\varphi + \rho^{-1}\,\Phi = \partial_t^{2}\varphi,
+	\quad
+	c_2^{2}\,\Delta\psi    + \rho^{-1}\,\Psi = \partial_t^{2}\psi,
+	\quad
+	c_2^{2}\,\Delta u_3    + \rho^{-1}\,b_3  = \partial_t^{2}u_3,
+\end{equation}
+with $\Delta = \nabla_\alpha\nabla_\alpha$.  Finally, the stress components are
+\begin{equation}\label{GuzZozulyaEq35}
+	\begin{aligned}
+		\sigma_{\alpha\beta} &=
+		\lambda\,\Delta\varphi\,\delta_{\alpha\beta}
+		+ 2\mu\,\nabla_\alpha\nabla_\beta\varphi
+		+ \mu\Bigl(
+		e_{\alpha\gamma}\,\nabla_\beta\nabla_\gamma\psi
+		+ e_{\beta\gamma}\,\nabla_\alpha\nabla_\gamma\psi
+		\Bigr),
+		\\
+		\sigma_{33} &= \lambda\,\Delta\varphi,
+		\qquad
+		\sigma_{3\alpha} = \mu\,\nabla_\alpha u_3.
+	\end{aligned}
+\end{equation}
+
+This potential representation cleanly separates P- and SH-wave contributions
+when analysing wave interaction with finite cracks in an unbounded elastic
+medium, while accommodating possible contact between crack faces.
+
+\section{Interaction of a Finite Mode-III Crack with an SH-Wave}
+
+We consider the interaction of a finite mode-III (antiplane) crack with a
+harmonic SH-wave propagating normal to the crack edges.  
+Such loading generates an antiplane deformation in the elastic medium
+and can induce frictional contact of the crack faces.
+
+\medskip
+\emph{Geometry and incident wave.} Consider an unbounded, homogeneous, isotropic elastic body in
+$\mathbb{R}^{3}$ containing a finite crack in the plane $\{x_{2}=0\}$:
+\begin{equation}\label{GuzZozulyaEq36}
+	\Omega
+	=
+	\bigl\{
+	\mathbf{x}:\,
+	-l \le x_1 \le l,\;
+	x_2 = 0,\;
+	-\infty < x_3 < \infty
+	\bigr\}.
+\end{equation}
+
+A harmonic, horizontally polarised SH-wave of frequency $\omega$
+propagates in the $x_1x_2$-plane, normal to the crack edges, with its shear
+axis along $x_3$ (see \ref{GuzZozulyaFig2}).  
+The incident field is described by the potential
+\begin{equation}\label{GuzZozulyaEq37}
+	\psi_1(\mathbf{x}_\alpha,t)
+	=
+	\psi_0
+	\exp\bigl\{
+	i\bigl(k_2\,\mathbf{n}\cdot \mathbf{x}_\alpha - \omega t\bigr)
+	\bigr\},
+\end{equation}
+where $\psi_0$ is the amplitude,  
+$k_2 = \omega / c_2$ is the wavenumber,
+$c_2 = \sqrt{\mu/\rho}$ is the SH-wave speed,
+$\mu$ is the Lamé shear modulus,
+$\rho$ is the mass density,
+$\mathbf{n} = (\cos\alpha,\sin\alpha)$ is the wave-front normal,
+and $\alpha$ is the incidence angle.
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=0.45\textwidth]{GuzZozulyaFig2}
+	\caption{Finite crack under antiplane shear deformation (mode III)
+		produced by an incident SH-wave.}
+	\label{GuzZozulyaFig2}
+\end{figure}
+
+The motion is antiplane, with only
+$u_3(\mathbf{x}_\alpha,t)$ nonzero, and Hooke's law gives
+\begin{equation}\label{GuzZozulyaEq38}
+	\sigma_{3\alpha} = \mu\,\nabla_\alpha u_3.
+\end{equation}
+The equation of motion is
+\begin{equation}\label{GuzZozulyaEq39}
+	\mu\,\nabla_\beta \sigma_{3\beta} + b_3
+	= \rho\,\partial_t^2 u_3.
+\end{equation}
+
+
+
+\medskip
+\emph{Frictional contact on the crack faces.} The effective traction on the crack faces is
+\begin{equation}\label{GuzZozulyaEq42}
+	p_3^{s}(\mathbf{x}_\alpha,t)
+	=
+	\begin{cases}
+		p_3(\mathbf{x}_\alpha,t), & \mathbf{x}_\alpha\notin\Omega_e(t), \\[2pt]
+		p_3(\mathbf{x}_\alpha,t)+q_3(\mathbf{x}_\alpha,t), & \mathbf{x}_\alpha\in\Omega_e(t),
+	\end{cases}
+\end{equation}
+where $\Omega_e(t) = \Omega^+\cap\Omega^-$ is the instantaneous
+frictional contact region and $q_3$ is the tangential contact force.
+The relative displacement is
+\(\Delta u_3(\mathbf{x}_\alpha,t)=u_3^+(\mathbf{x}_\alpha,t)-u_3^-(\mathbf{x}_\alpha,t)\).
+The Coulomb friction law reads
+\begin{equation}\label{GuzZozulyaEq43}
+	|q_3| \le k_* q_n \;\Rightarrow\; \partial_t \Delta u_3 = 0,
+	\qquad
+	|q_3| = k_* q_n \;\Rightarrow\; \partial_t \Delta u_3 = -\lambda_* q_3,
+\end{equation}
+$\forall\,\mathbf{x}_\alpha\in\Omega_e(t)$, $\forall\,t\in\mathcal{I}$,
+where $k_*$ and $\lambda_*$ are frictional coefficients and
+$q_n$ is the known normal contact force.
+
+\medskip
+\emph{Fourier series representation.} Following \cite{GuzZozulyaRef31}, the fields are expanded in Fourier series
+over the period $T=2\pi/\omega$:
+\begin{equation}\label{GuzZozulyaEq44}
+	\begin{aligned}
+		u_3(\mathbf{x}_\alpha,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty}
+		u_3^k(\mathbf{x}_\alpha)\,e^{i\omega_k t} \right\},\\
+		\sigma_{3\beta}(\mathbf{x}_\alpha,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty}
+		\sigma_{3\beta}^k(\mathbf{x}_\alpha)\,e^{i\omega_k t} \right\},
+	\end{aligned}
+\end{equation}
+with Fourier coefficients
+\begin{equation}\label{GuzZozulyaEq45}
+	\begin{array}{ll}
+		u_3^k(\mathbf{x}_\alpha)
+		&= \dfrac{\omega}{2\pi}\displaystyle\int_0^T u_3(\mathbf{x}_\alpha,t)\,e^{i\omega_k t}\,dt,\\
+		\sigma_{3\beta}^k(\mathbf{x}_\alpha)
+		&= \dfrac{\omega}{2\pi}\displaystyle\int_0^T \sigma_{3\beta}(\mathbf{x}_\alpha,t)\,e^{i\omega_k t}\,dt,
+	\end{array}
+\end{equation}
+where $\omega_k = k\omega$.  
+
+Similarly, the traction and opening along the crack line are
+\begin{equation}\label{GuzZozulyaEq46}
+	\begin{aligned}
+		p_3(x_1,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty} p_3^k(x_1)\,e^{i\omega_k t} \right\},\\
+		\Delta u_3(x_1,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty} \Delta u_3^k(x_1)\,e^{i\omega_k t} \right\},
+	\end{aligned}
+\end{equation}
+with
+\begin{equation}\label{GuzZozulyaEq47}
+	\begin{array}{ll}
+		p_3^k(x_1)
+		&= \dfrac{\omega}{2\pi}\displaystyle\int_0^T p_3(x_1,t)\,e^{i\omega_k t}\,dt,\\
+		\Delta u_3^k(x_1)
+		&= \dfrac{\omega}{2\pi}\displaystyle\int_0^T \Delta u_3(x_1,t)\,e^{i\omega_k t}\,dt.
+	\end{array}
+\end{equation}
+
+Substituting into \eqref{GuzZozulyaEq39} leads to the steady-state
+Helmholtz equations
+\begin{equation}\label{GuzZozulyaEq48}
+	\Delta u_3^k
+	+ \frac{\omega^2}{c_2^2}\,u_3^k
+	+ \frac{\rho}{\mu}\,b_3^k
+	= 0,
+	\qquad k \in \mathbb{Z}
+\end{equation}
+with the boundary condition
+\begin{equation}\label{GuzZozulyaEq49}
+	p_3^k(x_1) = p_3^{s,k}(x_1),
+	\qquad x_1\in[-l,l].
+\end{equation}
+
+\medskip
+\emph{Boundary integral equation and SIF.} The Fourier components of the traction and crack opening satisfy the
+boundary integral equation (BIE)
+\begin{equation}\label{GuzZozulyaEq50}
+	p_3^k(\mathbf{x}_\alpha)
+	= -\,\mathrm{F.P.}\!
+	\int_{\Omega}
+	F_{33}(\mathbf{x}_\alpha,\mathbf{y}_\alpha;\omega_k)\,
+	\Delta u_3^k(\mathbf{y}_\alpha)\,d\Omega,
+\end{equation}
+where $\mathrm{F.P.}$ denotes the Hadamard Finite Ppart integral ,
+needed due to the singularity of $F_{33}$ at
+$\mathbf{x}_\alpha=\mathbf{y}_\alpha$.  
+The kernels are obtained from the fundamental solutions of
+\eqref{GuzZozulyaEq48} 
+\cite{GuzZozulyaRef3,GuzZozulyaRef8,GuzZozulyaRef31,GuzZozulyaRef9}.
+
+We examine the case of normal incidence of a unit-amplitude SH-wave and assume
+the normal contact force is constant, $q_n=1$.  
+The elastic material properties are
+\[
+E = 200\,\mathrm{GPa}, \quad
+\nu = 0.25, \quad
+\rho = 7800\,\mathrm{kg/m^3},
+\]
+with $E$ the Young modulus, $\nu$ the Poisson ratio, and $\rho$ the density.
+
+For mode-III tearing, the near-tip displacement is
+\begin{equation}\label{GuzZozulyaEq61}
+	u_3
+	=
+	\frac{K_{III}}{\mu}
+	\sqrt{\frac{2\varepsilon}{\pi}}\,
+	\sin\frac{\theta}{2},
+\end{equation}
+where $\varepsilon$ is the radial distance from the crack tip and
+$\theta$ the polar angle.
+Taking $\theta\to\pi$ yields the SIF as
+\begin{equation}\label{GuzZozulyaEq62}
+	K_{III}
+	=
+	\lim_{\varepsilon \to 0}
+	\frac{\mu\sqrt{\pi}}{\sqrt{2\varepsilon}}\,
+	u_3\bigl(l-\varepsilon,t\bigr).
+\end{equation}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.55\textwidth]{GuzZozulyaFig3}
+	\caption{%
+		Normalised mode-III SIF \(|K_{III}^{\max}|/K_{III}^{stat}|\)
+		versus nondimensional wavenumber \(k_2l\) for various friction
+		coefficients:\\
+		1 — \(k_\tau=0\); \\
+		2 — \(k_\tau=0.2\); \\
+		3 — \(k_\tau=0.4\).%
+	}
+	\label{GuzZozulyaFig3}
+\end{figure}
+
+Figure~\ref{GuzZozulyaFig3} shows that:
+\begin{itemize}
+\item Friction reduces the SIF relative to the frictionless case;
+\item A peak appears at a certain $k_2l$, corresponding to resonance-like
+amplification of the crack-tip response;
+\item Increasing $k_\tau$ lowers the peak and accelerates the decay of $K_{III}$
+with wavenumber;
+\item At higher wavenumbers ($k_2l>2$), all curves approach a similar low level.
+\end{itemize}
+
+These trends demonstrate that frictional contact diminishes the crack opening,
+reduces dynamic SIFs, and should be considered in the fracture-mechanics
+design of dynamically loaded structures.
+
+\section{Interaction of a Finite Mode-II Crack With an SH-Wave}
+
+We consider the interaction of a finite mode-II (in-plane shear) crack with a
+harmonic SH-wave propagating normal to the crack edges.
+Such waves produce a plane deformation of the elastic medium
+and can induce frictional contact interaction of the crack faces.
+
+\medskip
+\emph{Geometry and incident wave.} Consider an unbounded, homogeneous, isotropic elastic body in
+$\mathbb{R}^{3}$ containing a finite crack in the plane $\{x_{2}=0\}$:
+\begin{equation}\label{GuzZozulyaEq63}
+	\Omega
+	=
+	\bigl\{
+	\mathbf{x}:\,
+	-l \le x_1 \le l,\;
+	x_2 = 0,\;
+	-\infty < x_3 < \infty
+	\bigr\}.
+\end{equation}
+
+A harmonic, horizontally polarised SH-wave of frequency $\omega$
+propagates in the $x_1x_2$-plane, with its shear axis along $x_1$, as shown in
+Fig.~\ref{GuzZozulyaFig4}.  
+
+Following the approach of
+\cite{GuzZozulyaRef1,GuzZozulyaRef15,GuzZozulyaRef18},
+we consider separately the problems of the \emph{incident} and \emph{reflected} waves.
+The incident-wave problem is trivial:
+if the wave potential $\psi(\mathbf{x}_\alpha,t)$ is known, then the in-plane
+displacement and shear stress are
+\begin{equation}\label{GuzZozulyaEq65}
+	\begin{array}{ll}
+		u_\alpha(\mathbf{x}_\alpha,t)
+	&= e_{\alpha\beta} k_2 n_\beta
+	\Re\bigl\{
+	i\psi_0\,e^{i(k_2 \mathbf{n}\cdot \mathbf{x}_\alpha - \omega t)}
+	\bigr\},
+	\\[4pt]
+	\sigma_{12}(\mathbf{x}_\alpha,t)
+	&= \mu k_2^2 \bigl(n_2^2-n_1^2\bigr)
+	\Re\bigl\{
+	\psi_0\,e^{i(k_2 \mathbf{n}\cdot \mathbf{x}_\alpha - \omega t)}
+	\bigr\},
+	\end{array}
+\end{equation}
+where $k_2=\omega/c_2$, $c_2=\sqrt{\mu/\rho}$ is the SH-wave speed,
+$\mu$ is the shear modulus, and $\rho$ is the mass density.
+
+We now focus on the reflected-wave problem for normal incidence.
+
+The load on the crack edges from the incident wave is
+\begin{equation}\label{GuzZozulyaEq66}
+	p_1(\mathbf{x}_\alpha,t)
+	= -\sigma_{12}(x_1,t)
+	= p_0\,\Re\left\{ e^{i(k_2 x_1 - \omega t)} \right\},
+	\qquad
+	p_0=-\mu k_2^2 \psi_0.
+\end{equation}
+
+With frictional contact, the effective load on the crack faces is
+\begin{equation}\label{GuzZozulyaEq67}
+	p_1^{s}(\mathbf{x}_\alpha,t)
+	=
+	\begin{cases}
+		p_1(\mathbf{x}_\alpha,t), & \mathbf{x}_\alpha \notin \Omega_e(t),
+		\\
+		p_1(\mathbf{x}_\alpha,t)+q_1(\mathbf{x}_\alpha,t), & \mathbf{x}_\alpha \in \Omega_e(t),
+	\end{cases}
+\end{equation}
+where $q_1(\mathbf{x}_\alpha,t)$ is the tangential contact force and
+$\Omega_e(t) = \Omega^+\cap\Omega^-$ is the instantaneous region of frictional
+contact.
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.45\textwidth]{GuzZozulyaFig4}
+	\caption{Finite crack under in-plane (mode II) shear deformation produced by
+		an incident SH-wave.}
+	\label{GuzZozulyaFig4}
+\end{figure}
+
+The contact force $q_1(\mathbf{x}_\alpha,t)$ and the displacement jump
+$\Delta u_1(\mathbf{x}_\alpha,t)
+= u_1^+(\mathbf{x}_\alpha,t)-u_1^-(\mathbf{x}_\alpha,t)$
+satisfy the Coulomb friction law
+\begin{equation}\label{GuzZozulyaEq68}
+	|q_1| \le k_* q_n \;\Rightarrow\; \partial_t \Delta u_1 = 0,
+	\qquad
+	|q_1| = k_* q_n \;\Rightarrow\; \partial_t \Delta u_1 = -\lambda_* q_1,
+\end{equation}
+$\forall \mathbf{x}_\alpha\in\Omega_e(t),\,\forall t\in\mathcal{I}$,
+where $k_*$ and $\lambda_*$ are frictional coefficients
+and $q_n(\mathbf{x}_\alpha,t)$ is the known normal contact force.
+
+Due to the nonlinear frictional constraint \eqref{GuzZozulyaEq68},
+the reflected-wave problem is a periodic steady-state rather than purely harmonic.
+The reflected fields cannot be expressed simply as
+$\mathbf{x}_\alpha$-dependent functions times $e^{-i\omega t}$;
+instead, they must be expanded into Fourier series
+\cite{GuzZozulyaRef18,GuzZozulyaRef31}:
+\begin{equation}\label{GuzZozulyaEq69}
+	\begin{aligned}
+		u_\alpha(\mathbf{x}_\alpha,t)
+		&= \Re\Bigl\{\sum_{k=-\infty}^{\infty} u_\alpha^k(\mathbf{x}_\alpha)\,e^{i\omega_k t}\Bigr\},\\
+		\sigma_{\alpha\beta}(\mathbf{x}_\alpha,t)
+		&= \Re\Bigl\{\sum_{k=-\infty}^{\infty} \sigma_{\alpha\beta}^k(\mathbf{x}_\alpha)\,e^{i\omega_k t}\Bigr\},
+	\end{aligned}
+\end{equation}
+with Fourier coefficients
+\begin{equation}\label{GuzZozulyaEq70}
+	\begin{array}{ll}
+		u_\alpha^k(\mathbf{x}_\alpha)
+	&= \dfrac{\omega}{2\pi} \displaystyle\int_0^T u_\alpha(\mathbf{x}_\alpha,t)\,e^{i\omega_k t}\,dt,
+	\\
+	\sigma_{\alpha\beta}^k(\mathbf{x}_\alpha)
+	&= \dfrac{\omega}{2\pi} \displaystyle\int_0^T \sigma_{\alpha\beta}(\mathbf{x}_\alpha,t)\,e^{i\omega_k t}\,dt,
+	\end{array}
+\end{equation}
+and $\omega_k=k\omega$.
+
+Similarly, the traction and opening on the crack edges are
+\begin{equation}\label{GuzZozulyaEq71}
+	\begin{aligned}
+		p_1(x_1,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty} p_1^k(x_1)\,e^{i\omega_k t}\right\},\\
+		\Delta u_1(x_1,t)
+		&= \Re\left\{\sum_{k=-\infty}^{\infty} \Delta u_1^k(x_1)\,e^{i\omega_k t}\right\},
+	\end{aligned}
+\end{equation}
+with
+\begin{equation}\label{GuzZozulyaEq72}
+	\begin{array}{ll}
+		p_1^k(x_1)
+	&= \dfrac{\omega}{2\pi} \displaystyle\int_0^T p_1(x_1,t)\,e^{i\omega_k t}\,dt,
+	\\
+	\Delta u_1^k(x_1)
+	&= \dfrac{\omega}{2\pi} \displaystyle\int_0^T \Delta u_1(x_1,t)\,e^{i\omega_k t}\,dt.
+	\end{array}
+\end{equation}
+
+Substituting the series \eqref{GuzZozulyaEq69} into \eqref{GuzZozulyaEq31}
+yields the sequence of steady-state problems
+\begin{equation}\label{GuzZozulyaEq73}
+	L_{\alpha\beta}\,u_\beta^k
+	+ \frac{\omega^2}{c_2^2} \, u_\alpha^k = 0,
+	\qquad k \in \mathbb{Z}
+\end{equation}
+with boundary condition
+\begin{equation}\label{GuzZozulyaEq74}
+	p_1^k(\mathbf{x}_\alpha) = p_1^{s,k}(\mathbf{x}_\alpha),
+	\qquad \mathbf{x}_\alpha\in\Omega.
+\end{equation}
+
+Fourier components of the opening and traction satisfy the boundary integral
+equation (BIE)
+\begin{equation}\label{GuzZozulyaEq75}
+	p_1^k(\mathbf{x}_\alpha)
+	= -\,\mathrm{F.P.}
+	\int_\Omega
+	F_{11}(\mathbf{x}_\alpha,\mathbf{y}_\alpha,\omega_k)\,
+	\Delta u_1^k(\mathbf{y}_\alpha)\,d\Omega,
+\end{equation}
+where $\mathrm{F.P.}$ denotes the Hadamard finite part.  
+The kernels $F_{11}$ are derived from the fundamental solutions of
+\eqref{GuzZozulyaEq73}
+\cite{GuzZozulyaRef3,GuzZozulyaRef8,GuzZozulyaRef31,GuzZozulyaRef9}.
+
+We study the case of normal incidence of a unit-amplitude SH-wave
+and assume the normal contact force $q_n=1$.  
+The elastic material has
+\[
+E = 200\,\mathrm{GPa}, \quad
+\nu = 0.25, \quad
+\rho = 7800\,\mathrm{kg/m^3}.
+\]
+
+The mode-II SIF is evaluated from the near-tip
+displacement field
+\begin{equation}\label{GuzZozulyaEq89}
+	u_1
+	=
+	\frac{K_{II}}{\mu}
+	\sqrt{\frac{r}{2\pi}}\,
+	\sin\frac{\theta}{2}\,
+	\Bigl( 2-2\nu + \cos^2\frac{\theta}{2} \Bigr),
+\end{equation}
+so that, for $\theta=\pi$,
+\begin{equation}\label{GuzZozulyaEq90}
+	K_{II}(t)
+	=
+	\lim_{\varepsilon\to0}\;
+	\frac{\mu\sqrt{2\pi}}
+	{4(1-\nu)\sqrt{\varepsilon}}\,
+	\Delta u_1(l-\varepsilon,t).
+\end{equation}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.55\textwidth]{GuzZozulyaFig5}
+	\caption{%
+		Mode-II SIF versus nondimensional wavenumber $k_1 l$ for various friction
+		coefficients:\\
+		1 — $k_\tau=0$,\\
+		2 — $k_\tau=0.2$,\\
+		3 — $k_\tau=0.4$.%
+	}
+	\label{GuzZozulyaFig5}
+\end{figure}
+
+Figure~\ref{GuzZozulyaFig5} presents the normalized maximum mode-II SIF
+\(
+\left| {K_{II}^{\text{max}}}/{K_{II}^{\text{stat}}} \right|
+\)
+as a function of the nondimensional wavenumber \( k_1 l \), for various values of the tangential contact stiffness \( k_{\tau} \). Curve 1 corresponds to the solution without contact interaction (\( k_{\tau} = 0 \)), while curves 2 and 3 represent cases with frictional contact for \( k_{\tau} = 0.2 \) and \( k_{\tau} = 0.4 \), respectively.
+
+
+The results demonstrate that frictional contact interaction significantly reduces the dynamic SIF compared to the frictionless case. As \( k_{\tau} \) increases, the peak value of \( K_{II}^{\text{max}} \) decreases, and the overall amplitude of the response is damped. This effect is particularly notable at higher wavenumbers, where contact interaction more effectively limits the crack opening. Therefore, the influence of contact must be taken into account in dynamic fracture analysis and the design of structures under shear wave excitation.
+
+\section{Interaction of a Finite Mode-I Crack with a Normally Incident \textit{P}-Wave}
+
+A finite mode-I (opening) crack is subjected to a harmonic, normal–incidence
+tension–compression \(P\)-wave.  
+The loading produces plane deformation in the elastic medium and triggers
+\emph{unilateral} contact of the crack faces.
+
+\medskip
+\emph{Geometry and incident wave.} An unbounded, homogeneous, isotropic elastic solid in
+\(\mathbb{R}^{3}\) contains a straight crack lying in the plane \(x_{2}=0\):
+\begin{equation}\label{GuzZozulyaEq91}
+	\Omega=\bigl\{\mathbf{x}:\, -l\le x_{1}\le l,\; x_{2}=0,\;
+	-\infty< x_{3}<\infty \bigr\}.
+\end{equation}
+
+The normally incident harmonic \(P\)-wave is represented by a scalar potential
+\begin{equation}\label{GuzZozulyaEq92}
+	\varphi(\mathbf{x}_{\alpha},t)=
+	\varphi_{0}\,
+	e^{\,i\!\left(k_{1}\,\mathbf{n} \cdot \mathbf{x}_{\alpha}-\omega t\right)},
+\end{equation}
+where  
+\(k_{1}=\omega/c_{1}\), \(c_{1}=\sqrt{(\lambda+2\mu)/\rho}\),
+\(\mathbf{n}=(\cos\alpha,\sin\alpha)\), and the usual elastic constants
+\(\lambda,\mu,\rho\) have their standard meaning.
+
+A sketch of the configuration is shown in Fig.~\ref{GuzZozulyaFig6}.
+Only the reflected field requires solution; the incident field
+provides the traction
+\begin{equation}\label{GuzZozulyaEq94}
+	p_{2}(\mathbf{x}_{\alpha},t)=
+	-\Re\!\left\{p_{2}^{*}(x_{1})\,e^{-i\omega t}\!\right\},
+	\qquad
+	p_{2}^{*}=\mu k_{1}^{2}\varphi_{0}.
+\end{equation}
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=0.55\textwidth]{GuzZozulyaFig6.png}
+	\caption{Finite crack under tension–compression (plane) deformation
+		produced by a normally incident \(P\)-wave.}
+	\label{GuzZozulyaFig6}
+\end{figure}
+
+\medskip
+\emph{Unilateral contact conditions.} The effective traction on the crack faces is
+\begin{equation}\label{GuzZozulyaEq95}
+	p_{2}^{s}(\mathbf{x}_{\alpha},t)=
+	\begin{cases}
+		p_{2}(\mathbf{x}_{\alpha},t), & \mathbf{x}_{\alpha}\notin\Omega_{e}(t),
+		\\
+		p_{2}(\mathbf{x}_{\alpha},t)+q_{2}(\mathbf{x}_{\alpha},t),
+		& \mathbf{x}_{\alpha}\in\Omega_{e}(t),
+	\end{cases}
+\end{equation}
+where \(\Omega_{e}(t)=\Omega^{+}\!\cap\!\Omega^{-}\) is the instantaneous
+contact region and \(q_{2}\) the normal contact force.
+The unilateral conditions are
+\begin{equation}\label{GuzZozulyaEq96}
+	\Delta u_{2}\ge -h_{0},\qquad
+	q_{2}\ge 0,\qquad
+	(\Delta u_{2}+h_{0})\,q_{2}=0,
+	\qquad \forall\mathbf{x}_{\alpha}\in\Omega,\; t\in\mathcal{I},
+\end{equation}
+with \(h_{0}\) the initial crack opening and
+\(\Delta u_{2}=u_{2}^{+}-u_{2}^{-}\).
+
+Because of the constant constraint \eqref{GuzZozulyaEq96}, the problem is nonlinear, the reflected field is
+\emph{periodic}, not purely harmonic.  
+Hence every field component is expanded in a Fourier series,
+cf.\ Eqs.~\eqref{GuzZozulyaEq69}–\eqref{GuzZozulyaEq70}.  
+Each Fourier mode \(u^{k}_{\alpha}\) satisfies
+\begin{equation}\label{GuzZozulyaEq100}
+	L_{\alpha\beta}u_{\beta}^{k}
+	+\frac{\omega_{k}^{2}}{c_{1}^{2}}\,u_{\alpha}^{k}=0,
+\end{equation}
+with traction boundary condition
+\begin{equation}\label{GuzZozulyaEq101}
+	p_{2}^{k}(\mathbf{x}_{\alpha})=p_{2}^{s}(\mathbf{x}_{\alpha}),
+	\qquad \mathbf{x}_{\alpha}\in\Omega.
+\end{equation}
+
+For each \(k\) the displacement jump and traction are related by the
+boundary–integral equation
+\begin{equation}\label{GuzZozulyaEq102}
+	p_{2}^{k}(\mathbf{x}_{\alpha})=
+	-\mathrm{F.P.}\!
+	\int_{\Omega}
+	F_{22}(\mathbf{x}_{\alpha}-\mathbf{y}_{\alpha},\omega_{k})\,
+	\Delta u_{2}^{k}(\mathbf{y}_{\alpha})\,d\Omega_{\mathbf{y}},
+\end{equation}
+where \(\mathrm{F.P.}\) denotes the Hadamard finite part integral.
+
+\medskip
+\emph{Stress intensity factor.} For mode I the near-tip displacement is
+\begin{equation}\label{GuzZozulyaEq117}
+	u_{2}=
+	\frac{K_{I}}{\mu}\sqrt{\frac{r}{2\pi}}\,
+	\sin\!\frac{\theta}{2}\!
+	\Bigl(1-2\nu+\cos^{2}\!\frac{\theta}{2}\Bigr),
+\end{equation}
+and the extraction formula is
+\begin{equation}\label{GuzZozulyaEq118}
+	K_{I}(t)=
+	\lim_{\varepsilon\to 0}
+	\frac{\mu\sqrt{2\pi}}{4(1-\nu)\sqrt{\varepsilon}}\,
+	\Delta u_{2}(l-\varepsilon,t).
+\end{equation}
+
+\begin{figure}[t]
+	\sidecaption[t]
+	\includegraphics[width=0.55\textwidth]{GuzZozulyaFig7.png}
+	\caption{Normalised maximum mode-I SIF versus wave number
+		\(k_{1}l\):
+		\\
+		1 — without contact; \\
+		2 — with unilateral contact.}
+	\label{GuzZozulyaFig7}
+\end{figure}
+
+\medskip
+\emph{Analysis of the numerical results.} Figure~\ref{GuzZozulyaFig7} illustrates the normalized dynamic mode-I SIF as a function of the nondimensional wavenumber \(k_1l\). At low frequencies (\(k_1l < 0.4\)), the presence of contact has negligible influence. In the intermediate range (\(0.4 < k_1l < 1.3\)), the SIF is higher without contact. However, for \(k_1l > 1.3\), the contact solution exceeds the no-contact case. A pronounced minimum is observed in the no-contact curve at \(k_1l = 1.8\), while the two curves nearly coincide for \(k_1l > 2.3\). These results underscore the frequency-dependent role of crack-face contact and highlight the need to account for such interactions in dynamic fracture analyses.
+
+\section{Conclusions}
+
+This chapter presented a mathematical formulation of the elastodynamic contact problem for a cracked elastic body. A generalized variational principle involving a non-smooth functional was employed to derive the governing equations, along with the appropriate boundary and contact conditions.
+
+The interaction of harmonic P-waves and SH-waves with finite cracks was investigated under plane and antiplane deformation modes. The problems were solved using boundary integral equation (BIE) methods combined with iterative algorithms. Particular attention was given to the influence of unilateral contact interaction between the crack faces.
+
+Stress intensity factors (SIFs) were evaluated as functions of the incident wave number, and results were compared with those obtained without accounting for contact. It was shown that the effect of contact interaction may lead to differences exceeding 30\% in some frequency ranges.
+
+The findings presented here, consistent with earlier publications, highlight the critical importance of incorporating crack-face contact effects in dynamic fracture analyses. Further large-scale investigations are necessary to support the safe design and assessment of structural components subjected to dynamic loading.
+
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter14}

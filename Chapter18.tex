@@ -1,0 +1,1175 @@
+% !TeX root = BookN.tex
+
+\title{Exact Solutions of Thermoelectroelasticity Problems for a Piezoelectric Transversally Isotropic Space with an Internal and External Circular Crack}
+\titlerunning{Thermoelectroelasticity of a Piezoelectric Space with Circular Cracks}
+
+\author{Vitaly Kirilyuk, Olga Levchuk, and Petro Kobzar}
+
+\institute{%
+	Vitaly Kirilyuk 
+	\at 
+	\AffIMech
+	\\
+	\email{kirilyuk_v@ukr.net}
+	\and
+	Olha Levchuk 
+	\at 
+	\AffIMech
+	\\
+	\email{2013levchuk@gmail.com}
+	\and
+	Petro Kobzar 
+	\at 
+	\AffIMech
+	\\
+	\email{kobzar.p.yu@gmail.com}
+}
+
+\maketitle
+
+\graphicspath{{18_Kirilyuk/}}
+
+\abstract{The static problems of thermoelectroelasticity for a transversely isotropic piezoelectric material containing internal and external circular cracks subjected to stationary temperature fields are investigated. Exact analytical solutions of the governing thermoelectroelasticity equations are obtained, and closed-form expressions are derived for the stress intensity factors (SIFs) and electric induction intensity factors (EIIFs) corresponding to various temperature loading conditions on the crack surfaces.
+	\newline
+	The solutions are presented for several types of temperature distributions, including concentrated sources, ring-type loading, and polynomial temperature fields acting over different regions of the crack surface. The obtained relations allow the evaluation of the distribution of the intensity factors along the front of a circular crack in a piezoelectric medium.
+	\newline
+	The developed formulas also contain, as particular cases, the corresponding results for a purely elastic transversely isotropic material with internal or external circular cracks. Numerical examples are presented to illustrate the influence of crack geometry, temperature distribution, and piezoelectric material properties on the values of the stress intensity factors.
+}
+	
+
+\section{Introduction}
+
+Research on electroelasticity problems for piezoelectric bodies containing planar cracks has been summarized in \cite{Kirilyuk2,Kirilyuk6,Kirilyuk8}. 
+The influence of temperature fields on the stress and electric state of transversely isotropic electroelastic bodies with circular and elliptical cracks, for particular temperature loading cases, has been investigated in \cite{Kirilyuk1,Kirilyuk2,Kirilyuk5,Kirilyuk6,Kirilyuk7,Kirilyuk8,Kirilyuk9,Kirilyuk10,Kirilyuk11,Kirilyuk12,Kirilyuk13,Kirilyuk14,Kirilyuk15,Kirilyuk16}. 
+The correspondence between the stress intensity factors (SIFs) for planar cracks located in the isotropy plane of a transversely isotropic electroelastic material and those for cracks of the same shape in an isotropic elastic material subjected to mechanical and thermal loads was established in \cite{Kirilyuk6,Kirilyuk8}. 
+Important thermoelastic problems for an infinite space with circular and elliptical cracks were considered in \cite{Kirilyuk3,Kirilyuk4}. 
+
+However, thermoelectroelastic static problems for a piezoelectric material containing an internal or external circular crack located in the isotropy plane and subjected to arbitrary symmetric (with respect to the crack plane) temperature loading have not been sufficiently investigated.
+
+The present study addresses the three-dimensional static problem of thermoelectroelasticity for a transversely isotropic piezoelectric medium containing an internal or external circular crack lying in the plane of isotropy and subjected to symmetric temperature fields. 
+The solution of the governing thermoelectroelasticity equations is constructed using Fourier--Bessel integral representations. Explicit expressions for the potential functions are obtained, and analytical formulas are derived for evaluating the stress intensity factors (SIFs) and electric intensity factors (EIIFs) for a circular crack under thermal loading.
+
+Several thermoelectroelastic boundary-value problems are then examined using the derived general solution, and closed-form expressions for the SIFs and EIIFs are obtained. 
+As a special case, the results also yield the SIFs for a circular crack in a transversely isotropic elastic material subjected to the same symmetric temperature loading.
+
+\section{Governing Equations of Thermoelectroelasticity}
+
+The governing equations of steady-state thermoelectroelasticity for a piezoceramic body, written in terms of the displacement components $u_x$, $u_y$, $u_z$ and the electric potential $\Psi$, in the absence of body forces, free electric charges, and internal heat sources, take the form
+
+\begin{equation}
+	\begin{aligned}
+		\begin{multlined}[b]
+			c_{11}^{E} u_{x,xx}
+			+ \tfrac12 (c_{11}^{E}-c_{12}^{E}) u_{x,yy}
+			+ c_{44}^{E} u_{x,zz}
+			\\
+			+ \tfrac12 (c_{11}^{E}+c_{12}^{E}) u_{y,xy}
+			+ (c_{13}^{E}+c_{44}^{E}) u_{z,xz}
+			+ (e_{31}+e_{15})\Psi_{,xz}
+		\end{multlined}
+		&= \beta_{11} T_{,x},
+		\\
+		\begin{multlined}[b]
+			c_{11}^{E} u_{y,yy}
+			+ \tfrac12 (c_{11}^{E}-c_{12}^{E}) u_{y,xx}
+			+ c_{44}^{E} u_{y,zz}
+			\\
+			+ \tfrac12 (c_{11}^{E}+c_{12}^{E}) u_{x,xy}
+			+ (c_{13}^{E}+c_{44}^{E}) u_{z,yz}
+			+ (e_{31}+e_{15})\Psi_{,yz}
+		\end{multlined}
+		&= \beta_{11} T_{,y},
+		\\
+		\begin{multlined}[b]
+			(c_{13}^{E}+c_{44}^{E})(u_{x,xz}+u_{y,yz})
+			+ c_{44}^{E}(u_{z,xx}+u_{z,yy})
+			+ c_{33}^{E} u_{z,zz}
+			\\
+			+ e_{15}(\Psi_{,xx}+\Psi_{,yy})
+			+ e_{33}\Psi_{,zz}
+		\end{multlined}
+		&= \beta_{33} T_{,z},
+		\\
+		\begin{multlined}[b]
+			(e_{31}+e_{15})(u_{x,xz}+u_{y,yz})
+			+ e_{15}(u_{z,xx}+u_{z,yy})
+			+ e_{33}u_{z,zz}
+			\\
+			- \varepsilon_{11}^{S}(\Psi_{,xx}+\Psi_{,yy})
+			- \varepsilon_{33}^{S}\Psi_{,zz}
+		\end{multlined}
+		&= -p_{3} T_{,z},
+		\\
+		\lambda_{11}(T_{,xx}+T_{,yy}) + \lambda_{33}T_{,zz} &= 0.
+	\end{aligned}
+	\label{KirilyukEq3}
+\end{equation}
+%
+In \eqref{KirilyukEq3},
+$c_{11}^{E}, c_{12}^{E}, c_{13}^{E}, c_{33}^{E}, c_{44}^{E}$ are the independent elastic moduli measured at a constant electric field;
+$e_{31}, e_{15}, e_{33}$ are the piezoelectric moduli;
+$\varepsilon_{11}^{S}, \varepsilon_{33}^{S}$ are the dielectric constants measured at constant strain;
+$\lambda_{11}, \lambda_{33}$ are the thermal conductivity coefficients;
+$\beta_{11}, \beta_{33}$ are the thermoelastic coupling coefficients; and
+$p_{3}$ is the pyroelectric constant.
+
+\medskip
+\emph{Displacement–potential representation.} The solution of the system of equations \eqref{KirilyukEq3}, according to \cite{Kirilyuk13}, can be expressed in terms of five potential functions $\Phi_i$ $(i=1,\dots,5)$ as follows:
+\begin{equation}
+	\begin{aligned}
+		u_x = \sum_{j=1}^{4} \Phi_{j,x} + \Phi_{5,y},
+		\qquad &
+		u_y = \sum_{j=1}^{4} \Phi_{j,y} - \Phi_{5,x},
+		\\
+		u_z = \sum_{j=1}^{4} k_j \Phi_{j,z},
+		\qquad &
+		\Psi = \sum_{j=1}^{4} l_j \Phi_{j,z},
+	\end{aligned}
+	\label{KirilyukEq4}
+\end{equation}
+where $k_i$ and $l_i$ are constants to be determined later.
+
+\medskip
+\emph{Harmonic potentials.} Substituting the expressions for the displacements and the electric potential \eqref{KirilyukEq4} into the governing equations \eqref{KirilyukEq3} shows that these equations are satisfied identically provided that the functions $\Phi_j$ satisfy
+
+\begin{equation}
+	\Phi_{j,xx} + \Phi_{j,yy} + \nu_j \Phi_{j,zz} = 0,
+	\qquad j=1,\dots,5 .
+	\label{KirilyukEq5}
+\end{equation}
+%
+Here
+\[
+\nu_{5} = \frac{2c_{44}^{E}}{c_{11}^{E}-c_{12}^{E}},
+\]
+and the parameters $\nu_i$ ($i=1,2,3$) are the roots of the cubic algebraic equation
+\begin{multline*}
+	\nu^{3}(A_{1}B_{2}-C_{1}D_{2})
+	+\nu^{2}(A_{1}B_{3}+A_{2}B_{2}-C_{1}D_{3}-C_{2}D_{2})
+	\\
+	+\nu(A_{2}B_{3}+A_{3}B_{2}-C_{2}D_{3}-C_{3}D_{2})
+	+ A_{3}B_{3}-C_{3}D_{3} = 0 .
+\end{multline*}
+%
+with coefficients
+\begin{equation}
+	\begin{aligned}
+		A_{1} &= c_{11}^{E} e_{15},\quad
+		A_{2} = (c_{13}^{E}+c_{44}^{E})(e_{31}+e_{15})
+		- c_{11}^{E} e_{33}
+		- c_{44}^{E} e_{15}, \\
+		A_{3} &= c_{44}^{E} e_{33}, \quad
+		B_{2} = -\bigl[\varepsilon_{11}^{S}(c_{13}^{E}+c_{44}^{E})
+		+ e_{15}(e_{31}+e_{15})\bigr], \\
+		B_{3} &= \varepsilon_{33}^{S}(c_{13}^{E}+c_{44}^{E})
+		+ e_{33}(e_{31}+e_{15}), \quad
+		C_{1} = -c_{11}^{E}\varepsilon_{11}^{S}, \\
+		C_{2} &= (e_{31}+e_{15})^{2}
+		+ c_{11}^{E}\varepsilon_{33}^{S}
+		+ c_{44}^{E}\varepsilon_{11}^{S}, \quad
+		C_{3} = -c_{44}^{E}\varepsilon_{33}^{S}, \\
+		D_{2} &= e_{15}(c_{13}^{E}+c_{44}^{E})
+		- c_{44}^{E}(e_{31}+e_{15}), 
+		\\
+		D_{3} &= c_{33}^{E}(e_{31}+e_{15})
+		- e_{33}(c_{13}^{E}+c_{44}^{E}).
+	\end{aligned}
+	\label{KirilyukEq6}
+\end{equation}
+
+The constants $k_j$ and $l_j$  appearing in \eqref{KirilyukEq4}
+are related to $\nu_j$ by
+\begin{align}
+	&	\frac{a_j + c_{13}^{E} k_j + e_{31} l_j}{c_{11}^{E}}
+	=
+	\frac{c_{33}^{E} k_j + e_{33} l_j}{c_{13}^{E}+a_j}
+	=
+	\frac{c_{33}^{E} k_j - \varepsilon_{33}^{S} l_j}{e_{31}+d_j}
+	=
+	\nu_j,
+	\label{KirilyukEq7}
+	\\
+	&	a_j = c_{44}^{E}(1+k_j) + e_{15}l_j,
+	\qquad
+	d_j = e_{15}(1+k_j) - \varepsilon_{11}^{S}l_j.
+	\label{KirilyukEq8}
+\end{align}
+
+The potential $\Phi_4$ simultaneously satisfies
+\begin{equation}
+	\Phi_{4,zz} = \frac{m}{k^{2}}\,T,
+	\qquad
+	\Phi_{4,xx} + \Phi_{4,yy} + k^{2}\Phi_{4,zz} = 0 ,
+	\label{KirilyukEq9}
+\end{equation}
+where
+\[
+k^{2} = \frac{\lambda_{33}}{\lambda_{11}}
+\]
+is the ratio of the thermal conductivity coefficients, and $m$ is an unknown constant.
+
+The parameters $k_j$ and $l_j$ ($j=1,2,3$) can be written as
+\begin{equation}
+	\begin{aligned}
+		k_j &=
+		\frac{(\nu_j c_{11}^{E}-c_{44}^{E})(e_{15}\nu_j-e_{33})
+			+ \nu_j(c_{44}^{E}+c_{13}^{E})(e_{31}+e_{15})}
+		{(c_{13}^{E}+c_{44}^{E})(e_{15}\nu_j-e_{33})
+			- (c_{44}^{E}\nu_j-c_{33}^{E})(e_{31}+e_{15})},
+		\\
+		l_j &=
+		\frac{(\nu_j c_{11}^{E}-c_{44}^{E})(\nu_j c_{44}^{E}-c_{33}^{E})
+			+ \nu_j(c_{44}^{E}+c_{13}^{E})^{2}}
+		{(\nu_j c_{44}^{E}-c_{33}^{E})(e_{31}+e_{15})
+			- (c_{13}^{E}+c_{44}^{E})(e_{15}\nu_j-e_{33})}.
+	\end{aligned}
+	\label{KirilyukEq10}
+\end{equation}
+
+The unknown constants $k_4$ and $l_4$ are determined from the system
+\begin{equation}
+	\begin{aligned}
+		\begin{multlined}[b]
+			\bigl[\beta_{33}(c_{13}^{E}+c_{44}^{E})
+			- \beta_{11}c_{33}^{E}
+			+ \beta_{11}c_{44}^{E}k^{2}\bigr]k_{4}
+			\\
+			+ \bigl[\beta_{33}(e_{15}+e_{31})
+			- \beta_{11}e_{33}
+			+ \beta_{11}e_{15}k^{2}\bigr]l_{4}
+			\\
+			+ \bigl[\beta_{33}(c_{44}^{E}-c_{11}^{E}k^{2})
+			+ \beta_{11}(c_{44}^{E}+c_{13}^{E})k^{2}\bigr] 
+		\end{multlined} &= 0,
+		\\[6pt]
+		\begin{multlined}[b]
+			\bigl[-p_{3}(c_{13}^{E}+c_{44}^{E})
+			- \beta_{11}e_{33}
+			+ \beta_{11}e_{15}k^{2}\bigr]k_{4}
+			\\
+			+ \bigl[-p_{3}(e_{15}+e_{31})
+			+ \beta_{11}\varepsilon_{33}^{S}
+			- \beta_{11}\varepsilon_{11}^{S}k^{2}\bigr]l_{4}
+			\\
+			+ \bigl[-p_{3}(c_{44}^{E}-c_{11}^{E}k^{2})
+			+ \beta_{11}(e_{15}+e_{31})k^{2}\bigr]
+		\end{multlined} &= 0 .
+	\end{aligned}
+	\label{KirilyukEq11}
+\end{equation}
+
+Finally, the constant $m$ is expressed through $k_4$ and $l_4$ as
+\begin{equation}
+	m =
+	\frac{\beta_{11}k^{2}}
+	{c_{44}^{E}
+		+ (c_{13}^{E}+c_{44}^{E})k_{4}
+		+ (e_{15}+e_{31})l_{4}
+		- c_{11}^{E}k^{2}} .
+	\label{KirilyukEq12}
+\end{equation}
+
+Introducing the notation
+\[
+z_j = z\,\nu_j^{-1/2}, \qquad j=1,\dots,5,
+\]
+the functions $\Phi_1(x,y,z_1)$, $\Phi_2(x,y,z_2)$, $\Phi_3(x,y,z_3)$,
+$\Phi_4(x,y,z_4)$, and $\Phi_5(x,y,z_5)$ are harmonic in the corresponding coordinate systems.
+
+\section{Internal Circular Crack in a Piezoelectric Material}
+
+\medskip
+\emph{Problem statement.} Consider an infinite transversely isotropic piezoelectric medium containing an internal circular crack of radius $a$ located in the plane of material isotropy ($z=0$). 
+The temperature distribution on the crack surface is assumed to be symmetric with respect to the crack plane and is specified as
+$-T_{0}(r,\theta) < 0$ on the crack faces. 
+The crack surfaces are assumed to be free of external mechanical and electrical loads.
+
+Under these assumptions, the boundary conditions take the form
+\begin{equation}
+	\label{KirilyukEq1}
+	\begin{aligned}
+		\sigma_{xz}^{\pm} &= 0, \qquad 
+		\sigma_{yz}^{\pm} = 0, \qquad 
+		D_{z}^{\pm} = 0, 
+		\qquad z=0, \\
+		\sigma_{zz}^{\pm} &= 0, 
+		\qquad 0 \le r < a, \quad z=0, \\
+		u_{z}^{\pm} &= 0, 
+		\qquad r > a, \quad z=0, \\
+		T^{\pm}(r,\theta,0) &= -T_{0}(r,\theta), 
+		\qquad 0 \le r < a, \\
+		\frac{\partial T^{\pm}}{\partial z} &= 0,
+		\qquad r>a, \quad 0 \le \theta < 2\pi .
+	\end{aligned}
+\end{equation}
+
+The temperature distribution on the crack surface is expanded into a Fourier series:
+\begin{equation}
+	\label{KirilyukEq2}
+	T_{0}(r,\theta)
+	=
+	\sum_{n=0}^{\infty} f_{n}(r)\cos(n\theta)
+	+
+	\sum_{n=1}^{\infty} g_{n}(r)\sin(n\theta).
+\end{equation}
+
+The Fourier coefficients are defined as
+\begin{equation*}
+	\begin{aligned}
+		f_{0}(r) &= \frac{1}{\pi}\int_{0}^{\pi} T_{0}(r,\theta)\, d\theta, \\
+		f_{n}(r) &= \frac{2}{\pi}\int_{0}^{\pi} T_{0}(r,\theta)\cos(n\theta)\, d\theta, \\
+		g_{n}(r) &= \frac{2}{\pi}\int_{0}^{\pi} T_{0}(r,\theta)\sin(n\theta)\, d\theta .
+	\end{aligned}
+\end{equation*}
+
+To construct the solution of the thermoelectroelastic problem for a piezoelectric medium containing an internal circular crack with a prescribed symmetric temperature distribution on the crack surface, represented by the trigonometric series \eqref{KirilyukEq2}, harmonic potentials of a special form will be employed.
+
+
+\medskip
+\emph{Solution method.}
+The temperature field in a piezoelectric medium containing a crack is represented as the potential of a simple layer with an unknown density
+\begin{equation}
+	T(x,y,z_4) =
+	-\frac{1}{2\pi}
+	\iint_{\Omega}
+	\frac{\theta(\xi,\eta)\, d\xi d\eta}
+	{\big[(x-\xi)^2+(y-\eta)^2+z_4^2\big]^{1/2}},
+	\label{KirilyukEq13}
+\end{equation}
+where $\Omega$ is the region of the circular crack.
+
+Next, the solution is constructed using the superposition of two states.
+
+For the first state we choose the potential
+\begin{align}
+	\Phi_4^{(1)}(x,y,z_4)&=F(x,y,z_4)
+	\notag
+	\\
+	&=
+	m
+	\iint_{\Omega}
+	\theta(\xi,\eta)
+	\left\{
+	z_4 \ln(\rho_4+z_4)-\rho_4
+	\right\}
+	d\xi d\eta ,
+	\label{KirilyukEq14}
+\end{align}
+where
+\[
+\rho_4(x,y,z_4)
+=
+\sqrt{(x-\xi)^2+(y-\eta)^2+z_4^2}.
+\]
+
+For this state we also set
+\[
+\Phi_i^{(1)}(x,y,z_i)
+=
+\alpha_i^{*}F(x,y,z_i),
+\qquad i=1,2,3,
+\]
+and
+\[
+\Phi_5^{(1)}=0 .
+\]
+
+The constants $\alpha_i^{*}$ are determined from the linear system
+\begin{align}
+	\alpha_1^{*}\frac{a_1}{\sqrt{\nu_1}}
+	+
+	\alpha_2^{*}\frac{a_2}{\sqrt{\nu_2}}
+	+
+	\alpha_3^{*}\frac{a_3}{\sqrt{\nu_3}}
+	&=
+	-\frac{a_4}{k},
+	\nonumber\\
+	\alpha_1^{*}\frac{k_1}{\sqrt{\nu_1}}
+	+
+	\alpha_2^{*}\frac{k_2}{\sqrt{\nu_2}}
+	+
+	\alpha_3^{*}\frac{k_3}{\sqrt{\nu_3}}
+	&=
+	-\frac{k_4}{k},
+	\label{KirilyukEq15}\\
+	\alpha_1^{*} d_1
+	+
+	\alpha_2^{*} d_2
+	+
+	\alpha_3^{*} d_3
+	&=
+	-\frac{l_4}{k}.
+	\nonumber
+\end{align}
+
+For the second superposition state we select
+\[
+\Phi_4^{(2)}=\Phi_5^{(2)}=0,
+\qquad
+\Phi_i^{(2)}(x,y,z_i)
+=
+\beta_i^{*}f^{*}(x,y,z_i)
++
+\beta_i^{**}f^{**}(x,y,z_i),
+\quad i=1,2,3,
+\]
+where $\beta_i^{*}$ and $\beta_i^{**}$ are constants, and
+$f^{*}(x,y,z)$ and $f^{**}(x,y,z)$ are unknown functions.
+
+Following \cite{Kirilyuk4}, for $z=0$ we obtain
+\begin{equation}
+	\begin{aligned}
+	\frac{\partial^2 f^{*}}{\partial z^2}
+	&=
+	-m\left(\sum_{i=1}^{3}\alpha_i^{*}a_i+a_4\right)T_0(x,y)
+	\\
+	&=
+	\gamma_S^{\text{Piezo}}\,T_0(x,y),
+	\qquad (x,y)\in\Omega,
+	\\
+\frac{\partial f^{*}}{\partial z}&=0,
+\quad (x,y)\in\mathbb{R}^2\setminus\Omega .
+\end{aligned}
+\label{KirilyukEq16}
+\end{equation}
+
+Similarly,
+\begin{equation}
+	\begin{aligned}
+	\frac{\partial^2 f^{**}}{\partial z^2}
+	&=
+	-m\left(\sum_{i=1}^{3}\alpha_i^{*}d_i+d_4\right)T_0(x,y)
+	\\
+	&=
+	\gamma_D^{\text{Piezo}}\,T_0(x,y),
+	\quad (x,y)\in\Omega,
+\\
+\frac{\partial f^{**}}{\partial z}&=0,
+\quad (x,y)\in\mathbb{R}^2\setminus\Omega .
+\end{aligned}
+\label{KirilyukEq17}
+\end{equation}
+
+\medskip
+\emph{Fourier–Bessel representation.} To construct $f^{*}$ and $f^{**}$ we use the harmonic potential
+$\phi(r,\theta,z)$ in the form of a Fourier--Bessel integral \cite{Kirilyuk7}
+\begin{multline}
+	\phi(r,\theta,z)
+	=
+	\sum_{n=0}^{\infty}
+	\cos(n\theta)
+	\int_{0}^{\infty}
+	g_n^{*}(s)
+	\frac{1}{s}
+	J_n(sr)e^{-sz}\,ds
+	\\
+	+
+	\sum_{n=1}^{\infty}
+	\sin(n\theta)
+	\int_{0}^{\infty}
+	h_n^{*}(s)
+	\frac{1}{s}
+	J_n(sr)e^{-sz}\,ds .
+	\label{KirilyukEq18}
+\end{multline}
+
+The functions $g_n^{*}(s)$ and $h_n^{*}(s)$ are given by
+\begin{align*}
+g_n^{*}(s)
+&=
+\left(\frac{s}{2\pi}\right)^{1/2}
+\int_{0}^{a}
+J_{n+1/2}(st)
+\frac{1}{t^{\,n-1/2}}
+\left[
+\int_{0}^{t}
+\frac{u^{n+1}f_n(u)\,du}{(t^2-u^2)^{1/2}}
+\right]dt,
+\\
+h_n^{*}(s)
+&=
+\left(\frac{s}{2\pi}\right)^{1/2}
+\int_{0}^{a}
+J_{n+1/2}(st)
+\frac{1}{t^{\,n-1/2}}
+\left[
+\int_{0}^{t}
+\frac{u^{n+1}g_n(u)\,du}{(t^2-u^2)^{1/2}}
+\right]dt .
+\end{align*}
+
+\medskip
+\emph{Stress and electric intensity factors.} Using the temperature distribution on the crack surfaces in the trigonometric form,
+the SIF and EIIF are obtained as
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{2}{\sqrt{\pi}}
+	\Bigg(
+	\sum_{n=0}^{\infty}
+	\frac{\cos(n\theta)}{a^{n+1/2}}
+	\int_{0}^{a}
+	\frac{u^{n+1}f_n(u)\,du}{(a^2-u^2)^{1/2}}
+	\\
+	+
+	\sum_{n=1}^{\infty}
+	\frac{\sin(n\theta)}{a^{n+1/2}}
+	\int_{0}^{a}
+	\frac{u^{n+1}g_n(u)\,du}{(a^2-u^2)^{1/2}}
+	\Bigg),
+	\label{KirilyukEq19}
+\end{multline}
+%
+where
+\[
+\gamma_S^{\text{Piezo}}
+=
+-m\left(\sum_{i=1}^{3}\alpha_i^{*}a_i+a_4\right),
+\qquad
+\gamma_D^{\text{Piezo}}
+=
+-m\left(\sum_{i=1}^{3}\alpha_i^{*}d_i+d_4\right).
+\]
+
+For an axisymmetric temperature distribution on the crack surface we obtain
+\begin{equation}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{2}{\sqrt{\pi a}}
+	\int_{0}^{a}
+	\frac{u\,T_0(u)\,du}{(a^2-u^2)^{1/2}} .
+	\label{KirilyukEq20}
+\end{equation}
+
+Based on \eqref{KirilyukEq19} and \eqref{KirilyukEq20}, several specific temperature loading cases for an electroelastic medium with a circular crack will be considered.
+
+\medskip
+\emph{1. Concentrated temperature source.} Let a concentrated temperature source act at the center of the circular crack surface. Then
+\[
+T(r,\theta,0) = -T_0(r) = -\frac{T_0}{2\pi (r/a)}\,\delta(r).
+\]
+Substituting this distribution into \eqref{KirilyukEq20}, we obtain
+\begin{equation}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{T_0}{\pi^{3/2}a^{1/2}} .
+	\label{KirilyukEq21}
+\end{equation}
+
+\medskip
+\emph{2. Ring temperature loading.} Let the temperature be distributed uniformly along a circle of radius $c<a$. Then
+\[
+T(r,\theta,0) = -T_0(r) = -\frac{T_0}{2\pi (r/a)}\,\delta(r-c).
+\]
+As a result, we obtain
+\begin{equation}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{T_0}{\pi^{3/2}a^{1/2}}
+	\frac{1}{\sqrt{1-(c/a)^2}} .
+	\label{KirilyukEq22}
+\end{equation}
+
+\medskip
+\emph{3. Polynomial temperature distribution.} Let the temperature distribution on the circular crack surface be represented by a fourth-order polynomial in $r/a$:
+\begin{multline}
+	T(r,\theta,0)
+	=
+	-\big[
+	T_0 + T_1(r/a) 
+	\\
+	+ T_2(r/a)^2 + T_3(r/a)^3 + T_4(r/a)^4
+	\big],
+	\qquad 0 \le r < a .
+	\label{KirilyukEq23}
+\end{multline}
+Then
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\bigg(
+	2T_0\sqrt{\frac{a}{\pi}}
+	+\frac{T_1}{2}\sqrt{a\pi}
+	\\
+	+\frac{4T_2}{3}\sqrt{\frac{a}{\pi}}
+	+\frac{3T_3}{8}\sqrt{a\pi}
+	+\frac{16T_4}{15}\sqrt{\frac{a}{\pi}}
+	\bigg).
+	\label{KirilyukEq24}
+\end{multline}
+
+\medskip
+\emph{4. Loading over an inner region.} Consider the case where the polynomial temperature distribution
+\eqref{KirilyukEq23} acts not on the entire crack surface but only on its inner circular region
+$0 \le r \le b < a$.
+
+Introducing the dimensionless parameter
+\[
+r_0=\frac{b}{a}, \qquad 0\le r_0  <1,
+\]
+we rewrite the result in the form
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	2T_0\sqrt{\frac{a}{\pi}}
+	\left(1-\sqrt{1- r_0^2}\right)
+	\\
+	+T_1\sqrt{\frac{a}{\pi}}
+	\left(
+	\arcsin r_0
+	- r_0\sqrt{1- r_0^2}
+	\right)
+	\\
+	+\frac{2}{3}T_2\sqrt{\frac{a}{\pi}}
+	\left(
+	- r_0^2\sqrt{1- r_0^2}
+	-2\sqrt{1- r_0^2}
+	+2
+	\right)
+	\\
+	+T_3\sqrt{\frac{a}{\pi}}
+	\left[
+	-\frac12  r_0^3\sqrt{1- r_0^2}
+	-\frac34  r_0\sqrt{1- r_0^2}
+	+\frac34 \arcsin r_0
+	\right]
+	\\
+	+2T_4\sqrt{\frac{a}{\pi}}
+	\left[
+	\frac{8}{15}\bigl(1-\sqrt{1- r_0^2}\bigr)
+	-\frac15  r_0^2\sqrt{1- r_0^2}\,( r_0^2+4)
+	\right].
+	\label{KirilyukEq25}
+\end{multline}
+
+\medskip
+\emph{5. Loading over an outer annular region.} Let the fourth-order polynomial temperature distribution \eqref{KirilyukEq23} act on the outer annular part of the circular crack, that is, in the region $b<r<a$. Introducing the dimensionless parameter
+\[
+ r_0=\frac{b}{a}, \qquad 0\le  r_0<1,
+\]
+we obtain
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	2T_0\sqrt{\frac{a}{\pi}}\,\sqrt{1- r_0^2}
+\\
+	+T_1\left[
+	\frac{\sqrt{\pi a}}{2}
+	-\sqrt{\frac{a}{\pi}}
+	\left(
+	\arcsin r_0- r_0\sqrt{1- r_0^2}
+	\right)
+	\right]
+\\
+	+\frac{2}{3}T_2\sqrt{\frac{a}{\pi}}
+	\left[
+	2\sqrt{1- r_0^2}
+	+ r_0^2\sqrt{1- r_0^2}
+	\right]
+	\\
+	+T_3\left[
+	\frac{3}{8}\sqrt{\pi a}
+	-\sqrt{\frac{a}{\pi}}
+	\left(
+	-\frac12 r_0^3\sqrt{1- r_0^2}
+	-\frac34 r_0\sqrt{1- r_0^2}
+	+\frac34\arcsin r_0
+	\right)
+	\right]
+	\\
+	+\frac{2}{5}T_4\sqrt{\frac{a}{\pi}}
+	\sqrt{1- r_0^2}\,( r_0^4+4 r_0^2+8).
+	\label{KirilyukEq26}
+\end{multline}
+
+It is readily verified that the sum of the results for Problems~4 and~5 reproduces the expression obtained in Problem~3, that is, the case where the polynomial temperature distribution \eqref{KirilyukEq23} acts over the entire surface of the circular crack.
+
+\medskip
+\emph{6. Loading in a finite annular region.} Let the fourth-order polynomial temperature distribution act on the annular region
+$c<r<b\le a$ of the circular crack, where $0\le c<b\le a$.
+Introducing the dimensionless parameters
+\[
+ r_0=\frac{b}{a}, \qquad \chi=\frac{c}{a}, \qquad 0\le \chi< r_0\le 1,
+\]
+we obtain
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	2T_0\sqrt{\frac{a}{\pi}}
+	\left(
+	\sqrt{1-\chi^2}-\sqrt{1- r_0^2}
+	\right)
+	\\
+	+T_1\sqrt{\frac{a}{\pi}}
+	\left[
+	\arcsin\chi-\arcsin r_0
+	+ r_0\sqrt{1- r_0^2}
+	-\chi\sqrt{1-\chi^2}
+	\right]
+	\\
+	+\frac{2}{3}T_2\sqrt{\frac{a}{\pi}}
+	\left[
+	2\sqrt{1- r_0^2}
+	+ r_0^2\sqrt{1- r_0^2}
+	-2\sqrt{1-\chi^2}
+	-\chi^2\sqrt{1-\chi^2}
+	\right]
+	\\
+	+T_3\sqrt{\frac{a}{\pi}}
+	\bigg[
+	-\frac12  r_0^3\sqrt{1- r_0^2}
+	-\frac34  r_0\sqrt{1- r_0^2}
+	+\frac34 \arcsin r_0
+	\\
+	+\frac12 \chi^3\sqrt{1-\chi^2}
+	+\frac34 \chi\sqrt{1-\chi^2}
+	-\frac34 \arcsin\chi
+	\bigg]
+\\
+	+\frac{2}{5}T_4\sqrt{\frac{a}{\pi}}
+	\left[
+	\sqrt{1-\chi^2}\,(\chi^4+4\chi^2+8)
+	-\sqrt{1- r_0^2}\,( r_0^4+4 r_0^2+8)
+	\right].
+	\label{KirilyukEq27}
+\end{multline}
+
+\medskip
+\emph{7. Two symmetric temperature sources.} Consider the case of concentrated temperature sources (or sinks) acting at two points on the surface of a circular crack with polar coordinates $(b,\pm\alpha)$, that is,
+\begin{equation}
+	T(r,\theta,0)
+	=
+	-T_0(r,\theta)
+	=
+	-\frac{T_0}{r/a}\,\delta(r-b)\delta(\theta\pm\alpha).
+	\label{KirilyukEq28}
+\end{equation}
+
+In this case the problem is non-axisymmetric. Using the trigonometric expansions, we obtain
+\begin{equation}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{2T_0}{\pi^{3/2}a^{1/2}}
+	\frac{1}{\sqrt{1- r_0^2}}
+	\left[
+	1+2\sum_{n=1}^{\infty} r_0^n\cos(n\alpha)\cos(n\theta)
+	\right],
+	\label{KirilyukEq29}
+\end{equation}
+where
+\[
+ r_0=\frac{b}{a}.
+\]
+
+Setting $\alpha=0$, we obtain the case where concentrated temperature sources (or sinks) of double intensity $2T_0$ act at the point with polar coordinates $(b,0)$, i.e.,
+\begin{equation}
+	T(r,\theta,0)
+	=
+	-T_0(r,\theta)
+	=
+	-\frac{2T_0}{r/a}\,\delta(r-b)\delta(\theta).
+	\label{KirilyukEq30}
+\end{equation}
+
+Then
+\begin{equation}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	=
+	\frac{2T_0}{\pi^{3/2}a^{1/2}}
+	\frac{1- r_0^2}{1-2 r_0\cos\theta+ r_0^2}.
+	\label{KirilyukEq31}
+\end{equation}
+
+Using \eqref{KirilyukEq19}, one can similarly determine the SIF and EIIF for other temperature distributions on the surfaces of a circular crack.
+
+When transitioning from a piezoelectric material to a purely elastic transversely isotropic material, we have 
+\[
+\gamma_{S}^{\text{Piezo}} \to \gamma^{\text{Trans}}.
+\]
+Further transition to an isotropic elastic material yields
+\[
+\gamma^{\text{Trans}} \to \frac{\mu \alpha (1+\nu)}{1-\nu},
+\]
+where $\nu$ is the Poisson ratio, $\mu$ is the shear modulus, and $\alpha$ is the coefficient of linear thermal expansion of the isotropic material.
+
+\medskip
+\emph{Numerical analysis.} Consider a piezoelectric material with a circular crack on whose upper and lower surfaces concentrated heat sinks act at the points $(r_0=b/a,\theta=0)$ according to \eqref{KirilyukEq30}. Based on formula \eqref{KirilyukEq31}, we study the distribution of the SIF and EIIF along the front of a circular crack in an electroelastic material.
+
+Figure~\ref{KirilyukFig1} shows the distribution of SIF and EIIF along the front of a circular
+crack for different distances of the temperature sinks from the crack center.
+The curves correspond to different values of the parameter $r_0=b/a$.
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=.5\textwidth]{KirilyukFig1.png}
+	\caption{Distribution of the normalized stress intensity factor $K_I^{*}$
+		along the front of a circular crack for different values of $r_0=b/a$.}
+	\label{KirilyukFig1}
+\end{figure}
+
+Curves 1--4 correspond to $r_0=0.6$, $0.5$, $0.4$, and $0.3$, respectively.
+In the figure the normalized quantity
+\[
+K_I^{*}=\frac{K_I(\pi a)^{3/2}}{2T_0\gamma_S^{\text{Piezo}}}
+\]
+is plotted.
+
+It can be seen that as the distance of the temperature sink from the crack
+center increases, the maximum values of the stress intensity factor and the
+electric intensity factor also increase.
+
+\section{External Circular Crack in a Piezoelectric Material}
+
+\medskip
+\emph{Problem statement.} Consider an infinite transversely isotropic electroelastic medium containing an external circular crack lying in the plane of material isotropy ($z=0$). Let the temperature distribution on the crack surfaces be prescribed by $-T_0(r,\theta)$. The boundary conditions then take the form
+\begin{equation}
+	\label{KirilyukEq32}
+	\begin{aligned}
+		\sigma_{xz}^{\pm} &= 0, \qquad
+		\sigma_{yz}^{\pm} = 0, \qquad
+		D_{z}^{\pm} = 0,
+		\qquad z=0, \\
+		\sigma_{zz}^{\pm} &= 0,
+		\qquad r>a, \quad z=0, \\
+		u_{z}^{\pm} &= 0,
+		\qquad 0 \le r < a, \quad z=0, \\
+		T^{\pm}(r,\theta,0) &= -T_0(r,\theta),
+		\qquad r>a, \\
+		\frac{\partial T^{\pm}}{\partial z} &= 0,
+		\qquad 0 \le r < a, \quad 0 \le \theta < 2\pi .
+	\end{aligned}
+\end{equation}
+
+We also assume that the symmetric temperature distribution on the surfaces of the external crack satisfies the condition
+\[
+\int_{0}^{2\pi}\int_{0}^{\infty} r\,T_0(r,\theta)\,dr\,d\theta < \infty .
+\]
+
+Expanding $T_0(r,\theta)$ into a Fourier series, we write
+\[
+T_0(r,\theta)
+=
+-\left(
+\sum_{n=0}^{\infty} f_n^{*}(r)\cos(n\theta)
++
+\sum_{n=1}^{\infty} g_n^{*}(r)\sin(n\theta)
+\right).
+\]
+
+In what follows, we use the representation of the solution to the thermoelectroelasticity equations for a transversely isotropic piezoelectric material in terms of harmonic functions given by \eqref{KirilyukEq4}.
+
+\medskip
+\emph{Solution method.}
+The temperature field in an electroelastic medium with a crack is represented as a simple-layer potential with density $\theta(\xi,\eta)$. We again employ the superposition of two states.
+
+For the first state we take
+\begin{equation}
+	\Phi_{4}^{(1)}(x,y,z_{4}) = F(x,y,z_{4})
+	=
+	m\iint_{\Omega}\theta(\xi,\eta)
+	\left\{
+	z_{4}\ln(\rho_{4}+z_{4})-\rho_{4}
+	\right\}
+	d\xi d\eta ,
+	\label{KirilyukEq33}
+\end{equation}
+where
+\[
+\rho_{4}(x,y,z_{4})=\sqrt{(x-\xi)^{2}+(y-\eta)^{2}+z_{4}^{2}},
+\]
+and $\Omega$ is the crack surface. In addition,
+\[
+\Phi_i^{(1)}(x,y,z_i)=\alpha_i^{*}F(x,y,z_i), \qquad i=1,2,3,
+\]
+while
+\[
+\Phi_5^{(1)}=0,
+\]
+where $\alpha_1^{*},\alpha_2^{*},\alpha_3^{*}$ are unknown constants.
+
+For the second superposition state we choose
+\[
+\Phi_4^{(2)}=\Phi_5^{(2)}=0,
+\quad
+\Phi_i^{(2)}(x,y,z_i)
+=
+\beta_i^{*}f^{*}(x,y,z_i)
++
+\beta_i^{**}f^{**}(x,y,z_i),
+\quad i=1,2,3,
+\]
+where $\beta_i^{*}$ and $\beta_i^{**}$ are unknown constants and
+$f^{*}$ and $f^{**}$ are harmonic functions. In constructing these functions we use the harmonic potential in the form of a Fourier--Bessel integral
+\begin{multline}
+	\phi(r,\theta,z)
+	=
+	\sum_{n=0}^{\infty}\cos(n\theta)
+	\int_{0}^{\infty} g_n^{*}(s)\frac{1}{s}J_n(sr)e^{-sz}\,ds
+	\\
+	+
+	\sum_{n=1}^{\infty}\sin(n\theta)
+	\int_{0}^{\infty} h_n^{*}(s)\frac{1}{s}J_n(sr)e^{-sz}\,ds .
+	\label{KirilyukEq34}
+\end{multline}
+
+After performing the calculations, we obtain the following expressions for the SIF and EIIF:
+
+\begin{equation}
+	\begin{aligned}
+	K_I
+	&=
+\begin{multlined}[t]
+	\frac{2}{\sqrt{\pi}}
+	\bigg(
+	\sum_{n=0}^{\infty}
+	\frac{\cos(n\theta)}{a^{-n+1/2}}
+	\int_{a}^{\infty}
+	\frac{r^{1-n}\bigl[\gamma_S^{\text{Piezo}}f_n^{*}(r)\bigr]\,dr}
+	{(r^{2}-a^{2})^{1/2}}
+\\
+	+\sum_{n=1}^{\infty}
+	\frac{\sin(n\theta)}{a^{-n+1/2}}
+	\int_{a}^{\infty}
+	\frac{r^{1-n}\bigl[\gamma_S^{\text{Piezo}}g_n^{*}(r)\bigr]\,dr}
+	{(r^{2}-a^{2})^{1/2}}
+	\bigg),
+\end{multlined}
+\\
+	K_D
+	&=
+	\begin{multlined}[t]
+	\frac{2}{\sqrt{\pi}}
+	\bigg(
+	\sum_{n=0}^{\infty}
+	\frac{\cos(n\theta)}{a^{-n+1/2}}
+	\int_{a}^{\infty}
+	\frac{r^{1-n}\bigl[\gamma_D^{\text{Piezo}}f_n^{*}(r)\bigr]\,dr}
+	{(r^{2}-a^{2})^{1/2}}
+	\\
+	+\sum_{n=1}^{\infty}
+	\frac{\sin(n\theta)}{a^{-n+1/2}}
+	\int_{a}^{\infty}
+	\frac{r^{1-n}\bigl[\gamma_D^{\text{Piezo}}g_n^{*}(r)\bigr]\,dr}
+	{(r^{2}-a^{2})^{1/2}}
+	\bigg),
+	\end{multlined}
+	\end{aligned}
+	\label{KirilyukEq35}
+\end{equation}
+where $f_n^{*}(r)$ and $g_n^{*}(r)$ are the Fourier coefficients of the temperature field.
+
+In the case of axisymmetric loading we obtain
+\begin{equation}
+	K_I
+	=
+	\frac{2}{\sqrt{\pi a}}
+	\int_{a}^{\infty}
+	\frac{r\,\gamma_S^{\text{Piezo}}T_0(r)}{(r^{2}-a^{2})^{1/2}}\,dr,
+	\qquad
+	K_D
+	=
+	\frac{2}{\sqrt{\pi a}}
+	\int_{a}^{\infty}
+	\frac{r\,\gamma_D^{\text{Piezo}}T_0(r)}{(r^{2}-a^{2})^{1/2}}\,dr .
+	\label{KirilyukEq36}
+\end{equation}
+
+We now consider several examples of thermoelectroelastic problems for a piezoelectric material containing an external circular crack.
+
+\medskip
+\emph{1. Ring temperature loading.} Let temperature, mechanical, and electrical loads be uniformly distributed along a circle of radius $c>a$. Then
+\[
+T(r,\theta,0)
+=
+T_0(r)
+=
+\frac{T_0}{2\pi(r/a)}\,\delta(r-c).
+\]
+
+Introducing the dimensionless parameter
+\[
+\chi=\frac{c}{a},
+\]
+we obtain
+\begin{equation}
+	K_I
+	=
+	\frac{\gamma_S^{\text{Piezo}}T_0}{\pi^{3/2}a^{1/2}}
+	\frac{1}{\sqrt{\chi^{2}-1}},
+	\qquad
+	K_D
+	=
+	\frac{\gamma_D^{\text{Piezo}}T_0}{\pi^{3/2}a^{1/2}}
+	\frac{1}{\sqrt{\chi^{2}-1}} .
+	\label{KirilyukEq37}
+\end{equation}
+
+\medskip
+\emph{2. Polynomial temperature distribution.} Let the temperature distribution in the annular region of the crack be
+\begin{equation}
+	T(r,\theta,0)
+	=
+	-\left(
+	T_0+\frac{T_1}{r/a}
+	\right),
+	\qquad a<r<b .
+	\label{KirilyukEq38}
+\end{equation}
+
+Introducing
+\[
+r_0=\frac{b}{a},
+\]
+we obtain
+\[
+\frac{K_I}{\gamma_S^{\text{Piezo}}}
+=
+\frac{K_D}{\gamma_D^{\text{Piezo}}}
+=
+2\sqrt{\frac{a}{\pi}}
+\left(
+T_0\sqrt{r_0^{2}-1}
++
+T_1\ln\!\left(r_0+\sqrt{r_0^{2}-1}\right)
+\right).
+\]
+
+
+\medskip
+\emph{3. Loading over a finite annular region.} If the temperature distribution \eqref{KirilyukEq38} acts only on a part of the annular region of the external circular crack whose boundary does not coincide with the crack contour, then
+\begin{multline}
+	\frac{K_I}{\gamma_S^{\text{Piezo}}}
+	=
+	\frac{K_D}{\gamma_D^{\text{Piezo}}}
+	\\
+	=
+	2\sqrt{\frac{a}{\pi}}
+	\left[
+	T_0
+	\left(
+	\sqrt{\chi^{2}-1}
+	-
+	\sqrt{r_0^{2}-1}
+	\right)
+	+
+	T_1
+	\ln
+	\left(
+	\frac{\chi+\sqrt{\chi^{2}-1}}
+	{r_0+\sqrt{r_0^{2}-1}}
+	\right)
+	\right].
+	\label{KirilyukEq39}
+\end{multline}
+
+\medskip
+\emph{4. Two concentrated sources.}
+Let concentrated temperature sources act at two points on the surface of an external circular crack with polar coordinates $(b,\pm\alpha)$, where $b>a$. The boundary condition is
+\[
+T(r,\theta,0)
+=
+-\frac{T_0}{(r/a)}\,\delta(r-b)\,\delta(\theta\pm\alpha).
+\]
+
+Introducing the dimensionless parameter
+\[
+r_0=\frac{b}{a},
+\]
+we obtain
+\begin{equation}
+	\begin{aligned}
+		K_I
+		&=
+		\frac{2\gamma_S^{\text{Piezo}}T_0}{(\pi a)^{3/2}\sqrt{r_0^2-1}}
+		\left(
+		1+2\sum_{n=1}^{\infty} r_0^{-n}\cos(n\alpha)\cos(n\theta)
+		\right),
+		\\[4pt]
+		K_D
+		&=
+		\frac{2\gamma_D^{\text{Piezo}}T_0}{(\pi a)^{3/2}\sqrt{r_0^2-1}}
+		\left(
+		1+2\sum_{n=1}^{\infty} r_0^{-n}\cos(n\alpha)\cos(n\theta)
+		\right).
+	\end{aligned}
+	\label{KirilyukEq40}
+\end{equation}
+
+\noindent
+Setting $\alpha=0$, we obtain the case when concentrated sources with double intensity act on the crack surface at the point with polar coordinates $(b,0)$. In this case
+
+\begin{equation}
+	\begin{aligned}
+	K_I
+	&=
+	\frac{2\gamma_S^{\text{Piezo}}T_0}{(\pi a)^{3/2}}
+	\frac{r_0^2-1}{1-2r_0\cos\theta+r_0^2},
+	\\
+	K_D
+	&=
+	\frac{2\gamma_D^{\text{Piezo}}T_0}{(\pi a)^{3/2}}
+	\frac{r_0^2-1}{1-2r_0\cos\theta+r_0^2}.
+\end{aligned}
+	\label{KirilyukEq41}
+\end{equation}
+
+Figure~\ref{KirilyukFig2} shows the distribution of the stress intensity factor
+along the front of an external circular crack of radius $a$ according to
+Eq.~\eqref{KirilyukEq41} for $\theta=0$. The curves correspond to different
+distances of the concentrated heat source from the crack center,
+characterized by the parameter $r_0=b/a$.
+
+\begin{figure}[b]
+	\sidecaption[b]
+	\includegraphics[width=.5\textwidth]{KirilyukFig2.png}
+	\caption{Distribution of the normalized stress intensity factor $K_I^{*}$
+		along the front of an external circular crack for $\theta=0$.}
+	\label{KirilyukFig2}
+\end{figure}
+
+Curves 1--5 correspond to $r_0=2.0$, $1.7$, $1.5$, $1.4$, and $1.3$,
+respectively. In the figure the normalized value
+\[
+K_I^{*}=\frac{K_I(\pi a)^{3/2}}{10\,\gamma_S^{\text{Piezo}}T_0}
+\]
+is plotted.
+
+It can be seen that as the load application point approaches the front of
+the external circular crack ($r_0\to1$), the values of the stress intensity
+factor increase.
+
+
+
+\section{Conclusions}
+
+Thus, the work presents a series of exact solutions to thermoelectroelasticity problems for a piezoelectric transversely isotropic space with internal and external circular cracks for known symmetric temperature distributions on the crack surfaces. The governing equations of steady thermoelectroelasticity are reduced to a system of harmonic potentials using the displacement–potential representation, which makes it possible to construct analytical solutions in a closed form.
+
+Based on this approach, the stress intensity factor and the electric intensity factor at the front of a circular crack are derived in explicit analytical form. The obtained formulas allow one to evaluate these parameters for various temperature loading scenarios, including concentrated temperature sources, ring-type loading, polynomial temperature distributions, and temperature fields acting over finite regions of the crack surface.
+
+The developed solutions describe the influence of thermal loading on the coupled mechanical and electric fields in piezoelectric materials and make it possible to analyze the distribution of the intensity factors along the crack front. The results obtained for a piezoelectric medium also contain, as particular cases, the corresponding solutions for transversely isotropic thermoelastic materials and for isotropic elastic solids subjected to thermal loading.
+
+The analytical relations derived in the chapter can be used for evaluating the fracture behavior of piezoelectric materials under thermal effects and for verifying numerical methods applied to coupled thermoelectroelastic fracture problems.
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{Chapter18}
